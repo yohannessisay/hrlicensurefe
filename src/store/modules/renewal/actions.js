@@ -1,214 +1,37 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
-
+import axios from "axios";
 import {
-  SET_LICENSE,
-  SET_APPLICATION_ID,
+  SET_UPLOAD_PROGRESS,
   SET_BUTTONS,
-  SET_DOCUMENT_SPEC,
-  SET_DRAFT,
-  SET_DECLINED_FIELDS,
-  SET_ACCEPTED_FIELDS,
-  SET_REMARK,
-  SET_RENEWAL_HEALTH_EXAM_CERT,
-  SET_RENEWAL_LETTER,
-  SET_RENEWAL_WORK_EXPERIENCE,
-  SET_RENEWAL_WORK_EXPERIENCE2,
-  SET_RENEWAL_SERVICE_FEE,
-  SET_RENEWAL_CPD,
-  SET_RENEWAL_CPD2,
-  SET_RENEWAL_CPD3,
-  SET_RENEWAL_CPD4,
-  SET_GENERAL_INFO,
-  SET_RENEWAL_CPD5,
-  SET_PREVIOUS_LICEENSE,
-  SET_CERTIFICATE,
-  SET_DIPLOMA,
-  SET_TRANSCRIPT,
-  SET_PROFESSIONAL_DOCUMENT,
-  SET_PAYROLL,
-  SET_PASSPORT,
-  SET_LANGUAGE,
-  SET_HERQA,
-  SET_LETTER_FROM_ORG,
-  SET_PROFESSIONAL_LICENSE,
-  SET_RENEWED_LICENSE,
-  SET_COC,
-  SET_DEGREE,
-  SET_EDUCATIONAL_DOCUMENT,
-  SET_EDU_EIGHTH,
-  SET_EDU_TENTH,
-  SET_EDU_TWELVETH,
-  SET_EDU_TRANSCRIPT1,
-  SET_EDU_TRANSCRIPT2,
-  SET_SUPPORT_LETTER,
-  SET_PRO_CERTIFICATE,
-  SET_PRO_DIPLOMA,
-  SET_PRO_TRANSCRIPT,
-  SET_MASTERS,
-  SET_MASTERS_TRANSCRIPT,
-  SET_PHD,
-  SET_PHD_TRANSCRIPT,
-  SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
   SET_TEMP_DOCS,
+  SET_GENERAL_INFO
 } from "./mutation-types";
 
 const userId = +localStorage.getItem("userId");
+function authHeaders(needsAuth) {
+  const token = localStorage.getItem("token");
+  return needsAuth
+    ? {
+        Authorization: token ? `Bearer ${token}` : ""
+      }
+    : {};
+}
 export default {
-  setLicense({ commit }, license) {
-    commit(SET_LICENSE, license);
-  },
-  setApplicationId({ commit }, id) {
-    commit(SET_APPLICATION_ID, id);
-  },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
-  },
-  setDocumentSpecs({ commit }, documentSpecs) {
-    commit(SET_DOCUMENT_SPEC, documentSpecs);
-  },
-  setDraft({ commit }, draft) {
-    commit(SET_DRAFT, draft);
-  },
-  async storeDeclinedFields({ commit }, fields) {
-    commit(SET_DECLINED_FIELDS, fields);
-  },
-  async storeAcceptedFields({ commit }, fields) {
-    commit(SET_ACCEPTED_FIELDS, fields);
-  },
-  async storeRemark({ commit }, remark) {
-    commit(SET_REMARK, remark);
-  },
-  setRenewalHealthExamCert({ commit }, renewalHealthExamCert) {
-    commit(SET_RENEWAL_HEALTH_EXAM_CERT, renewalHealthExamCert);
-  },
-  setRenewalLetter({ commit }, renewalLetter) {
-    commit(SET_RENEWAL_LETTER, renewalLetter);
-  },
-  setRenewalServiceFee({ commit }, renewalServiceFee) {
-    commit(SET_RENEWAL_SERVICE_FEE, renewalServiceFee);
-  },
-  setRenewalCpd({ commit }, renewalCpd) {
-    commit(SET_RENEWAL_CPD, renewalCpd);
-  },
-  setRenewalCpd2({ commit }, renewalCpd2) {
-    commit(SET_RENEWAL_CPD2, renewalCpd2);
-  },
-  setRenewalCpd3({ commit }, renewalCpd3) {
-    commit(SET_RENEWAL_CPD3, renewalCpd3);
-  },
-  setRenewalCpd4({ commit }, renewalCpd4) {
-    commit(SET_RENEWAL_CPD4, renewalCpd4);
-  },
-  setRenewalCpd5({ commit }, renewalCpd5) {
-    commit(SET_RENEWAL_CPD5, renewalCpd5);
-  },
-  setProfessionalDoc({ commit }, professionalDoc) {
-    commit(SET_PROFESSIONAL_DOCUMENT, professionalDoc);
-  },
-  setRenewalWorkExperience({ commit }, renewalWorkExperience) {
-    commit(SET_RENEWAL_WORK_EXPERIENCE, renewalWorkExperience);
-  },
-  setRenewalWorkExperience2({ commit }, renewalWorkExperience2) {
-    commit(SET_RENEWAL_WORK_EXPERIENCE2, renewalWorkExperience2);
-  },
-  setPreviousLicense({ commit }, license) {
-    commit(SET_PREVIOUS_LICEENSE, license);
-  },
-  setCertificate({ commit }, certificate) {
-    commit(SET_CERTIFICATE, certificate);
-  },
-  setDiploma({ commit }, diploma) {
-    commit(SET_DIPLOMA, diploma);
-  },
-  setGeneralInfo({ commit }, generalInfo) {
-    commit(SET_GENERAL_INFO, generalInfo);
-  },
-  setTranscript({ commit }, transcript) {
-    commit(SET_TRANSCRIPT, transcript);
-  },
-  setPayroll({ commit }, payroll) {
-    commit(SET_PAYROLL, payroll);
-  },
-  setPassport({ commit }, passport) {
-    commit(SET_PASSPORT, passport);
-  },
-  setLanguage({ commit }, language) {
-    commit(SET_LANGUAGE, language);
-  },
-  setHerqa({ commit }, herqa) {
-    commit(SET_HERQA, herqa);
-  },
-  setLetterfromOrg({ commit }, letter) {
-    commit(SET_LETTER_FROM_ORG, letter);
-  },
-  setProfessionalLicense({ commit }, license) {
-    commit(SET_PROFESSIONAL_LICENSE, license);
-  },
-  setRenewedLicense({ commit }, license) {
-    commit(SET_RENEWED_LICENSE, license);
-  },
-  setCOC({ commit }, coc) {
-    commit(SET_COC, coc);
-  },
-  setDegree({ commit }, degree) {
-    commit(SET_DEGREE, degree);
-  },
-  setEducationalDocument({ commit }, educationalDoc) {
-    commit(SET_EDUCATIONAL_DOCUMENT, educationalDoc);
-  },
-  setEduEighth({ commit }, eduEighth) {
-    commit(SET_EDU_EIGHTH, eduEighth);
-  },
-  setEduTenth({ commit }, eduTenth) {
-    commit(SET_EDU_TENTH, eduTenth);
-  },
-  setEduTwelveth({ commit }, eduTwelveth) {
-    commit(SET_EDU_TWELVETH, eduTwelveth);
-  },
-  setEduTranscript1({ commit }, eduTranscript1) {
-    commit(SET_EDU_TRANSCRIPT1, eduTranscript1);
-  },
-  setEduTranscript2({ commit }, eduTranscript2) {
-    commit(SET_EDU_TRANSCRIPT2, eduTranscript2);
-  },
-  setSupportLetter({ commit }, letter) {
-    commit(SET_SUPPORT_LETTER, letter);
-  },
-  setProCertificate({ commit }, proCertificate) {
-    commit(SET_PRO_CERTIFICATE, proCertificate);
-  },
-  setProDiploma({ commit }, proDiploma) {
-    commit(SET_PRO_DIPLOMA, proDiploma);
-  },
-  setProTranscript({ commit }, proTranscript) {
-    commit(SET_PRO_TRANSCRIPT, proTranscript);
-  },
-  setMasters({ commit }, masters) {
-    commit(SET_MASTERS, masters);
-  },
-  setMastersTranscript({ commit }, mastersTranscript) {
-    commit(SET_MASTERS_TRANSCRIPT, mastersTranscript);
-  },
-  setPhd({ commit }, phd) {
-    commit(SET_PHD, phd);
-  },
-  setPhdTranscript({ commit }, phdTranscript) {
-    commit(SET_PHD_TRANSCRIPT, phdTranscript);
-  },
-  setRenewedLicenseOfHealthFacility(
-    { commit },
-    renewedLicenseOfHealthFacility
-  ) {
-    commit(
-      SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
-      renewedLicenseOfHealthFacility
-    );
   },
   setTempDocs({ commit }, docs) {
     commit(SET_TEMP_DOCS, docs);
   },
-  async addRenewalLicense({ commit }, license) {
+  setUploadProgress({ commit }, uploadProgress) {
+    commit(SET_UPLOAD_PROGRESS, uploadProgress);
+  },
+
+  setGeneralInfo({ commit }, generalInfo) {
+    commit(SET_GENERAL_INFO, generalInfo);
+  },
+  async addRenewalLicense(context, license) {
     try {
       const resp = await ApiService.post(baseUrl + "/renewals/add", license);
       return resp;
@@ -216,7 +39,7 @@ export default {
       return error;
     }
   },
-  async editRenewalLicense({ commit }, license) {
+  async editRenewalLicense(context, license) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.id,
@@ -229,30 +52,48 @@ export default {
   },
   async uploadDocuments({ commit }, documents) {
     try {
-      const resp = await ApiService.post(
+      var config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          ...authHeaders(true)
+        },
+        onUploadProgress: function(progressEvent) {
+          var progress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          commit(SET_UPLOAD_PROGRESS, progress);
+        }
+      };
+
+      const resp = await axios.post(
         baseUrl + "/documentUploads/renewalDocument/" + documents.id,
         documents.document,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        config
       );
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async updateDocuments({ commit }, documents) {
+  async updateDocuments({commit}, documents) {
     try {
-      const resp = await ApiService.put(
+      var config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          ...authHeaders(true)
+        },
+        onUploadProgress: function(progressEvent) {
+          var progress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          commit(SET_UPLOAD_PROGRESS, progress);
+        }
+      };
+
+      const resp = await axios.put(
         baseUrl + "/documentUploads/renewalDocument/" + documents.id,
         documents.document,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        config
       );
       return resp;
     } catch (error) {
@@ -267,7 +108,7 @@ export default {
       return error;
     }
   },
-  async getInstitution({ commit }, value) {
+  async getInstitution(context, value) {
     try {
       const resp = await ApiService.get(
         baseUrl + "/lookups/appTypeInstitutions/" + value
@@ -285,7 +126,7 @@ export default {
       return error;
     }
   },
-  async getProfile({ commit }, id) {
+  async getProfile(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
       return resp;
@@ -309,7 +150,7 @@ export default {
       return error;
     }
   },
-  async getDocumentSpecs({ commit }, id) {
+  async getDocumentSpecs(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/documentSpecs/" + id);
       return resp;
@@ -317,7 +158,7 @@ export default {
       return error;
     }
   },
-  async getRenewalLicense({ commit }) {
+  async getRenewalLicense() {
     try {
       const resp = await ApiService.get(baseUrl + "/renewals/user/" + userId);
       return resp;
@@ -325,7 +166,7 @@ export default {
       return error;
     }
   },
-  async getRenewalsByUser({ commit }, id) {
+  async getRenewalsByUser(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/renewals/user/" + id);
       return resp;
@@ -333,7 +174,7 @@ export default {
       return error;
     }
   },
-  async getDraft({ commit }, id) {
+  async getDraft(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/renewals/" + id);
       return resp;
@@ -341,7 +182,7 @@ export default {
       return error;
     }
   },
-  async withdraw({ commit }, payload) {
+  async withdraw(context, payload) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + payload.licenseId,
@@ -352,7 +193,18 @@ export default {
       return error;
     }
   },
-  async updateDraft({ commit }, payload) {
+  async updateDeclined(context, payload) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/renewals/" + payload.renewalId,
+        payload.declinedData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateDraft(context, payload) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + payload.licenseId,
@@ -398,27 +250,28 @@ export default {
       return error;
     }
   },
-  async getProfessionalTypes(context, deptId, eduId) {
+  async getProfessionalTypes(context, params) {
+ 
     try {
       const resp = await ApiService.get(
-        baseUrl + "/lookups/professionalTypes/" + deptId + "/" +eduId
+        baseUrl + "/lookups/professionalTypes/" + params.departmentId + "/" + params.educationalLevelId
       );
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async searchNewLicense({ commit }, id) {
+  async searchNewLicense(context, id) {
     try {
       const resp = await ApiService.get(
-        baseUrl + "/newLicenses/search/applicant"
+        baseUrl + "/newLicenses/search/applicant/" + id
       );
       return resp;
     } catch (error) {
-      return resp;
+      return error;
     }
   },
-  async searchProfessionalType({ commit }, profTypes) {
+  async searchProfessionalType(context, profTypes) {
     try {
       const resp = await ApiService.post(
         baseUrl + "/renewals/search/professionalType",
@@ -430,7 +283,7 @@ export default {
     }
   },
 
-  async getCommonRNdocuments({ commit }, params) {
+  async getCommonRNdocuments(context, params) {
     try {
       const resp = await ApiService.get(
         baseUrl + `/documentSpecs/common/${params[0]}/${params[1]}/true`
@@ -441,10 +294,11 @@ export default {
       return resp;
     }
   },
-  async getRNdocuments({ commit }, params) {
+  async getRNdocuments(context, params) {
     try {
       const resp = await ApiService.get(
-        baseUrl + `/documentSpecs/${params[0]}/${params[1]}/${params[2]}/${params[3]}`
+        baseUrl +
+          `/documentSpecs/${params[0]}/${params[1]}/${params[2]}/${params[3]}`
       );
       return resp;
     } catch (error) {
@@ -460,5 +314,5 @@ export default {
     } catch (error) {
       return error;
     }
-  },
+  }
 };

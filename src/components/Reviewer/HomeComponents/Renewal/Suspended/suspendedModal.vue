@@ -32,7 +32,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -59,13 +59,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -93,7 +93,7 @@
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name ? modalData.name : "" }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -119,7 +119,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -190,7 +190,7 @@
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
-                                >Martial Status:</span
+                                >Marital Status:</span
                               >
                               {{
                                 modalData.maritalStatus
@@ -220,7 +220,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -277,7 +277,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -328,7 +328,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -354,15 +354,16 @@
                                 leading-tight
                                 uppercase
                                 rounded
-                                shadow-lg
+                                 
                                 hover:bg-white hover:text-primary-700
                                 transition
                                 duration-150
                                 ease-in-out
                               "
+                              @click="earlySuspension()"
                             >
                               <i class="fa fa-times-circle"></i>
-                              Early Susupension
+                              Resumption
                             </button>
                             <button
                               type="button"
@@ -376,7 +377,7 @@
                                 leading-tight
                                 uppercase
                                 rounded
-                                shadow-lg
+                                 
                                 hover:bg-white hover:text-yellow-300
                                 transition
                                 duration-150
@@ -394,7 +395,7 @@
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="block p-6 rounded-lg   bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
@@ -446,7 +447,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             p-2
@@ -467,7 +468,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600
               transition
               duration-150
@@ -494,7 +495,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -542,7 +543,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -578,7 +579,7 @@
               </div>
               <div class="vld-parent">
                 <loading
-                  :active="isLoadingSuspend"
+                  :active="isLoadingExtend"
                   :can-cancel="true"
                   :is-full-page="true"
                   :color="'#2F639D'"
@@ -643,7 +644,7 @@
 
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-center
@@ -662,18 +663,19 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               bg-yellow-300
-              hover:bg-white hover:text-yellow-300 hover:shadow-lg
+              hover:bg-white hover:text-yellow-300 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
             "
+            @click="extend()"
           >
             <i class="fa fa-times-circle"></i>
             Extend
@@ -690,7 +692,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -713,14 +715,14 @@ import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { useToast } from "vue-toastification";
 export default {
   name: "Modal",
   components: { Loading },
   props: ["modalDataId"],
   setup(props) {
     const store = useStore();
-
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(true); 
     let showOptions = ref(true);
@@ -728,6 +730,7 @@ export default {
     let modalData = ref({});
     let extendedData = ref({});
     let isLoadingSuspend = ref(false);
+    let isLoadingExtend = ref(false);
     let result = {};
     const check = () => {
       store
@@ -773,12 +776,139 @@ export default {
           }
         });
     };
+    const earlySuspension = () => {
+      extendedData.value.suspEndDate = new Date().toISOString().slice(0, 10);
+      isLoading.value = true;
+      let req = {
+        action: "ApproveEvent",
+        data: extendedData.value,
+      };
+      let smsData = {
+        recipients: [
+          extendedData.value && extendedData.value.applicant
+            ? "251" + extendedData.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          extendedData.value && extendedData.value.profile
+            ? "Dear " +
+              extendedData.value.profile.name +
+              " " +
+              extendedData.value.profile.fatherName +
+              ", Your renewal license with license number " +
+              extendedData.value.renewalCode +
+              "has been released from suspension . Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
+      store
+        .dispatch("reviewer/editRenewal", req)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.data.status == "Success") {
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success(
+                "Application released from suspension Successfully",
+                {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                }
+              );
+              setTimeout(() => {
+                location.reload()
+              }, 1000);
+            });
+          } else {
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        });
+    };
+    const extend = () => {
+      isLoadingExtend.value = true;
+      let req = {
+        action: "",
+        data: extendedData.value,
+      };
+      let smsData = {
+        recipients: [
+          extendedData.value && extendedData.value.applicant
+            ? "251" + extendedData.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          extendedData.value && extendedData.value.profile
+            ? "Dear " +
+              extendedData.value.profile.name +
+              " " +
+              extendedData.value.profile.fatherName +
+              ", Your renewal license with license number " +
+              extendedData.value.renewalCode +
+              " suspension has been extended . Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
 
+      store
+        .dispatch("reviewer/editRenewal", req)
+        .then((res) => {
+          isLoadingExtend.value = false;
+          if (res.data.status == "Success") {
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Application Susupension Extended Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            });
+            setTimeout(() => {
+                location.reload()
+              }, 2000);
+          } else {
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        });
+    };
     watch(props.modalDataId, () => {
       isLoading.value = true;
       check();
     });
     return {
+      earlySuspension,
+      extend,
+      isLoadingExtend,
       show,
       check,
       isLoading,
@@ -792,8 +922,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

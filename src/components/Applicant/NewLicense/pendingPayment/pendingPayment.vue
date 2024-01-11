@@ -27,7 +27,7 @@
             lg:w-1/4
             mdlg:w-1/4
             sm:w-full sm:mr-4
-            shadow-lg
+             
             rounded-lg
             transform
             transition
@@ -136,7 +136,7 @@
                 <img
                   alt="Placeholder"
                   class="block rounded-full h-8"
-                  v-bind:src="
+                  :src="
                     userInfo.profilePicturePath
                       ? googleApi + userInfo.profilePicturePath
                       : ''
@@ -161,7 +161,7 @@
                   font-bold
                   uppercase
                   rounded
-                  shadow-lg
+                   
                   mb-4
                   transition
                   duration-150
@@ -193,7 +193,7 @@
         lg:w-1/4
         mdlg:w-1/4
         sm:w-full sm:mr-4
-        shadow-lg
+         
         rounded-lg
         transform
         transition

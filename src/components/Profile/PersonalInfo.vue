@@ -1,56 +1,18 @@
 <template>
-  <div
-    class="w-screen max-w-4xl"
-    v-if="approveStatus == 1"
-  >
+  <!-- If user clicks HRA -->
+  <div class="w-screen max-w-4xl" v-if="approveStatus == 1">
     <div
-      class="
-        flex flex-col
-        mt-medium
-        w-full
-        bg-white
-        blue-box-shadow-light
-        rounded
-        mb-large
-      "
+      class="flex flex-col mt-medium w-full bg-white blue-box-shadow-light rounded mb-large"
     >
-      <h2 class="font-bold ml-56 mt-4">
-        Search here if you are registered in HRA
-      </h2>
+      <h2 class="font-bold ml-56 mt-4">Search here if you are registered in HRA</h2>
       <div class="flex justify-center mt-4">
         <div class="mb-3 xl:w-96">
           <div
-            class="
-              input-group
-              relative
-              flex flex-wrap
-              items-stretch
-              w-full
-              mb-4
-              gap-2
-            "
+            class="input-group relative flex flex-wrap items-stretch w-full mb-4 gap-2"
           >
             <input
               type="search"
-              class="
-                form-control
-                relative
-                flex-auto
-                min-w-0
-                block
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                text-gray-700
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                hover:text-primary-600 hover:border
-                focus:outline-none
-              "
+              class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out hover:text-primary-600 hover:border focus:outline-none"
               placeholder="Employee ID *"
               aria-label="Search"
               aria-describedby="button-addon2"
@@ -59,33 +21,7 @@
             />
             <input
               type="search"
-              class="
-                form-control
-                relative
-                flex-auto
-                min-w-0
-                block
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                text-gray-700
-                bg-white bg-clip-padding
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                space-x-7
-                >
-                *
-                +
-                *
-                focus:text-gray-700
-                focus:bg-white
-                focus:border-blue-600
-                focus:outline-none
-              "
+              class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out space-x-7 > * + * focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               placeholder="File Number *"
               aria-label="Search"
               aria-describedby="button-addon2"
@@ -93,31 +29,7 @@
               required
             />
             <button
-              class="
-                btn
-                inline-block
-                px-6
-                py-2.5
-                bg-primary-600
-                text-white
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                rounded
-                shadow-md
-                hover:bg-blue-700 hover:shadow-lg
-                focus:bg-blue-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-blue-800 active:shadow-lg
-                transition
-                duration-150
-                ease-in-out
-                hover:text-primary-600 hover:border
-                items-center
-              "
+              class="btn inline-block px-6 py-2.5 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
               type="button"
               id="button-addon2"
               @click="searchUser()"
@@ -144,44 +56,21 @@
       </div>
     </div>
   </div>
-
-  <div class="w-screen max-w-4xl mt-64  mb-20 p-4" v-if="approveStatus == 2">
-    <div
-      class="
-        flex flex-col
-         
-        w-full
-        form_wrapper
-        bg-white
-        blue-box-shadow-light
-        rounded
-        mb-large
-      "
-    >
-      <div class="  flex justify-center">
-        <h1 class="text-main-400">Complete profile data</h1>
+  <!-- If user clicks HRA -->
+  <!-- If user clicks New profile -->
+  <div class="w-screen max-w-4xl mb-20 p-4" v-if="approveStatus == 2">
+    <div class="flex flex-col w-full form_wrapper bg-white border rounded-md mb-large">
+      <div class="flex justify-center">
+        <h1 class="text-main-400 text-3xl">Complete profile data</h1>
       </div>
 
-      <form
-        class="mx-auto max-w-3xl w-full mt-10 p-2"
-        @submit.prevent="nextStep"
-      >
-        <div class="flex justify-center">
-          <span>
-            <h6 class="text-sm border-b-2 text-main-400">
-              File-{{ photoFile.name }}
-            </h6>
-            <h6 class="text-sm text-main-400">Size-{{ fileSize }}</h6>
-          </span>
-        </div>
-        <div class="flex mb-12 justify-center">
-          <span v-if="showUpload">
-            <span>
-              <label class="text-main-400 text-justify text-sm"
-                >Maximum size for profile picture is 3 MB
-              </label>
-            </span>
-            <br />
+      <form class="mx-auto max-w-3xl w-full mt-4 p-2" @submit.prevent="nextStep">
+        <h2 class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2">
+          Please upload your own personal picture where the prefered size is in a passport
+          size format which is 3 X 4 as this photo will be used in your generated license
+        </h2>
+        <div class="flex mb-4 justify-center">
+          <div class="flex mb-2 justify-center" v-if="showUpload">
             <label class="text-primary-700 text-justify">
               <div class="dropbox ml-8">
                 <input
@@ -189,6 +78,7 @@
                   id="photoFile"
                   class="photoFile"
                   ref="photoFileP"
+                  accept=".jpeg,.jpg,.png"
                   v-on:change="handleFileUpload()"
                   style="margin-bottom: 15px !important"
                 />
@@ -198,6 +88,7 @@
                   or click to browse
                 </p>
               </div>
+
               <div class="ml-8 mt-4">
                 <span
                   v-if="personalInfoErrors.photo"
@@ -206,37 +97,21 @@
                 >
               </div>
             </label>
-          </span>
+          </div>
+
           <picture v-if="!showUpload && isImage">
             <div class="flex justify-center">
               <span
                 @click="reset()"
-                class="
-                  ml-4
-                  mb-4
-                  cursor-pointer
-                  border
-                  text-white
-                  hover:text-main-400
-                  rounded-lg
-                  p-2
-                  hover:bg-white
-                  bg-main-400
-                "
+                class="ml-4 mb-4 cursor-pointer border text-white hover:text-main-400 rounded-lg p-2 hover:bg-white bg-main-400"
               >
-                <i
-                  class="
-                    fa fa-upload
-                    cursor-pointer
-                    hover:text-main-400
-                    text-white
-                  "
-                ></i
+                <i class="fa fa-upload cursor-pointer hover:text-main-400 text-white"></i
                 >Upload again
               </span>
             </div>
-            <img v-bind:src="filePreview" v-show="showPreview" />
+            <img :src="filePreview" v-show="showPreview" />
           </picture>
+
           <span v-if="photoSizeCheck" style="color: red"
             >Image size to big, Upload again. Image must be less than 3 MB</span
           >
@@ -244,389 +119,250 @@
             <img :src="filePreview" alt="" class="preview" />
           </span>
         </div>
+        <div class="flex justify-center">
+          <span>
+            <h6 class="text-sm border-b-2 text-main-400">
+              {{ photoFile.name ? photoFile.name : "------" }}
+            </h6>
+            <h6 class="text-sm">
+              {{ fileSize ? fileSize : "------" }}
+            </h6>
+          </span>
+        </div>
 
         <!-- English Name Part -->
-        <h2 class="text-main-400">Name (English)</h2>
-        <div
-          class="
-            grid
-            lg:grid-cols-2
-            sm:grid-rows-1
-            mdlg:grid-rows-1
-            md:grid-rows-1
-          "
-        >
+        <h2 class="text-main-400 text-xl">Name (English)</h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2 mb-8">
           <div class="flex">
-            <div class="form-floating mb-3 xl:w-96">
+            <div class="form-floating">
               <input
                 type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  sm:w-1/2
-                  md:w-1/2
-                  mdlg::w-1/2
-                  lg:w-full
-                  p-2
-                  h-14
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-2
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                class="capitalize form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.name"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.firstname
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.firstname"
+                autocapitalize="word"
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-gray-700">Name</label>
+              <label for="floatingInput" class="text-grey-800 text-lg"
+                >Name
+                <span class="text-red-300">*</span>
+              </label>
               <span
                 v-if="personalInfoErrors.name"
-                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                class="border p-2 text-sm text-red-300 ml-4 rounded-md"
                 >{{ personalInfoErrors.name }}</span
               >
             </div>
           </div>
           <div class="flex">
-            <div class="form-floating mb-3 xl:w-96">
+            <div class="form-floating">
               <input
                 type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  p-2
-                  h-14
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-2
-                  sm:w-1/2
-                  md:w-1/2
-                  mdlg::w-1/2
-                  lg:w-full
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.fatherName"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.middlename
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.middlename"
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-gray-700"
-                >Father Name</label
+              <label for="floatingInput" class="text-grey-800 text-lg"
+                >Father Name <span class="text-red-300">*</span></label
               >
               <span
                 v-if="personalInfoErrors.fatherName"
-                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4 rounded-md"
                 >{{ personalInfoErrors.fatherName }}</span
               >
             </div>
           </div>
-        </div>
-
-        <div
-          class="
-            border-b-4
-            text-main-400
-            grid
-            lg:grid-cols-2
-            sm:grid-rows-1
-            mdlg:grid-rows-1
-            md:grid-rows-1
-          "
-        >
           <div class="flex">
-            <div class="form-floating mb-3 xl:w-96">
+            <div class="form-floating xl:w-96">
               <input
                 type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  sm:w-1/2
-                  md:w-1/2
-                  mdlg::w-1/2
-                  lg:w-full
-                  p-2
-                  h-14
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-2
-                  focus:border-main-400 focus:outline-none
-                "
+                class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.grandFatherName"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.lastname
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.lastname"
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-gray-700"
-                >Grandfather Name</label
+              <label for="floatingInput" class="text-grey-800 text-lg"
+                >Grandfather Name <span class="text-red-300">*</span></label
               >
               <span
                 v-if="personalInfoErrors.grandFatherName"
-                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4 break-all rounded-md"
                 >{{ personalInfoErrors.grandFatherName }}</span
               >
             </div>
           </div>
         </div>
+
         <!-- End Of English Name Part -->
 
         <!-- Amharic Name Part -->
-        <h2 class="text-main-400">Name (Amharic)</h2>
-        <div
-          class="
-            grid
-            lg:grid-cols-2
-            sm:grid-rows-1
-            mdlg:grid-rows-1
-            md:grid-rows-1
-          "
-        >
+        <h2 class="text-main-400 text-xl">Name (Amharic)</h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2 mb-8">
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  sm:w-1/2
-                  md:w-1/2
-                  mdlg::w-1/2
-                  lg:w-full
-                  p-2
-                  h-14
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-2
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeName"
                 id="amhName"
                 placeholder="Amharic First name"
               />
-              <label for="amhName" class="text-grey-700">ስም</label>
+              <label for="amhName" class="text-grey-800 text-lg">ስም</label>
             </div>
           </div>
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  p-2
-                  h-14
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-2
-                  sm:w-1/2
-                  md:w-1/2
-                  mdlg::w-1/2
-                  lg:w-full
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeFatherName"
                 id="amhFName"
                 placeholder="Amharic Fathers name"
               />
-              <label for="amhFName" class="text-grey-700">የአባት ስም</label>
+              <label for="amhFName" class="text-grey-800 text-lg">የአባት ስም</label>
             </div>
           </div>
-        </div>
-
-        <div
-          class="
-            border-b-4
-            text-main-400
-            grid
-            lg:grid-cols-2
-            sm:grid-rows-1
-            mdlg:grid-rows-1
-            md:grid-rows-1
-          "
-        >
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  sm:w-1/2
-                  md:w-1/2
-                  mdlg::w-1/2
-                  lg:w-full
-                  p-2
-                  h-14
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-2
-                  focus:border-main-400 focus:outline-none
-                "
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:border-main-400 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeGrandFatherName"
                 id="amhGName"
                 placeholder="Amharic Grand Father name"
               />
-              <label for="amhGName" class="text-gray-700">የ ኣያት ስም</label>
+              <label for="amhGName" class="text-grey-800 text-lg">የ ኣያት ስም</label>
             </div>
           </div>
         </div>
+
         <!-- End Of English Name Part -->
 
         <!-- General personal info Part -->
-        <h2 class="text-main-400">General Information</h2>
-
-        <div
-          class="
-            grid
-            lg:grid-cols-2
-            sm:grid-rows-1
-            mdlg:grid-rows-1
-            md:grid-rows-1
-          "
-        >
+        <h2 class="text-main-400 text-xl">General Information</h2>
+        <div class="text-main-400 grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2">
           <div class="flex">
+            <div class="form-floating mb-3 w-full mt-2">
+              <input
+                type="date"
+                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2"
+                :max="minimumBirthDate"
+                min="1899-01-01"
+                v-model="personalInfo.dateOfBirth"
+                @change="validateDate(personalInfo.dateOfBirth)"
+                :disabled="isRegisterdHRAuser == true && searchResultData.birthdate"
+                id="birthDate"
+              />
+              <label for="birthDate" class="text-grey-800 text-lg"
+                >Date of Birth <span class="text-red-300">*</span></label
+              >
+              <div
+                v-if="
+                  personalInfoErrors.dateOfBirth || personalInfoErrors.invalidBirthDate
+                "
+                class="border p-2 text-sm text-red-300 mr-4 rounded-md w-3/4 ml-4"
+              >
+                <span class="mt-2 text-sm text-red-300">{{
+                  personalInfoErrors.dateOfBirth
+                }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-1/2 ml-2 mt-2">
+              <div class="flex flex-col w-full">
+                <label class="text-main-400 text-lg"
+                  >Gender <span class="text-red-300">*</span></label
+                >
+                <div class="flex w-full">
+                  <div class="flex flex-col mb-small w-full">
+                    <div class="flex py-2">
+                      <input
+                        class="flex flex-col"
+                        type="radio"
+                        id="male"
+                        value="male"
+                        v-model="personalInfo.gender"
+                        :disabled="isRegisterdHRAuser == true && searchResultData.gender"
+                      />
+                      <label class="ml-tiny flex flex-col text-grey-800" for="male">
+                        Male
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="flex py-2 ml-4">
+                    <input
+                      type="radio"
+                      id="female"
+                      value="female"
+                      v-model="personalInfo.gender"
+                      :disabled="isRegisterdHRAuser == true && searchResultData.gender"
+                    />
+                    <label class="ml-tiny text-grey-800" for="female"> Female </label>
+                  </div>
+                </div>
+                <span
+                  v-if="personalInfoErrors.gender"
+                  class="border p-2 text-sm text-red-300 ml-4 rounded-md"
+                >
+                  {{ personalInfoErrors.gender }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div class="flex mt-2">
             <div class="flex justify-center">
               <div class="mb-3 w-full ml-2">
-                <label for="">Nationality</label>
+                <label class="text-grey-800 text-lg"
+                  >Nationality <span class="text-red-300">*</span></label
+                >
                 <select
-                  class="
-                    form-select
-                    appearance-none
-                    block
-                    w-full
-                    px-3
-                    text-base
-                    font-normal
-                    text-gray-700
-                    bg-white bg-clip-padding bg-no-repeat
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    m-0
-                    mb-4
-                  "
+                  class="form-select text-main-400 appearance-none block w-full px-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
                   aria-label="Default select example"
                   v-model="personalInfo.nationalityId"
                   @change="fetchNationalities()"
-                  :disabled="
-                    isRegisterdHRAuser == true && searchResultData.nationality
-                  "
+                  :disabled="isRegisterdHRAuser == true && searchResultData.nationality"
                 >
                   <option
                     v-for="types in state.nationalities"
-                    v-bind:key="types.name"
-                    v-bind:value="types.id"
+                    :key="types.name"
+                    :value="types.id"
                   >
                     {{ types.name }}
                   </option>
                 </select>
                 <span
                   v-if="personalInfoErrors.nationalityId"
-                  class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                  class="mt-2 border p-2 text-sm text-red-300 ml-4 rounded-md"
                   >{{ personalInfoErrors.nationalityId }}</span
                 >
               </div>
             </div>
           </div>
-          <div class="flex">
+          <div class="flex mt-2">
             <div class="mb-3 w-full sm:ml-2 md:ml-2 mdlg:ml-2 ml-2">
-              <label for="">Marital Status</label>
+              <label class="text-grey-800 text-lg"
+                >Marital Status <span class="text-red-300">*</span></label
+              >
               <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  mb-4
-                "
+                class="form-select text-main-400 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
                 aria-label="Default select example"
                 v-model="personalInfo.maritalStatusId"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.maritalStatus
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.maritalStatus"
               >
                 >
                 <option value="1">Single</option>
@@ -637,182 +373,31 @@
               </select>
               <span
                 v-if="personalInfoErrors.maritalStatus"
-                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4 rounded-md"
                 >{{ personalInfoErrors.maritalStatus }}</span
               >
             </div>
           </div>
-        </div>
-
-        <div
-          class="
-            text-main-400
-            grid
-            lg:grid-cols-2
-            sm:grid-rows-1
-            mdlg:grid-rows-1
-            md:grid-rows-1
-          "
-        >
-          <div class="flex">
-            <div class="form-floating mb-3 w-full mt-2">
+          <div class="flex mt-2">
+            <div class="form-floating w-full">
               <input
-                type="date"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  sm:w-1/2
-                  md:w-1/2
-                  mdlg::w-1/2
-                  lg:w-full
-                  p-2
-                  h-14
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-2
-                  focus:border-main-400 focus:outline-none
-                "
-                :max="minimumBirthDate"
-                min='1899-01-01'
-                v-model="personalInfo.dateOfBirth"
-                @change="validateDate(personalInfo.dateOfBirth)"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.birthdate
-                "
-                id="birthDate"
+                type="number"
+                class="form-control block w-full text-base font-normal text-main-400 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2"
+                v-model="personalInfo.poBox"
+                :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
+                id="pobox"
+                placeholder="Po-box"
               />
-              <label for="birthDate" class="text-gray-700">Date of Birth</label>
-              <div
-                v-if="
-                  personalInfoErrors.dateOfBirth ||
-                  personalInfoErrors.invalidBirthDate
-                "
-                class="border p-2 text-sm text-red-300 mr-4"
-              >
-                <span class="mt-2 text-sm text-red-300 ml-4">{{
-                  personalInfoErrors.dateOfBirth
-                }}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex">
-            <div class="flex flex-col mb-medium w-1/2 ml-2 mt-2">
-              <div class="flex flex-col w-full">
-                <label class="text-main-400">Gender</label>
-                <div class="flex w-full">
-                  <div class="flex flex-col mb-small w-full">
-                    <div class="flex py-2">
-                      <input
-                        class="flex flex-col"
-                        type="radio"
-                        id="male"
-                        value="male"
-                        v-model="personalInfo.gender"
-                        :disabled="
-                          isRegisterdHRAuser == true && searchResultData.gender
-                        "
-                      />
-                      <label
-                        class="ml-tiny flex flex-col text-primary-700"
-                        for="male"
-                      >
-                        Male
-                      </label>
-                    </div> 
-                  </div>
-
-                  <div class="flex py-2 ml-4">
-                    <input
-                      type="radio"
-                      id="female"
-                      value="female"
-                      v-model="personalInfo.gender"
-                      :disabled="
-                        isRegisterdHRAuser == true && searchResultData.gender
-                      "
-                    />
-                    <label class="ml-tiny text-primary-700" for="female">
-                      Female
-                    </label>
-                  </div>
-                </div>
-                <span
-                  v-if="personalInfoErrors.gender"
-                  class="border p-2 text-sm text-red-300 ml-4"
-                >
-                  {{ personalInfoErrors.gender }}</span
-                >
-              </div>
+              <label for="pobox" class="text-grey-700">Po-box</label>
             </div>
           </div>
         </div>
+
         <!-- General personal info Part -->
-        <div class="flex">
-          <div class="form-floating mb-3 w-full">
-            <input
-              type="number"
-              class="
-                form-control
-                block
-                w-full
-                px-3
-                p-2
-                h-14
-                text-base
-                font-normal
-                text-gray-700
-                bg-white bg-clip-padding
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                m-2
-                sm:w-1/2
-                md:w-1/2
-                mdlg::w-1/2
-                lg:w-full
-                focus:text-gray-700
-                focus:bg-white
-                focus:border-blue-600
-                focus:outline-none
-              " 
-              v-model="personalInfo.poBox"
-              :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
-              id="pobox"
-              placeholder="Po-box"
-            />
-            <label for="pobox" class="text-grey-700">Po-box</label>
-          </div>
-        </div>
 
-        <div class="flex justify-center">
+        <div class="flex justify-center mb-24">
           <button
-            class="
-              transition
-              duration-200
-              bg-main-400
-              text-white
-              hover:text-main-400 hover:bg-white
-              w-full
-              ml-auto
-              mt-4
-              rounded-lg
-              text-md
-              shadow-sm
-              hover:shadow-md
-              font-semibold
-              text-center
-              inline-block
-            "
+            class="transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full ml-auto mt-4 rounded-lg text-md shadow-sm hover: font-semibold text-center inline-block"
           >
             Next
           </button>
@@ -820,15 +405,17 @@
       </form>
     </div>
   </div>
+  <!-- If user clicks New profile -->
 </template>
 <script>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex"; 
+import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 
 export default {
-  components: {  },
+  components: {},
   props: ["activeState", "approvalModal"],
+  emits: ["nextStep", "changeActiveState"],
   setup(props, { emit }) {
     const store = useStore();
     let approveStatus = ref(props.approvalModal);
@@ -843,8 +430,9 @@ export default {
     let photoSizeCheck = ref(false);
     let fileSize = ref("");
     let nationality = ref("");
-    let minimumBirthDate =  
-      new Date(`${new Date().getFullYear()-18}`).toISOString().slice(0,10);
+    let minimumBirthDate = new Date(`${new Date().getFullYear() - 18}`)
+      .toISOString()
+      .slice(0, 10);
     let maritalStatus = ref("");
     let invalidBirthDate = ref(false);
     const hraUserStat = ref(false);
@@ -945,87 +533,77 @@ export default {
         employeeId: searchEmployee.value,
         fileNumber: searchByFileNumber.value,
       };
-      store
-        .dispatch("profile/checkHrlRegistration", searchparamters)
-        .then((res) => {
-          if (res.data.data) {
-            let searchResult = res.data.data;
-            let nationalityId = 0;
-            searchResultData.value = searchResult;
-            let nationality =
-              state.value?.nationalities == null
-                ? null
-                : state.value.nationalities;
-            let maritalStatusId = 0;
-            if (searchResult.maritalStatus) {
-              maritalStatusId =
-                searchResult.maritalStatus == "Married"
-                  ? 2
-                  : searchResult.maritalStatus == "Single"
-                  ? 1
-                  : searchResult.maritalStatus == "Divorced"
-                  ? 3
-                  : 0;
-            }
-            if (searchResult.nationality) {
-              nationalityId = nationality.find(
-                (nat) => nat.name == searchResult?.nationality
-              ).id;
-            }
-            // let maritalStatusId = maritalStatus.find(
-            //   nat => nat.name == searchResult?.maritalStatus
-            // ).id;
-
-            let data = {
-              name: searchResult.firstname,
-              fatherName: searchResult?.middlename,
-              grandFatherName: searchResult?.lastname,
-              alternativeName: searchResult?.alternativeName,
-              alternativeFatherName: searchResult?.alternativeFatherName,
-              alternativeGrandFatherName:
-                searchResult?.alternativeGrandFatherName,
-              gender: searchResult?.gender,
-              dateOfBirth: searchResult?.birthdate,
-              nationalityId: nationalityId,
-              maritalStatusId: maritalStatusId,
-              poBox: searchResult?.pobox,
-              employeeId: searchResult.employeeId
-                ? searchResult.employeeId
-                : null,
-              fileNumber: searchResult.fileNumber,
-            };
-
-            store.dispatch("profile/setProfileInfo", data);
-            personalInfo.value = data;
-            approveStatus.value = 2;
-            isRegisterdHRAuser.value = true;
-            toast.success(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-          } else {
-            toast.error(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+      store.dispatch("profile/checkHrlRegistration", searchparamters).then((res) => {
+        if (res.data.data) {
+          let searchResult = res.data.data;
+          let nationalityId = 0;
+          searchResultData.value = searchResult;
+          let nationality =
+            state.value?.nationalities == null ? null : state.value.nationalities;
+          let maritalStatusId = 0;
+          if (searchResult.maritalStatus) {
+            maritalStatusId =
+              searchResult.maritalStatus == "Married"
+                ? 2
+                : searchResult.maritalStatus == "Single"
+                ? 1
+                : searchResult.maritalStatus == "Divorced"
+                ? 3
+                : 0;
           }
-        });
+          if (searchResult.nationality) {
+            nationalityId = nationality.find(
+              (nat) => nat.name == searchResult?.nationality
+            ).id;
+          }
+          // let maritalStatusId = maritalStatus.find(
+          //   nat => nat.name == searchResult?.maritalStatus
+          // ).id;
+
+          let data = {
+            name: searchResult.firstname,
+            fatherName: searchResult?.middlename,
+            grandFatherName: searchResult?.lastname,
+            alternativeName: searchResult?.alternativeName,
+            alternativeFatherName: searchResult?.alternativeFatherName,
+            alternativeGrandFatherName: searchResult?.alternativeGrandFatherName,
+            gender: searchResult?.gender,
+            dateOfBirth: searchResult?.birthdate,
+            nationalityId: nationalityId,
+            maritalStatusId: maritalStatusId,
+            poBox: searchResult?.pobox,
+            employeeId: searchResult.employeeId ? searchResult.employeeId : null,
+            fileNumber: searchResult.fileNumber,
+          };
+
+          store.dispatch("profile/setProfileInfo", data);
+          personalInfo.value = data;
+          approveStatus.value = 2;
+          isRegisterdHRAuser.value = true;
+          toast.success(res.data.message, {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        } else {
+          toast.error(res.data.message, {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        }
+      });
     };
 
     const fetchUserTypes = () => {
       store.dispatch("profile/getUserTypes").then((res) => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
-        state.value.userTypes.splice(
-          state.value.userTypes.indexOf("Reviewer"),
-          1
-        );
+        state.value.userTypes.splice(state.value.userTypes.indexOf("Reviewer"), 1);
       });
     };
     const fetchRegions = () => {
@@ -1056,29 +634,32 @@ export default {
       personalInfo.value.employeeId = searchResultData.value.employeeId;
       personalInfoErrors.value = validateForm(personalInfo.value);
       for (let i = 0; i < state.value.nationalities.length; i++) {
-        if (
-          state.value.nationalities[i].id == personalInfo.value.nationalityId
-        ) {
+        if (state.value.nationalities[i].id == personalInfo.value.nationalityId) {
           nationality.value = state.value.nationalities[i].name;
         }
       }
-      if (personalInfo.value.maritalStatusId == 1)
-        maritalStatus.value = "Single";
-      if (personalInfo.value.maritalStatusId == 2)
-        maritalStatus.value = "Married";
-      if (personalInfo.value.maritalStatusId == 3)
-        maritalStatus.value = "Divorced";
+      if (personalInfo.value.maritalStatusId == 1) maritalStatus.value = "Single";
+      if (personalInfo.value.maritalStatusId == 2) maritalStatus.value = "Married";
+      if (personalInfo.value.maritalStatusId == 3) maritalStatus.value = "Divorced";
       store.dispatch("profile/setNationality", nationality.value);
       store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
 
-      console.log(personalInfoErrors.value,empty)
       if (empty == false || invalidBirthDate.value == true) {
+        toast.error("Please fill out required fields", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
         return;
       } else if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
         store.dispatch("profile/setPhoto", photoFile.value);
+
         emit("changeActiveState");
+        emit("nextStep", "add");
       }
     };
     const validateDate = (dateInput) => {
@@ -1095,7 +676,7 @@ export default {
         invalidBirthDate.value = true;
         personalInfoErrors.value.dateOfBirth = "Applicant must be 18 or above";
       } else {
-        invalidBirthDate.value = false; 
+        invalidBirthDate.value = false;
       }
     };
     const validateForm = (formData) => {
@@ -1103,26 +684,24 @@ export default {
       if (!formData.photo) errors.photo = "Profile picture is required";
       if (!formData.name) errors.name = "First name is required";
       if (!formData.fatherName) errors.fatherName = "Father's name is required";
-      if (!formData.dateOfBirth)
-        errors.dateOfBirth = "Date of birth is required";
-      if (!formData.maritalStatusId)
-        errors.maritalStatus = "Marital status is required";
+      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of birth is required";
+      if (!formData.maritalStatusId) errors.maritalStatus = "Marital status is required";
       if (!formData.gender) errors.gender = "Gender is required";
       if (!formData.grandFatherName)
-        errors.grandFatherName = "Grandfather's name is required";
-      if (!formData.nationalityId)
-        errors.nationalityId = "Nationality is required";
+        errors.grandFatherName = "Grandfather's name required";
+      if (!formData.nationalityId) errors.nationalityId = "Nationality is required";
 
       let today = new Date().getFullYear();
       let age = today - new Date(formData.dateOfBirth).getFullYear();
-    
+
       if (age < 18) {
         errors.dateOfBirth = "Applicant must be 18 or above";
-      }  
+      }
       return errors;
     };
     const isEmpty = (obj) => {
       for (var prop in obj) {
+        // eslint-disable-next-line no-prototype-builtins
         if (obj.hasOwnProperty(prop)) {
           return false;
         }
@@ -1254,7 +833,6 @@ img {
 .dropbox p {
   font-size: 1.2em;
   text-align: center;
- 
 }
 
 .form_wrapper {

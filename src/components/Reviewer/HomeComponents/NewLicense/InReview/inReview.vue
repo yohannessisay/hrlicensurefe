@@ -1,6 +1,9 @@
 <template>
   <!-- Sidebar -->
-  <reviewer-side-nav :finalUrl="'newLicense'"></reviewer-side-nav>
+  <reviewer-side-nav
+    :finalUrl="'newLicense'"
+    :inReviewCount="inReviewCount"
+  ></reviewer-side-nav>
   <!-- Sidebar -->
 
   <section class="home-section">
@@ -98,7 +101,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         duration-150
@@ -179,6 +182,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                        @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
                       />
@@ -217,14 +221,13 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -310,7 +313,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -392,6 +395,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                        @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
                       />
@@ -430,14 +434,13 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -482,7 +485,7 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
-    editModalOthers
+    editModalOthers,
   },
   setup() {
     const store = useStore();
@@ -490,48 +493,48 @@ export default {
       .regionId;
     let modalDataId = ref({
       id: "",
-      change: 0
+      change: 0,
     });
     let modalDataIdOthers = ref({
       id: "",
-      change: 0
+      change: 0,
     });
     let adminRole = localStorage.getItem("role");
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
-    let allInfo = ref({});
-    const reviewers = ref([]);
-    const searchTerm = ref("");
-    const searchTermOthers = ref("");
+    let allInfo = [];
+    let reviewers = ref([]);
+    let inReviewCount = ref(0);
+    let searchTerm = ref("");
+    let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
     let searchTermToDateOth = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
-    let tableData = ref([]);
-    let toYouTableData = ref([]);
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
+    let tableData = [];
+    let toYouTableData = [];
     toOthersTable.value = {
-      isLoading: true
+      isLoading: true,
     };
     toYouTable.value = {
-      isLoading: true
+      isLoading: true,
     };
 
     const refreshTable = () => {
       toOthersTable.value.isLoading = true;
       toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
 
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 }
+        { key: "size", value: 10 },
       ]);
       inReviewAssignedToYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 }
+        { key: "size", value: 10 },
       ]);
     };
 
@@ -541,10 +544,10 @@ export default {
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 }
+        { key: "size", value: 10 },
       ]);
     };
     const clearFilters = () => {
@@ -553,29 +556,31 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+
       inReviewAssignedToYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 }
+        { key: "size", value: 10 },
       ]);
     };
-    const inReviewAssignedToYou = apiParameters => {
+    const inReviewAssignedToYou = (apiParameters) => {
       let statId = statuses
-        ? statuses.filter(stat => stat.code == "IRV")[0].id
+        ? statuses.filter((stat) => stat.code == "IRV")[0].id
         : "";
+      toYouTableData = [];
       store
         .dispatch("reviewerNewLicense/getNewLicenseByStatus", [
           {
-            statusId: statId
+            statusId: statId,
           },
           {
-            params: apiParameters
-          }
+            params: apiParameters,
+          },
         ])
-        .then(res => {
-          allInfo.value = res ? res.rows : [];
-          allInfo.value.forEach(element => {
-            toYouTableData.value.push({
+        .then((res) => {
+          allInfo = res ? res.rows : [];
+          inReviewCount.value = res.count;
+          allInfo.forEach((element) => {
+            toYouTableData.push({
               LicenseNumber: element.newLicenseCode,
               ApplicantName:
                 element.profile.name +
@@ -590,7 +595,7 @@ export default {
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
-              data: element
+              data: element,
             });
           });
 
@@ -600,25 +605,25 @@ export default {
                 label: "License Number",
                 field: "LicenseNumber",
                 width: "20%",
-                isKey: true
+                isKey: true,
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "40%",
-                sortable: true
+                sortable: true,
               },
               {
                 label: "Applicant Type",
                 field: "ApplicantType",
                 width: "20%",
-                sortable: true
+                sortable: true,
               },
               {
                 label: "Date",
                 field: "Date",
                 width: "20%",
-                sortable: true
+                sortable: true,
               },
               {
                 label: "Action",
@@ -626,41 +631,42 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
-                }
-              }
+                },
+              },
             ],
 
-            rows: toYouTableData.value,
-            totalRecordCount: toYouTableData.value.length,
+            rows: toYouTableData,
+            totalRecordCount: res.count,
             sortable: {
               order: "id",
-              sort: "asc"
-            }
+              sort: "asc",
+            },
           };
         });
     };
-    const inReviewAssignedToOthers = apiParameters => {
+    const inReviewAssignedToOthers = (apiParameters) => {
       let statId = statuses
-        ? statuses.filter(stat => stat.code == "IRV")[0].id
+        ? statuses.filter((stat) => stat.code == "IRV")[0].id
         : "";
+      tableData = [];
       store
         .dispatch("reviewerNewLicense/getOthersNewLicenseByStatus", [
           {
-            statusId: statId
+            statusId: statId,
           },
           {
-            params: apiParameters
-          }
+            params: apiParameters,
+          },
         ])
-        .then(res => {
-          allInfo.value = res ? res.rows : [];
+        .then((res) => {
+          allInfo = res ? res.rows : [];
 
-          allInfo.value.forEach(element => {
-            tableData.value.push({
+          allInfo.forEach((element) => {
+            tableData.push({
               LicenseNumber: element ? element.newLicenseCode : "",
               ApplicantName:
                 (element.profile ? element.profile.name : "------") +
@@ -675,11 +681,15 @@ export default {
               ApplicationType: element.applicantType
                 ? element.applicantType.name
                 : "",
-              Date: new Date(element.createdAt)
+              ReviewerName:
+                element.licenseReviewer && element.licenseReviewer.reviewer
+                  ? element.licenseReviewer.reviewer.name
+                  : "",
+              AppliedDate: new Date(element.createdAt)
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
-              data: element
+              data: element,
             });
           });
 
@@ -689,25 +699,31 @@ export default {
                 label: "License Number",
                 field: "LicenseNumber",
                 width: "20%",
-                isKey: true
+                isKey: true,
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "40%",
-                sortable: true
+                sortable: true,
+              },
+              {
+                label: "Reviewer Name",
+                field: "ReviewerName",
+                width: "40%",
+                sortable: true,
               },
               {
                 label: "Applicant Type",
                 field: "ApplicationType",
                 width: "20%",
-                sortable: true
+                sortable: true,
               },
               {
-                label: "Date",
-                field: "Date",
+                label: "Applied Date",
+                field: "AppliedDate",
                 width: "20%",
-                sortable: true
+                sortable: true,
               },
               {
                 label: "Action",
@@ -715,19 +731,19 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
                     row.id +
                     '" ><i class="fa fa-eye"></i> View</button>'
                   );
-                }
-              }
+                },
+              },
             ],
-            rows: tableData.value,
-            totalRecordCount: tableData.value.length,
+            rows: tableData,
+            totalRecordCount: res.count,
             sortable: {
               order: "id",
-              sort: "asc"
-            }
+              sort: "asc",
+            },
           };
         });
     };
@@ -740,7 +756,6 @@ export default {
           element.addEventListener("click", rowClicked());
         }
       });
-      toYouTable.value.isLoading = false;
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
@@ -749,9 +764,8 @@ export default {
           element.addEventListener("click", rowClickedOthers());
         }
       });
-      toOthersTable.value.isLoading = false;
     };
-    const rowClicked = row => {
+    const rowClicked = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
 
@@ -759,7 +773,7 @@ export default {
         modalDataId.value.change++;
       }
     };
-    const rowClickedOthers = row => {
+    const rowClickedOthers = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.id = row.data ? row.data.id : "-----";
@@ -770,40 +784,40 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+
       inReviewAssignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
         { key: "value", value: searchTerm.value },
         { key: "fromDate", value: searchTermFromDate.value },
-        { key: "toDate", value: searchTermToDate.value }
+        { key: "toDate", value: searchTermToDate.value },
       ]);
     };
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
         { key: "value", value: searchTermOthers.value },
         { key: "fromDate", value: searchTermFromDateOth.value },
-        { key: "toDate", value: searchTermToDateOth.value }
+        { key: "toDate", value: searchTermToDateOth.value },
       ]);
     };
     onMounted(() => {
       inReviewAssignedToYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 }
+        { key: "size", value: 10 },
       ]);
       adminRole && adminRole != "REV"
         ? inReviewAssignedToOthers([
             { key: "page", value: 0 },
-            { key: "size", value: 10 }
+            { key: "size", value: 10 },
           ])
         : "";
-      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then(res => {
-        reviewers.value = res.data.data.filter(e => {
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
+        reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });
       });
@@ -813,14 +827,14 @@ export default {
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           inReviewAssignedToYou([
             { key: "page", value: offset },
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value }
+            { key: "toDate", value: searchTermToDate.value },
           ]);
         } else {
           inReviewAssignedToYou([
@@ -828,7 +842,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value }
+            { key: "toDate", value: searchTermToDate.value },
           ]);
         }
         toYouTable.value.sortable.order = order;
@@ -840,14 +854,14 @@ export default {
 
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           inReviewAssignedToOthers([
             { key: "page", value: offset },
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateOth.value },
-            { key: "toDate", value: searchTermToDateOth.value }
+            { key: "toDate", value: searchTermToDateOth.value },
           ]);
         } else {
           inReviewAssignedToOthers([
@@ -855,7 +869,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateOth.value },
-            { key: "toDate", value: searchTermToDateOth.value }
+            { key: "toDate", value: searchTermToDateOth.value },
           ]);
         }
         toOthersTable.value.sortable.order = order;
@@ -879,6 +893,7 @@ export default {
       searchTermToDateOth,
       toYouTable,
       reviewers,
+      inReviewCount,
       tableLoadingFinish,
       inReviewAssignedToOthers,
       tableLoadingFinishOthers,
@@ -886,9 +901,9 @@ export default {
       rowClickedOthers,
       refreshTable,
       modalDataId,
-      modalDataIdOthers
+      modalDataIdOthers,
     };
-  }
+  },
 };
 </script>
 <style scoped>

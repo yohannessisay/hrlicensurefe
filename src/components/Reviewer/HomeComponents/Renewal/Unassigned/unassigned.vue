@@ -93,7 +93,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -174,6 +174,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplication()"
                           v-model="searchTermToDate"
                           aria-label="Default select example"
                         />
@@ -213,7 +214,7 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
@@ -301,7 +302,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -383,6 +384,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplicationResub()"
                         v-model="searchTermToDateResub"
                         aria-label="Default select example"
                       />
@@ -421,7 +423,7 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
@@ -615,9 +617,9 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 }
               }
@@ -697,9 +699,9 @@ export default {
                   return (
                     '<button  data-set="' +
                     row +
-                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white  hover:shadow-lg hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-white  hover:  hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 }
               }
@@ -720,8 +722,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      unassignedTable.value.isLoading = false;
+      }); 
     };
 
     const tableLoadingFinishResub = () => {
@@ -732,8 +733,7 @@ export default {
         if (element.classList.contains("edit-btn-resubmitted")) {
           element.addEventListener("click", rowClickedResub());
         }
-      });
-      reSubmittedTable.value.isLoading = false;
+      }); 
     };
 
     const rowClicked = row => {
@@ -803,7 +803,7 @@ export default {
 
       setTimeout(() => {
         unassignedTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           unassigned([
             { key: "page", value: offset },
@@ -830,7 +830,7 @@ export default {
 
       setTimeout(() => {
         reSubmittedTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           reSubmitted([
             { key: "page", value: offset },

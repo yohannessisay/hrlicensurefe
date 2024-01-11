@@ -28,44 +28,57 @@
           />
         </svg>
 
-        <span class="logo_name ml-4">eHPL</span>
+        <span class="ml-4 logo_name">eHPL</span>
       </div>
     </router-link>
     <div id="outer">
       <div class="top left"></div>
     </div>
-    <li class="inverted-border-radius mb-8 mt-4">
+    <li class="mt-4 mb-8 inverted-border-radius">
       <i
-        class="bx bx-skip-previous-circle ml-8 mt-4"
+        class="mt-4 ml-8 bx bx-skip-previous-circle"
         style="color: #224771"
       ></i>
 
-      <span class="header_text ml-4">Legacy Data</span>
+      <span class="ml-4 header_text">Legacy Data</span>
     </li>
     <ul class="nav-links">
-      <router-link to="legacyData">
+      <router-link to="LegacyData">
         <li
-          :class="$route.fullPath === '/admin/legacyData' ? 'mb-2 active' : ''"
+          :class="$route.fullPath === '/admin/legacyData'||$route.fullPath === '/admin/LegacyData' ? 'mb-2 active' : ''"
         >
           <a href="#legacyData">
             <i class="bx bx-skip-previous-circle"></i>
 
-            <span class="links_name">Legacy Data</span>
+            <span class="links_name">FMOH Legacy Data</span>
+          </a>
+        </li>
+      </router-link>
+    </ul>
+    <ul class="nav-links">
+      <router-link to="AALegacyData">
+        <li
+          :class="$route.fullPath === '/admin/AALegacyData' ? 'mb-2 active' : ''"
+        >
+          <a href="#AALegacyData">
+            <i class="bx bx-skip-previous-circle"></i>
+
+            <span class="links_name">A/A Legacy Data</span>
           </a>
         </li>
       </router-link>
     </ul>
     <ul class="nav-links">
       <div
-        class="profile-details mb-8 ml-4"
+        class="mb-8 ml-4 profile-details"
      
       >
         <router-link to="/admin/review/">
           <li  style="margin-top:100px;">
             <a href="" class="ml-6">
-              <i class="bx bx-arrow-to-left text-white"></i>
+              <i class="text-white bx bx-arrow-to-left"></i>
 
-              <span class="links_name text-white mr-12">Home</span>
+              <span class="mr-12 text-white links_name">Home</span>
             </a>
           </li>
         </router-link>

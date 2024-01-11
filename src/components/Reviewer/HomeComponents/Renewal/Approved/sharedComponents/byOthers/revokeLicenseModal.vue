@@ -1,58 +1,21 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
-    id="revokeLicense"
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+    id="revokeLicenseOther"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="revokeLicense"
+    aria-labelledby="revokeLicenseOtherLabel"
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-md
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-md relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-          justify-center
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current justify-center"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-center
-            p-2
-            rounded-t-md
-            border-b border-grey-100
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-center p-2 rounded-t-md border-b border-grey-100"
         >
           <label class="mb-4 text-lg text-red-300 font-bold">Remark</label>
         </div>
@@ -65,7 +28,7 @@
               </div>
               <div class="vld-parent">
                 <loading
-                  :active="isLoading" 
+                  :active="isLoading"
                   :is-full-page="false"
                   :color="'#2F639D'"
                   :opacity="0.7"
@@ -89,38 +52,11 @@
         </div>
 
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-center
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-center border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              bg-red-300
-              hover:bg-white hover:text-red-300 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded bg-red-300 hover:bg-white hover:text-red-300 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             @click="revoke()"
           >
             <i class="fa fa-times-circle"></i>
@@ -128,24 +64,7 @@
           </button>
           <button
             type="button"
-            class="
-         inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:border-primary-600 hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -195,7 +114,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -204,9 +123,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
           }
         })
         .catch((err) => {

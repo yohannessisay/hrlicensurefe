@@ -49,7 +49,7 @@
               mt-2
               w-56
               rounded-md
-              shadow-lg
+               
               bg-white
               focus:outline-none
             "

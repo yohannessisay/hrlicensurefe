@@ -1,148 +1,61 @@
 <template>
   <div class="container mt-4 mx-auto">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div class="border rounded-md text-main-400 m-4 p-4">
+      <h2 class="text-primary-600 font-bold text-3xl">
+        Welcome back, {{ loggedInUser ? loggedInUser.name : "" }}
+      </h2>
+      <h2 class="text-grey-800 font-bold text-2xl">
+        Here are your current statuses so far
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
       <div
-        class="
-          card
-          m-2
-          bg-primary-700
-          border border-grey-400
-          rounded-2xl
-          hover:shadow-2xl  
-          transform
-          shadow-md
-          hover:-translate-y-2
-          transition-all
-          duration-200
-        "
+        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl transform hover:-translate-y-4 transition-all duration-200"
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total Applicants
-          </h2>
-          <i class="fa fa-user fa-2x text-white"></i>
-          <h2
-            class="
-              font-light font-mono
-              transition-all
-              duration-200
-              text-white text-3xl
-            "
-            id="totalApp"
-          >
-            <span style="font-size:38px !important">{{
-              stat.applicantCount
-            }}</span>
-          </h2>
-        </div>
-      </div>
-
-      <div
-        class="
-        card
-          m-2
-          bg-primary-700
-          border border-grey-400
-          rounded-2xl
-          hover:shadow-2xl  
-          transform
-          shadow-md
-          hover:-translate-y-2
-          transition-all
-          duration-200
-        "
-      >
-        <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total New Licenses
+            Total Approved New Licenses
           </h2>
           <i class="fa fa-check fa-2x text-white"></i>
           <h2
-            class="
-              font-light font-mono
-              transition-all
-              duration-200
-              text-white text-3xl
-            "
+            class="font-light font-mono transition-all duration-200 text-white text-3xl"
             id="totalNew"
           >
-            <span style="font-size:38px !important">{{
-              stat.newLicenseCount
-            }}</span>
+            <span style="font-size: 38px !important">{{ stat.newLicenseCount }}</span>
           </h2>
         </div>
       </div>
 
       <div
-        class="
-        card
-          m-2
-          bg-primary-700
-          border border-grey-400
-          rounded-2xl
-          hover:shadow-2xl  
-          transform
-          shadow-md
-          hover:-translate-y-2
-          transition-all
-          duration-200
-        "
+        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl ransform hover:-translate-y-4 transition-all duration-200"
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total Renewals
+            Total Approved Renewals
           </h2>
           <i class="fa fa-refresh fa-2x text-white"></i>
           <h2
-            class="
-              font-light 
-              font-mono
-              transition-all
-              duration-200
-              text-white 
-              text-3xl
-            "
+            class="font-light font-mono transition-all duration-200 text-white text-3xl"
             id="totalRen"
           >
-            <span style="font-size:38px !important">
-              {{ stat.renewalCount }}</span
-            >
+            <span style="font-size: 38px !important"> {{ stat.renewalCount }}</span>
           </h2>
         </div>
       </div>
 
       <div
-        class="
-        card
-          m-2
-          bg-primary-700
-          border border-grey-400
-          rounded-2xl
-          hover:shadow-2xl  
-          transform
-          shadow-md
-          hover:-translate-y-2
-          transition-all
-          duration-200
-        "
+        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl transform hover:-translate-y-4 transition-all duration-200"
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total Good-Standings
+            Total Approved Good-Standings
           </h2>
           <i class="fa fa-thumbs-up fa-2x text-white"></i>
           <h2
-            class="
-              font-light font-mono
-              transition-all
-              duration-200
-              text-white text-3xl
-            "
+            class="font-light font-mono transition-all duration-200 text-white text-3xl"
             id="totalGoo"
           >
-            <span style="font-size:38px !important">{{
-              stat.goodStandingCount
-            }}</span>
+            <span style="font-size: 38px !important">{{ stat.goodStandingCount }}</span>
           </h2>
         </div>
       </div>
@@ -154,31 +67,11 @@
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/newLicense/">
           <div
-            class="
-              bg-white
-              shadow-lg
-              box
-              rounded-2xl
-              hover:shadow-2xl
-              transition
-              duration-500
-              transform
-              hover:scale-110
-              cursor-pointer
-              cart
-            "
+            class="bg-white box rounded-2xl transition duration-500 transform hover:scale-110 cursor-pointer cart"
             style="height: 200px; width: 300px"
           >
             <p
-              class="
-                py-6
-                px-6
-                text-lg
-                tracking-wide
-                text-center
-                flex flex-row
-                justify-center
-              "
+              class="py-6 px-6 text-lg tracking-wide text-center flex flex-row justify-center"
             >
               <img
                 src="../../assets/certificate.png"
@@ -188,9 +81,7 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500 dashboard_card_title">
-                New License
-              </h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">New License</h1>
             </div>
           </div>
         </router-link>
@@ -199,30 +90,11 @@
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/renewal/">
           <div
-            class="
-              bg-white
-              shadow-xl
-              box
-              rounded-2xl
-              hover:shadow-2xl
-              transition
-              duration-500
-              transform
-              hover:scale-110
-              cursor-pointer
-            "
+            class="bg-white box rounded-2xl transition duration-500 transform hover:scale-110 cursor-pointer"
             style="height: 200px; width: 300px"
           >
             <p
-              class="
-                py-6
-                px-6
-                text-lg
-                tracking-wide
-                text-center
-                flex flex-row
-                justify-center
-              "
+              class="py-6 px-6 text-lg tracking-wide text-center flex flex-row justify-center"
             >
               <img
                 src="../../assets/renew.png"
@@ -232,9 +104,7 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500 dashboard_card_title">
-                Renewal
-              </h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">Renewal</h1>
             </div>
           </div>
         </router-link>
@@ -247,30 +117,11 @@
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/verification/">
           <div
-            class="
-              bg-white
-              shadow-lg
-              box
-              rounded-2xl
-              hover:shadow-4xl
-              transition
-              duration-500
-              transform
-              hover:scale-110
-              cursor-pointer
-            "
+            class="bg-white box rounded-2xl transition duration-500 transform hover:scale-110 cursor-pointer"
             style="height: 200px; width: 300px"
           >
             <p
-              class="
-                py-6
-                px-6
-                text-lg
-                tracking-wide
-                text-center
-                flex flex-row
-                justify-center
-              "
+              class="py-6 px-6 text-lg tracking-wide text-center flex flex-row justify-center"
             >
               <img
                 src="../../assets/verify.png"
@@ -280,9 +131,7 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500 dashboard_card_title">
-                Verification
-              </h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">Verification</h1>
             </div>
           </div>
         </router-link>
@@ -291,30 +140,11 @@
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/goodStanding/">
           <div
-            class="
-              bg-white
-              shadow-lg
-              box
-              rounded-2xl
-              hover:shadow-3xl
-              transition
-              duration-500
-              transform
-              hover:scale-110
-              cursor-pointer
-            "
+            class="bg-white box rounded-2xl transition duration-500 transform hover:scale-110 cursor-pointer"
             style="height: 200px; width: 300px"
           >
             <p
-              class="
-                py-6
-                px-6
-                text-lg
-                tracking-wide
-                text-center
-                flex flex-row
-                justify-center
-              "
+              class="py-6 px-6 text-lg tracking-wide text-center flex flex-row justify-center"
             >
               <img
                 src="../../assets/good.png"
@@ -324,7 +154,7 @@
             </p>
 
             <div class="flex justify-center px-1 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500 dashboard_card_title ">
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">
                 Good Standing
               </h1>
             </div>
@@ -341,7 +171,7 @@ export default {
   setup() {
     const store = useStore();
     const stat = ref({});
-    let objApp = document.getElementById("totalApp");
+    const loggedInUser = JSON.parse(localStorage.getItem("allAdminData"));
     let objRen = document.getElementById("totalNew");
     let objNew = document.getElementById("totalRen");
     let objGoo = document.getElementById("totalGoo");
@@ -353,10 +183,7 @@ export default {
           let startTimestamp = null;
           const step = (timestamp) => {
             if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min(
-              (timestamp - startTimestamp) / duration,
-              1
-            );
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
             obj.innerHTML = Math.floor(progress * (end - start) + start);
             if (progress < 1) {
               window.requestAnimationFrame(step);
@@ -365,7 +192,6 @@ export default {
           window.requestAnimationFrame(step);
         };
 
-        animateValue(objApp, 0, stat.value.applicantCount, 4000);
         animateValue(objRen, 0, stat.value.newLicenseCount, 3000);
         animateValue(objNew, 0, stat.value.renewalCount, 2000);
         animateValue(objGoo, 0, stat.value.goodStandingCount, 1000);
@@ -373,16 +199,19 @@ export default {
     };
 
     onMounted(() => {
-      objApp = document.getElementById("totalApp");
       objRen = document.getElementById("totalNew");
       objNew = document.getElementById("totalRen");
       objGoo = document.getElementById("totalGoo");
-
+      store.dispatch("admin/getAdminStatus").then((res) => {
+        let result = res && res.data && res.data.data ? res.data.data : {};
+        localStorage.setItem("adminStats", JSON.stringify(result));
+      });
       getStats();
     });
 
     return {
       stat,
+      loggedInUser,
     };
   },
 };

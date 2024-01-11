@@ -1,18 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="staticBackdropOthers"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -22,47 +11,12 @@
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
           <button
             type="button"
-            class="
-              px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -86,7 +40,7 @@
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -95,40 +49,19 @@
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                mb-12
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex mb-12 items-center justify-center"
                             >
                               <picture>
                                 <source
                                   :srcset="
-                                    modalData.profile &&
-                                    modalData.profile.profilePicture
+                                    modalData.profile && modalData.profile.profilePicture
                                       ? googleApi +
-                                        modalData.profile.profilePicture
-                                          .filePath
+                                        modalData.profile.profilePicture.filePath
                                       : ''
                                   "
                                   type="image/jpg"
@@ -141,45 +74,24 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-extrabold text-2xl mb-1">
-                              Personal Info
-                            </h2>
-                            <div
-                              class="
-                                border-2
-                                p-2
-                                rounded-lg
-                                m-1
-                                shadow-md
-                                text-primary-500
-                              "
-                            >
+                            <h2 class="font-extrabold text-2xl mb-1">Personal Info</h2>
+                            <div class="border-2 p-2 rounded-lg m-1 text-primary-500">
                               <p class="text-gray-500">
-                                <span
-                                  class="
-                                  font-semibold
-                                  text-lg text-primary-700
-                                  mb-1
-                                "
+                                <span class="font-semibold text-lg text-primary-700 mb-1"
                                   >Full Name:</span
                                 >
                                 <span class="text-grey-800">
                                   {{ modalData.name }}
-                                  
                                 </span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Gender:</span
                                 >
-                                <span class="text-grey-800">
-                                  {{ modalData.gender }}</span
-                                >
+                                <span class="text-grey-800"> {{ modalData.gender }}</span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Nationality:</span
                                 >
                                 <span class="text-grey-800">
@@ -187,8 +99,7 @@
                                 </span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Date Of Birth:</span
                                 >
                                 <span class="text-grey-800">
@@ -200,9 +111,8 @@
                                 </span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
+                                <span class="font-semibold text-primary-700 mb-1"
+                                  >Marital Status:</span
                                 >
                                 <span class="text-grey-800">
                                   {{ modalData.maritalStatus }}</span
@@ -214,48 +124,19 @@
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-40
-                                h-40
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-40 h-40 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1 text-2xl ">
-                              Contact Info
-                            </h2>
-                            <div
-                              class="
-                                border-2
-                                p-2
-                                rounded-lg
-                                m-1
-                                shadow-md
-                                text-primary-500
-                              "
-                            >
+                            <h2 class="font-bold mb-1 text-2xl">Contact Info</h2>
+                            <div class="border-2 p-2 rounded-lg m-1 text-primary-500">
                               <p class="text-gray-500">
                                 <span class="font-medium text-primary-700 mb-1"
                                   >Mobile Number:</span
@@ -268,9 +149,7 @@
                                 <span class="font-medium text-primary-700 mb-1"
                                   >Email:</span
                                 >
-                                <span class="text-grey-800">
-                                  {{ modalData.email }}</span
-                                >
+                                <span class="text-grey-800"> {{ modalData.email }}</span>
                               </p>
                             </div>
                           </div>
@@ -278,70 +157,39 @@
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-64
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-64 flex items-center justify-center"
                             >
                               <i class="fa fa-building fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6 mb-4">
-                            <h2 class="font-bold mb-1 text-2xl ">
-                              Education Detail
-                            </h2>
+                            <h2 class="font-bold mb-1 text-2xl">Education Detail</h2>
 
                             <div
-                              class="
-                                border-2
-                                p-2
-                                rounded-lg
-                                m-1
-                                shadow-md
-                                text-primary-500
-                              "
+                              class="border-2 p-2 rounded-lg m-1 text-primary-500"
                               v-for="education in modalData.data
                                 ? modalData.data.educations
                                 : []"
                               :key="education.id"
                             >
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
 
                                 <span class="text-grey-800">
                                   {{
-                                    education.department
-                                      ? education.department.name
-                                      : ""
+                                    education.department ? education.department.name : ""
                                   }}</span
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
 
@@ -354,8 +202,7 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
 
@@ -368,8 +215,7 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
                                 <span class="text-grey-800">
@@ -386,53 +232,134 @@
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
-                        <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-blue-600
-                            hover:text-primary-600 hover:border
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseExample"
-                          aria-expanded="false"
-                          aria-controls="collapseExample"
+                        <div class="flex items-start">
+                          <div class="shrink-0">
+                            <div
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
+                            >
+                              <i class="bx bx-certification text-largeDisplay"></i>
+                            </div>
+                          </div>
+                          <div class="grow ml-6">
+                            <h2 class="font-bold mb-1 text-xl">License Detail</h2>
+                            <p class="text-gray-500">
+                              <span class="font-medium text-primary-700 mb-1"
+                                >Approved By:</span
+                              >
+                              {{
+                                modalData.data &&
+                                modalData.data.licenseReviewer &&
+                                modalData.data.licenseReviewer.reviewer
+                                  ? modalData.data.licenseReviewer.reviewer.name
+                                  : ""
+                              }}
+                            </p>
+                            <p class="text-gray-500">
+                              <span class="font-medium text-primary-700 mb-1"
+                                >Licensed Date:</span
+                              >
+                              {{
+                                modalData.data
+                                  ? modalData.data.certifiedDate.slice(0, 10)
+                                  : ""
+                              }}
+                            </p>
+                            <p class="text-gray-500">
+                              <span class="font-medium text-primary-700 mb-1"
+                                >Expiration Date:</span
+                              >
+                              {{
+                                modalData.data
+                                  ? modalData.data.licenseExpirationDate.slice(0, 10)
+                                  : ""
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          v-if="adminRole == 'ADM'"
+                          class="grid grid-cols-4 gap-2 w-full border rounded-md p-2 mt-4"
                         >
-                          Show Attached Documents
-                        </button>
+                          <button
+                            v-if="adminRole != 'REV'"
+                            class="inline-block px-6 py-2.5 bg-yellow-300 text-white hover:bg-ywhite hover:text-yellow-300 font-medium text-xs leading-tight uppercase rounded focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#suspendLicenseOther"
+                          >
+                            <i class="fa fa-ban"></i>
+                            Suspend
+                          </button>
+
+                          <button
+                            v-if="adminRole != 'REV'"
+                            class="inline-block px-6 py-2.5 bg-red-300 hover:text-white hover:bg-white hover:text-red-300 text-white font-medium text-xs leading-tight uppercase rounded focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#revokeLicenseOther"
+                          >
+                            <i class="fa fa-remove"></i>
+                            Revoke
+                          </button>
+
+                          <button
+                            v-if="adminExpLevel != 'REG'"
+                            class="inline-block px-6 py-2.5 bg-yellow-400 text-primary-600 font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#generatePdfOth"
+                            @click="changePrintType('externship')"
+                          >
+                            <i class="fa fa-file-archive"></i>
+                            Externship
+                          </button>
+                          <button
+                            v-if="adminExpLevel != 'REG'"
+                            class="inline-block px-6 py-2.5 bg-primary-400 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#generatePdfOth"
+                            @click="changePrintType('temporary')"
+                          >
+                            <i class="fa fa-file-circle-check"></i>
+                            Temporary
+                          </button>
+                          <button
+                            class="col-span-2 inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#generatePdfOth"
+                            @click="
+                              changePrintType(
+                                modalData &&
+                                  modalData.data &&
+                                  modalData.data.applicantType &&
+                                  modalData.data.applicantType.code == 'FOR'
+                                  ? 'foreigners'
+                                  : ''
+                              )
+                            "
+                          >
+                            <i class="fa fa-file-text"></i>
+                            Generate License
+                          </button>
+                          <button
+                            class="col-span-2 inline-block mt-4 px-6 py-2.5 bg-grey-500 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#requestStatusOther"
+                          >
+                            <i class="fa fa-file-archive"></i>
+                            Request Status Change
+                          </button>
+                        </div>
                       </div>
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="block p-6 rounded-lg bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
@@ -481,34 +408,21 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
+            class="inline-block px-6 m-2 py-2.5 bg-blue-600 hover:text-primary-600 hover:border text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            Show Attached Documents
+          </button>
+          <button
+            type="button"
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:border-primary-600 hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
@@ -517,6 +431,10 @@
       </div>
     </div>
   </div>
+  <generate-pdf :modalData="modalData"></generate-pdf>
+  <revoke-license-modal :modalData="modalData"></revoke-license-modal>
+  <request-status-change-modal :modalData="modalData"></request-status-change-modal>
+  <suspend-license-modal :modalData="modalData"></suspend-license-modal>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -525,44 +443,52 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
+import generatePdf from "./generateLicensedPdfOth.vue";
+import revokeLicenseModal from "./sharedComponents/byOthers/revokeLicenseModal.vue";
+import requestStatusChangeModal from "./sharedComponents/byOthers/requestStatusChange.vue";
+import suspendLicenseModal from "./sharedComponents/byOthers/suspendLicenseModal.vue";
 export default {
   props: ["modalDataIdOthers"],
   components: {
     Loading,
+    generatePdf,
+    revokeLicenseModal,
+    requestStatusChangeModal,
+    suspendLicenseModal,
   },
   computed: {
     moment: () => moment,
   },
   setup(props) {
     const store = useStore();
-
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-
+    let adminRole = localStorage.getItem("allAdminData")
+      ? JSON.parse(localStorage.getItem("allAdminData")).role.code
+      : "";
+    let adminExpLevel = localStorage.getItem("allAdminData")
+      ? JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code
+      : "";
     let isLoading = ref(false);
     let reviewerAdminId = ref(0);
-
     const showModal = () => {
       show.value = true;
     };
-
-    const modalData = ref({});
+    let regionExpDate = localStorage.getItem("regionExpDate")
+      ? JSON.parse(localStorage.getItem("regionExpDate"))
+      : "";
+    let modalData = ref({ change: 0 });
     let result = {};
-
-    const check = () => {
-    
-      store
-        .dispatch(
-          "reviewer/getNewLicenseApplication",
-          props.modalDataIdOthers.id
-        )
+    const changePrintType = (type) => {
+      modalData.value.printType = type;
+    };
+    const check = async () => {
+      await store
+        .dispatch("reviewer/getNewLicenseApplication", props.modalDataIdOthers.id)
         .then((res) => {
-          if (
-            res.data.status == "Success" &&
-            res.data.message !=
-              "New licenses total count retrieved successfully!"
-          ) {
+          if (res.data.status == "Success") {
             result = res.data.data;
+
             modalData.value.name =
               result.profile.name +
               " " +
@@ -572,8 +498,8 @@ export default {
             modalData.value.gender = result.profile.gender
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile.nationality?.name
-              ? result.profile.nationality?.name
+            modalData.value.nationality = result.profile.nationality
+              ? result.profile.nationality.name
               : "-----";
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
@@ -587,14 +513,20 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-
+            modalData.value.newEducations = result.educations ? result.educations : {};
             modalData.value.profile = result.profile;
-            modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate =
-              result.licenseExpirationDate;
-            modalData.value.data = result;
             modalData.value.documents = result.documents;
+            modalData.value.data = result;
+            modalData.value.id = result.id;
+            modalData.value.applicantType = result.applicantType;
+            modalData.value.profileImage =
+              result.profile && result.profile.profilePicture
+                ? googleApi + result.profile.profilePicture.filePath
+                : "";
+            const inputDate = new Date(result.certifiedDate);
+            inputDate.setFullYear(inputDate.getFullYear() + regionExpDate);
+            modalData.value.licenseExpirationDate = inputDate.toISOString();
             isLoading.value = false;
           }
         });
@@ -609,16 +541,14 @@ export default {
       adminId,
       reviewerAdminId,
       showModal,
+      changePrintType,
       check,
       isLoading,
       modalData,
       googleApi,
+      adminRole,
+      adminExpLevel,
     };
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>

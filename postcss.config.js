@@ -27,7 +27,7 @@ module.exports = {
           /accordion*/,
           /card*/,
           /Vue-Toastification*/,
-          
+          /fr*/,
           /vcp*/,
           /control*/,  
           /layer*/,
@@ -39,7 +39,7 @@ module.exports = {
           /accordion*/,
           /card*/,
           /Vue-Toastification*/,
-          
+          /fr*/,
           /vcp*/,
           /control*/,  
           /layer*/,

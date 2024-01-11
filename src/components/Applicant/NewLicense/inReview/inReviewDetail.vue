@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -57,13 +57,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+               
               transition
               duration-150
               ease-in-out
@@ -74,7 +68,7 @@
             <i class="fa fa-close fa-2x"></i>
           </button>
         </div>
-        <div class="vld-parent mt-4">
+        <div class="vld-parent ">
           <loading
             :active="isLoading"
             :is-full-page="false"
@@ -102,7 +96,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl ">
+                      <article class="overflow-hidden rounded-lg   ">
                         <header
                           class="
                             flex
@@ -191,7 +185,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -289,7 +283,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -377,7 +371,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex

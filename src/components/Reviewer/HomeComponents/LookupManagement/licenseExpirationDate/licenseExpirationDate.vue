@@ -32,6 +32,7 @@
           </p>
           <p class="absolute right-0" v-if="showAddButton">
             <button
+            
               class="
                 inline-block
                 px-6
@@ -43,7 +44,7 @@
                 uppercase
                 border
                 rounded
-                shadow-lg
+                 
                 hover:bg-white hover:text-primary-600 hover:border-primary-600
                 transition
                 duration-150
@@ -60,7 +61,7 @@
 
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
-          :is-static-mode="true"
+            :is-static-mode="true"
             :is-loading="licenseExpDateTable.isLoading"
             :columns="licenseExpDateTable.columns"
             :rows="licenseExpDateTable.rows"
@@ -116,6 +117,7 @@ export default {
           res.data.data.forEach((element) => {
             licenseExpDateTableData.push({
               id: element.id ? element.id : "",
+              Region: element.region ? element.region.name : "",
               Years: element.years ? element.years : "",
               Code: element.code ? element.code : "",
               Status: element && element.status == true ? "Active" : "Inactive",
@@ -136,9 +138,15 @@ export default {
               isKey: true,
             },
             {
+              label: "Region",
+              field: "Region",
+              width: "30%",
+              sortable: true,
+            },
+            {
               label: "Years",
               field: "Years",
-              width: "50%",
+              width: "10%",
               sortable: true,
             },
             {
@@ -151,7 +159,7 @@ export default {
               label: "Status",
               field: "Status",
               width: "30%",
-              display: function (row) {
+              display: function(row) {
                 return row.Status && row.Status == "Active"
                   ? '<span  class="activeElement" >  ' + row.Status + " </span>"
                   : '<span  class="bg-red-300 rounded-md p-1 text-white font-bold" >' +
@@ -164,9 +172,9 @@ export default {
               label: "",
               field: "quick",
               width: "10%",
-              display: function (row) {
+              display: function(row) {
                 return (
-                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
+                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded   hover:   transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i> View/Edit</button>'
                 );
@@ -189,10 +197,9 @@ export default {
       });
     };
 
-    const tableLoadingFinish = () => {
-      licenseExpDateTable.value.isLoading = false;
+    const tableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn");
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }

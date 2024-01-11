@@ -57,7 +57,7 @@
                 right-0
                 w-64
                 rounded-md
-                shadow-lg
+                 
                 bg-white
                 focus:outline-none
               "
@@ -103,7 +103,7 @@
               v-on:click="showDropDown()"
             >
               <div v-if="!isFirstTime" class="w-12 h-12">
-                <img v-bind:src="pic" alt="image here" class="w-20 h-12" />
+                <img :src="pic" alt="image here" class="w-20 h-12" />
               </div>
               <div v-if="isFirstTime">
                 <svg
@@ -131,7 +131,7 @@
                 mt-1
                 w-56
                 rounded-md
-                shadow-lg
+                 
                 bg-white
                 focus:outline-none
               "

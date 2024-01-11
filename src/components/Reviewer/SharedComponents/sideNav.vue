@@ -28,7 +28,7 @@
           />
         </svg>
 
-        <span class="logo_name ml-4">eHPL</span>
+        <h2 class="logo_name ml-4 text-xl">eHPL</h2>
       </div>
     </router-link>
     <div id="outer">
@@ -70,6 +70,19 @@
           <a href="#inReview">
             <i class="bx bx-refresh "></i>
             <span class="links_name">In Review</span>
+            <h6
+              v-if="
+                statList && statList.filter(el => el.name == 'In Review')[0]
+              "
+              id="nlIRVCounter"
+              class="ml-4 text-primary-600 font-bold text-xl  p-1"
+            >
+              {{
+                statList && statList.filter(el => el.name == "In Review")[0]
+                  ? statList.filter(el => el.name == "In Review")[0].statusCount
+                  : ""
+              }}
+            </h6>
           </a>
         </li>
       </router-link>
@@ -82,6 +95,17 @@
           <a href="#Draft">
             <i class="bx bx-pencil "></i>
             <span class="links_name">Draft</span>
+            <h6
+              v-if="statList && statList.filter(el => el.name == 'Draft')[0]"
+              id="nlIRVCounter"
+              class="ml-4 text-primary-600 font-bold text-xl  p-1"
+            >
+              {{
+                statList && statList.filter(el => el.name == "Draft")[0]
+                  ? statList.filter(el => el.name == "Draft")[0].statusCount
+                  : ""
+              }}
+            </h6>
           </a>
         </li>
       </router-link>
@@ -200,7 +224,8 @@
     </ul>
   </div>
 </template>
-<script> 
+<script>
+import { ref } from "vue";
 export default {
   props: ["finalUrl"],
   setup(props) {
@@ -215,10 +240,27 @@ export default {
         : "";
       return classUrl;
     };
+    let adminStats = ref(
+      localStorage.getItem("adminStats")
+        ? JSON.parse(localStorage.getItem("adminStats"))
+        : []
+    );
+
+    let statList = [];
+
+    props.finalUrl == "newLicense"
+      ? (statList = adminStats.value.newLicense)
+      : props.finalUrl == "renewal"
+      ? (statList = adminStats.value.renewal)
+      : props.finalUrl == "goodstanding"
+      ? (statList = adminStats.value.goodStanding)
+      : "";
+
     return {
       classUrl,
       returnClassUrl,
+      statList
     };
-  },
+  }
 };
 </script>

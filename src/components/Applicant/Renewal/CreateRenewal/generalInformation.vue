@@ -1,5 +1,12 @@
 <template>
-  <nav class="bg-grey-100 mb-4 px-5 py-3 rounded-md w-full" id="topNav">
+  <nav
+    :class="
+      isDarkMode && isDarkMode == true
+        ? 'bg-secondaryDark mb-4 px-5 py-3 rounded-md w-full'
+        : 'bg-grey-100 mb-4 px-5 py-3 rounded-md w-full'
+    "
+    id="topNav"
+  >
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
@@ -31,9 +38,7 @@
       <li>
         <span
           :class="
-            isDarkMode && isDarkMode == true
-              ? 'text-white mx-2 '
-              : 'text-main-400 mx-2'
+            isDarkMode && isDarkMode == true ? 'text-white mx-2 ' : 'text-main-400 mx-2'
           "
           >/</span
         >
@@ -41,7 +46,7 @@
       <li
         :class="
           isDarkMode && isDarkMode == true
-            ? 'text-grey-100 '
+            ? 'text-main-400 '
             : 'text-main-400 hover:text-blue-700'
         "
       >
@@ -53,78 +58,41 @@
   <div
     :class="
       isDarkMode && isDarkMode == true
-        ? '    block p-6 rounded-lg shadow-lg darkModeSecondLayer max-w-full mr-8 mb-8 sm:p-4'
-        : '   block p-6 rounded-lg shadow-lg bg-primary-200 max-w-full mr-8 mb-8 sm:p-4'
+        ? '    block p-6 rounded-lg   bg-primaryDark  max-w-full mb-8 '
+        : '  block p-6 rounded-lg   bg-white max-w-full mb-8 '
     "
   >
-    <div class="mt-small flex justify-center">
+    <div class="flex justify-center">
       <h2
         :class="
           isDarkMode && isDarkMode == true
             ? 'text-white text-3xl font-bold'
-            : 'text-main-400 text-3xl font-bold'
+            : 'text-main-400 text-xl lg:text-3xl border-b-4 font-bold sm:text-xl '
         "
       >
         General Information
       </h2>
     </div>
 
-    <!-- <div class="float-container" @click="darkMode()">
-      <a href="#" class="icon one"> </a>
-    </div> -->
-    <form @submit.prevent="submit" class="mx-auto w-full mt-10 p-4">
+    <form @submit.prevent="submit" class="mx-auto w-full mt-2">
       <div
         :class="
           isDarkMode && isDarkMode == true
-            ? 'generalInfoCard flex shadow-lg rounded-md   justify-center mt-8 p-4'
-            : 'flex shadow-lg rounded-md bg-primary-100 justify-center mt-8 p-4'
+            ? 'bg-secondaryDark  border-white rounded-md mt-2 p-4'
+            : '  bg-white  mt-2 p-4 border-b-2'
         "
       >
-        <!-- applican type -->
+        <!-- applicant type -->
         <div
-          class="
-            grid grid-rows-3
-            sm:grid-rows-1
-            lg:grid-cols-3
-            mdlg:grid-cols-3
-            md:grid-cols-3
-            p-4
-          "
+          class="grid grid-cols-1 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2"
         >
-          <div class="mr-4">
+          <div>
             <label
-              :class="
-                isDarkMode && isDarkMode == true
-                  ? 'text-white '
-                  : 'text-main-400'
-              "
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Applicant Type</label
             ><span class="text-red-300">*</span>
             <select
-              class="
-                form-select
-                appearance-none
-                block
-                xl:w-64
-                md:w-64
-                sm:w-64
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                text-gray-700
-                hover:text-main-500 hover:border-main-500
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                m-0
-                focus:text-gray-700
-                focus:bg-white
-                focus:border-main-400
-                focus:outline-none
-              "
+              class="form-select appearance-none block w-full mb-2 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
               aria-label="Default select example"
               :disabled="
                 generalInfo.multipleDepartment
@@ -149,55 +117,28 @@
                   ? generalInfo.multipleDepartment.length > 0
                   : 0
               "
-              :class="
-                isDarkMode && isDarkMode == true
-                  ? 'text-white '
-                  : 'text-main-400'
-              "
-              >You can change applicant type when there is no added
-              education/department data below</small
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >You can change applicant type when there is no added education/department
+              data below</small
             >
           </div>
-          <div v-if="showLanguage" class="mr-4">
+          <div v-if="showLanguage">
             <label
               :class="
                 isDarkMode && isDarkMode == true
-                  ? 'text-white '
-                  : 'text-main-400'
+                  ? 'text-white lg:ml-4'
+                  : 'text-main-400 lg:ml-4'
               "
               >Language Type</label
             ><span class="text-red-300">*</span>
             <select
-              class="
-                form-select
-                appearance-none
-                block
-                xl:w-64
-                md:w-64
-                sm:w-64
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                text-gray-700
-                hover:text-main-500 hover:border-main-500
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                m-0
-                focus:text-gray-700
-                focus:bg-white
-                focus:border-main-400
-                focus:outline-none
-              "
+              class="form-select appearance-none block w-full lg:ml-4 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
               v-model="generalInfo.nativeLanguageSelected"
             >
               <option
                 v-for="language in languages"
-                v-bind:key="language.name"
-                v-bind:value="language"
+                :key="language.name"
+                :value="language"
               >
                 {{ language.name }}
               </option>
@@ -207,42 +148,19 @@
             <label
               :class="
                 isDarkMode && isDarkMode == true
-                  ? 'text-white '
-                  : 'text-main-400'
+                  ? 'text-white lg:ml-4'
+                  : 'text-main-400 lg:ml-4'
               "
               >Employer Type</label
             ><span class="text-red-300">*</span>
             <select
-              class="
-                form-select
-                appearance-none
-                block
-                xl:w-64
-                md:w-64
-                sm:w-64
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                text-gray-700
-                hover:text-main-500 hover:border-main-500
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                m-0
-                focus:text-gray-700
-                focus:bg-white
-                focus:border-main-400
-                focus:outline-none
-              "
+              class="form-select appearance-none block w-full lg:ml-4 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
               v-model="generalInfo.occupationSelected"
             >
               <option
                 v-for="occupation in occupations"
-                v-bind:key="occupation.name"
-                v-bind:value="occupation"
+                :key="occupation.name"
+                :value="occupation"
               >
                 {{ occupation.name }}
               </option>
@@ -252,25 +170,7 @@
       </div>
       <button
         v-show="Object.keys(localData).length != 0"
-        class="
-          inline-block
-          px-6
-          bg-main-400
-          text-white
-          max-w-3xl
-          font-medium
-          text-xs
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          hover:text-main-500 hover:border-main-500
-          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-          active:bg-blue-800 active:shadow-lg
-          transition
-          duration-150
-          ease-in-out
-        "
+        class="inline-block px-6 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded hover:text-main-500 hover:border-main-500 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
         @click="clearLocalData()"
       >
         <i class="fa fa-close"></i>
@@ -281,215 +181,109 @@
         v-if="showLocation"
         :class="
           isDarkMode && isDarkMode == true
-            ? 'flex shadow-lg rounded-md generalInfoCard justify-center mt-8 p-4'
-            : 'flex shadow-lg rounded-md bg-primary-100 justify-center mt-8 p-4'
+            ? '  rounded-md generalInfoCard  border-white mt-2'
+            : ' bg-white border-b-2 mt-2'
         "
       >
-        <div class="flex">
-          <div
-            class="
-              grid grid-rows-3
-              sm:grid-rows-3
-              lg:grid-cols-3
-              mdlg:grid-cols-3
-              md:grid-cols-3
-              p-4
-            "
-          >
-            <div class="mr-4">
-              <label
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >Region</label
-              ><span class="text-red-300">*</span>
-              <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-full
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
-                :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                v-model="generalInfo.regionSelected"
-                @change="regionChangeHandler()"
-                required
-              >
-                <option
-                  v-for="region in regions"
-                  v-bind:key="region.name"
-                  v-bind:value="region"
-                >
-                  {{ region.name }}
-                </option>
-              </select>
-              <small
-                v-if="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >You can change region when there is no added
-                education/department data below</small
-              >
-            </div>
+        <h2 class="text-yellow-300 text-xl">
+          ***Please select the region you are applying for, not where you are currently
+          living***
+        </h2>
+        <div
+          class="grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-4"
+        >
+          <div>
+            <label
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >Region</label
+            ><span class="text-red-300">*</span>
+            <select
+              class="form-select appearance-none block w-full mb-2 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              :disabled="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              v-model="generalInfo.regionSelected"
+              @change="regionChangeHandler()"
+              required
+            >
+              <option v-for="region in regions" :key="region.name" :value="region">
+                {{ region.name }}
+              </option>
+            </select>
+            <small
+              v-if="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >You can change region when there is no added education/department data
+              below</small
+            >
+          </div>
 
-            <div class="mr-4">
-              <label
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >Zone</label
-              ><span class="text-red-300">*</span>
-              <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-64
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
-                :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                @change="zoneChangeHandler()"
-                v-model="generalInfo.zoneSelected"
-              >
-                <option
-                  v-for="zone in zones"
-                  v-bind:key="zone.name"
-                  v-bind:value="zone"
-                >
-                  {{ zone.name }}
-                </option>
-              </select>
-              <small
-                v-if="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >You can change zone when there is no added education/department
-                data below</small
-              >
-            </div>
+          <div v-if="generalInfo.regionSelected.code != 'HAR'">
+            <label
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >Zone</label
+            ><span class="text-red-300">*</span>
+            <select
+              class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              :disabled="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              @change="zoneChangeHandler()"
+              v-model="generalInfo.zoneSelected"
+            >
+              <option v-for="zone in zones" :key="zone.name" :value="zone">
+                {{ zone.name }}
+              </option>
+            </select>
+            <small
+              v-if="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >You can change zone when there is no added education/department data
+              below</small
+            >
+          </div>
 
-            <div class="mr-4">
-              <label
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >Woreda</label
-              ><span class="text-red-300">*</span>
-              <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-64
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
-                :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                v-model="generalInfo.woredaSelected"
-                required
-              >
-                <option
-                  v-for="woreda in woredas"
-                  v-bind:key="woreda.name"
-                  v-bind:value="woreda"
-                >
-                  {{ woreda.name }}
-                </option>
-              </select>
-              <small
-                v-if="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                class="text-green-200"
-                >You can change woreda when there is no added
-                education/department data below</small
-              >
-            </div>
+          <div>
+            <label
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >Woreda</label
+            ><span class="text-red-300">*</span>
+            <select
+              class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              :disabled="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              v-model="generalInfo.woredaSelected"
+              required
+            >
+              <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
+                {{ woreda.name }}
+              </option>
+            </select>
+            <small
+              v-if="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              class="text-green-200"
+              >You can change woreda when there is no added education/department data
+              below</small
+            >
           </div>
         </div>
       </div>
@@ -500,515 +294,322 @@
       <div
         :class="
           isDarkMode && isDarkMode == true
-            ? 'generalInfoCard flex shadow-lg rounded-md   justify-center mt-8  '
-            : 'flex shadow-lg rounded-md bg-primary-100 justify-center mt-8  '
+            ? 'generalInfoCard border-white rounded-md   mt-2  '
+            : ' bg-white mb-4  mt-2 border-b-2  '
         "
         v-if="generalInfo.multipleDepartment.length < 3"
       >
         <!-- Container -->
-        <div class="grid grid-rows-3 justify-center p-4">
-          <div
-            class="
-              grid grid-cols-1
-              lg:grid-cols-2
-              mdlg:grid-cols-2
-              md:grid-cols-2
-              sm:grid-cols-1
-              gap-4
-            "
-          >
-            <div class="mt-12">
-              <label
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >Department</label
-              ><span class="text-red-300">*</span>
-              <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-64
-                  w-full
-                  mb-2
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
-                v-model="generalInfo.departmentSelected"
-                @change="departmentChange()"
+
+        <div
+          class="grid grid-cols-1 gap-4 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-4"
+        >
+          <div class="mt-0 sm:mt-8">
+            <label
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >Department</label
+            ><span class="text-red-300">*</span>
+            <select
+              class="form-select appearance-none block w-full mb-2 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              v-model="generalInfo.departmentSelected"
+              @change="departmentChange()"
+            >
+              <option
+                v-for="department in departments"
+                :key="department.name"
+                :value="department"
               >
-                <option
-                  v-for="department in departments"
-                  v-bind:key="department.name"
-                  v-bind:value="department"
-                >
-                  {{ department.name }}
-                </option>
-              </select>
-            </div>
-            <!-- ... -->
-            <div class="mt-12">
-              <label
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >Education Level
-              </label>
-              <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-64
-                  w-full
-                  mb-2
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
-                :disabled="!isDepartmentSelected"
-                v-model="generalInfo.educationalLevelSelected"
-                @change="educationalLevelChange()"
-              >
-                <option
-                  v-for="educationalLevel in educationalLevels"
-                  v-bind:key="educationalLevel.name"
-                  v-bind:value="educationalLevel"
-                >
-                  {{ educationalLevel.name }}
-                </option>
-              </select>
-            </div>
+                {{ department.name }}
+              </option>
+            </select>
           </div>
-
-          <div
-            class="
-              grid grid-cols-1
-              lg:grid-cols-2
-              mdlg:grid-cols-2
-              md:grid-cols-2
-              sm:grid-cols-1
-              gap-4
-            "
-          >
-            <div class="mt-12">
-              <label
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >Professional Types</label
-              ><span class="text-red-300">*</span>
-              <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-64
-                  w-full
-                  mb-2
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
-                :disabled="!isEdLevelSelected"
-                v-model="generalInfo.professionalTypeSelected"
-                @change="ProfessionTypeChange(institution)"
+          <!-- ... -->
+          <div class="mt-0 sm:mt-8">
+            <label
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >Education Level </label
+            ><span class="text-red-300">*</span>
+            <select
+              class="form-select appearance-none block w-full mb-2 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              :disabled="!isDepartmentSelected"
+              v-model="generalInfo.educationalLevelSelected"
+              @change="educationalLevelChange()"
+            >
+              <option
+                v-for="educationalLevel in educationalLevels"
+                :key="educationalLevel.name"
+                :value="educationalLevel"
               >
-                <option
-                  v-for="pf in professionalTypes"
-                  v-bind:key="pf.id"
-                  v-bind:value="pf"
-                >
-                  {{ pf.name }}
-                </option>
-              </select>
-              <div class="grid grid-rows-2">
-                <input
-                  v-model="generalInfo.otherProfessionalType"
-                  v-if="showOtherProfession"
-                  class="mt-2"
-                  placeholder="Write profession title"
-                  type="text"
-                />
-                <input
-                  v-model="generalInfo.otherProfessionalTypeAmharic"
-                  v-if="showOtherProfession"
-                  class="mt-2"
-                  placeholder="Write profession title in Amharic"
-                  type="text"
-                />
-              </div>
-            </div>
-            <!-- ... -->
-
-            <div class="mt-12">
-              <label
-                :class="
-                  isDarkMode && isDarkMode == true
-                    ? 'text-white '
-                    : 'text-main-400'
-                "
-                >Educational Institution</label
-              ><span class="text-red-300">*</span>
-
-              <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-64
-                  w-full
-                  mb-2
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
-                :disabled="!isAppTypeSelected"
-                v-model="generalInfo.institutionSelected"
-                @change="institutionChange(institution)"
-              >
-                <option
-                  v-for="institution in institutions"
-                  v-bind:key="institution.name"
-                  v-bind:value="institution"
-                >
-                  {{ institution.name }}
-                </option>
-              </select>
+                {{ educationalLevel.name }}
+              </option>
+            </select>
+          </div>
+          <div class="mt-0 sm:mt-8">
+            <label
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >Professional Types</label
+            ><span class="text-red-300">*</span>
+            <select
+              class="form-select appearance-none block w-full mb-2 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              :disabled="!isEdLevelSelected"
+              v-model="generalInfo.professionalTypeSelected"
+              @change="ProfessionTypeChange(institution)"
+            >
+              <option v-for="pf in professionalTypes" :key="pf.id" :value="pf">
+                {{ pf.name }}
+              </option>
+            </select>
+            <div class="grid grid-rows-2">
               <input
-                v-model="generalInfo.otherEducationalInstitution"
-                v-if="showOtherEducation"
-                class="mt-2"
-                placeholder="Write Educational Institution"
+                v-model="generalInfo.otherProfessionalType"
+                v-if="showOtherProfession"
+                class="mb-2 w-full"
+                placeholder="Other profession title"
+                type="text"
+              />
+              <input
+                v-model="generalInfo.otherProfessionalTypeAmharic"
+                v-if="showOtherProfession"
+                class="w-full"
+                placeholder="Amharic other profession name"
                 type="text"
               />
             </div>
           </div>
+          <!-- ... -->
 
-          <div class="text-right">
-            <button
-              type="button"
-              class="
-                px-6
-                mr-2
-                mb-2
-                py-2.5
-                bg-white
-                text-main-400
-                font-medium
-                border
-                text-xs
-                leading-tight
-                uppercase
-                rounded
-                shadow-md
-                hover:text-white hover:border-main-400 hover:bg-main-400
-                focus:bg-blue-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-blue-800 active:shadow-lg
-                transition
-                duration-150
-                ease-in-out
-              "
-              @click="addMultiple()"
+          <div class="mt-0 sm:mt-8">
+            <label
+              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              >Educational Institution</label
+            ><span class="text-red-300">*</span>
+
+            <select
+              class="form-select appearance-none block w-full mb-2 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              :disabled="!isAppTypeSelected"
+              v-model="generalInfo.institutionSelected"
+              @change="institutionChange(institution)"
             >
-              <i class="fa fa-plus"></i>
-
-              <span
-                v-if="
-                  generalInfo.multipleDepartment &&
-                    generalInfo.multipleDepartment.length > 0
-                "
+              <option
+                v-for="institution in institutions"
+                :key="institution.name"
+                :value="institution"
               >
-                Add More Education
-              </span>
-              <span v-else>Add</span>
-            </button>
+                {{ institution.name }}
+              </option>
+            </select>
+            <input
+              v-model="generalInfo.otherEducationalInstitution"
+              v-if="showOtherEducation"
+              class="mb-2 w-full"
+              placeholder="Write Educational Institution"
+              type="text"
+            />
           </div>
-          <span v-if="multipleDepartmentError" class="text-red-300"
-            >Please fill in all fields</span
-          >
-          <span v-if="checkForAddedError" class="ml-8 text-red-300"
-            >You already added the department</span
-          >
-          <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
-            >Only three departments can be selected</span
-          >
         </div>
+
+        <div class="text-right">
+          <button
+            type="button"
+            class="px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+            @click="addMultiple()"
+          >
+            <i class="fa fa-plus"></i>
+
+            <span
+              v-if="
+                generalInfo.multipleDepartment &&
+                generalInfo.multipleDepartment.length > 0
+              "
+            >
+              Add More Department
+            </span>
+            <span v-else>Add</span>
+          </button>
+        </div>
+
+        <div
+          class="flex justify-center m-4"
+          v-if="
+            generalInfo.multipleDepartment && generalInfo.multipleDepartment.length == 0
+          "
+        >
+          <h2 class="text-xl text-yellow-300 font-bold border p-2 rounded-md">
+            * In order to proceed to the next step please choose one or more department
+            and add to the list
+          </h2>
+        </div>
+        <span v-if="multipleDepartmentError" class="text-red-300 m-4"
+          >Please fill in all fields</span
+        >
+        <span v-if="checkForAddedError" class="ml-8 text-red-300 m-4"
+          >You already added the department</span
+        >
+        <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300 m-4"
+          >Only three departments can be selected</span
+        >
+
         <!-- ./Container -->
       </div>
       <!-- Table for selected departments data -->
       <div
         :class="
           isDarkMode && isDarkMode == true
-            ? 'generalInfoCard  table-multiple border  shadow-lg mt-12 mb-8 rounded-sm  '
-            : ' table-multiple border border-white shadow-lg mt-12 mb-8 rounded-sm bg-white'
+            ? 'generalInfoCard  table-multiple border    mt-2 mb-8 rounded-sm  '
+            : ' table-multiple border mt-2 mb-8 rounded-sm bg-white'
         "
       >
         <h2
           :class="
             isDarkMode && isDarkMode == true
               ? 'text-white font-bold m-4 border-b-2'
-              : 'text-main-400 font-bold m-4 border-b-2'
+              : 'text-main-400 font-bold m-4 border-b-4 text-xl'
           "
         >
           Selected Departments
         </h2>
 
         <div class="flex flex-col">
-          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-              <div class="overflow-hidden">
-                <div
-                  class="flex justify-center"
-                  v-if="generalInfo.multipleDepartment.length < 1"
-                >
-                  No Data
-                </div>
-                <div v-else>
-                  <table class="min-w-full p-4">
-                    <thead class="border-b border-t text-main-400 p-4">
-                      <tr>
-                        <th
-                          scope="col"
-                          :class="
-                            isDarkMode && isDarkMode == true
-                              ? ' text-sm text-gray-900 p-5 text-left font-bold text-white'
-                              : ' text-sm text-gray-900 p-5 text-left font-bold text-main-400'
-                          "
-                        >
-                          Department
-                        </th>
-                        <th
-                          scope="col"
-                          :class="
-                            isDarkMode && isDarkMode == true
-                              ? ' text-sm text-gray-900 p-5 text-left font-bold text-white'
-                              : ' text-sm text-gray-900 p-5 text-left font-bold text-main-400'
-                          "
-                        >
-                          Education Level
-                        </th>
-                        <th
-                          scope="col"
-                          :class="
-                            isDarkMode && isDarkMode == true
-                              ? ' text-sm text-gray-900 p-5 text-left font-bold text-white'
-                              : ' text-sm text-gray-900 p-5 text-left font-bold text-main-400'
-                          "
-                        >
-                          Institution
-                        </th>
-                        <th
-                          scope="col"
-                          :class="
-                            isDarkMode && isDarkMode == true
-                              ? ' text-sm text-gray-900 p-5 text-left font-bold text-white'
-                              : ' text-sm text-gray-900 p-5 text-left font-bold text-main-400'
-                          "
-                        >
-                          Professional Type
-                        </th>
-                        <th
-                          scope="col"
-                          :class="
-                            isDarkMode && isDarkMode == true
-                              ? ' text-sm text-gray-900 p-5 text-left font-bold text-white'
-                              : ' text-sm text-gray-900 p-5 text-left font-bold text-main-400'
-                          "
-                        >
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tbody>
-                      <tr
-                        :class="
-                          isDarkMode && isDarkMode == true
-                            ? ' border-b border-white   p-4 text-white'
-                            : ' border-b border-main-400   p-4 text-main-400'
-                        "
-                        v-for="(item, index) in generalInfo.multipleDepartment"
-                        :key="item.id"
-                      >
-                        <td
-                          class="
-                            p-4
-                            whitespace-nowrap
-                            text-sm
-                            font-medium
-                            text-gray-900
-                          "
-                        >
-                          {{ item.department ? item.department.name : "" }}
-                        </td>
-                        <td
-                          class="
-                            text-sm text-gray-900
-                            font-light
-                            p-4
-                            whitespace-nowrap
-                          "
-                        >
-                          {{
-                            item.educationalLevel
-                              ? item.educationalLevel.name
-                              : item.educationLevel
-                              ? item.educationLevel.name
-                              : "----"
-                          }}
-                        </td>
-                        <td
-                          class="
-                            text-sm text-gray-900
-                            font-light
-                            p-4
-                            whitespace-nowrap
-                          "
-                        >
-                          {{
-                            item.institution && item.institution.code != "OTH"
-                              ? item.institution.name
-                              : item.otherEducationalInstitution
-                          }}
-                        </td>
-                        <td
-                          class="
-                            text-sm text-gray-900
-                            font-light
-                            p-4
-                            whitespace-nowrap
-                          "
-                        >
-                          {{
-                            item.professionalType &&
-                            item.professionalType.code != "OTH"
-                              ? item.professionalType.name
-                              : item.professionalType &&
-                                item.professionalType.code == "OTH"
-                              ? item.otherProfessionalType +
-                                " ( " +
-                                item.otherProfessionalTypeAmharic +
-                                " )"
-                              : item.professionType
-                              ? item.professionType.name
-                              : "---"
-                          }}
-                        </td>
-                        <td
-                          class="
-                            text-sm text-gray-900
-                            font-light
-                            p-5
-                            whitespace-nowrap
-                          "
-                        >
-                          <span @click="removeDepartment(index)" title="Remove"
-                            ><i
-                              class="fa fa-trash text-red-300 cursor-pointer"
-                            ></i
-                          ></span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          <div class="overflow-x-scroll">
+            <div
+              class="flex justify-center"
+              v-if="generalInfo.multipleDepartment.length < 1"
+            >
+              No Data
+            </div>
+            <div v-else>
+              <table class="min-w-full p-4">
+                <thead class="border-b border-t text-main-400 p-4">
+                  <tr>
+                    <th
+                      scope="col"
+                      :class="
+                        isDarkMode && isDarkMode == true
+                          ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
+                          : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
+                      "
+                    >
+                      Department
+                    </th>
+                    <th
+                      scope="col"
+                      :class="
+                        isDarkMode && isDarkMode == true
+                          ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
+                          : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
+                      "
+                    >
+                      Education Level
+                    </th>
+                    <th
+                      scope="col"
+                      :class="
+                        isDarkMode && isDarkMode == true
+                          ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
+                          : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
+                      "
+                    >
+                      Institution
+                    </th>
+                    <th
+                      scope="col"
+                      :class="
+                        isDarkMode && isDarkMode == true
+                          ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
+                          : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
+                      "
+                    >
+                      Professional Type
+                    </th>
+                    <th
+                      scope="col"
+                      :class="
+                        isDarkMode && isDarkMode == true
+                          ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
+                          : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
+                      "
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tbody>
+                  <tr
+                    :class="
+                      isDarkMode && isDarkMode == true
+                        ? ' border-b border-white   p-4 text-white'
+                        : ' border-b border-main-400   p-4 text-grey-800'
+                    "
+                    v-for="(item, index) in generalInfo.multipleDepartment"
+                    :key="item.id"
+                  >
+                    <td class="p-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {{ item.department ? item.department.name : "" }}
+                    </td>
+                    <td class="text-sm text-gray-900 font-light p-4 whitespace-nowrap">
+                      {{ item.educationalLevel ? item.educationalLevel.name : "" }}
+                    </td>
+                    <td class="text-sm text-gray-900 font-light p-4 whitespace-nowrap">
+                      {{
+                        item.institution && item.institution.code != "OTH"
+                          ? item.institution.name
+                          : item.otherEducationalInstitution
+                      }}
+                    </td>
+                    <td class="text-sm text-gray-900 font-light p-4 whitespace-nowrap">
+                      {{
+                        item.professionalType && item.professionalType.code != "OTH"
+                          ? item.professionalType.name
+                          : item.otherProfessionalType +
+                            " ( " +
+                            item.otherProfessionalTypeAmharic +
+                            " )"
+                      }}
+                    </td>
+                    <td class="text-sm text-gray-900 font-light p-5 whitespace-nowrap">
+                      <span @click="removeDepartment(index)" title="Remove"
+                        ><i class="fa fa-trash text-red-300 cursor-pointer"></i
+                      ></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
-      <!-- Table for selected departments data -->
-      <div class="flex justify-end mb-2 mr-1">
-        <button
-          :class="
-            generalInfo.multipleDepartment.length > 0
-              ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-xs leading-tight font-bold uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-              : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
-          "
-          type="submit"
-          @click="saveDraft()"
-        >
-          Save as draft
-        </button>
-        <button
-          :class="
-            generalInfo.multipleDepartment.length > 0
-              ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-              : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
-          "
-          type="submit"
-          @click="apply()"
-        >
-          Next
-        </button>
+      <div class="vld-parent mt-4">
+        <loading
+          :active="isLoading"
+          :is-full-page="false"
+          :color="'#2F639D'"
+          :opacity="1"
+        ></loading>
+        <div class="flex justify-end mb-2 mr-1">
+          <button
+            :class="
+              generalInfo.multipleDepartment.length > 0
+                ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-base leading-tight font-bold   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-base leading-tight   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+            "
+            type="submit"
+            @click="saveDraft()"
+          >
+            Save as Draft
+          </button>
+          <button
+            :class="
+              generalInfo.multipleDepartment.length > 0
+                ? 'px-6 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out'
+                : 'px-6 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out  disabled'
+            "
+            type="submit"
+            @click="apply()"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </form>
   </div>
@@ -1018,10 +619,12 @@
 import { useStore } from "vuex";
 import { ref, onMounted, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["activeState"],
-  components: {},
-
+  components: { Loading },
+  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     let applicantTypes = ref("");
     const toast = useToast();
@@ -1040,6 +643,7 @@ export default {
     let localData = ref({});
     let store = useStore();
     let showLocation = ref(false);
+    let isLoading = ref(false);
     let regionSelected = ref({});
     let zoneSelected = ref({});
     let woredaSelected = ref({});
@@ -1060,9 +664,10 @@ export default {
     let multipleDepartmentError = ref(false);
     let multipleDepartmentMaxError = ref(false);
     let checkForAddedError = ref(false);
+    let existingLicense = ref({});
     let generalInfo = ref({
       educationalLevelSelected: "",
-      applicantTypeSelected: "",
+      applicantTypeSelected: JSON.parse(localStorage.getItem("applicantTypeSelected")),
       applicantPositionId: "",
       regionSelected: "",
       zoneSelected: "",
@@ -1100,7 +705,7 @@ export default {
     const fetchRegions = () => {
       store.dispatch("renewal/getRegions").then((res) => {
         const regionsResult = res.data.data;
-        regions.value = regionsResult;
+        regions.value = regionsResult.filter((el) => el.code != "FED");
       });
     };
 
@@ -1127,31 +732,48 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store
-        .dispatch("newlicense/getProfessionalTypes", profession)
-        .then((res) => {
-          professionalTypes.value = res.data.data;
-        });
+      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
     };
     const applicantTypeChangeHandler = async () => {
       isAppTypeSelected.value = true;
-      if (generalInfo.value.applicantTypeSelected.code == "ETH") {
+      if (
+        generalInfo.value.applicantTypeSelected &&
+        generalInfo.value.applicantTypeSelected.code &&
+        generalInfo.value.applicantTypeSelected.code == "ETH"
+      ) {
         showLocation.value = true;
         showOccupation.value = true;
-        await fetchInstitutions(true);
+        fetchInstitutions(true);
       } else {
         showLocation.value = false;
         showOccupation.value = false;
-        await fetchInstitutions(false);
+        fetchInstitutions(false);
       }
-      if (generalInfo.value.applicantTypeSelected.code == "FOR") {
-        await fetchLanguages();
+      if (
+        generalInfo.value.applicantTypeSelected &&
+        generalInfo.value.applicantTypeSelected.code &&
+        generalInfo.value.applicantTypeSelected.code == "FOR"
+      ) {
+        fetchLanguages();
         showLanguage.value = true;
       } else {
         showLanguage.value = false;
       }
     };
     const regionChangeHandler = () => {
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code == "HAR"
+      ) {
+        generalInfo.value.zoneSelected = {
+          name: "Default Harar",
+          id: 464,
+          code: "ZN_HAR_DEF_54",
+        };
+        fetchWoredas();
+      }
       fetchZones();
     };
     const zoneChangeHandler = () => {
@@ -1163,6 +785,19 @@ export default {
           languages.value = res.data.data;
         }
       });
+    };
+    const convertOtherProf = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+      let formattedString = trimmedString.replace(/\b\w/g, function (match) {
+        return match.toUpperCase();
+      });
+
+      return formattedString;
+    };
+    const convertOtherProfAmh = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+
+      return trimmedString;
     };
     const departmentChange = () => {
       isDepartmentSelected.value = true;
@@ -1176,7 +811,10 @@ export default {
       }
     };
     const ProfessionTypeChange = () => {
-      if (generalInfo.value.professionalTypeSelected.code == "OTH") {
+      if (
+        generalInfo.value.professionalTypeSelected.name &&
+        generalInfo.value.professionalTypeSelected.name.toLowerCase() == "other"
+      ) {
         showOtherProfession.value = true;
       } else {
         showOtherProfession.value = false;
@@ -1206,6 +844,22 @@ export default {
         generalInfo.value.institutionSelected &&
         generalInfo.value.professionalTypeSelected
       ) {
+        if (
+          generalInfo.value.applicantTypeSelected.code != "FOR" &&
+          showOtherProfession.value &&
+          showOtherProfession.value == true &&
+          (generalInfo.value.otherProfessionalType == undefined ||
+            generalInfo.value.otherProfessionalTypeAmharic == undefined)
+        ) {
+          toast.error("Please fill other profession name in amharic and english", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          return;
+        }
         if (generalInfo.value.multipleDepartment.length > 3) {
           multipleDepartmentMaxError.value = true;
         } else {
@@ -1230,22 +884,31 @@ export default {
                 institution: generalInfo.value.institutionSelected,
                 professionalType: generalInfo.value.professionalTypeSelected,
 
-                otherEducationalInstitution:
-                  generalInfo.value.otherEducationalInstitution,
-                otherProfessionalTypeAmharic:
-                  generalInfo.value.otherProfessionalTypeAmharic,
-                otherProfessionalType: generalInfo.value.otherProfessionalType,
+                otherEducationalInstitution: generalInfo.value.otherEducationalInstitution
+                  ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                  : "",
+                otherProfessionalTypeAmharic: generalInfo.value
+                  .otherProfessionalTypeAmharic
+                  ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                  : "",
+                otherProfessionalType: generalInfo.value.otherProfessionalType
+                  ? convertOtherProf(generalInfo.value.otherProfessionalType)
+                  : "",
               });
               generalInfo.value.education.push({
                 departmentId: generalInfo.value.departmentSelected.id,
-                educationalLevelId:
-                  generalInfo.value.educationalLevelSelected.id,
+                educationalLevelId: generalInfo.value.educationalLevelSelected.id,
                 institutionId: generalInfo.value.institutionSelected.id,
                 professionTypeId: generalInfo.value.professionalTypeSelected.id,
-                otherInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionTypeAmharic:
-                  generalInfo.value.otherProfessionalTypeAmharic,
-                otherProfessionType: generalInfo.value.otherProfessionalType,
+                otherInstitution: generalInfo.value.otherEducationalInstitution
+                  ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                  : "",
+                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic
+                  ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                  : "",
+                otherProfessionType: generalInfo.value.otherProfessionalType
+                  ? convertOtherProf(generalInfo.value.otherProfessionalType)
+                  : "",
               });
             }
           } else {
@@ -1256,21 +919,30 @@ export default {
               institution: generalInfo.value.institutionSelected,
               professionalType: generalInfo.value.professionalTypeSelected,
 
-              otherEducationalInstitution:
-                generalInfo.value.otherEducationalInstitution,
-              otherProfessionalTypeAmharic:
-                generalInfo.value.otherProfessionalTypeAmharic,
-              otherProfessionalType: generalInfo.value.otherProfessionalType,
+              otherEducationalInstitution: generalInfo.value.otherEducationalInstitution
+                ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                : "",
+              otherProfessionalTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic
+                ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                : "",
+              otherProfessionalType: generalInfo.value.otherProfessionalType
+                ? convertOtherProf(generalInfo.value.otherProfessionalType)
+                : "",
             });
             generalInfo.value.education.push({
               departmentId: generalInfo.value.departmentSelected.id,
               educationalLevelId: generalInfo.value.educationalLevelSelected.id,
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
-              otherInstitution: generalInfo.value.otherEducationalInstitution,
-              otherProfessionTypeAmharic:
-                generalInfo.value.otherProfessionalTypeAmharic,
-              otherProfessionType: generalInfo.value.otherProfessionalType,
+              otherInstitution: generalInfo.value.otherEducationalInstitution
+                ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                : "",
+              otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic
+                ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                : "",
+              otherProfessionType: generalInfo.value.otherProfessionalType
+                ? convertOtherProf(generalInfo.value.otherProfessionalType)
+                : "",
             });
           }
           generalInfo.value.departmentSelected = "";
@@ -1292,7 +964,50 @@ export default {
         }
       });
     };
+
+    const checkForExistingLicense = () => {
+      let tempError = false;
+      let tempComparision = [];
+      if (
+        existingLicense.value &&
+        generalInfo.value.education &&
+        existingLicense.value.length > 0
+      ) {
+        existingLicense.value.forEach((element) => {
+          if (
+            element.educations &&
+            element.applicationStatus.code != "WD" &&
+            element.applicationStatus.code != "DEC"
+          ) {
+            tempComparision.push({
+              licenseId: element.id,
+              licenseStatus: element.applicationStatus.code,
+              educations: element.educations,
+            });
+          }
+        });
+      }
+      tempComparision.forEach((existingEd) => {
+        generalInfo.value.education.forEach((newEd) => {
+          if (existingEd.educations) {
+            existingEd.educations.forEach((element) => {
+              if (
+                element.departmentId == newEd.departmentId &&
+                element.professionTypeId == newEd.professionTypeId
+              ) {
+                tempError = true;
+                return;
+              }
+            });
+          }
+        });
+      });
+      return tempError;
+    };
+
     const apply = () => {
+      let tempError = checkForExistingLicense();
+
       let tempApplicationData = generalInfo.value;
       let tempFieldError = {};
 
@@ -1311,27 +1026,45 @@ export default {
       generalInfo.value.applicantTypeSelected.code == "ETH"
         ? (tempFieldError.occupationSelected = true)
         : delete tempFieldError.occupationSelected;
-
-      if (Object.keys(tempFieldError).length > 0) {
-        toast.error("Fill out fileds marked red", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
+      if (tempError == false) {
+        if (Object.keys(tempFieldError).length > 0) {
+          toast.error("Fill out fileds marked red", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        } else {
+          window.localStorage.setItem(
+            "RNApplicationData",
+            JSON.stringify(tempApplicationData)
+          );
+          store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
+            let tempRN = localStorage.getItem("tempRN")
+              ? JSON.parse(localStorage.getItem("tempRN"))
+              : {};
+            tempRN.step = 2;
+            localStorage.setItem("tempRN", JSON.stringify(tempRN));
+            emit("changeActiveState");
+          });
+        }
       } else {
-        window.localStorage.setItem(
-          "RNApplicationData",
-          JSON.stringify(tempApplicationData)
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
         );
-        store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
-          emit("changeActiveState");
-        });
       }
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("RNApplicationData", "");
+      window.localStorage.removeItem("RNApplicationData");
+      window.localStorage.removeItem("tempRN");
       window.indexedDB.deleteDatabase("RNdocumentUploads");
       setTimeout(() => {
         window.location.reload();
@@ -1367,29 +1100,57 @@ export default {
             ? generalInfo.value.nativeLanguageSelected.id
             : null,
           isLegal: true,
+          regionId: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.id
+            : "",
+          regionCode: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.code
+            : "FED",
         },
       };
-      store.dispatch("renewal/addRenewal", license).then((res) => {
-        if (res.data.status == "Success") {
-          toast.success("Applied successfuly", {
+      isLoading.value = true;
+      let tempError = checkForExistingLicense();
+      if (!tempError) {
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+          isLoading.value = false;
+          if (res.data.status == "Success") {
+            isLoading.value = true;
+            localStorage.setItem(
+              "tempRN",
+              JSON.stringify({ id: res.data.data.id, step: 2 })
+            );
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            localStorage.removeItem("RNApplicationData");
+            location.reload();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
+      } else {
+        isLoading.value = false;
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
+          {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
-          });
-          localStorage.removeItem("RNApplicationData");
-          location.reload();
-        } else {
-          toast.error("Error occured, please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-        }
-      });
+          }
+        );
+      }
     };
     const darkMode = () => {
       emit("darkMode");
@@ -1405,17 +1166,28 @@ export default {
       }
     };
     onMounted(async () => {
-      fetchApplicantType();
-      fetchDepartments();
-      fetchInstitutions();
-      fetchEducationLevel();
-      fetchRegions();
-      fetchOccupation();
-      localData.value = window.localStorage.getItem("RNApplicationData")
-        ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
-        : {};
-      if (Object.keys(localData.value).length != 0) {
-        generalInfo.value = localData.value;
+      let tryAgain = localStorage.getItem("tempRN")
+        ? JSON.parse(localStorage.getItem("tempRN"))
+        : false;
+      if (tryAgain && tryAgain.id != null && tryAgain.step != 1) {
+        emit("changeActiveState");
+      } else {
+        applicantTypeChangeHandler();
+        fetchApplicantType();
+        fetchDepartments();
+        fetchEducationLevel();
+        fetchRegions();
+        fetchOccupation();
+        localData.value = window.localStorage.getItem("RNApplicationData")
+          ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
+          : {};
+        if (Object.keys(localData.value).length != 0) {
+          generalInfo.value = localData.value;
+        }
+        let userId = JSON.parse(window.localStorage.getItem("userId"));
+        store.dispatch("renewal/getRenewalsByUser", userId).then((res) => {
+          existingLicense.value = res.data.data;
+        });
       }
     });
     return {
@@ -1428,6 +1200,7 @@ export default {
       addMultiple,
       removeDepartment,
       apply,
+      isLoading,
       saveDraft,
       fetchOccupation,
       educationalLevelChange,
@@ -1479,5 +1252,6 @@ export default {
 }
 .table-multiple {
   border-radius: 5px;
+  overflow-x: scroll;
 }
 </style>

@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -58,13 +58,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -94,7 +94,7 @@
                       <span class="text-2xl font-bold mb-12 px-6">
                         {{ modalData.name }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -128,7 +128,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -154,7 +154,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                               >
@@ -213,7 +213,7 @@
                                 <p class="text-gray-500">
                                   <span
                                     class="font-semibold text-primary-700 mb-1"
-                                    >Martial Status:</span
+                                    >Marital Status:</span
                                   >
                                   <span class="text-grey-800 ml-1">{{
                                     modalData.maritalStatus
@@ -243,7 +243,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -313,7 +313,7 @@
                                         max-height-12
                                         overflow-hidden overflow-y-scroll
                                         rounded-lg
-                                        shadow-md
+                                         
                                         text-left
                                         dropdown-menu
                                       "
@@ -364,11 +364,11 @@
                                           leading-tight
                                           uppercase
                                           rounded
-                                          shadow-md
+                                           
                                           mt-4
                                           ml-1
                                           hover:bg-white
-                                          hover:shadow-md
+                                          hover: 
                                           hover:text-primary-600
                                           transition
                                           duration-150
@@ -411,7 +411,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -430,7 +430,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                               >
@@ -480,7 +480,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -499,7 +499,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                               >
@@ -511,7 +511,9 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
+                                      modalData.data.GSProfessionals &&
                                       modalData.data.GSProfessionals
+                                        .professionalTypes
                                         ? modalData.data.GSProfessionals
                                             .professionalTypes.name
                                         : ""
@@ -540,7 +542,9 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
+                                      modalData.data.GSProfessionals &&
                                       modalData.data.GSProfessionals
+                                        .professionalTypes
                                         ? modalData.data.GSProfessionals
                                             .educationLevel.name
                                         : ""
@@ -576,7 +580,8 @@
                               modalData.data &&
                               modalData.data.goodstandingReviewer &&
                               modalData.data.goodstandingReviewer.transferFrom
-                                ? modalData.data.goodstandingReviewer.transferFrom.name
+                                ? modalData.data.goodstandingReviewer
+                                    .transferFrom.name
                                 : ""
                             }}
                           </h5>
@@ -592,7 +597,8 @@
                               modalData.data &&
                               modalData.data.goodstandingReviewer &&
                               modalData.data.goodstandingReviewer.transferFrom
-                                ? modalData.data.goodstandingReviewer.transferRemark
+                                ? modalData.data.goodstandingReviewer
+                                    .transferRemark
                                 : ""
                             }}
                           </h5>
@@ -626,10 +632,10 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
-              hover:text-primary-600 hover:shadow-md
+               
+              hover:text-primary-600 hover: 
              
-              active:bg-purple-800 active:shadow-md
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -744,32 +750,18 @@ export default {
         isLoading.value = true;
         store
           .dispatch("reviewer/transferGoodStandingReview", transfer.value)
-          .then((response) => {
-            if (response.statusText == "Created") {
-              toast.success("Selected reviewer is successfully assigned", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-            } else {
-              toast.error("Error Occured", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
-            }
+          .then(() => {
+            toast.success("Selected reviewer is successfully assigned", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
           })
           .catch(() => {
             toast.error("Error Occured", {
@@ -782,7 +774,7 @@ export default {
             isLoading.value = false;
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           });
       }
     };

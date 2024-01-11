@@ -94,7 +94,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -175,6 +175,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplication()"
                           v-model="searchTermToDate"
                           aria-label="Default select example"
                         />
@@ -214,7 +215,7 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
@@ -303,7 +304,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -385,6 +386,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplicationResub()"
                         v-model="searchTermToDateResub"
                         aria-label="Default select example"
                       />
@@ -423,7 +425,7 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
@@ -504,8 +506,8 @@ export default {
       change: 0,
     });
 
-    let allInfo = ref({});
-    let allInfoRes = ref({});
+    let allInfo = [];
+  
 
     const assignedToYouTable = ref({});
     const assignedToOthersTable = ref([]);
@@ -515,15 +517,15 @@ export default {
     assignedToOthersTable.value = {
       isLoading: true,
     };
-    let tableData = ref([]);
-    let othersTable = ref([]);
+    let tableData = [];
+    let othersTable = []
     const clearFilters = () => {
       searchTerm.value = "";
       searchTermFromDate.value = "";
       searchTermToDate.value = "";
       assignedToYouTable.value.isLoading = true;
       assignedToYouTable.value.rows = [];
-      tableData.value = [];
+     
       assignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -553,17 +555,17 @@ export default {
       let subId = statuses
         ? statuses.filter((stat) => stat.code == "DEC")[0].id
         : "";
-
+        tableData=[];
       store
         .dispatch("reviewerGoodStanding/getGoodstandingsByStatus", [
           { statusId: subId },
           { params: apiParameters },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          if (allInfo.value) {
-            allInfo.value.forEach((element) => {
-              tableData.value.push({
+          allInfo = res ? res.rows : [];
+        
+            allInfo.forEach((element) => {
+              tableData.push({
                 LicenseNumber: element.goodStandingCode,
                 ApplicantName:
                   (element.profile ? element.profile.name : "") +
@@ -581,7 +583,7 @@ export default {
                 data: element,
               });
             });
-          }
+         
 
           assignedToYouTable.value = {
             columns: [
@@ -616,14 +618,14 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 },
               },
             ],
-            rows: tableData.value,
+            rows: tableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -637,16 +639,17 @@ export default {
       let updId = statuses
         ? statuses.filter((stat) => stat.code == "DEC")[0].id
         : "";
+        othersTable=[];
       store
         .dispatch("reviewerGoodStanding/getOtherGoodstandingsByStatus", [
           { statusId: updId },
           { params: apiParameters },
         ])
         .then((res) => {
-          allInfoRes.value = res && res.rows ? res.rows : [];
+          allInfo = res && res.rows ? res.rows : [];
 
-          allInfoRes.value.forEach((element) => {
-            othersTable.value.push({
+          allInfo.forEach((element) => {
+            othersTable.push({
               LicenseNumber: element.goodStandingCode,
               ApplicantName:
                 (element.profile ? element.profile.name : "") +
@@ -697,14 +700,14 @@ export default {
                   return (
                     '<button  data-set="' +
                     row +
-                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white  hover:shadow-lg hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-white  hover:  hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 },
               },
             ],
-            rows: othersTable.value,
+            rows: othersTable,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -720,8 +723,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      assignedToYouTable.value.isLoading = false;
+      }); 
     };
 
     const tableLoadingFinishOthers = () => {
@@ -732,8 +734,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOth());
         }
-      });
-      assignedToOthersTable.value.isLoading = false;
+      }); 
     };
 
     const rowClicked = (row) => {
@@ -753,7 +754,7 @@ export default {
     const searchApplication = () => {
       assignedToYouTable.value.isLoading = true;
       assignedToYouTable.value.rows = [];
-      tableData.value = [];
+     
       assignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -771,7 +772,7 @@ export default {
     const searchApplicationResub = () => {
       assignedToOthersTable.value.isLoading = true;
       assignedToOthersTable.value.rows = [];
-      othersTable.value = [];
+    
       assignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -804,7 +805,7 @@ export default {
       setTimeout(() => {
         assignedToYouTable.value.isReSearch =
           offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           assignedToYou([
             { key: "page", value: offset },
@@ -832,7 +833,7 @@ export default {
       setTimeout(() => {
         assignedToOthersTable.value.isReSearch =
           offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           assignedToOthers([
             { key: "page", value: offset },

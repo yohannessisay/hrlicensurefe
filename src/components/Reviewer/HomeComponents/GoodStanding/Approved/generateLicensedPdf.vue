@@ -1,17 +1,6 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="generatePdf"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -20,487 +9,53 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-2
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-2 rounded-t-md"
         ></div>
 
         <div class="modal-body relative p-4">
-          <div class="container px-6 mx-auto">
-            <section class="text-gray-800">
-              <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-xl"></div>
-              </div>
-              <div class="vld-parent">
-                <loading
-                  :active="isLoading"
-                  :can-cancel="true"
-                  :is-full-page="false"
-                  :color="'#2F639D'"
-                  :opacity="0.7"
-                ></loading>
-
-                <div class="flex flex-wrap">
-                  <div class="grow-0 shrink-0 basis-auto w-full">
-                    <div
-                      class="
-                          bg-lightBlueB-200
-                          flex
-                          items-center
-                          justify-center
-                        "
-                      id="printedDiv"
-                    >
-                      <div class="w-screen">
-                        <div
-                          class="
-                              flex flex-col
-                              w-full
-                              bg-white
-                              blue-box-shadow-light
-                              rounded
-                              justify-center
-                              items-center
-                            "
-                        >
-                          <div class="bg-white h-full " contenteditable="true">
-                            <div v-if="show" class="ml-8 mr-8 mb-12">
-                              <div v-if="!modalData.withExperiance">
-                                <h2 class="ml-4 mt-8" contenteditable="true">
-                                  To:
-                                  {{
-                                    modalData
-                                      ? modalData.whomGoodStandingFor
-                                      : ""
-                                  }}.
-                                </h2>
-                                <h3 class="ml-64 mb-8" contenteditable="true">
-                                  LETTER OF GOOD STANDING
-                                </h3>
-                                <h5 class="" contenteditable="true">
-                                  This letter of good standing and confirmation
-                                  of registration is written upon request of
-                                  <span
-                                    contenteditable="false"
-                                    class="text-yellow-300"
-                                    >{{
-                                      modalData && modalData.applicantTitle
-                                        ? modalData.applicantTitle.name
-                                        : ""
-                                    }}</span
-                                  >
-                                  <span
-                                    contenteditable="false"
-                                    class="ml-1 text-yellow-300"
-                                  >
-                                    {{
-                                      (modalData &&
-                                      modalData.profile &&
-                                      modalData.profile.name
-                                        ? modalData.profile.name
-                                        : "") +
-                                        " " +
-                                        (modalData &&
-                                        modalData.profile &&
-                                        modalData.profile.fatherName
-                                          ? modalData.profile.fatherName
-                                          : "") +
-                                        " " +
-                                        (modalData &&
-                                        modalData.profile &&
-                                        modalData.profile.grandFatherName
-                                          ? modalData.profile.grandFatherName
-                                          : "")
-                                    }}
-                                  </span>
-                                  .
-                                </h5>
-                                <span contenteditable="true">
-                                  {{
-                                    modalData &&
-                                    modalData.profile &&
-                                    modalData.profile.gender == "male"
-                                      ? "He"
-                                      : "She"
-                                  }}
-                                </span>
-                                had been registered and licensed as
-                                <span
-                                  contenteditable="false"
-                                  class="text-yellow-300"
-                                  >{{
-                                    modalData &&
-                                    modalData.GSProfessionals &&
-                                    modalData.GSProfessionals.professionalTypes
-                                      ? modalData.GSProfessionals
-                                          .professionalTypes.name
-                                      : ""
-                                  }}</span
-                                >
-                                on
-                                <span
-                                  class="text-yellow-300"
-                                  contenteditable="true"
-                                  >{{
-                                    modalData
-                                      ? moment(
-                                          modalData
-                                            ? modalData.licenseIssuedDate
-                                            : ""
-                                        ).format("MMMM D, YYYY")
-                                      : ""
-                                  }}</span
-                                >
-                                by the
-                                <span
-                                  contenteditable="false"
-                                  class="text-yellow-300"
-                                  >{{
-                                    modalData && modalData.whoIssued
-                                      ? modalData.whoIssued.name + ", "
-                                      : ""
-                                  }}</span
-                                >.which is the responsible organ for
-                                registration and licensing of health
-                                professionals and with registration number
-                                <span contenteditable="false">
-                                  {{
-                                    modalData
-                                      ? modalData.licenseRegistrationNumber
-                                      : ""
-                                  }} </span
-                                >.
-                                <p class="ml-8 mt-8">
-                                  Hence we appreciate any assistance, which will
-                                  be rendered to
-                                  <span contenteditable="false">
-                                    {{
-                                      modalData &&
-                                      modalData.profile &&
-                                      modalData.profile.gender == "male"
-                                        ? "Him"
-                                        : "Her"
-                                    }} </span
-                                  >. With best regards
-                                </p>
-                              </div>
-                              <!--end of letter without experiance -->
-                              <!-- letter with experiance -->
-                              <div
-                                v-if="modalData.withExperiance"
-                                class="mt-large bg-white"
-                                id="pdf"
-                              >
-                                <h2 class="ml-4 mt-8" contenteditable="true">
-                                  To:
-                                  {{
-                                    modalData
-                                      ? modalData.whomGoodStandingFor
-                                      : ""
-                                  }}.
-                                </h2>
-
-                                <h3 class="ml-64 mb-8" contenteditable="true">
-                                  LETTER OF GOOD STANDING
-                                </h3>
-
-                                <h5 contenteditable="true">
-                                  This letter of good standing and confirmation
-                                  of registration is written upon request of
-                                  <span
-                                    contenteditable="false"
-                                    class="text-yellow-300"
-                                    >{{
-                                      modalData &&
-                                      modalData.applicantTitle &&
-                                      modalData.applicantTitle.name
-                                        ? modalData.applicantTitle.name
-                                        : ""
-                                    }}</span
-                                  >
-                                  <span
-                                    contenteditable="false"
-                                    class="ml-1 text-yellow-300"
-                                  >
-                                    {{
-                                      (modalData &&
-                                      modalData.profile &&
-                                      modalData.profile.name
-                                        ? modalData.profile.name
-                                        : "") +
-                                        " " +
-                                        (modalData &&
-                                        modalData.profile &&
-                                        modalData.profile.fatherName
-                                          ? modalData.profile.fatherName
-                                          : "") +
-                                        " " +
-                                        (modalData &&
-                                        modalData.profile &&
-                                        modalData.profile.grandFatherName
-                                          ? modalData.profile.grandFatherName
-                                          : "")
-                                    }}
-                                  </span>
-                                  .
-                                </h5>
-
-                                <h4 class="">
-                                  <span contenteditable="false">
-                                    {{
-                                      modalData &&
-                                      modalData.profile &&
-                                      modalData.profile.gender == "male"
-                                        ? "He"
-                                        : "She"
-                                    }}
-                                  </span>
-                                  <span contenteditable="true">
-                                    had been registered and licensed as
-                                  </span>
-
-                                  <span
-                                    contenteditable="false"
-                                    class="text-yellow-300"
-                                    >{{
-                                      modalData &&
-                                      modalData.GSProfessionals &&
-                                      modalData.GSProfessionals
-                                        .professionalTypes
-                                        ? modalData.GSProfessionals
-                                            .professionalTypes.name
-                                        : ""
-                                    }}</span
-                                  >
-                                  <span contenteditable="true"> on </span>
-                                  <span
-                                    class="text-yellow-300"
-                                    contenteditable="false"
-                                    >{{
-                                      modalData
-                                        ? moment(
-                                            modalData
-                                              ? modalData.licenseIssuedDate
-                                              : ""
-                                          ).format("MMMM D, YYYY")
-                                        : ""
-                                    }}</span
-                                  >
-
-                                  <span contenteditable="true"> by </span>
-
-                                  <span
-                                    contenteditable="false"
-                                    class="text-yellow-300"
-                                    >{{
-                                      modalData && modalData.whoIssued
-                                        ? modalData.whoIssued.name + ", "
-                                        : ""
-                                    }}</span
-                                  >
-
-                                  <span contenteditable="true"
-                                    >which is the responsible organ for
-                                    registration and licensing of health
-                                    professionals and with registration number
-                                  </span>
-                                  <span contenteditable="false">
-                                    {{
-                                      modalData
-                                        ? modalData.licenseRegistrationNumber
-                                        : ""
-                                    }}
-                                  </span>
-
-                                  .
-                                </h4>
-                                <h4 class=" mt-8">
-                                  <span contenteditable="false">
-                                    {{
-                                      modalData && modalData.profile
-                                        ? modalData.profile.gender == "male"
-                                          ? "He"
-                                          : "She"
-                                        : ""
-                                    }}
-                                  </span>
-                                  <span>
-                                    has been working From
-                                    <span contenteditable="true">
-                                      __/__/__</span
-                                    >
-                                    to
-                                    <span contenteditable="true">
-                                      __/__/__</span
-                                    >
-                                    in Ethiopia.
-                                  </span>
-
-                                  <p contenteditable="true">
-                                    Since __/__/__ registration, till __/__/__
-                                    <span contenteditable="false">
-                                      {{
-                                        modalData && modalData.profile
-                                          ? modalData.profile.gender == "male"
-                                            ? "He"
-                                            : "She"
-                                          : ""
-                                      }}
-                                    </span>
-                                    has no any reported medico legal records and
-                                    malpractices while
-                                    <span contenteditable="false">
-                                      {{
-                                        modalData && modalData.profile
-                                          ? modalData.profile.gender == "male"
-                                            ? "He"
-                                            : "She"
-                                          : ""
-                                      }}
-                                    </span>
-                                    has practiced
-                                    <span class="text-yellow-300">
-                                      {{
-                                        modalData &&
-                                        modalData.GSProfessionals &&
-                                        modalData.GSProfessionals
-                                          .professionalTypes
-                                          ? modalData.GSProfessionals
-                                              .professionalTypes.name
-                                          : ""
-                                      }}</span
-                                    >
-                                    medical profession in Ethiopia.
-                                  </p>
-                                </h4>
-
-                                .
-
-                                <h5 class="ml-8 mt-8" contenteditable="true">
-                                  Hence we appreciate any assistance, which will
-                                  be rendered to
-                                  <span>
-                                    {{
-                                      modalData && modalData.profile
-                                        ? modalData.profile.gender == "male"
-                                          ? "him"
-                                          : "her"
-                                        : ""
-                                    }} </span
-                                  >.
-                                </h5>
-                                <h5 class="ml-8 mb-8" contenteditable="true">
-                                  With best regards
-                                </h5>
-
-                                <div
-                                  class="flex justify-start"
-                                  v-if="expertLevelId != 3"
-                                >
-                                  <h3 class="font-bold" contenteditable="true">
-                                    Address
-                                  </h3>
-                                </div>
-                              </div>
-                              <!--end of letter with experiance -->
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :can-cancel="true"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="0.7"
+            ></loading>
+            <froala
+              id="edit"
+              :tag="'textarea'"
+              :config="config"
+              v-model:value="model"
+            ></froala>
+            <div id="printedDiv" class="grow-0 shrink-0 basis-auto w-full px-8">
+              <div :v-html="model"></div>
+            </div>
           </div>
         </div>
 
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer p-2 flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
-          <button
-            type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+          <!-- <a
+            class="py-3 mr-2 cursor-pointer inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             @click="printPdf"
           >
             <i class="fa fa-check"></i>
             Generate
-          </button>
-          <button
-            type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+          </a> -->
+          <a
+            class="py-3 w-auto cursor-pointer inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:border-primary-600 hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
             Close
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -512,10 +67,10 @@ import { ref, computed } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { jsPDF } from "jspdf";
+import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import html2pdf from "html2pdf.js";
+
 export default {
   props: ["modalDataGenerate"],
   components: { Loading },
@@ -528,14 +83,12 @@ export default {
     const toast = useToast();
     let isLoading = ref(false);
     let myRegion = ref(true);
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
     let show = ref(false);
-
+    let qrSrc = ref("");
     let showLoading = ref(false);
     let isUserApproved = ref(false);
 
@@ -571,72 +124,113 @@ export default {
     let showErrorFlash = ref(false);
     let profile = ref({});
     let applicationType = ref("");
-
     let getReviewId = ref(0);
     let modalData = computed(() => props.modalDataGenerate);
+    let tempModel = computed(
+      () => `<br> 
+      <div class="grid grid-cols-2 mt-32"><div class="flex justify-start mt-1" contenteditable="false"> <img src="${
+        qrSrc.value
+      }" alt="" style="height: 120px; width: 120px" /></div></div>
+   <h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 2rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;' id="isPasted">To:${
+     modalData.value ? modalData.value.whomGoodStandingFor : ""
+   }</h5><div   style="box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0px; padding: 0px; font-family: Dosis-Bold, sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.3px; display: flex; justify-content: center; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 1rem 0px 2rem; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>LETTER OF GOOD STANDING</h5></div><div   style="box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0px; padding: 0px; font-family: Dosis-Bold, sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.3px; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>This letter of good standing and confirmation of registration is written upon the request of  ${
+        modalData.value && modalData.value.applicantTitle
+          ? modalData.value.applicantTitle.name
+          : ""
+      }. ${
+        modalData.value && modalData.value.profile && modalData.value.profile.name
+          ? modalData.value.profile.name
+          : ""
+      } ${
+        modalData.value && modalData.value.profile && modalData.value.profile.fatherName
+          ? modalData.value.profile.fatherName
+          : ""
+      } ${
+        modalData.value &&
+        modalData.value.profile &&
+        modalData.value.profile.grandFatherName
+          ? modalData.value.profile.grandFatherName
+          : ""
+      } </h5><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0.75rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>ATO. daro cala daraje has been registered as a ${
+        modalData.value &&
+        modalData.value.GSProfessionals &&
+        modalData.value.GSProfessionals.professionalTypes &&
+        modalData.value.GSProfessionals.professionalTypes.name == "other"
+          ? modalData.value.GSProfessionals.otherProfessionType
+          : modalData.value.GSProfessionals &&
+            modalData.value.GSProfessionals.professionalTypes
+          ? modalData.value.GSProfessionals.professionalTypes.name
+          : ""
+      }, on ${
+        modalData.value
+          ? moment(modalData.value ? modalData.value.licenseIssuedDate : "").format(
+              "MMMM D, YYYY"
+            )
+          : ""
+      } by ${
+        modalData.value && modalData.value.whoIssued
+          ? modalData.value.whoIssued.name + ", "
+          : ""
+      } which is the responsible organ for the registration and licensing of health professionals, and the registration number is ${
+        modalData.value ? modalData.value.licenseRegistrationNumber : ""
+      }. From __/__/__ to __/__/__ has been working here in Ethiopia.</h5><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 1rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>Since his registration, till ${new Date()
+        .toISOString()
+        .slice(
+          0,
+          10
+        )}, he has no reported medico-legal records and malpractices while he has practiced his medical profession in Ethiopia.</h5><h5  style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 1rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>Hence we appreciate any assistance, that will be rendered to  ${
+        modalData.value && modalData.value.profile && modalData.value.profile.name
+          ? modalData.value.profile.name
+          : ""
+      } ${
+        modalData.value && modalData.value.profile && modalData.value.profile.fatherName
+          ? modalData.value.profile.fatherName
+          : ""
+      } ${
+        modalData.value &&
+        modalData.value.profile &&
+        modalData.value.profile.grandFatherName
+          ? modalData.value.profile.grandFatherName
+          : ""
+      } </h5></div><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 3rem 0px 12rem; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>With best regards</h5>`
+    );
+    let model = ref(tempModel);
+    const printPdf = async () => {
+      if (license.value.isReprint == false) {
+        license.value.isReprint = true;
+        license.value.isLicenseGenerated = true;
+        let req = {
+          data: { ...license.value, isLicenseGenerated: true },
+        };
 
-    const printPdf = () => {
-      isLoading.value = true;
-
-      var element = document.getElementById("printedDiv");
-      var opt = {
-        margin: 1,
-        filename: "myfile.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-      };
-
-      html2pdf()
-        .set(opt)
-        .from(element)
-        .save(
-          license.value && license.value.profile && license.value.profile.name
-            ? license.value.profile.name +
-                " " +
-                new Date().toISOString().slice(0, 10)
-            : ""
-        );
-
-      license.value.isLicenseGenerated &&
-      license.value.isLicenseGenerated == true
-        ? (license.value.isReprint = true)
-        : "";
-      license.value.isLicenseGenerated = true;
-
-      let req = {
-        data: { ...license.value, isLicenseGenerated: true },
-      };
-      store
-        .dispatch("reviewer/editGoodStanding", req)
-        .then((res) => {
-          if (res.statusText == "Created") {
-            toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+        store
+          .dispatch("reviewer/editGoodStanding", req)
+          .then((res) => {
+            if (res.statusText == "Created") {
+              toast.success("Letter updated successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+            } else {
+              toast.error(res, {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+            }
+          })
+          .catch((err) => {
+            console.log(err);
             isLoading.value = false;
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          } else {
-            toast.error(res, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          isLoading.value = false;
-        });
+          });
+      }
     };
 
     if (
@@ -672,9 +266,7 @@ export default {
     }
 
     userProfile.value.name =
-      modalData.value && modalData.value.profile
-        ? modalData.value.profile.name
-        : "";
+      modalData.value && modalData.value.profile ? modalData.value.profile.name : "";
     userProfile.value.fatherName =
       modalData.value && modalData.value.profile
         ? modalData.value.profile.fatherName
@@ -684,23 +276,85 @@ export default {
         ? modalData.value.profilegrandFatherName
         : "";
     userProfile.value.gender =
-      modalData.value && modalData.value.profile
-        ? modalData.value.profile.gender
-        : "";
+      modalData.value && modalData.value.profile ? modalData.value.profile.gender : "";
 
-    const apPosition = ref(
-      modalData.value ? modalData.value.applicantPosition : {}
-    );
+    const apPosition = ref(modalData.value ? modalData.value.applicantPosition : {});
     if (apPosition.value) {
-      applicantPosition.value = apPosition.value.name
-        ? apPosition.value.name
-        : "-";
+      applicantPosition.value = apPosition.value.name ? apPosition.value.name : "-";
     }
     getReviewId.value = modalData.value ? modalData.value.reviewerId : "";
     show.value = true;
+    let config = ref({
+      toolbarButtons: [
+        "fullscreen",
+        "bold",
+        "italic",
+        "underline",
+        "strikeThrough",
+        "subscript",
+        "superscript",
+        "|",
+        "fontFamily",
+        "fontSize",
+        "color",
+        "inlineStyle",
+        "paragraphStyle",
+        "|",
+        "paragraphFormat",
+        "align",
+        "formatOL",
+        "formatUL",
+        "outdent",
+        "indent",
+        "quote",
+        "-",
+        "insertTable",
+        "|",
+        "emoticons",
+        "specialCharacters",
+        "insertHR",
+        "selectAll",
+        "clearFormatting",
+        "|",
+        "print",
+        "help",
+        "html",
+        "|",
+        "undo",
+        "redo",
+        "trackChanges",
+        "markdown",
+      ],
+      events: {
+        initialized: async function () {
+          const printButton = document.getElementById("print-1");
+          if (printButton) {
+            printButton.addEventListener("click", function (event) {
+              event.preventDefault();
+            });
+          }
+
+          let staticUrl = STATIC_CERTIFICATE_URL;
+          let userId =
+            modalData.value && modalData.value.profile
+              ? modalData.value.profile.id
+              : null;
+          let applicationId = modalData.value ? modalData.value.id : null;
+          let applicationType = "GoodStanding";
+          const qrParam = { url: null };
+          qrParam.url =
+            staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
+          console.log(qrParam.url);
+          await store.dispatch("reviewer/getQrCode", qrParam).then((res) => {
+            qrSrc.value = res.data.data;
+          });
+        },
+      },
+    });
 
     return {
       license,
+      qrSrc,
       userProfile,
       activeClass,
       errorClass,
@@ -715,7 +369,8 @@ export default {
       show,
       showLoading,
       applicationType,
-
+      config,
+      model,
       licenseId,
       isUserApproved,
       isGoodStanding,
@@ -728,9 +383,30 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
+@import url("https://fonts.cdnfonts.com/css/times-new-roman");
+.mainText {
+  font-family: "Times New Roman", sans-serif !important;
+}
 .text-danger > label,
 .text-danger > h5 {
   color: red;
+}
+.normalFont {
+  font-family: serif !important;
+  letter-spacing: 2px;
+}
+[type="button"],
+[type="submit"],
+button {
+  min-width: 20px;
+  max-width: 20px;
+}
+a {
+  border: 1px solid black;
+}
+.fr-second-toolbar,
+#Layer_1 {
+  display: none;
 }
 </style>

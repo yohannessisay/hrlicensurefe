@@ -1,25 +1,19 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
   <div>
-    <div class="accordion mr-8" id="FilesAccordion">
-      <div
-        class="accordion-item bg-white border border-grey-200 p-4 rounded-lg"
+    <div class="accordion mr-8 mt-24 sm" id="FilesAccordion">
+      <h2
+        v-if="alreadyUploaded"
+        class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
       >
+        It seems like you have already attached the documents required to go to the next
+        step, if you wish to change any file, you can do so, else click next at the bottom
+        of the screen
+      </h2>
+      <div class="accordion-item bg-white border border-grey-200 p-4 rounded-lg">
         <h2 class="accordion-header mb-0" id="headingOne">
           <button
-            class="
-              accordion-button
-              relative
-              flex
-              items-center
-              w-full
-              py-4
-              px-5
-              text-base text-gray-800 text-left
-              border-0
-              rounded-md
-              transition
-              focus:outline-none
-            "
+            class="accordion-button relative flex items-center w-full p-4 border text-gray-800 text-xl rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -36,84 +30,33 @@
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
-          <div class="accordion-body py-4 px-5">
+          <div class="accordion-body py-1 px-5">
             <div class="bg-red-800 py-5">
               <div class="overflow-x-auto w-full p-4">
                 <table
-                  class="
-                    max-w-full
-                    w-full
-                    whitespace-nowrap
-                    rounded-lg
-                    shadow-lg
-                    mb-8
-                    bg-white
-                    divide-y
-                    overflow-hidden
-                  "
+                  class="max-w-full w-full whitespace-nowrap rounded-lg mb-8 bg-white divide-y overflow-hidden"
                 >
                   <thead class="bg-lightMain-500">
                     <tr class="text-left">
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Document Name
                       </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Document Description
                       </th>
                       <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-left text-white
-                        "
+                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
                       >
                         Upload
                       </th>
 
                       <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-center text-white
-                        "
+                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
                         View
                       </th>
 
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Remark
                       </th>
                     </tr>
@@ -123,9 +66,7 @@
                       v-for="item in commonDocuments"
                       :key="item.id"
                       :class="
-                        fileUploadError[
-                          `file_upload_row_${item.documentType.code}`
-                        ]
+                        fileUploadError[`file_upload_row_${item.documentType.code}`]
                           ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
                           : 'accordion-body py-4 px-5 border-b rounded-lg'
                       "
@@ -135,9 +76,7 @@
                           <div>
                             <p class="">
                               {{ item.documentType.name }}
-                              <b v-if="item.isRequired" class="text-red-300"
-                                >(*)</b
-                              >
+                              <b v-if="item.isRequired" class="text-red-300">(*)</b>
                             </p>
                           </div>
                         </div>
@@ -160,10 +99,8 @@
                           <input
                             type="file"
                             required
-                            :id="
-                              'common_image_' + item.documentType.id + item.id
-                            "
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            :id="'common_image_' + item.documentType.id + item.id"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleCommonFileUpload(item, $event)"
@@ -174,41 +111,26 @@
                         <div class="flex items-center p-4">
                           <div>
                             <p class="">
-                              {{
-                                item.fileName
-                                  ? item.fileName
-                                  : "---------------"
-                              }}
+                              {{ item.fileName ? item.fileName : "---------------" }}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td
-                        class="px-6 py-4 text-center"
-                        v-if="item && item.existingFile"
-                      >
+                      <td class="px-6 py-4 text-center" v-if="item && item.existingFile">
                         <a
-                          :id="
-                            'common_image_href_' +
-                              item.documentType.id +
-                              item.id
-                          "
+                          :id="'common_image_href_' + item.documentType.id + item.id"
                           :href="item.existingFile"
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="
-                              'common_icon_' + item.documentType.id + item.id
-                            "
+                            :id="'common_icon_' + item.documentType.id + item.id"
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'common_image_lightbox_' +
-                                  item.documentType.id +
-                                  item.id
+                                'common_image_lightbox_' + item.documentType.id + item.id
                               "
                               :src="item.existingFile"
                               class="w-full h-2 object-cover"
@@ -218,32 +140,19 @@
                       </td>
                       <td class="px-6 py-4 text-center" v-else>
                         <a
-                          :id="
-                            'common_image_href_' +
-                              item.documentType.id +
-                              item.id
-                          "
+                          :id="'common_image_href_' + item.documentType.id + item.id"
                           href=""
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="
-                              'common_icon_' + item.documentType.id + item.id
-                            "
-                            class="
-                              fa fa-eye
-                              cursor-pointer
-                              text-main-400
-                              disabled
-                            "
+                            :id="'common_icon_' + item.documentType.id + item.id"
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'common_image_lightbox_' +
-                                  item.documentType.id +
-                                  item.id
+                                'common_image_lightbox_' + item.documentType.id + item.id
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -272,32 +181,10 @@
           </div>
         </div>
       </div>
-      <div
-        class="
-          accordion-item
-          bg-white
-          border border-grey-200
-          p-4
-          mt-8
-          rounded-lg
-        "
-      >
-        <h2 class="accordion-header mb-0" id="headingTwo">
+      <div class="accordion-item bg-white border border-grey-200 p-1 mt-8 rounded-lg">
+        <h2 class="accordion-header mb-0 mr-1">
           <button
-            class="
-              accordion-button
-              relative
-              flex
-              items-center
-              w-full
-              py-4
-              px-5
-              text-base text-gray-800 text-left
-              border-0
-              rounded-md
-              transition
-              focus:outline-none
-            "
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -318,9 +205,9 @@
             <div
               v-for="table in educationalDocs"
               :key="table"
-              class="border-b-4 text-main-400 mb-8"
+              class="border-b-4 text-main-400 mb-8 border p-1 rounded-md"
             >
-              <h4 class="text-main-400 font-bold">
+              <h4 class="text-grey-800 font-bold border-b">
                 {{ table.educationalLevel ? table.educationalLevel.name : "" }}
                 Related Files
               </h4>
@@ -329,79 +216,28 @@
               </h5>
               <div class="overflow-x-auto w-full p-4">
                 <table
-                  class="
-                    w-full
-                    p-4
-                    whitespace-nowrap
-                    rounded-lg
-                    bg-white
-                    shadow-lg
-                    divide-y divide-gray-300
-                    overflow-hidden
-                    table-auto
-                  "
+                  class="w-full p-4 whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto"
                 >
                   <thead class="bg-lightMain-500 p-4">
                     <tr class="text-left">
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Document Name
                       </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Document Description
                       </th>
 
                       <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-left text-white
-                        "
+                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
                       >
                         Upload
                       </th>
                       <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-center text-white
-                        "
+                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
                         View
                       </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Remark
                       </th>
                     </tr>
@@ -424,9 +260,7 @@
                           <div>
                             <p class="">
                               {{ item.documentType.name }}
-                              <b v-if="item.isRequired" class="text-red-300"
-                                >(*)</b
-                              >
+                              <b v-if="item.isRequired" class="text-red-300">(*)</b>
                             </p>
                           </div>
                         </div>
@@ -450,10 +284,8 @@
                           <input
                             type="file"
                             :required="item.isRequired"
-                            :id="
-                              `files_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                            "
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            :id="`files_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event, table)"
@@ -465,23 +297,16 @@
                         <div class="flex items-center p-4">
                           <div>
                             <p class="">
-                              {{
-                                item.fileName
-                                  ? item.fileName
-                                  : "---------------"
-                              }}
+                              {{ item.fileName ? item.fileName : "---------------" }}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td
-                        v-if="item.existingFile"
-                        class="px-6 py-4 text-center"
-                      >
+                      <td v-if="item.existingFile" class="px-6 py-4 text-center">
                         <a
                           :id="
                             'image_href_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           :href="item.existingFile"
                           :data-title="item.name ? item.name : '-----'"
@@ -490,9 +315,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${
-                                  item.documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -500,9 +325,9 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${
-                                    item.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  item.documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="item.existingFile"
                               class="w-full h-2 object-cover"
@@ -514,9 +339,9 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${
-                                item.documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            `${
+                              item.documentType.code
+                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -525,49 +350,25 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${
-                                  item.documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
-                            class="
-                              fa fa-eye
-                              cursor-pointer
-                              text-main-400
-                              disabled
-                             
-                            "
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
                           >
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${
-                                    item.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  item.documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
                             />
                           </i>
                         </a>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p
-                              v-if="
-                                fileSizeExceed[
-                                  `${
-                                    item.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                ]
-                              "
-                              class="text-red-300"
-                            >
-                              Uploaded file Size has exceeded the limit (3 MB)
-                            </p>
-                          </div>
-                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -593,9 +394,7 @@
                           <div>
                             <p class="">
                               {{ parentItem[0].documentType.name }}
-                              <b
-                                v-if="parentItem[0].isRequired"
-                                class="text-red-300"
+                              <b v-if="parentItem[0].isRequired" class="text-red-300"
                                 >(*)</b
                               >
                             </p>
@@ -621,18 +420,14 @@
                           <input
                             type="file"
                             :required="parentItem[0].isRequired"
-                            :id="
-                              `files_
+                            :id="`files_
                                     ${
                                       parentItem[0].documentType.code
-                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                            "
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
-                            v-on:change="
-                              handleFileUpload(parentItem[0], $event, table)
-                            "
+                            v-on:change="handleFileUpload(parentItem[0], $event, table)"
                           />
                         </p>
                       </td>
@@ -652,27 +447,22 @@
                           </div>
                         </div>
                       </td>
-                      <td
-                        v-if="parentItem[0].existingFile"
-                        class="px-6 py-4 text-center"
-                      >
+                      <td v-if="parentItem[0].existingFile" class="px-6 py-4 text-center">
                         <a
                           :id="
                             'image_href_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           :href="parentItem[0].existingFile"
-                          :data-title="
-                            parentItem[0].name ? parentItem[0].name : '-----'
-                          "
+                          :data-title="parentItem[0].name ? parentItem[0].name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
                             :id="
                               'educational_icon_' +
-                                `${
-                                  parentItem[0].documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -680,9 +470,9 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${
-                                    parentItem[0].documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  parentItem[0].documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="parentItem[0].existingFile"
                               class="w-full h-2 object-cover"
@@ -694,9 +484,9 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${
-                                parentItem[0].documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            `${
+                              parentItem[0].documentType.code
+                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           href=""
                           :data-title="parentItem[0].name ? item.name : '-----'"
@@ -705,48 +495,25 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${
-                                  parentItem[0].documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
-                            class="
-                              fa fa-eye
-                              cursor-pointer
-                              text-main-400
-                              disabled
-                            "
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
                           >
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${
-                                    parentItem[0].documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  parentItem[0].documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
                             />
                           </i>
                         </a>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p
-                              v-if="
-                                fileSizeExceed[
-                                  `${
-                                    parentItem[0].documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                ]
-                              "
-                              class="text-red-300"
-                            >
-                              Uploaded file Size has exceeded the limit (3 MB)
-                            </p>
-                          </div>
-                        </div>
                       </td>
                     </tr>
                     <!-- if parent doc has more than 1 elements -->
@@ -772,9 +539,7 @@
                                   parentItem[0].documentType.name.length - 2
                                 )
                               }}
-                              <b
-                                v-if="parentItem[0].isRequired"
-                                class="text-red-300"
+                              <b v-if="parentItem[0].isRequired" class="text-red-300"
                                 >(*)</b
                               >
                             </p>
@@ -789,24 +554,7 @@
 
                       <td class="px-6 text-center">
                         <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-white
-                            hover:bg-main-400 hover:text-white
-                            text-main-400 text-xs
-                            font-bold
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-md
-                            active:border-main-400
-                            transition
-                            duration-150
-                            ease-in-out
-                            border
-                          "
+                          class="inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
                           type="button"
                           @click="addMore(parentItem[0])"
                         >
@@ -819,43 +567,27 @@
                     <tr>
                       <div
                         v-if="
-                          showNestedDocuments[
-                            parentItem[0].documentType.code
-                          ] != null
+                          showNestedDocuments[parentItem[0].documentType.code] != null
                         "
                         class="accordion p-4"
-                        :id="
-                          `accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                        "
+                        :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
                         style="width: max-content"
                       >
-                        <div
-                          class="
-                            shadow-lg
-                            w-full
-                            bg-white
-                            border border-grey-400
-                            ml-8
-                          "
-                        >
+                        <div class="w-full bg-white border border-grey-400 ml-8">
                           <div
                             :id="
                               'docAccordion_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class=""
-                            :aria-labelledby="
-                              `headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            "
-                            :data-bs-parent="
-                              `#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            "
+                            :aria-labelledby="`headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                            :data-bs-parent="`#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
                           >
                             <div class="accordion-body py-4 px-5">
                               <div class="bg-lightMain-500 rounded-sm p-2">
                                 <small class="text-white"
-                                  >Only the first file upload is required, the
-                                  remaining ones are optional</small
+                                  >Only the first file upload is required, the remaining
+                                  ones are optional</small
                                 >
                               </div>
 
@@ -901,10 +633,8 @@
                                     <div>
                                       <p class="">
                                         {{
-                                          parentChildItem.documentType
-                                            .description
-                                            ? parentChildItem.documentType
-                                                .description
+                                          parentChildItem.documentType.description
+                                            ? parentChildItem.documentType.description
                                             : "- "
                                         }}
                                       </p>
@@ -924,29 +654,19 @@
                                     <input
                                       type="file"
                                       :required="parentChildItem.isRequired"
-                                      :id="
-                                        `files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                      "
-                                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="
-                                        `imageUploader${parentChildItem.id}`
-                                      "
+                                      :id="`files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
+                                      accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
+                                      :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
-                                        handleFileUpload(
-                                          parentChildItem,
-                                          $event,
-                                          table
-                                        )
+                                        handleFileUpload(parentChildItem, $event, table)
                                       "
                                     />
                                   </p>
                                 </td>
                                 <td
                                   class="px-6 py-4"
-                                  v-if="
-                                    parentChildItem && parentChildItem.fileName
-                                  "
+                                  v-if="parentChildItem && parentChildItem.fileName"
                                 >
                                   <div class="flex items-center p-4">
                                     <div>
@@ -963,18 +683,18 @@
                                 <td
                                   v-if="
                                     parentChildItem.existingFile &&
-                                      showNestedDocuments[
-                                        parentItem[0].documentType.code
-                                      ] >= index
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index
                                   "
                                   class="px-6 py-4 text-center"
                                 >
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${
-                                          parentChildItem.documentType.code
-                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      `${
+                                        parentChildItem.documentType.code
+                                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     :href="parentChildItem.existingFile"
                                     :data-title="
@@ -987,9 +707,9 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${
-                                            parentChildItem.documentType.code
-                                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
                                       class="fa fa-eye cursor-pointer text-main-400"
                                       aria-hidden="true"
@@ -997,9 +717,9 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${
-                                              parentChildItem.documentType.code
-                                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                          `${
+                                            parentChildItem.documentType.code
+                                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         :src="parentChildItem.existingFile"
                                         class="w-full h-2 object-cover"
@@ -1018,7 +738,7 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     href=""
                                     :data-title="
@@ -1029,20 +749,15 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                        `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
-                                      class="
-                                        fa fa-eye
-                                        cursor-pointer
-                                        text-main-400
-                                        disabled
-                                      "
+                                      class="fa fa-eye cursor-pointer text-main-400 disabled"
                                       aria-hidden="true"
                                     >
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                          `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         src=""
                                         class="w-full h-2 object-cover"
@@ -1050,22 +765,20 @@
                                     </i>
                                   </a>
                                 </td>
-                                <td class="px-6 py-4">
-                                  <div class="flex items-center p-4">
-                                    <div>
-                                      <p
-                                        v-if="
-                                          fileSizeExceed[
-                                            `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                          ]
-                                        "
-                                        class="text-red-300"
-                                      >
-                                        Uploaded file Size has exceeded the
-                                        limit (3 MB)
-                                      </p>
-                                    </div>
-                                  </div>
+                                <td
+                                  v-if="
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index
+                                  "
+                                >
+                                  <span
+                                    class="ml-4 cursor-pointer"
+                                    @click="
+                                      removeChildUpload(parentItem[0].documentType.code)
+                                    "
+                                    ><i class="fa-solid fa-trash text-red-300"></i
+                                  ></span>
                                 </td>
                               </tr>
                             </div>
@@ -1076,93 +789,56 @@
                   </tbody>
                 </table>
                 <small
-                  >Note:-document names with
-                  <b class="text-red-300">(*)</b> must be uploaded in order to
-                  go forward with application process</small
+                  >Note:-document names with <b class="text-red-300">(*)</b> must be
+                  uploaded in order to go forward with application process</small
                 >
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
+        <h2 class="text-yellow-300 font-bold text-3xl">
+          Please attach the following files to proceed
+        </h2>
+        <li
+          class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
+          v-for="error in errorDocuments"
+          :key="error"
+        >
+          {{ error.name }}
+        </li>
+      </div>
     </div>
-    <div class="flex justify-end mr-8 mb-8">
-      <button
-        class="
-          mt-8
-          inline-block
-          px-6
-          py-2.5
-          bg-white
-          hover:bg-main-400 hover:text-white
-          text-main-400 text-xs
-          font-bold
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          active:border-main-400
-          transition
-          duration-150
-          ease-in-out
-          border
-        "
-        type="submit"
-        @click="saveDraft()"
-      >
-        Save as draft
-      </button>
-      <button
-        class="
-          mt-8
-          inline-block
-          px-6
-          py-2.5
-          bg-white
-          hover:bg-main-400 hover:text-white
-          text-main-400 text-xs
-          font-bold
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          active:border-main-400
-          transition
-          duration-150
-          ease-in-out
-          border
-        "
-        @click="back()"
-      >
-        back
-      </button>
-      <button
-        class="
-          mt-8
-          inline-block
-          px-6
-          py-2.5
-          bg-white
-          hover:bg-main-400 hover:text-white
-          text-main-400 text-xs
-          font-bold
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          active:border-main-400
-          transition
-          duration-150
-          ease-in-out
-          border
-        "
-        @click="next()"
-      >
-        next
-      </button>
+    <div class="vld-parent mt-4">
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div class="flex justify-end mr-8 mb-8">
+        <button
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
+          type="submit"
+          @click="saveDraft()"
+        >
+          Save as draft
+        </button>
+        <button
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
+          @click="back()"
+        >
+          back
+        </button>
+        <button
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
+          @click="next()"
+        >
+          next
+        </button>
+      </div>
     </div>
-
-    <div class="flex justify-right mr-0"></div>
   </div>
   <!--<filePreview :modalData="filePreviewData"> </filePreview>-->
 </template>
@@ -1170,22 +846,24 @@
 import { ref, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-
+import Compressor from "compressorjs";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
-
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: {},
+  components: { Loading },
 
   // eslint-disable-next-line vue/no-setup-props-destructure
   setup(props, { emit }) {
     let store = useStore();
     const toast = useToast();
-
+    let isLoading = ref(false);
     let documents = ref([]);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
     let goToNext = ref(false);
+    let alreadyUploaded = ref(false);
     let educationalDocs = ref([]);
     let localData = ref({});
     let filePreviewData = ref({
@@ -1197,7 +875,6 @@ export default {
     let existingDocs = [];
     let files = ref("");
     let maxFileSize = ref();
-    let db;
     let dbVersion = 1;
     let isImage = ref({});
     let isPdf = ref({});
@@ -1215,12 +892,7 @@ export default {
     let formData = new FormData();
     let documentsUploaded = ref({});
     let renewalDocuments = ref([]);
-    let errorDocuments = ref([
-      {
-        name: "",
-        code: "",
-      },
-    ]);
+    let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
 
     const previewFile = (code, name) => {
@@ -1231,22 +903,16 @@ export default {
     };
 
     const handleCommonFileUpload = (data, event) => {
-      documentsUploaded.value[data.documentType.code] = "";
-      documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
-      let reader = new FileReader();
+      if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
+        documentsUploaded.value[data.documentType.code] = "";
+        documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
+        let reader = new FileReader();
 
-      let fileS = documentsUploaded.value[data.documentType.code].size;
+        let fileS = documentsUploaded.value[data.documentType.code].size;
 
-      if (fileS <= maxFileSize.value / 1000) {
-        isImage.value[data.documentType.code] = true;
-        documentsUploaded.value[data.documentType.code] =
-          event?.target?.files[0];
-        formData.append(data.documentType.code, event?.target?.files[0]);
-        delete fileSizeExceed.value[data.documentType.code];
-        delete fileUploadError.value[
-          "file_upload_row_" + data.documentType.code
-        ];
-        showImage.value = true;
+        isImage.value[data.documentType.code] = false;
+
+        delete fileUploadError.value["file_upload_row_" + data.documentType.code];
 
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
@@ -1258,7 +924,7 @@ export default {
 
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -1269,9 +935,7 @@ export default {
               imageId: "common_image_lightbox_" + data.documentType.code,
               documenttype: data.documentType ? data.documentType.name : "",
               documentCode: data.documentType ? data.documentType.code : "",
-              educationalLevel: data.educationalLevel
-                ? data.educationalLevel.name
-                : "",
+              educationalLevel: data.educationalLevel ? data.educationalLevel.name : "",
               fileName: event?.target?.files[0].name,
               image: reader.result,
             });
@@ -1281,30 +945,9 @@ export default {
           false
         );
 
-        if (documentsUploaded.value[data.documentType.code]) {
-          if (
-            /\.(jpe?g|png|gif)$/i.test(
-              documentsUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = true;
-            isPdf.value[data.documentType.code] = false;
-
-            reader.readAsDataURL(
-              documentsUploaded.value[data.documentType.code]
-            );
-          } else if (
-            /\.(pdf)$/i.test(
-              documentsUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = false;
-            isPdf.value[data.documentType.code] = true;
-            reader.readAsDataURL(
-              documentsUploaded.value[data.documentType.code]
-            );
-          }
-        }
+        isPdf.value[data.documentType.code] = true;
+        formData.append(data.documentType.code, event?.target?.files[0]);
+        reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
         let icon = document.getElementById(
           "common_icon_" + data.documentType.id + data.id
         );
@@ -1327,62 +970,146 @@ export default {
         }
 
         output
-          ? (output.onload = function() {
+          ? (output.onload = function () {
               URL.revokeObjectURL(output.src); // free memory
             })
           : "";
       } else {
-        fileSizeExceed.value[data.documentType.code] = true;
-        documentsUploaded.value[data.documentType.code] = "";
+        new Compressor(event?.target?.files[0], {
+          quality: 0.5,
+
+          // The compression process is asynchronous,
+          // which means you have to access the `result` in the `success` hook function.
+          success(result) {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(new File([result], result.name));
+            event.target.files = dataTransfer.files;
+            documentsUploaded.value[data.documentType.code] = "";
+            documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
+            let reader = new FileReader();
+
+            let fileS = documentsUploaded.value[data.documentType.code].size;
+
+            delete fileUploadError.value["file_upload_row_" + data.documentType.code];
+            showImage.value = true;
+
+            if (fileS > 0 && fileS < 1000) {
+              fileSize.value += "B";
+            } else if (fileS > 1000 && fileS < 1000000) {
+              fileSize.value = fileS / 1000 + "kB";
+            } else {
+              fileSize.value = fileS / 1000000 + "MB";
+            }
+
+            reader.addEventListener(
+              "load",
+              function () {
+                showPreview.value = true;
+
+                previewDocuments.value[data.documentType.code] = reader.result;
+                imageData = imageData.filter(
+                  (el) => el.documenttype != data.documentType.name
+                );
+                imageData.push({
+                  imageId: "common_image_lightbox_" + data.documentType.code,
+                  documenttype: data.documentType ? data.documentType.name : "",
+                  documentCode: data.documentType ? data.documentType.code : "",
+                  educationalLevel: data.educationalLevel
+                    ? data.educationalLevel.name
+                    : "",
+                  fileName: event?.target?.files[0].name,
+                  image: reader.result,
+                });
+
+                documentToSave.value[data.documentType.code] = reader.result;
+              },
+              false
+            );
+
+            isImage.value[data.documentType.code] = true;
+            isPdf.value[data.documentType.code] = false;
+            formData.append(data.documentType.code, event?.target?.files[0]);
+            reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
+
+            let icon = document.getElementById(
+              "common_icon_" + data.documentType.id + data.id
+            );
+
+            if (icon.classList.contains("disabled")) {
+              icon.classList.toggle("disabled");
+            }
+
+            let output = document.getElementById(
+              "common_image_lightbox_" + data.documentType.id + data.id
+            );
+
+            let outputHref = document.getElementById(
+              "common_image_" + data.documentType.id + data.id
+            );
+
+            outputHref.href = URL.createObjectURL(event.target.files[0]);
+            if (output && output.src) {
+              output.src = URL.createObjectURL(event.target.files[0]);
+            }
+
+            output
+              ? (output.onload = function () {
+                  URL.revokeObjectURL(output.src); // free memory
+                })
+              : "";
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
       }
     };
 
     const handleFileUpload = (data, event, pro) => {
-      documentsUploaded.value[
-        data.documentType.code +
-          "_" +
-          data.educationalLevel.code.toUpperCase() +
-          "_" +
-          pro.professionType.code.toUpperCase()
-      ] = "";
-      documentsUploaded.value[
-        data.documentType.code +
-          "_" +
-          data.educationalLevel.code.toUpperCase() +
-          "_" +
-          pro.professionType.code.toUpperCase()
-      ] = event?.target?.files[0];
-      let reader = new FileReader();
-
-      let fileS =
+      if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
+        let reader = new FileReader();
         documentsUploaded.value[
           data.documentType.code +
             "_" +
             data.educationalLevel.code.toUpperCase() +
             "_" +
             pro.professionType.code.toUpperCase()
-        ].size;
+        ] = "";
 
-      if (fileS <= maxFileSize.value / 1000) {
-        if (data.parentDocument) {
+        documentsUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = event?.target?.files[0];
+
+        delete fileUploadError.value[
+          "file_upload_row_" +
+            data.documentType.code.toUpperCase() +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ];
+
+        let fileS =
           documentsUploaded.value[
             data.documentType.code +
               "_" +
               data.educationalLevel.code.toUpperCase() +
               "_" +
               pro.professionType.code.toUpperCase()
-          ] = event?.target?.files[0];
-        } else {
-          documentsUploaded.value[
-            data.documentType.code +
-              "_" +
-              data.educationalLevel.code.toUpperCase() +
-              "_" +
-              pro.professionType.code.toUpperCase()
-          ] = event?.target?.files[0];
-        }
+          ].size;
 
         isImage.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = false;
+        isPdf.value[
           data.documentType.code +
             "_" +
             data.educationalLevel.code.toUpperCase() +
@@ -1398,14 +1125,6 @@ export default {
 
           event?.target?.files[0]
         );
-        delete fileSizeExceed.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ];
-        showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
@@ -1414,17 +1133,10 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
-        delete fileUploadError.value[
-          "file_upload_row_" +
-            data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ];
+
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
 
             previewDocuments.value[
@@ -1450,18 +1162,15 @@ export default {
                 data.educationalLevel.code.toUpperCase() +
                 "_" +
                 pro.professionType.code.toUpperCase(),
-              educationalLevel: data.educationalLevel
-                ? data.educationalLevel.name
-                : "",
+              educationalLevel: data.educationalLevel ? data.educationalLevel.name : "",
               fileName: event?.target?.files[0].name,
               image: reader.result,
             });
-            // documentsUploaded.value[data.documentType.code] = reader.result;
           },
           false
         );
 
-        if (
+        reader.readAsDataURL(
           documentsUploaded.value[
             data.documentType.code +
               "_" +
@@ -1469,78 +1178,7 @@ export default {
               "_" +
               pro.professionType.code.toUpperCase()
           ]
-        ) {
-          if (
-            /\.(jpe?g|png|gif)$/i.test(
-              documentsUploaded.value[
-                data.documentType.code +
-                  "_" +
-                  data.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  pro.professionType.code.toUpperCase()
-              ].name
-            )
-          ) {
-            isImage.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = true;
-            isPdf.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = false;
-
-            reader.readAsDataURL(
-              documentsUploaded.value[
-                data.documentType.code +
-                  "_" +
-                  data.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  pro.professionType.code.toUpperCase()
-              ]
-            );
-          } else if (
-            /\.(pdf)$/i.test(
-              documentsUploaded.value[
-                data.documentType.code +
-                  "_" +
-                  data.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  pro.professionType.code.toUpperCase()
-              ].name
-            )
-          ) {
-            isImage.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = false;
-            isPdf.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = true;
-            reader.readAsDataURL(
-              documentsUploaded.value[
-                data.documentType.code +
-                  "_" +
-                  data.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  pro.professionType.code.toUpperCase()
-              ]
-            );
-          }
-        }
+        );
         let icon = document.getElementById(
           "educational_icon_" +
             data.documentType.code +
@@ -1575,26 +1213,187 @@ export default {
         }
 
         output
-          ? (output.onload = function() {
+          ? (output.onload = function () {
               URL.revokeObjectURL(output.src); // free memory
             })
           : "";
       } else {
-        fileSizeExceed.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ] = true;
+        new Compressor(event?.target?.files[0], {
+          quality: 0.5,
 
-        documentsUploaded.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ] = "";
+          // The compression process is asynchronous,
+          // which means you have to access the `result` in the `success` hook function.
+          success(result) {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(new File([result], result.name));
+            let reader = new FileReader();
+            event.target.files = dataTransfer.files;
+            documentsUploaded.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = "";
+            documentsUploaded.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = event?.target?.files[0];
+
+            let fileS =
+              documentsUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ].size;
+
+            isImage.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = true;
+            formData.append(
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase(),
+
+              event?.target?.files[0]
+            );
+
+            showImage.value = true;
+            if (fileS > 0 && fileS < 1000) {
+              fileSize.value += "B";
+            } else if (fileS > 1000 && fileS < 1000000) {
+              fileSize.value = fileS / 1000 + "kB";
+            } else {
+              fileSize.value = fileS / 1000000 + "MB";
+            }
+
+            delete fileUploadError.value[
+              "file_upload_row_" +
+                data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ];
+            reader.addEventListener(
+              "load",
+              function () {
+                showPreview.value = true;
+
+                previewDocuments.value[
+                  data.documentType.code +
+                    "_" +
+                    data.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    pro.professionType.code.toUpperCase()
+                ] = reader.result;
+
+                imageData.push({
+                  imageId:
+                    "image_lightbox_" +
+                    data.documentType.code +
+                    "_" +
+                    pro.educationalLevel.code +
+                    "_" +
+                    pro.professionType.code,
+                  documenttype: data.documentType ? data.documentType.name : "",
+                  documentCode:
+                    data.documentType.code +
+                    "_" +
+                    data.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    pro.professionType.code.toUpperCase(),
+                  educationalLevel: data.educationalLevel
+                    ? data.educationalLevel.name
+                    : "",
+                  fileName: event?.target?.files[0].name,
+                  image: reader.result,
+                });
+                // documentsUploaded.value[data.documentType.code] = reader.result;
+              },
+              false
+            );
+
+            isImage.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = true;
+            isPdf.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = false;
+
+            reader.readAsDataURL(
+              documentsUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ]
+            );
+
+            let icon = document.getElementById(
+              "educational_icon_" +
+                data.documentType.code +
+                "_" +
+                pro.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            );
+            if (icon.classList.contains("disabled")) {
+              icon.classList.toggle("disabled");
+            }
+
+            let output = document.getElementById(
+              "image_lightbox_" +
+                data.documentType.code +
+                "_" +
+                pro.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            );
+            let outputHref = document.getElementById(
+              "image_href_" +
+                data.documentType.code +
+                "_" +
+                pro.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            );
+            outputHref.href = URL.createObjectURL(event.target.files[0]);
+            if (output && output.src) {
+              output.src = URL.createObjectURL(event.target.files[0]);
+            }
+
+            output
+              ? (output.onload = function () {
+                  URL.revokeObjectURL(output.src); // free memory
+                })
+              : "";
+            // formData.append(data.documentType.code, result);
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
       }
     };
 
@@ -1603,10 +1402,12 @@ export default {
       let CMtemp = "";
       let NSTemp = "";
       var tempVal;
-
+      errorDocuments.value = [];
+      console.log(documentsUploaded.value);
       // if back button is clicked
       if (isBackButtonClicked.value == true) {
         // check common documents
+
         commonDocuments.value
           .filter((cd) => cd.isRequired)
           .forEach((element) => {
@@ -1627,25 +1428,26 @@ export default {
               ];
             }
           });
+
         // check normal docs with no parents
         educationalDocs.value.forEach((ed) => {
           ed.docs
             .filter((docs) => docs.isRequired)
             .forEach((single) => {
-              if (
-                documentsUploaded.value.some(
-                  (docs) =>
-                    docs.documentCode ==
-                    single.documentType.code.toUpperCase() +
-                      "_" +
-                      ed.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      ed.professionType.code.toUpperCase()
-                )
-              ) {
+              let tempEdVal = documentsUploaded.value.filter(
+                (el) =>
+                  el.documentCode ==
+                  single.documentType.code.toUpperCase() +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+              );
+
+              if (tempEdVal) {
                 delete fileUploadError.value[
                   "file_upload_row_" +
-                    single.documentType.code +
+                    single.documentType.code.toUpperCase() +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
@@ -1654,7 +1456,7 @@ export default {
               } else {
                 fileUploadError.value[
                   "file_upload_row_" +
-                    single.documentType.code +
+                    single.documentType.code.toUpperCase() +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
@@ -1663,7 +1465,7 @@ export default {
                 errorDocuments.value.push({
                   name: single.documentType.name,
                   code:
-                    single.documentType.code +
+                    single.documentType.code.toUpperCase() +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
@@ -1671,14 +1473,75 @@ export default {
                 });
               }
             });
+
+          //// check documetns with parents
+          for (var pd in ed.parentDoc) {
+            tempVal = renewalDocuments.value.filter(
+              (nld) => nld.parentDocument == pd && nld.isRequired
+            );
+
+            if (
+              tempVal &&
+              tempVal.length > 0 &&
+              tempVal[0] &&
+              tempVal[0].isRequired == true
+            ) {
+              // eslint-disable-next-line no-prototype-builtins
+              NSTemp = documentsUploaded.value.filter(
+                (el) =>
+                  el.documentCode ==
+                  tempVal[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+              );
+
+              if (NSTemp && NSTemp != "" && NSTemp[0]) {
+                delete fileUploadError.value[
+                  "file_upload_row_" +
+                    renewalDocuments.value.filter(
+                      (nld) => nld.parentDocument == pd && nld.isRequired
+                    )[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+                ];
+              } else {
+                fileUploadError.value[
+                  "file_upload_row_" +
+                    renewalDocuments.value.filter(
+                      (nld) => nld.parentDocument == pd && nld.isRequired
+                    )[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+                ] = true;
+                errorDocuments.value.push({
+                  name: renewalDocuments.value.filter(
+                    (nld) => nld.parentDocument == pd && nld.isRequired
+                  )[0].documentType.name,
+                  code:
+                    renewalDocuments.value.filter(
+                      (nld) => nld.parentDocument == pd && nld.isRequired
+                    )[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase(),
+                });
+              }
+            }
+          }
         });
       } else {
         commonDocuments.value
           .filter((cd) => cd.isRequired)
           .forEach((element) => {
-            CMtemp = documentsUploaded.value.hasOwnProperty(
-              element.documentType.code
-            );
+            // eslint-disable-next-line no-prototype-builtins
+            CMtemp = documentsUploaded.value.hasOwnProperty(element.documentType.code);
 
             if (!CMtemp) {
               fileUploadError.value[
@@ -1703,6 +1566,7 @@ export default {
           ed.docs
             .filter((docs) => docs.isRequired)
             .forEach((single) => {
+              // eslint-disable-next-line no-prototype-builtins
               temp = documentsUploaded.value.hasOwnProperty(
                 single.documentType.code +
                   "_" +
@@ -1752,6 +1616,7 @@ export default {
               tempVal[0] &&
               tempVal[0].isRequired == true
             ) {
+              // eslint-disable-next-line no-prototype-builtins
               NSTemp = documentsUploaded.value.hasOwnProperty(
                 tempVal[0].documentType.code +
                   "_" +
@@ -1796,35 +1661,23 @@ export default {
       let file = await fetch(url)
         .then((res) => res.blob())
         .then((blob) => {
-          return new File([blob], fileName, { type: "image/png" });
+          return new File([blob], fileName, {
+            type: /\.(pdf)$/i.test(fileName) ? "application/pdf" : "image/png",
+          });
         });
       return file;
     };
     const next = () => {
       let documentValidation = checkDocuments();
 
-      if (Object.keys(fileSizeExceed.value).length > 0) {
-        toast.error(
-          "Please review the file uploads that has exceeded the limit",
-          {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          }
-        );
-      } else if (
-        documentValidation &&
-        Object.keys(documentValidation).length == 0
-      ) {
+      if (documentValidation && Object.keys(documentValidation).length == 0) {
         let finalLocalData = {
           created: new Date(),
           data: [],
         };
         let db;
         let request = indexedDB.open("RNdocumentUploads", dbVersion);
-        request.onsuccess = function() {
+        request.onsuccess = function () {
           db = request.result;
           let transaction = db.transaction(["RNdocumentUploads"], "readwrite");
 
@@ -1865,24 +1718,26 @@ export default {
             store.dispatch("renewal/setTempDocs", formData);
           }
           finalLocalData.data = [...new Set(finalLocalData.data)];
-
           const objectStore = transaction.objectStore("RNdocumentUploads");
 
           const objectStoreRequest = objectStore.clear();
 
           objectStoreRequest.onsuccess = () => {
-            let addReq = transaction
-              .objectStore("RNdocumentUploads")
-              .put(finalLocalData);
+            let addReq = transaction.objectStore("RNdocumentUploads").put(finalLocalData);
 
-            addReq.onerror = function() {
+            addReq.onerror = function () {
               console.log(
                 "Error regarding your browser, please update your browser to the latest version"
               );
             };
 
-            transaction.oncomplete = function() {
+            transaction.oncomplete = function () {
               console.log("data stored");
+              let tempRN = localStorage.getItem("tempRN")
+                ? JSON.parse(localStorage.getItem("tempRN"))
+                : {};
+              tempRN.step = 3;
+              localStorage.setItem("tempRN", JSON.stringify(tempRN));
               emit("changeActiveState");
             };
           };
@@ -1910,12 +1765,20 @@ export default {
       }
     };
     const back = () => {
+      let tempRN = localStorage.getItem("tempRN")
+        ? JSON.parse(localStorage.getItem("tempRN"))
+        : false;
+      if (tempRN && tempRN.step != null) {
+        tempRN.step = 1;
+        localStorage.setItem("tempRN", JSON.stringify(tempRN));
+      }
+
       emit("changeActiveStateMinus");
     };
 
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
-
+      isLoading.value = true;
       let license = {
         action: "DraftEvent",
         data: {
@@ -1935,11 +1798,18 @@ export default {
             ? localData.value.nativeLanguageSelected.id
             : null,
           isLegal: true,
+          regionId: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.id
+            : "",
+          regionCode: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.code
+            : "FED",
         },
       };
-      store.dispatch("renewal/addRenewal", license).then((res) => {
+      store.dispatch("renewal/addRenewalLicense", license).then((res) => {
         let licenseId = res.data.data.id;
         let payload = { document: formData, id: licenseId };
+        localStorage.setItem("tempRN", JSON.stringify({ id: licenseId, step: 3 }));
         store
           .dispatch("renewal/uploadDocuments", payload)
           .then((res) => {
@@ -1951,7 +1821,10 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+              isLoading.value = false;
               localStorage.removeItem("RNApplicationData");
+              indexedDB.deleteDatabase("RNdocumentUploads");
+              localStorage.removeItem("tempRN");
               location.reload();
             } else {
               toast.error("Error occured, please try again", {
@@ -1985,9 +1858,7 @@ export default {
     };
 
     const addMore = (parentItem) => {
-      if (
-        showNestedDocuments.value[parentItem.documentType.code] == undefined
-      ) {
+      if (showNestedDocuments.value[parentItem.documentType.code] == undefined) {
         showNestedDocuments.value[parentItem.documentType.code] = 0;
       } else {
         showNestedDocuments.value[parentItem.documentType.code] =
@@ -1995,27 +1866,25 @@ export default {
       }
     };
 
-    const initDb = () => {
+    const initDb = async () => {
       let request = indexedDB.open("RNdocumentUploads", dbVersion);
 
-      request.onerror = function() {
+      request.onerror = function () {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function() {
+      request.onsuccess = function () {
         let db = request.result;
         const tx = db.transaction("RNdocumentUploads", "readwrite");
         const store = tx.objectStore("RNdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function(evt) {
+        getAllIDB.onsuccess = function (evt) {
           existingDocs =
-            evt.target.result && evt.target.result[0]
-              ? evt.target.result[0].data
-              : {};
+            evt.target.result && evt.target.result[0] ? evt.target.result[0].data : {};
         };
       };
 
-      request.onupgradeneeded = function() {
+      request.onupgradeneeded = function () {
         let db = request.result;
         db.createObjectStore("RNdocumentUploads", {
           keyPath: "id",
@@ -2024,7 +1893,11 @@ export default {
       };
     };
 
-    onMounted(() => {
+    onMounted(async () => {
+      let tryAgain = localStorage.getItem("tempRN")
+        ? JSON.parse(localStorage.getItem("tempRN"))
+        : false;
+
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {
         alert(
@@ -2033,7 +1906,7 @@ export default {
 
         return;
       } else {
-        initDb();
+        await initDb();
 
         localData.value = window.localStorage.getItem("RNApplicationData")
           ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
@@ -2041,14 +1914,14 @@ export default {
 
         generalInfo.value = localData.value;
 
-        store.dispatch("newlicense/getApplicationCategories").then((res) => {
+        await store.dispatch("newlicense/getApplicationCategories").then(async (res) => {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "RA")
             : "";
           let educationLevels = generalInfo.value.multipleDepartment;
 
           //Get department docs
-          educationLevels.forEach((element) => {
+          await educationLevels.forEach((element) => {
             store
               .dispatch("renewal/getRNdocuments", [
                 categoryResults[0].id,
@@ -2063,18 +1936,12 @@ export default {
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
                   professionType: element.professionalType,
-                  docs: resp.filter(
-                    (element) => element.parentDocument == null
-                  ),
+                  docs: resp.filter((element) => element.parentDocument == null),
                   parentDoc: groupByKey(resp, "parentDocument"),
                 });
-                if (
-                  existingDocs &&
-                  existingDocs.length > 0 &&
-                  resp &&
-                  resp.length > 0
-                ) { 
+                if (existingDocs && existingDocs.length > 0 && resp && resp.length > 0) {
                   isBackButtonClicked.value = true;
+                  alreadyUploaded.value = true;
                   documentsUploaded.value = existingDocs;
                   educationalDocs.value.forEach((ed) => {
                     ed.docs
@@ -2111,15 +1978,17 @@ export default {
                         });
                       });
                     }
-                  }); 
+                  });
+                }
+                if (tryAgain && tryAgain.id != null && tryAgain.step == 3) {
+                  next();
                 }
               });
-             
           });
 
           //Get Common Docs
 
-          store
+          await store
             .dispatch("renewal/getCommonRNdocuments", [
               categoryResults[0].id,
               generalInfo.value.applicantTypeSelected.id,
@@ -2151,8 +2020,11 @@ export default {
         });
       }
     });
-
+    const removeChildUpload = (docCode) => {
+      showNestedDocuments.value[docCode] -= 1;
+    };
     return {
+      removeChildUpload,
       documents,
       commonDocuments,
       files,
@@ -2173,9 +2045,11 @@ export default {
       next,
       back,
       addMore,
+      alreadyUploaded,
       showNestedDocuments,
-
+      errorDocuments,
       fileSizeExceed,
+      isLoading,
     };
   },
 };
@@ -2191,7 +2065,7 @@ export default {
   padding: 7px;
 }
 
-.shadow-lg {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 

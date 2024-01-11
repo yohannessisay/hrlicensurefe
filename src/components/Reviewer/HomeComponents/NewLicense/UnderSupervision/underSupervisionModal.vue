@@ -25,7 +25,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -52,13 +52,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -86,7 +86,7 @@
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -150,7 +150,7 @@
                                 p-2
                                 rounded-lg
                                 m-1
-                                shadow-md
+                                 
                                 text-primary-500
                               "
                             >
@@ -199,7 +199,7 @@
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
+                                  >Marital Status:</span
                                 >
                                 <span class="text-grey-800">{{
                                   modalData.maritalStatus
@@ -228,7 +228,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-40
                                 h-40
                                 flex
@@ -247,7 +247,7 @@
                                 p-2
                                 rounded-lg
                                 m-1
-                                shadow-md
+                                 
                                 text-primary-500
                               "
                             >
@@ -289,7 +289,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-64
                                 flex
@@ -309,7 +309,7 @@
                                 p-2
                                 rounded-lg
                                 m-1
-                                shadow-md
+                                 
                                 text-primary-500
                               "
                               v-for="education in modalData.data
@@ -384,7 +384,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-40
                                 h-40
                                 flex
@@ -403,7 +403,7 @@
                                 p-2
                                 rounded-lg
                                 m-1
-                                shadow-md
+                                 
                                 text-primary-500
                               "
                             >
@@ -444,21 +444,39 @@
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="block p-6 rounded-lg   bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
                         <div class="grid grid-cols-4 gap-4">
                           <div
-                            class="mt-4 mb-8 bg-white"
+                            class="mt-4 mb-8 bg-white  "
                             style="border-radius: 15px; padding: 10px"
                             v-for="document in modalData.documents"
                             :key="document.id"
                           >
-                            <div class="flex justify-center">
+                            <div
+                              v-if="
+                                document &&
+                                  document.fileType &&
+                                  document.fileType.split('/')[1] == 'pdf'
+                              "
+                            >
+                              <button
+                                class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-400 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-white hover:text-primary-600"
+                                @click="openPdfInNewTab(document.filePath)"
+                              >
+                                See pdf in detail
+                              </button>
+                            </div>
+                            <div class="flex justify-center" v-else>
                               <div class="mt-large bg-white">
                                 <a
-                                  :href="googleApi + document.filePath"
+                                  :href="
+                                    document.filePath
+                                      ? googleApi + document.filePath
+                                      : ''
+                                  "
                                   :data-title="
                                     document.documentType
                                       ? document.documentType.name
@@ -467,7 +485,11 @@
                                   data-lightbox="example-2"
                                 >
                                   <img
-                                    :src="googleApi + document.filePath"
+                                    :src="
+                                      document.filePath
+                                        ? googleApi + document.filePath
+                                        : ''
+                                    "
                                     class="w-full h-48 object-cover"
                                   />
                                 </a>
@@ -494,7 +516,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -516,13 +538,13 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
+                             
+                            hover:bg-blue-700 hover: 
                             focus:bg-blue-700
-                            focus:shadow-lg
+                            focus: 
                             focus:outline-none
                             focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
+                            active:bg-blue-800 active: 
                             transition
                             duration-150
                             ease-in-out
@@ -549,13 +571,13 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
+                             
+                            hover:bg-blue-700 hover: 
                             focus:bg-blue-700
-                            focus:shadow-lg
+                            focus: 
                             focus:outline-none
                             focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
+                            active:bg-blue-800 active: 
                             transition
                             duration-150
                             ease-in-out
@@ -581,7 +603,7 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -617,7 +639,7 @@
     <div
       class="
         modal-dialog modal-dialog-centered
-        modal-xl
+        modal-lg
         relative
         w-auto
         pointer-events-none
@@ -627,7 +649,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -676,57 +698,47 @@
           ></button>
         </div>
 
-        <div class="container shadow-md rounded-lg">
-          <div class="p-8 m-8 " id="printSupervisionModal">
-            <h2 contenteditable="true">ለ፡_________________________</h2>
-            <p>አዲስ አበባ</p>
+        <div class="container   rounded-lg" contenteditable="true">
+          <div class="px-8 m-4 " id="printSupervisionModal">
+            <div class="grid grid-cols-2 mb-8 mt-48">
+              <div class="flex justify-start" contenteditable="false">
+                <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
+              </div>
+            </div>
 
-            <p class="p-4 mt-8">
-              <span class="ml-4">ከዚህ</span> በታች
-              <span contenteditable="true">
-                {{
-                  modalData &&
-                  modalData.data &&
-                  modalData.data.profile &&
-                  modalData.data.profile.gender == "male"
-                    ? "ስሙ "
-                    : "ስሟ"
-                }}</span
-              >
-              በሰንጠረዥ የተመለከቱት ባለሙያ በ
-              <span contenteditable="true" class="text-yellow-300 font-bold">
-                __________________
-              </span>
-              ከሚገኘው
-              <span class="text-yellow-300 font-bold">{{
-                modalData.data && modalData.data.supervisingInstitution
-                  ? modalData.data.supervisingInstitution.name
-                  : ""
-              }}</span>
-              የህክምና ትምህርቷን
-              <span>{{
+            <h5 class="mt-4 px-8">ለ________________________</h5>
+            <h5 class="mt-4 px-8">አዲስ አበባ</h5>
+
+            <p class="mt-8 px-8" style="letter-spacing: 2px;">
+              ከዚህ በታች
+              {{
                 modalData &&
                 modalData.data &&
                 modalData.data.profile &&
                 modalData.data.profile.gender == "male"
-                  ? "ሲከታተል ቆይቶ"
-                  : "ስትከታተል ቆይታ"
-              }}</span>
-              ኤክስተርንሺፕ ሀገር ውስጥ ለመስራት በቀን ባቀረቡት ማመልከቻ ጠይቀዋል፡፡ በዚህም መሠረት ጉዳያቸው በ
-              <span contenteditable="true" class="text-yellow-300 font-bold"
-                >_____________</span
-              >
-              ቀርቦ ከታየ ከተገመገመ በኃላ To Work externship as a
-              <span contenteditable="true" class="text-yellow-300 font-bold"
-                >_____________</span
-              >በሚል ፀድቆቸው ተመዝገበዋል፡፡ ስለዚህም ልምምዱን ከ
-              <span contenteditable="true" class="text-yellow-300 font-bold"
-                >___/___/___</span
-              >
-              ጀምሮ ለ
-              <span contenteditable="true" class="text-yellow-300 font-bold"
-                >_____________</span
-              >እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን፤ ሆስፒታሉ በአንድ አመት መጨረሻ አስፈላጊውን ሁሉ በመፈጸም
+                  ? "ስሙ "
+                  : "ስሟ "
+              }}
+              በሰንጠረዥ የተመለከቱት ባለሙያ በቻይና ሀገር ከሚገኘው
+              {{
+                modalData.data && modalData.data.supervisingInstitution
+                  ? modalData.data.supervisingInstitution.name
+                  : ""
+              }}
+              የህክምና
+              {{
+                modalData &&
+                modalData.data &&
+                modalData.data.profile &&
+                modalData.data.profile.gender == "male"
+                  ? "ትምህርቱን ሲከታተል ቆይቶ"
+                  : "ትምህርቷን ስትከታተል ቆይታ"
+              }}
+              ኢንተርንሽፕ ሀገር ውስጥ ለመስራት በቀን17/03/2013ዓ.ም ባቀረቡት ማመልከቻ ጠይቀዋል፡፡ በዚህም
+              መሠረት ጉዳያቸው በ __/__/__ ዓ.ም ቀርቦ ከታየ ከተገመገመ በኃላ To Work Rotating
+              Medical Intern for One Years በሚል ፀድቆቸው ተመዝገበዋል፡፡ ስለዚህም ልምምዱን ከ
+              18/3/2013ዓ.ም ጀምሮ ለአንድ አመት እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን ሆስፒታሉ በአንድ አመት
+              መጨረሻ አስፈላጊውን ሁሉ በመፈጸም
               {{
                 modalData &&
                 modalData.data &&
@@ -751,63 +763,43 @@
                     >
                       የስም ዝርዝር
                     </th>
-                    <th
-                      scope="col"
-                      class="border-r px-6 py-4 dark:border-neutral-500"
-                    >
-                      የሙያ ስያሜ
-                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    class="border-b dark:border-neutral-500"
-                    v-for="(educations, index) in modalData &&
-                    modalData.data &&
-                    modalData.data.educations
-                      ? modalData.data.educations
-                      : []"
-                    :key="educations.id"
-                  >
+                  <tr class="border-b dark:border-neutral-500">
                     <td
                       class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
                     >
-                      {{ (index += 1) }}
+                      1
                     </td>
                     <td
-                      class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                      contenteditable="false"
+                      class="whitespace-nowrap border-r px-6 py-4"
                     >
-                      {{
-                        modalData && modalData.data && modalData.data.profile
-                          ? modalData.data.profile.name +
-                            " " +
-                            modalData.data.profile.fatherName +
-                            " " +
-                            modalData.data.profile.grandFatherName
-                          : []
-                      }}
-                    </td>
-                    <td
-                      class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
-                    >
-                      {{
-                        educations && educations.professionType
-                          ? educations.professionType.name
-                          : ""
-                      }}
+                      <span class="text-yellow-300">
+                        {{
+                          modalData && modalData.data && modalData.data.profile
+                            ? modalData.data.profile.name +
+                              " " +
+                              modalData.data.profile.fatherName +
+                              " " +
+                              modalData.data.profile.grandFatherName
+                            : []
+                        }}
+                      </span>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+            <h5 class="mt-8 mb-48 text-right">//ከሰላምታ ጋር//</h5>
           </div>
         </div>
 
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -829,7 +821,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600
               transition
               duration-150
@@ -851,7 +843,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600
               transition
               duration-150
@@ -873,8 +865,8 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import html2pdf from "html2pdf.js";
+import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
 export default {
   props: ["modalDataId"],
   components: {
@@ -888,7 +880,7 @@ export default {
 
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-
+    let qrSrc = ref("");
     let isLoading = ref(false);
     const licenseData = ref({});
     let reviewerAdminId = ref(0);
@@ -896,13 +888,16 @@ export default {
     const showModal = () => {
       show.value = true;
     };
-
+    let pdfFilePath = ref("");
     const onCancel = () => {
       isLoading.value = false;
     };
     const modalData = ref({});
     let result = {};
-
+    const openPdfInNewTab = (pdfPath) => {
+      pdfFilePath.value = pdfPath;
+      window.open(googleApi + "" + pdfPath, "_blank");
+    };
     const check = () => {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
@@ -953,22 +948,64 @@ export default {
     };
     const print = async () => {
       var data = document.getElementById("printSupervisionModal");
+      const staticUrl = STATIC_CERTIFICATE_URL;
+      const userId = modalData.value.data.profile.id;
+      const applicationId = modalData.value.data.id;
+      const applicationType = "NewLicense";
 
-      await html2canvas(data, { scale: 2 }).then((canvas) => {
-        const contentDataURL = canvas.toDataURL("image/png", 1.0);
+      const qrParam = { url: null };
 
-        let pdf = new jsPDF("l", "mm", "a4");
+      qrParam.url =
+        staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
+      store
+        .dispatch("reviewer/getQrCode", qrParam)
+        .then((res) => {
+          qrSrc.value = res.data.data;
+        })
+        .finally(async () => {
+          var element = data;
+          var opt = {
+            margin: 1,
+            filename: "myfile.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { orientation: "p", unit: "mm", format: "a4" },
+          };
 
-        var width = pdf.internal.pageSize.getWidth();
-        var height = pdf.internal.pageSize.getHeight();
-
-        pdf.addImage(contentDataURL, "PNG", 0, 0, width, height);
-
-        window.open(
-          pdf.output("bloburl", { filename: "new-file.pdf" }),
-          "_blank"
-        );
-      });
+          html2pdf()
+            .set(opt)
+            .from(element)
+            .save(
+              modalData.value.data &&
+                modalData.value.data.profile &&
+                modalData.value.data.profile.name
+                ? modalData.value.data.profile.name +
+                    " " +
+                    new Date().toISOString().slice(0, 10)
+                : ""
+            )
+            .then(() => {
+              document.getElementById("applicantCopyHeader").style.display =
+                "none";
+              document.getElementById("applicantCopyFooter").style.display =
+                "none";
+              html2pdf()
+                .set(opt)
+                .from(document.getElementById("printSupervisionModal"))
+                .save(
+                  modalData.value.data &&
+                    modalData.value.data.profile &&
+                    modalData.value.data.profile.name
+                    ? modalData.value.data.profile.name +
+                        " " +
+                        new Date().toISOString().slice(0, 10)
+                    : ""
+                );
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     watch(props.modalDataId, () => {
       isLoading.value = true;
@@ -982,15 +1019,14 @@ export default {
       check,
       print,
       isLoading,
+      qrSrc,
       onCancel,
+      pdfFilePath,
+      openPdfInNewTab,
       modalData,
       googleApi,
     };
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

@@ -1,80 +1,64 @@
 <template>
-  <div class="container" style="margin-top: 10px;">
-    <h2 class="text-main-400 font-bold text-display">Summary</h2>
+  <div class="container" style="margin-top: 10px">
+    <h2 class="text-main-400 font-bold text-display border-b-4 mb-4">Summary</h2>
     <div
-      class="grid grid-cols-1  
-              md:grid-cols-1
-              mdlg:grid-cols-1
-              lg:grid-cols-3
-              xl:grid-cols-3
-              sm:grid-rows-1"
+      class="grid md:grid-cols-6 mdlg:grid-cols-6 lg:grid-cols-6 xl:grid-cols-6 sm:grid-rows-1"
     >
-      <div class="bg-white rounded-md shadow-md p-4 m-2">
-        <article class="overflow-hidden   p-4">
-          <div class="flex justify-start flex-col mb-large">
-            <div class="flex justify-start">
-              <h2 class="text-main-400 font-bold text-lg">Profile Picture</h2>
-            </div>
-          </div>
+      <div class="rounded-md mr-8 sm:mb-4">
+        <article class="overflow-hidden border rounded-md p-4">
+          <h2 class="text-main-400 font-bold text-base mb-4">Profile Picture</h2>
 
           <picture>
             <img :src="profilePic" />
           </picture>
         </article>
       </div>
-      <div class="bg-white rounded-md shadow-md p-4 m-2">
-        <article class="overflow-hidden   p-4">
+      <div class="bg-white border rounded-md p-4 mb-8 col-span-5">
+        <article class="overflow-hidden p-4">
           <div class="flex justify-start flex-col">
             <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
-              <h2 class="text-main-400 font-bold text-lg">
-                General Personal Info
-              </h2>
+              <h2 class="text-main-400 font-bold text-lg">General Personal Info</h2>
             </div>
           </div>
 
-          <div
-            class="
-              grid grid-rows-1
-             
-            "
-          >
+          <div class="grid grid-rows-1">
             <div class="grid grid-cols-2">
               <label class="text-main-400 font-semibold"> Full Name</label>
-              <h5 class=" text-grey-800">
+              <h5 class="text-grey-800">
                 {{
-                  personalInfo.name +
-                    " " +
-                    personalInfo.fatherName +
-                    " " +
-                    personalInfo.grandFatherName
+                  capitalized(personalInfo.name) +
+                  " " +
+                  capitalized(personalInfo.fatherName) +
+                  " " +
+                  capitalized(personalInfo.grandFatherName)
                 }}
               </h5>
             </div>
             <div class="grid grid-cols-2">
-              <label class="text-main-400 font-semibold"
-                >Full Alternative Name</label
-              >
-              <h5 class=" text-grey-800">
+              <label class="text-main-400 font-semibold">Full Alternative Name</label>
+              <h5 class="text-grey-800">
                 {{
-                  personalInfo.alternativeName +
-                    " " +
-                    personalInfo.alternativeFatherName +
-                    " " +
-                    personalInfo.alternativeGrandFatherName
+                  personalInfo.alternativeName
+                    ? personalInfo.alternativeName
+                    : "----" + " " + personalInfo.alternativeFatherName
+                    ? personalInfo.alternativeFatherName
+                    : "----" + " " + personalInfo.alternativeGrandFatherName
+                    ? personalInfo.alternativeGrandFatherName
+                    : "----"
                 }}
               </h5>
             </div>
             <div class="grid grid-cols-2">
               <label class="text-main-400 font-semibold">Gender</label>
-              <h5 class=" text-grey-800">{{ personalInfo.gender }}</h5>
+              <h5 class="text-grey-800">{{ personalInfo.gender }}</h5>
             </div>
             <div class="grid grid-cols-2">
               <label class="text-main-400 font-semibold">Nationality</label>
-              <h5 class=" text-grey-800">{{ nationality }}</h5>
+              <h5 class="text-grey-800">{{ nationality }}</h5>
             </div>
             <div class="grid grid-cols-2">
               <label class="text-main-400 font-semibold"> Marital Status</label>
-              <h5 class=" text-grey-800">{{ maritalStatus }}</h5>
+              <h5 class="text-grey-800">{{ maritalStatus }}</h5>
             </div>
           </div>
           <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
@@ -83,73 +67,51 @@
 
           <div class="grid grid-cols-2">
             <label class="text-main-400 font-semibold">PO Box</label>
-            <h5 class=" text-grey-800">{{ personalInfo.poBox }}</h5>
+            <h5 class="text-grey-800">
+              {{ personalInfo.poBox ? personalInfo.poBox : "-----" }}
+            </h5>
           </div>
 
           <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
             <h2 class="text-main-400 font-bold text-lg">Contact Info</h2>
           </div>
-          <div
-            class="
-              grid grid-rows-1
-            "
-          >
+          <div class="grid grid-rows-1">
             <div class="grid grid-cols-2">
-              <label class=" text-main-400 font-semibold"> Email Address</label>
-              <h5 class=" text-grey-800">{{ user.emailAddress }}</h5>
+              <label class="text-main-400 font-semibold"> Email Address</label>
+              <h5 class="text-grey-800">{{ user.emailAddress }}</h5>
             </div>
             <div
               class="grid grid-cols-2"
-              v-if="
-                personalInfo.employeeId != null || personalInfo.employeeId != ''
-              "
+              v-if="personalInfo.employeeId != null || personalInfo.employeeId != ''"
             >
               <label class="text-main-400 font-semibold">HRA Employee Id</label>
-              <h5 class=" text-grey-800">{{ personalInfo.employeeId }}</h5>
+              <h5 class="text-grey-800">
+                {{ personalInfo.employeeId ? personalInfo.employeeId : "----" }}
+              </h5>
             </div>
             <div
               class="grid grid-cols-2"
-              v-if="
-                personalInfo.fileNumber != null || personalInfo.fileNumber != ''
-              "
+              v-if="personalInfo.fileNumber != null || personalInfo.fileNumber != ''"
             >
-              <label class=" text-main-400 font-semibold"
-                >HRA File Number</label
-              >
-              <h5 class=" text-grey-800">{{ personalInfo.fileNumber }}</h5>
+              <label class="text-main-400 font-semibold">HRA File Number</label>
+              <h5 class="text-grey-800">
+                {{ personalInfo.fileNumber ? personalInfo.fileNumber : "----" }}
+              </h5>
             </div>
           </div>
         </article>
-      </div>
-      <div class="bg-white rounded-md shadow-md p-4 m-2">
-        <div class="vld-parent mt-4">
+        <div class="vld-parent">
           <loading
             :active="isLoading"
             :is-full-page="false"
             :color="'#2F639D'"
             :opacity="1"
           ></loading>
-          <article class="overflow-hidden  p-4">
-            <div class="mt-12 flex justify-center mb-medium">
+          <article class="overflow-hidden p-4">
+            <div class="flex justify-center mb-medium">
               <div>
                 <button
-                  class="
-                  inline-block
-                  px-6
-                  py-2.5
-                  bg-main-400
-                  text-white
-                  font-medium
-                  text-xs
-                  leading-tight
-                  uppercase
-                  rounded
-                  shadow-md
-                  hover:bg-white hover:shadow-lg hover:text-main-400
-                  transition
-                  duration-150
-                  ease-in-out
-                "
+                  class="inline-block px-6 py-2.5 bg-main-400 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover: hover:text-main-400 transition duration-150 ease-in-out"
                   variant="outline"
                   type="button"
                   @click="prevStep"
@@ -166,23 +128,7 @@
                   v-on:click="submit()"
                   variant="outline"
                   type="button"
-                  class="
-                  inline-block
-                  px-6
-                  py-2.5
-                  bg-main-400
-                  text-white
-                  font-medium
-                  text-xs
-                  leading-tight
-                  uppercase
-                  rounded
-                  shadow-md
-                  hover:bg-white hover:shadow-lg hover:text-main-400
-                  transition
-                  duration-150
-                  ease-in-out
-                "
+                  class="inline-block px-6 py-2.5 bg-main-400 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover: hover:text-main-400 transition duration-150 ease-in-out"
                 >
                   Save Profile
                 </button>
@@ -191,6 +137,9 @@
           </article>
         </div>
       </div>
+      <!-- <div class="bg-white rounded-md   p-4 m-2">
+      
+      </div> -->
     </div>
   </div>
 </template>
@@ -208,6 +157,7 @@ export default {
   computed: {
     moment: () => moment,
   },
+  emits: ["nextStep", "changeActiveState"],
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
@@ -264,79 +214,61 @@ export default {
       let userId = +localStorage.getItem("userId");
       formData.append("document", photoFormData);
 
-      let payload = { document: formData, id: userId };
+      let data = {
+        name: capitalized(personalInfo.name),
+        fatherName: capitalized(personalInfo.fatherName),
+        grandFatherName: capitalized(personalInfo.grandFatherName),
+        alternativeName: personalInfo.alternativeName
+          ? personalInfo.alternativeName.replace(/\s/g, "")
+          : "",
+        alternativeFatherName: personalInfo.alternativeFatherName
+          ? personalInfo.alternativeFatherName.replace(/\s/g, "")
+          : "",
+        alternativeGrandFatherName: personalInfo.alternativeGrandFatherName
+          ? personalInfo.alternativeGrandFatherName.replace(/\s/g, "")
+          : "",
+        gender: personalInfo.gender,
+        photo: "photo",
+        dateOfBirth: personalInfo.dateOfBirth != "" ? personalInfo.dateOfBirth : null,
+        nationalityId: personalInfo.nationalityId,
+        maritalStatusId: parseInt(personalInfo.maritalStatusId),
+        poBox: personalInfo.poBox,
+        userId: +localStorage.getItem("userId"),
+        employeeId: personalInfo.employeeId ? personalInfo.employeeId : null,
+        fileNumber: personalInfo.fileNumber ? personalInfo.fileNumber : null,
+      };
       isLoading.value = true;
-      store
-        .dispatch("profile/addProfile", {
-          name: personalInfo.name,
-          fatherName: personalInfo.fatherName,
-          grandFatherName: personalInfo.grandFatherName,
-          alternativeName: personalInfo.alternativeName
-            ? personalInfo.alternativeName
-            : "",
-          alternativeFatherName: personalInfo.alternativeFatherName
-            ? personalInfo.alternativeFatherName
-            : "",
-          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName
-            ? personalInfo.alternativeGrandFatherName
-            : "",
-          gender: personalInfo.gender,
-          dateOfBirth:
-            personalInfo.dateOfBirth != "" ? personalInfo.dateOfBirth : null,
-          nationalityId: personalInfo.nationalityId,
-          maritalStatusId: parseInt(personalInfo.maritalStatusId),
-          poBox: personalInfo.poBox,
-          photo: personalInfo.photo,
-          userId: +localStorage.getItem("userId"),
-          employeeId: personalInfo.employeeId ? personalInfo.employeeId : null,
-          fileNumber: personalInfo.fileNumber ? personalInfo.fileNumber : null,
-        })
-        .then((response) => {
-          if (response.statusText == "Created") {
-            formData.append("document", photoFormData);
-            let payload = { document: formData, id: userId };
-            store
+      store.dispatch("profile/addProfile", data).then(() => {
+        formData.append("document", photoFormData);
+        let payload = { document: formData, id: userId };
+        store
 
-              .dispatch("profile/uploadProfilePicture", payload)
-              .then((res) => {
-                if (res.status == 200) {
-                  toast.success("Successfully updated profile information", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
-                  isLoading.value = false;
-                  router.push("/menu");
-                } else {
-                  toast.error("Please try again", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
-                  window.location.reload();
-                }
-              })
-              .catch((err) => {
-                console.log(err);
+          .dispatch("profile/uploadProfilePicture", payload)
+          .then((res) => {
+            if (res.status == 200) {
+              toast.success("Successfully updated profile information", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
               });
-          } else {
-            toast.error(response.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            window.location.reload();
-            setTimeout(() => {
-              message.value.showErrorFlash = false;
-            }, 3000);
-          }
-        });
+              isLoading.value = false;
+              router.push("/menu");
+            } else {
+              toast.error("Please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
     };
     const fetchUser = async () => {
       message.value.showLoading2 = true;
@@ -352,6 +284,7 @@ export default {
     };
     const prevStep = () => {
       emit("changeActiveStatePrevious");
+      emit("nextStep", "remove");
     };
     personalInfo = store.getters["profile/getPersonalInfo"];
     if (
@@ -368,12 +301,19 @@ export default {
     photoFormData = store.getters["profile/getPhoto"];
     onMounted(() => {
       fetchUser();
-      nextTick(function() {
+      nextTick(function () {
         window.setInterval(() => {
           showFlash.value = false;
         }, 10000);
       });
     });
+    const capitalized = (word) => {
+      word = word.replace(/\s/g, "");
+      const capitalizedFirst = word[0].toUpperCase();
+      const rest = word.slice(1).toLowerCase();
+
+      return capitalizedFirst + rest;
+    };
     return {
       profilePic,
       personalInfo,
@@ -389,6 +329,7 @@ export default {
       user,
       fetchUser,
       prevStep,
+      capitalized,
     };
   },
 };

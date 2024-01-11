@@ -33,7 +33,7 @@
             <button
               data-bs-toggle="modal"
               data-bs-target="#addUser"
-              class="px-2 bg-primary-700 text-white font-medium text-xs uppercase rounded shadow-md hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+              class="px-2 bg-primary-700 text-white font-medium text-xs uppercase rounded    hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             >
               <i class="fa fa-user-plus text-xl"></i>
               Add New User
@@ -60,7 +60,7 @@
                     <button
                       data-te-toggle="tooltip"
                       title="Search user"
-                      class="inline-block hover:bg-white hover:text-primary-600 px-6 py-2 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md  focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out items-center"
+                      class="inline-block hover:bg-white hover:text-primary-600 px-6 py-2 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded    focus:bg-blue-700 focus:   focus:outline-none focus:ring-0 active:bg-blue-800 active:   transition duration-150 ease-in-out items-center"
                       @click="searchUser()"
                     >
                       <svg
@@ -93,8 +93,8 @@
                       <option selected disabled>Expert Level</option>
                       <option
                         v-for="status in expertLevels"
-                        v-bind:key="status.code"
-                        v-bind:value="status.code"
+                        :key="status.code"
+                        :value="status.code"
                       >
                         {{ status.name }}
                       </option>
@@ -105,24 +105,7 @@
                 <div class="col-span-1 ml-8 mt-5">
                   <button
                     type="button"
-                    class="
-                        inline-block
-                        px-6
-                        py-2
-                     
-                        border-2 border-primary-600
-                        text-primary-600
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                    class="inline-block px-6 py-2 border-2 border-primary-600 text-primary-600 font-medium text-xs leading-tight uppercase rounded hover:bg-primary-600 hover:bg-opacity-5 hover:text-white focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                     @click="clearFilters()"
                   >
                     <i class="fa fa-close"></i>
@@ -133,7 +116,7 @@
             </div>
 
             <div
-              class="inline-block min-w-full shadow-md rounded-lg overflow-hidden bg-primary-800"
+              class="inline-block min-w-full    rounded-lg overflow-hidden bg-primary-800"
             >
               <vue-table-lite
                 :is-loading="userTable.isLoading"
@@ -157,8 +140,7 @@
 </template>
 
 <script>
-import "@ocrv/vue-tailwind-pagination/dist/style.css";
-import { ref, computed, reactive } from "@vue/reactivity";
+import { ref, reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -185,8 +167,7 @@ export default {
     let searchData = ref();
     let expertLevelFilter = ref("");
     const isUserManager =
-      localStorage.getItem("role") == "UM" ||
-      localStorage.getItem("role") == "SA";
+      localStorage.getItem("role") == "UM" || localStorage.getItem("role") == "SA";
     let expertLevels = ref([
       { name: "All", code: "all" },
       { name: "Federal", code: "FED" },
@@ -216,9 +197,7 @@ export default {
             id: element.id ? element.id : "",
             FullName: element.name ? element.name : "",
             Email: element.email ? element.email : "",
-            OrganizationalUnit: element.expertLevel
-              ? element.expertLevel.name
-              : "",
+            OrganizationalUnit: element.expertLevel ? element.expertLevel.name : "",
             Role: element.role ? element.role.name : "",
             PhoneNumber: element.phoneNumber ? element.phoneNumber : "",
             ExpertLevel: element.expertLevel ? element.expertLevel.name : "",
@@ -270,26 +249,16 @@ export default {
               label: "Action",
               field: "quick",
               width: "10%",
-              display: function(row) {
+              display: function (row) {
                 return (
-                  '<button data-bs-toggle="modal" data-bs-target="#editUser" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                  '<button data-bs-toggle="modal" data-bs-target="#editUser" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded      hover:      transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i> View</button>'
                 );
               },
             },
           ],
-          rows: computed(() => {
-            return tableData.filter(
-              (x) =>
-                x.Email.toLowerCase().includes(
-                  searchTerm.value.toLowerCase()
-                ) ||
-                x.FullName.toLowerCase().includes(
-                  searchTerm.value.toLowerCase()
-                )
-            );
-          }),
+          rows: tableData,
           totalRecordCount: res.count,
           sortable: {
             order: "id",
@@ -306,11 +275,9 @@ export default {
       getAdmins([0, 10, searchTerm.value, expertLevelFilter.value]);
     };
     const tableLoadingFinish = () => {
-      userTable.value.isLoading = false;
-      userTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function(element) {
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
@@ -329,7 +296,7 @@ export default {
 
       setTimeout(() => {
         userTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           getAdmins([offset, limit, searchTerm.value, expertLevelFilter.value]);
         } else {

@@ -39,7 +39,7 @@
             </a>
             <div
               v-if="showDD == true"
-              class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
+              class="origin-top-right absolute right-0 mt-2 w-56 rounded-md   bg-white focus:outline-none"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="options-menu"

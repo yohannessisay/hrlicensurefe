@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -57,13 +57,13 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -109,7 +109,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl ">
+                      <article class="overflow-hidden rounded-lg   ">
                         <header
                           class="
                             flex
@@ -196,7 +196,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -283,7 +283,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -370,7 +370,7 @@
                     >
                     
                         <!-- Article -->
-                        <article class="overflow-hidden rounded-lg shadow-xl">
+                        <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -470,7 +470,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -491,7 +491,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg 
+                
               transition
               duration-150
               ease-in-out

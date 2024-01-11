@@ -135,6 +135,99 @@ export default {
       return resp;
     }
   },
+
+  async addNewLicenseRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/newLicenseRequests/add";
+      const resp = await ApiService.post(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async addRenewalRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/renewalRequests/add";
+      const resp = await ApiService.post(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+
+  async addGoodStandingRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/goodStandingRequests/add";
+      const resp = await ApiService.post(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async updateNewLicenseRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/newLicenseRequests/" + request.id;
+      const resp = await ApiService.put(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async updateRenewalRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/renewalRequests/" + request.id;
+      const resp = await ApiService.put(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async updateGoodStandingRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/goodStandingRequests/" + request.id;
+      const resp = await ApiService.put(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async getRequestsByAdminRegion(context, params) {
+    try {
+      let finalType =
+        params && params.params[0].value == "newLicense"
+          ? "newLicenseRequests"
+          : params && params.params[0].value == "renewal"
+          ? "renewalRequests"
+          : params && params.params[0].value == "goodStanding"
+          ? "goodStandingRequests"
+          : "";
+      let url = `${baseUrl}/requests/${finalType}/getByAdminRegion?`;
+      let parameters = params ? params.params : [];
+     
+      if (parameters) {
+        parameters.forEach((param) => {
+          url +=
+            param && param.value!=''
+              ? `${param.key}=${param.value}&`
+              : "";
+        });
+      } 
+      url = url.substring(0, url.length - 1);
+
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+
   async getScannedCertificate(context, params) {
     try {
       const url =
@@ -952,7 +1045,22 @@ export default {
 
     return resp.data ? resp.data.data : [];
   },
+  async getAALegacyData(context, detail) {
+    let url = baseUrl + "/legacyData/AAlegacyData?";
 
+    let parameters = detail.params ? detail.params : [];
+
+    if (parameters) {
+      parameters.forEach((param) => {
+        url += param ? `${param.key}=${param.value}&` : "";
+      });
+    }
+    url = url.substring(0, url.length - 1);
+
+    const resp = await ApiService.get(url);
+
+    return resp.data ? resp.data.data : [];
+  },
   async getProfile(context, id) {
     try {
       const url = baseUrl + "/profiles/" + id;

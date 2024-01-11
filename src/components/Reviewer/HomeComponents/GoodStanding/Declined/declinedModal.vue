@@ -25,7 +25,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -52,13 +52,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -86,7 +86,7 @@
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -179,7 +179,7 @@
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
-                                >Martial Status:</span
+                                >Marital Status:</span
                               >
                               {{ modalData ? modalData.maritalStatus : "" }}
                             </p>
@@ -205,7 +205,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-40
                                 h-40
                                 flex
@@ -251,7 +251,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-64
                                 flex
@@ -271,7 +271,7 @@
                                 p-2
                                 rounded-lg
                                 m-1
-                                shadow-md
+                                 
                                 text-primary-500
                               "
                             >
@@ -359,7 +359,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-lg
+                             
                             hover:bg-white hover:text-main-400
                             transition
                             duration-150
@@ -383,13 +383,13 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
+                             
+                            hover:bg-blue-700 hover: 
                             focus:bg-blue-700
-                            focus:shadow-lg
+                            focus: 
                             focus:outline-none
                             focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
+                            active:bg-blue-800 active: 
                             transition
                             duration-150
                             ease-in-out
@@ -406,7 +406,7 @@
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="block p-6 rounded-lg   bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
@@ -456,7 +456,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -477,7 +477,7 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -662,8 +662,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

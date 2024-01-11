@@ -43,7 +43,7 @@
                 uppercase
                 border
                 rounded
-                shadow-lg
+                 
                 hover:bg-white hover:text-primary-600 hover:border-primary-600
                 transition
                 duration-150
@@ -112,6 +112,7 @@ export default {
           proPrefixTableData.push({
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
+            AmharicName: element.amharic_name ? element.amharic_name : "",
             Code: element.code ? element.code : "",
             Status: element && element.status == true ? "Active" : "Inactive",
             finalStatus: element.status,
@@ -130,9 +131,16 @@ export default {
             {
               label: "Name",
               field: "Name",
-              width: "50%",
+              width: "30%",
               sortable: true,
             },
+            {
+              label: "AmharicName",
+              field: "AmharicName",
+              width: "20%",
+              sortable: true,
+            },
+            
             {
               label: "Code",
               field: "Code",
@@ -158,7 +166,7 @@ export default {
               width: "10%",
               display: function (row) {
                 return (
-                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
+                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded   hover:   transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i> View/Edit</button>'
                 );
@@ -176,8 +184,7 @@ export default {
       });
     };
 
-    const tableLoadingFinish = () => {
-      proPrefixTable.value.isLoading = false;
+    const tableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {

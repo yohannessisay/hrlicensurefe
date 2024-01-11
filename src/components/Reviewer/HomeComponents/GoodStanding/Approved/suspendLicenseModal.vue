@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -66,9 +66,8 @@
               <div class="vld-parent">
                 <loading
                   :active="isLoading"
-                  :can-cancel="true"
-                  :on-cancel="onCancel"
-                  :is-full-page="fullPage"
+                  :can-cancel="true" 
+                  :is-full-page="false"
                   :color="'#2F639D'"
                   :opacity="0.7"
                 ></loading>
@@ -147,7 +146,7 @@
 
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-center
@@ -166,14 +165,14 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               bg-yellow-300
-              hover:bg-white hover:text-yellow-300s hover:shadow-lg
+              hover:bg-white hover:text-yellow-300s hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -196,7 +195,7 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
+               
               hover:bg-white 
               hover:text-primary-700
               transition
@@ -284,6 +283,7 @@ export default {
       remark,
       startDate,
       endDate,
+      isLoading,
       suspend,
     };
   },

@@ -96,7 +96,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         duration-150
@@ -177,6 +177,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
                       />
@@ -215,7 +216,7 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
@@ -308,7 +309,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -390,6 +391,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
                       />
@@ -428,7 +430,7 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
@@ -493,21 +495,20 @@ export default {
     let modalDataIdOthers = ref({
       id: "",
       change: 0,
-    });
-    let adminRole = localStorage.getItem("role");
+    }); 
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
-    let allInfo = ref({});
-    const reviewers = ref([]);
-    const searchTerm = ref("");
-    const searchTermOthers = ref("");
+    let allInfo = [];
+    let reviewers = ref([]);
+    let searchTerm = ref("");
+    let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
     let searchTermToDateOth = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
-    let tableData = ref([]);
-    let toYouTableData = ref([]);
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
+    let tableData = [];
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
     };
@@ -519,9 +520,9 @@ export default {
       toOthersTable.value.isLoading = true;
       toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+      
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+     
 
       returnedByOthers([
         { key: "page", value: 0 },
@@ -539,7 +540,7 @@ export default {
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+    
       returnedByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -551,7 +552,7 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+     
       returnedByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -561,6 +562,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "RTN")[0].id
         : "";
+        toYouTableData=[];
       store
         .dispatch("reviewerRenewal/getRenewalByStatus", [
           {
@@ -571,9 +573,9 @@ export default {
           },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          allInfo.value.forEach((element) => {
-            toYouTableData.value.push({
+          allInfo = res ? res.rows : [];
+          allInfo.forEach((element) => {
+            toYouTableData.push({
               LicenseNumber: element.renewalCode,
               ApplicantName:
                 element.profile.name +
@@ -624,16 +626,16 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 },
               },
             ],
 
-            rows: toYouTableData.value,
-            totalRecordCount: toYouTableData.value.length,
+            rows: toYouTableData,
+            totalRecordCount: res.count,
             sortable: {
               order: "id",
               sort: "asc",
@@ -645,6 +647,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "RTN")[0].id
         : "";
+        tableData=[];
       store
         .dispatch("reviewerRenewal/getOtherRenewalByStatus", [
           {
@@ -655,10 +658,10 @@ export default {
           },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
+          allInfo = res ? res.rows : [];
 
-          allInfo.value.forEach((element) => {
-            tableData.value.push({
+          allInfo.forEach((element) => {
+            tableData.push({
               LicenseNumber: element ? element.renewalCode : "",
               ApplicantName:
                 (element.profile ? element.profile.name : "------") +
@@ -713,15 +716,15 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
                     row.id +
                     '" ><i class="fa fa-eye"></i> View</button>'
                   );
                 },
               },
             ],
-            rows: tableData.value,
-            totalRecordCount: tableData.value.length,
+            rows: tableData,
+            totalRecordCount: res.count,
             sortable: {
               order: "id",
               sort: "asc",
@@ -737,8 +740,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      toYouTable.value.isLoading = false;
+      }); 
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
@@ -746,8 +748,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      });
-      toOthersTable.value.isLoading = false;
+      }); 
     };
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -768,7 +769,7 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+   
       returnedByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -780,7 +781,7 @@ export default {
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+     
       returnedByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -794,12 +795,10 @@ export default {
         { key: "page", value: 0 },
         { key: "size", value: 10 },
       ]);
-      adminRole && adminRole != "REV"
-        ? returnedByOthers([
+     returnedByOthers([
             { key: "page", value: 0 },
             { key: "size", value: 10 },
-          ])
-        : "";
+          ]);
       store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
@@ -811,7 +810,7 @@ export default {
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           returnedByYou([
             { key: "page", value: offset },
@@ -838,7 +837,7 @@ export default {
 
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           returnedByOthers([
             { key: "page", value: offset },

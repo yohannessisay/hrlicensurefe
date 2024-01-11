@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-md
+           
           relative
           flex flex-col
           w-full
@@ -58,13 +58,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-md
-              hover:bg-purple-700 hover:shadow-md
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-md
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-md
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -87,7 +87,7 @@
                     <span class="text-2xl font-bold mb-12 px-6">
                       {{ modalData.name }}
                     </span>
-                    's License Data
+                    's Application
                   </h2>
                 </div>
               </div>
@@ -121,7 +121,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -147,7 +147,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                             >
@@ -206,7 +206,7 @@
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
+                                  >Marital Status:</span
                                 >
                                 <span class="text-grey-800 ml-1">{{
                                   modalData.maritalStatus
@@ -236,7 +236,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -320,11 +320,11 @@
                                           leading-tight
                                           uppercase
                                           rounded
-                                          shadow-md
+                                           
                                           mt-4
                                           ml-1
                                           hover:bg-white
-                                          hover:shadow-md
+                                          hover: 
                                           hover:text-primary-600
                                           transition
                                           duration-150
@@ -347,7 +347,7 @@
                                         max-height-12
                                         overflow-hidden overflow-y-scroll
                                         rounded-lg
-                                        shadow-md
+                                         
                                         text-left
                                         dropdown-menu
                                       "
@@ -402,7 +402,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -421,7 +421,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                             >
@@ -471,7 +471,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -491,7 +491,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                               v-for="education in modalData.data
@@ -620,10 +620,10 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
-              hover:text-primary-600 hover:shadow-md
+               
+              hover:text-primary-600 hover: 
              
-              active:bg-purple-800 active:shadow-md
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -656,10 +656,10 @@ import { googleApi } from "@/composables/baseURL";
 export default {
   props: ["modalDataIdOthers", "reviewers"],
   components: {
-    Loading
+    Loading,
   },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -677,7 +677,7 @@ export default {
       reviewerId: null,
       licenseId: null,
       createdByAdminId: null,
-      transferRemark: ""
+      transferRemark: "",
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -686,8 +686,8 @@ export default {
     const evaluationData = ref({});
     let reviewerAdminId = ref(0);
 
-    const fetchRole = id => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
+    const fetchRole = (id) => {
+      store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
       });
     };
@@ -704,7 +704,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           }
         );
         return;
@@ -714,65 +714,54 @@ export default {
           reviewerId: transfer.value.reviewerId,
           expertLevelId: modalData.value.data.expertLevelId,
           createdByAdminId: +localStorage.getItem("adminId"),
-          transferRemark: transferRemark.value
+          transferRemark: transferRemark.value,
         };
 
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
-          .then(response => {
-            if (response.statusText == "Created") {
-              toast.success("Selected application transfered Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true
-              });
-              isLoading.value = false;
-              transfer.value = {};
-              reviewer.value = {};
-              transferRemark.value = "";
-              if (document.getElementById("closeButtonOther")) {
-                document.getElementById("closeButtonOther").click();
-              }
-              emit("refreshTable");
-
-              let notification = {
-                user_id:
-                  modalData.value.data && modalData.value.data.applicant
-                    ? modalData.value.data.applicant.id
-                    : null,
-                reviewer_id: transfer.value.reviewerId,
-                new_license_id: modalData.value.data
-                  ? modalData.value.data.id
-                  : null,
-                message: modalData.value.data
-                  ? // eslint-disable-next-line prettier/prettier
-                    `Dear reviewer , a re-submitted new license application with code ${modalData.value.data.newLicenseCode} has been transfered to you.`
-                  : "",
-                type: "reviewer_new_license",
-                status: "new",
-              };
-              store.dispatch("notification/notifyReviewer", notification);
-            } else {
-              toast.error("Error transfering", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true
-              });
-              isLoading.value = false;
+          .then(() => {
+            toast.success("Selected application transfered Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            transfer.value = {};
+            reviewer.value = {};
+            transferRemark.value = "";
+            if (document.getElementById("closeButtonOther")) {
+              document.getElementById("closeButtonOther").click();
             }
+            emit("refreshTable");
+
+            let notification = {
+              user_id:
+                modalData.value.data && modalData.value.data.applicant
+                  ? modalData.value.data.applicant.id
+                  : null,
+              reviewer_id: transfer.value.reviewerId,
+              new_license_id: modalData.value.data
+                ? modalData.value.data.id
+                : null,
+              message: modalData.value.data
+                ? // eslint-disable-next-line prettier/prettier
+                  `Dear reviewer , a re-submitted new license application with code ${modalData.value.data.newLicenseCode} has been transfered to you.`
+                : "",
+              type: "reviewer_new_license",
+              status: "new",
+            };
+            store.dispatch("notification/notifyReviewer", notification);
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
             toast.error("Error transfering", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             isLoading.value = false;
           });
@@ -784,11 +773,11 @@ export default {
     };
     const resultQuery = () => {
       if (reviewer.value.name) {
-        let data = props.reviewers.filter(item => {
+        let data = props.reviewers.filter((item) => {
           return reviewer.value.name
             .toLowerCase()
             .split(" ")
-            .every(v => item.name.toLowerCase().includes(v));
+            .every((v) => item.name.toLowerCase().includes(v));
         });
 
         return data;
@@ -797,12 +786,12 @@ export default {
       }
     };
 
-    const setInput = value => {
+    const setInput = (value) => {
       reviewer.value = {
         id: value.id,
         name: value.name,
         expertLevel: value.expertLevel.code,
-        role: value.role.code
+        role: value.role.code,
       };
       transfer.value.reviewerId = value.id;
       showOptions.value = false;
@@ -825,7 +814,7 @@ export default {
           "reviewer/getNewLicenseApplication",
           props.modalDataIdOthers.id
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
@@ -892,9 +881,9 @@ export default {
       fullPage,
       adminRole,
       evaluationData,
-      transferReviewer
+      transferReviewer,
     };
-  }
+  },
 };
 </script>
 

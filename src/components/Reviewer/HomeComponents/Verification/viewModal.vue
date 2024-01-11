@@ -25,7 +25,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -336,7 +336,7 @@
 
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -355,9 +355,9 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
               bg-primary-700
-              hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border
+              hover:bg-whitehover:  hover:text-primary-600 hover:border
               transition
               duration-150
               ease-in-out
@@ -503,8 +503,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-md {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

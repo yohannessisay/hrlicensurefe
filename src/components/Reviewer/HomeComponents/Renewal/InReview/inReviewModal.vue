@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-md
+           
           relative
           flex flex-col
           w-full
@@ -58,13 +58,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-md
-              hover:bg-purple-700 hover:shadow-md
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-md
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-md
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -93,7 +93,7 @@
                       <a class="text-2xl font-bold px-6 text-yellow-300">
                         {{ modalData.name }}
                       </a>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -125,7 +125,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -151,7 +151,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                               >
@@ -210,7 +210,7 @@
                                 <p class="text-gray-500">
                                   <span
                                     class="font-semibold text-primary-700 mb-1"
-                                    >Martial Status:</span
+                                    >Marital Status:</span
                                   >
                                   <span class="text-grey-800 ml-1">{{
                                     modalData.maritalStatus
@@ -240,7 +240,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -310,7 +310,7 @@
                                         max-height-12
                                         overflow-hidden overflow-y-scroll
                                         rounded-lg
-                                        shadow-md
+                                         
                                         text-left
                                         dropdown-menu
                                       "
@@ -349,11 +349,10 @@
                                           w-full
                                         "
                                       ></textarea>
-                                   
                                     </div>
-                                 
+
                                     <button
-                                        class="
+                                      class="
                                           inline-block
                                           px-6
                                           py-2.5
@@ -364,21 +363,21 @@
                                           leading-tight
                                           uppercase
                                           rounded
-                                          shadow-md
+                                           
                                           mt-4
                                           ml-1
                                           hover:bg-white
-                                          hover:shadow-md
+                                          hover: 
                                           hover:text-primary-600
                                           transition
                                           duration-150
                                           ease-in-out
                                           mb-8
                                         "
-                                        @click="transferReviewer()"
-                                      >
-                                        Transfer
-                                      </button>
+                                      @click="transferReviewer()"
+                                    >
+                                      Transfer
+                                    </button>
                                   </div>
                                 </div>
                               </label>
@@ -410,7 +409,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -429,7 +428,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                               >
@@ -480,7 +479,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-md
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -500,7 +499,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                                 v-for="education in modalData.data
@@ -612,7 +611,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -634,13 +633,13 @@
                 leading-tight
                 uppercase
                 rounded
-                shadow-md
-                hover:text-primary-600 hover:shadow-md
+                 
+                hover:text-primary-600 hover: 
                 focus:bg-purple-700
-                focus:shadow-md
+                focus: 
                 focus:outline-none
                 focus:ring-0
-                active:bg-purple-800 active:shadow-md
+                active:bg-purple-800 active: 
                 transition
                 duration-150
                 ease-in-out
@@ -662,13 +661,13 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
-              hover:text-primary-600 hover:shadow-md
+               
+              hover:text-primary-600 hover: 
               focus:bg-purple-700
-              focus:shadow-md
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-md
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -695,10 +694,10 @@ import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
-    Loading
+    Loading,
   },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -716,7 +715,7 @@ export default {
       reviewerId: null,
       licenseId: null,
       createdByAdminId: null,
-      transferRemark: ""
+      transferRemark: "",
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -725,8 +724,8 @@ export default {
     const evaluationData = ref({});
     let reviewerAdminId = ref(0);
 
-    const fetchRole = id => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
+    const fetchRole = (id) => {
+      store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
       });
     };
@@ -742,7 +741,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           }
         );
         return;
@@ -752,42 +751,28 @@ export default {
           reviewerId: transfer.value.reviewerId,
           createdByAdminId: +localStorage.getItem("adminId"),
           transferRemark: transferRemark.value,
-          expertLevelId: modalData.value.data.expertLevelId
+          expertLevelId: modalData.value.data.expertLevelId,
         };
 
         isLoading.value = true;
 
         store
           .dispatch("reviewer/transferRenewalReview", transfer.value)
-          .then(response => {
-            if (response.statusText == "Created") {
-              toast.success("Selected application transfered Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true
-              });
-              isLoading.value = false;
-              transfer.value = {};
-              reviewer.value = {};
-              transferRemark.value = "";
-              emit("refreshTable");
-              if (document.getElementById("closeButton")) {
-                document.getElementById("closeButton").click();
-              }
-            } else {
-              toast.error("Error transfering", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true
-              });
-              isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
+          .then(() => {
+            toast.success("Selected application transfered Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            transfer.value = {};
+            reviewer.value = {};
+            transferRemark.value = "";
+            emit("refreshTable");
+            if (document.getElementById("closeButton")) {
+              document.getElementById("closeButton").click();
             }
           })
           .catch(() => {
@@ -796,7 +781,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             isLoading.value = false;
             setTimeout(() => {
@@ -811,25 +796,25 @@ export default {
     };
     const resultQuery = () => {
       if (reviewer.value.name) {
-        let data = props.reviewers.filter(item => {
+        let data = props.reviewers.filter((item) => {
           return reviewer.value.name
             .toLowerCase()
             .split(" ")
-            .every(v => item.name.toLowerCase().includes(v));
+            .every((v) => item.name.toLowerCase().includes(v));
         });
-        data = data.filter(rev => rev.id != adminId);
+        data = data.filter((rev) => rev.id != adminId);
         return data;
       } else {
         return [];
       }
     };
 
-    const setInput = value => {
+    const setInput = (value) => {
       reviewer.value = {
         id: value.id,
         name: value.name,
         expertLevel: value.expertLevel.code,
-        role: value.role.code
+        role: value.role.code,
       };
       transfer.value.reviewerId = value.id;
       showOptions.value = false;
@@ -855,7 +840,7 @@ export default {
     const check = () => {
       store
         .dispatch("reviewer/getRenewalApplication", props.modalDataId.id)
-        .then(res => {
+        .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
 
@@ -921,14 +906,10 @@ export default {
       modalData,
       evaluationData,
       transferReviewer,
-      onCancel
+      onCancel,
     };
-  }
+  },
 };
 </script>
 
-<style scoped>
-.shadow-md {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

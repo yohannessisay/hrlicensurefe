@@ -1,18 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="staticBackdropOthers"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -22,47 +11,12 @@
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
           <button
             type="button"
-            class="
-              px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -86,7 +40,7 @@
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -95,40 +49,19 @@
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                mb-12
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex mb-12 items-center justify-center"
                             >
                               <picture>
                                 <source
                                   :srcset="
-                                    modalData.profile &&
-                                    modalData.profile.profilePicture
+                                    modalData.profile && modalData.profile.profilePicture
                                       ? googleApi +
-                                        modalData.profile.profilePicture
-                                          .filePath
+                                        modalData.profile.profilePicture.filePath
                                       : ''
                                   "
                                   type="image/jpg"
@@ -141,16 +74,9 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-extrabold text-2xl mb-1">
-                              Personal Info
-                            </h2>
+                            <h2 class="font-extrabold text-2xl mb-1">Personal Info</h2>
                             <p class="text-gray-500">
-                              <span
-                                class="
-                                  font-semibold
-                                  text-lg text-primary-700
-                                  mb-1
-                                "
+                              <span class="font-semibold text-lg text-primary-700 mb-1"
                                 >Full Name:</span
                               >
                               {{ modalData.name }}
@@ -179,7 +105,7 @@
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
-                                >Martial Status:</span
+                                >Marital Status:</span
                               >
                               {{ modalData.maritalStatus }}
                             </p>
@@ -188,76 +114,54 @@
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-40
-                                h-40
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-40 h-40 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
                             <h2 class="font-bold mb-1">Contact Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Mobile Number:</span
-                              >
-                              {{ modalData.mobileNumber }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Email:</span
-                              >
-                              {{ modalData.email }}
-                            </p>
+                            <div class="border text-primary-600 rounded-md p-2">
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Mobile Number:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{ modalData.mobileNumber }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Email:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{ modalData.email }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Reason for decline:</span
+                                >
+                                <span class="text-grey-800 ml-2">{{
+                                  modalData && modalData.data ? modalData.data.remark : ""
+                                }}</span>
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-64
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-64 flex items-center justify-center"
                             >
                               <i class="fa fa-building fa-4x"></i>
                             </div>
@@ -266,62 +170,47 @@
                             <h2 class="font-bold mb-1">Education Detail</h2>
 
                             <div
-                              class="
-                                border-2
-                                p-2
-                                rounded-lg
-                                m-1
-                                shadow-md
-                                text-primary-500
-                              "
+                              class="border-2 p-2 rounded-lg m-1 text-primary-500"
                               v-for="education in modalData.data
                                 ? modalData.data.educations
                                 : []"
                               :key="education.id"
                             >
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
-                                {{
-                                  education.department
-                                    ? education.department.name
-                                    : ""
-                                }}
+                                <span class="text-grey-800 ml-2">{{
+                                  education.department ? education.department.name : ""
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-2">{{
                                   education.educationLevel
                                     ? education.educationLevel.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-2">{{
                                   education.professionType
                                     ? education.professionType.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
-                                {{
-                                  education.institution
-                                    ? education.institution.name
-                                    : ""
-                                }}
+                                <span class="text-grey-800 ml-2">{{
+                                  education.institution ? education.institution.name : ""
+                                }}</span>
                               </p>
                             </div>
                           </div>
@@ -329,74 +218,27 @@
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
-                        <h2 class="text-primary-600 text-xl font-bold">
-                          Actions
-                        </h2>
+                        <h2 class="text-primary-600 text-xl font-bold">Actions</h2>
                         <button
                           v-if="
                             (adminData.expertLevel.code == 'FED' &&
                               adminData.role.code == 'ADM') ||
                             (adminData.expertLevel.code == 'REG' &&
-                              adminData.role.code == 'ADM')||
+                              adminData.role.code == 'ADM') ||
                             (adminData.expertLevel.code == 'REG' &&
                               adminData.role.code == 'TL')
                           "
                           type="button"
-                          class="
-                            inline-block
-                            px-6
-                            text-white
-                            font-medium
-                            text-xs
-                            bg-main-400
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-white hover:text-main-400
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          class="inline-block px-6 text-white font-medium text-xs bg-main-400 leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
                           @click="release()"
                         >
                           <i class="fa fa-refresh"></i>
                           Approve
                         </button>
                         <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-blue-600
-                            hover:text-primary-600 hover:border
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          class="inline-block px-6 py-2.5 bg-blue-600 hover:text-primary-600 hover:border text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
                           type="button"
                           data-bs-toggle="collapse"
                           data-bs-target="#collapseExample"
@@ -409,7 +251,7 @@
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="block p-6 rounded-lg bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
@@ -458,34 +300,11 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:border-primary-600 hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
@@ -532,15 +351,11 @@ export default {
 
     const check = () => {
       store
-        .dispatch(
-          "reviewer/getRenewalApplication",
-          props.modalDataIdOthers.id
-        )
+        .dispatch("reviewer/getRenewalApplication", props.modalDataIdOthers.id)
         .then((res) => {
           if (
             res.data.status == "Success" &&
-            res.data.message !=
-              "Renewal licenses total count retrieved successfully!"
+            res.data.message != "Renewal licenses total count retrieved successfully!"
           ) {
             result = res.data.data;
             modalData.value.name =
@@ -571,8 +386,7 @@ export default {
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate =
-              result.licenseExpirationDate;
+            modalData.value.licenseExpirationDate = result.licenseExpirationDate;
             modalData.value.documents = result.documents;
             renewal = result ? result : {};
             modalData.value.data = result;
@@ -601,10 +415,10 @@ export default {
             : "",
         ],
         message:
-        renewal && renewal.profile
+          renewal && renewal.profile
             ? "Dear " +
-            renewal.profile.name +
-            renewal.profile.fatherName +
+              renewal.profile.name +
+              renewal.profile.fatherName +
               ", Your license with license number " +
               renewal.renewalCode +
               " has been released from a declined state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
@@ -668,8 +482,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>

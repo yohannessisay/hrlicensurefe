@@ -9,22 +9,18 @@
       <ol class="list-reset flex">
         <li>
           <router-link to="/admin/review"
-            ><span class="text-primary-600 text-base ">Home</span></router-link
+            ><span class="text-primary-600 text-base">Home</span></router-link
           >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a
-            href="/admin/goodstanding/"
-            class="hover:text-primary-600 text-grey-300"
+          <a href="/admin/goodstanding/" class="hover:text-primary-600 text-grey-300"
             >Goodstanding</a
           >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Unassigned</a
-          >
+          <a href="#" class="pointer-events-none text-lg text-grey-300">Unassigned</a>
         </li>
       </ol></reviewer-nav-bar
     >
@@ -32,7 +28,7 @@
 
     <!-- Main Content -->
     <div class="home-content">
-      <main-body> 
+      <main-body>
         <template v-slot:unassigned>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
@@ -42,65 +38,18 @@
                   <div class="mb-3 xl:w-full">
                     <h2 class="text-primary-800 text-lg">Applicant Name</h2>
                     <div
-                      class="
-                      input-group
-                      relative
-                      flex flex-wrap
-                      items-stretch
-                      w-full
-                      mb-4
-                    "
+                      class="input-group relative flex flex-wrap items-stretch w-full mb-4"
                     >
                       <input
                         type="search"
-                        class="
-                        form-control
-                        relative
-                        flex-auto
-                        min-w-0
-                        block
-                        w-full
-                        px-6
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         placeholder="Search Using Applicant's Name"
                         aria-label="Search"
                         aria-describedby="button-addon2"
                         v-model="searchTerm"
                       />
                       <button
-                        class="
-                        inline-block
-                        px-6
-                        py-2
-                        bg-primary-600
-                        border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-md
-                        hover:bg-white hover:text-primary-600  
-                        transition
-                        focus:border-blue-600
-                        duration-150
-                        ease-in-out
-                        items-center
-                      "
+                        class="inline-block px-6 py-2 bg-primary-600 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition focus:border-blue-600 duration-150 ease-in-out items-center"
                         @click="searchApplication()"
                       >
                         <svg
@@ -127,26 +76,7 @@
                         <input
                           v-model="searchTermFromDate"
                           type="date"
-                          class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-2
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                          class="appearance-none block w-full px-6 ml-2 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                           aria-label="Default select example"
                         />
                       </div>
@@ -154,26 +84,8 @@
                         <label for="" class="ml-4"> To</label>
                         <input
                           type="date"
-                          class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                          class="appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          @change="searchApplication()"
                           v-model="searchTermToDate"
                           aria-label="Default select example"
                         />
@@ -181,25 +93,7 @@
                       <div class="ml-8 mt-4">
                         <button
                           type="button"
-                          class="
-                        inline-block
-                        px-6
-                        py-2
-                        mt-2
-                        border-2 border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        bg-primary-600
-                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                          class="inline-block px-6 py-2 mt-2 border-2 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded bg-primary-600 hover:bg-white hover:bg-opacity-5 hover:text-primary-600 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                           @click="clearFilters()"
                         >
                           <i class="fa fa-close"></i>
@@ -210,17 +104,9 @@
                   </div>
                 </div>
                 <div
-                  class="
-                    inline-block
-                    min-w-full
-                    shadow-md
-                    rounded-lg
-                    overflow-hidden
-                    bg-primary-800
-                  "
+                  class="inline-block min-w-full rounded-lg overflow-hidden bg-primary-800"
                 >
                   <vue-table-lite
-                    
                     :is-loading="unassignedTable.isLoading"
                     :columns="unassignedTable.columns"
                     :rows="unassignedTable.rows"
@@ -240,7 +126,7 @@
               </div>
             </div>
           </div>
-        </template> 
+        </template>
         <template v-slot:resubmitted>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
@@ -250,65 +136,18 @@
                   <div class="mb-3 xl:w-full">
                     <h2 class="text-primary-800 text-lg">Applicant Name</h2>
                     <div
-                      class="
-                      input-group
-                      relative
-                      flex flex-wrap
-                      items-stretch
-                      w-full
-                      mb-4
-                    "
+                      class="input-group relative flex flex-wrap items-stretch w-full mb-4"
                     >
                       <input
                         type="search"
-                        class="
-                        form-control
-                        relative
-                        flex-auto
-                        min-w-0
-                        block
-                        w-full
-                        px-6
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         placeholder="Search Using Applicant's Name"
                         aria-label="Search"
                         aria-describedby="button-addon2"
                         v-model="searchTermOthers"
                       />
                       <button
-                        class="
-                      inline-block
-                        px-6
-                        py-2
-                        bg-primary-600
-                        border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-md
-                        hover:bg-white hover:text-primary-600  
-                        transition
-                        focus:border-blue-600
-                        duration-150
-                        ease-in-out
-                        items-center
-                      "
+                        class="inline-block px-6 py-2 bg-primary-600 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition focus:border-blue-600 duration-150 ease-in-out items-center"
                         @click="searchApplicationResub()"
                       >
                         <svg
@@ -336,26 +175,7 @@
                       <input
                         v-model="searchTermFromDateResub"
                         type="date"
-                        class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-2
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="appearance-none block w-full px-6 ml-2 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         aria-label="Default select example"
                       />
                     </div>
@@ -363,26 +183,8 @@
                       <label for="" class="ml-4"> To</label>
                       <input
                         type="date"
-                        class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        @change="searchApplicationResub()"
                         v-model="searchTermToDateResub"
                         aria-label="Default select example"
                       />
@@ -390,25 +192,7 @@
                     <div class="ml-8 mt-4">
                       <button
                         type="button"
-                        class="
-                      inline-block
-                        px-6
-                        py-2
-                        mt-2
-                        border-2 border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        bg-primary-600
-                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                        class="inline-block px-6 py-2 mt-2 border-2 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded bg-primary-600 hover:bg-white hover:bg-opacity-5 hover:text-primary-600 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                         @click="clearFiltersResub()"
                       >
                         <i class="fa fa-close"></i>
@@ -418,17 +202,9 @@
                   </div>
                 </div>
                 <div
-                  class="
-                    inline-block
-                    min-w-full
-                    shadow-md
-                    rounded-lg
-                    overflow-hidden
-                    bg-primary-800
-                  "
+                  class="inline-block min-w-full rounded-lg overflow-hidden bg-primary-800"
                 >
                   <vue-table-lite
-                    
                     :is-loading="reSubmittedTable.isLoading"
                     :columns="reSubmittedTable.columns"
                     :rows="reSubmittedTable.rows"
@@ -488,10 +264,8 @@ export default {
     let searchTermFromDateResub = ref("");
     let searchTermToDateResub = ref("");
     let searchedReviewer = ref("");
-    const adminLevel = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevel;
-    const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminLevel = JSON.parse(localStorage.getItem("allAdminData")).expertLevel;
+    const adminRegion = JSON.parse(localStorage.getItem("allAdminData")).regionId;
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
     let modalDataId = ref({
       id: "",
@@ -550,9 +324,7 @@ export default {
     };
     const unassigned = (apiParameters) => {
       // modalDataId.value.apStatusUnassigned = res;
-      let subId = statuses
-        ? statuses.filter((stat) => stat.code == "SUB")[0].id
-        : "";
+      let subId = statuses ? statuses.filter((stat) => stat.code == "SUB")[0].id : "";
 
       store
         .dispatch("reviewerGoodStanding/getGoodstandingsByStatus", [
@@ -571,9 +343,7 @@ export default {
                   (element.profile ? element.profile.fatherName : "") +
                   " " +
                   (element.profile ? element.profile.grandFatherName : ""),
-                ApplicantType: element.applicantType
-                  ? element.applicantType.name
-                  : "",
+                ApplicantType: element.applicantType ? element.applicantType.name : "",
                 Date: new Date(element.createdAt)
                   .toJSON()
                   .slice(0, 10)
@@ -615,11 +385,11 @@ export default {
                 label: "Action",
                 field: "quick",
                 width: "10%",
-                display: function(row) {
+                display: function (row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 },
               },
@@ -635,9 +405,7 @@ export default {
     };
 
     const reSubmitted = (apiParameters) => {
-      let updId = statuses
-        ? statuses.filter((stat) => stat.code == "UPD")[0].id
-        : "";
+      let updId = statuses ? statuses.filter((stat) => stat.code == "UPD")[0].id : "";
       store
         .dispatch("reviewerGoodStanding/getGoodstandingsByStatus", [
           { statusId: updId },
@@ -656,10 +424,7 @@ export default {
                 " " +
                 (element.profile ? element.profile.grandFatherName : ""),
               ApplicationType: element ? element.applicantType.name : "",
-              Date: new Date(element.createdAt)
-                .toJSON()
-                .slice(0, 10)
-                .replace(/-/g, "/"),
+              Date: new Date(element.createdAt).toJSON().slice(0, 10).replace(/-/g, "/"),
               data: element,
             });
           });
@@ -695,13 +460,13 @@ export default {
                 label: "Actions",
                 field: "quick",
                 width: "10%",
-                display: function(row) {
+                display: function (row) {
                   return (
                     '<button  data-set="' +
                     row +
-                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white  hover:shadow-lg hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-white  hover:  hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 },
               },
@@ -718,24 +483,20 @@ export default {
 
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
-      Array.prototype.forEach.call(elements, function(element) {
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
       });
-      unassignedTable.value.isLoading = false;
     };
 
     const tableLoadingFinishResub = () => {
-      let elementsResub = document.getElementsByClassName(
-        "edit-btn-resubmitted"
-      );
-      Array.prototype.forEach.call(elementsResub, function(element) {
+      let elementsResub = document.getElementsByClassName("edit-btn-resubmitted");
+      Array.prototype.forEach.call(elementsResub, function (element) {
         if (element.classList.contains("edit-btn-resubmitted")) {
           element.addEventListener("click", rowClickedResub());
         }
       });
-      reSubmittedTable.value.isLoading = false;
     };
 
     const rowClicked = (row) => {
@@ -805,7 +566,7 @@ export default {
 
       setTimeout(() => {
         unassignedTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           unassigned([
             { key: "page", value: offset },
@@ -832,7 +593,7 @@ export default {
 
       setTimeout(() => {
         reSubmittedTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           reSubmitted([
             { key: "page", value: offset },

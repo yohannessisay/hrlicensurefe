@@ -61,7 +61,7 @@
                 <p class="ml-4">
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
-                <img v-bind:src="filePreview" v-show="showPreview" />
+                <img :src="filePreview" v-show="showPreview" />
               </picture>
               <span v-if="photoSizeCheck" style="color: red"
                 >Image size to big, Upload again. Image must be less than 3
@@ -154,8 +154,8 @@
                 >
                   <option
                     v-for="types in state.nationalities"
-                    v-bind:key="types.name"
-                    v-bind:value="types.id"
+                    :key="types.name"
+                    :value="types.id"
                   >
                     {{ types.name }}
                   </option>
@@ -231,7 +231,7 @@
             <div class="flex">
               <div class="flex w-1/2 mb-small m1-12">
                 <div class="flex flex-col w-full">
-                  <label class="text-primary-700">Martial Status</label>
+                  <label class="text-primary-700">marital Status</label>
                   <div class="flex w-full">
                     <div class="flex flex-col w-1/3">
                       <div class="flex py-2">
@@ -290,7 +290,7 @@
               class="flex mb-medium w-full mt-medium"
             >
               <button
-                class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
+                class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover: "
               >
                 Update Profile
               </button>
@@ -306,7 +306,7 @@
       <FlashMessage message="Login Successful!" />
     </div>
     <div v-if="message.showErrorFlash">
-      <ErrorFlashMessage v-bind:message="message.errorMessage" />
+      <ErrorFlashMessage :message="message.errorMessage" />
     </div>
   </div>
 </template>

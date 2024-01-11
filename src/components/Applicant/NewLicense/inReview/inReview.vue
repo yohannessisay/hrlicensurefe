@@ -1,6 +1,6 @@
 <template>
   <main-content :url="'newLicense'">
-    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
       <ol class="list-reset flex">
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -29,7 +29,7 @@
             lg:w-1/4
             mdlg:w-1/4
             sm:w-full sm:mr-4
-            shadow-lg
+             
             rounded-lg
             transform
             transition
@@ -146,7 +146,7 @@
                 <img
                   alt="Placeholder"
                   class="block rounded-full h-8"
-                  v-bind:src="
+                  :src="
                     userInfo.profilePicturePath
                       ? googleApi + userInfo.profilePicturePath
                       : ''
@@ -171,7 +171,7 @@
                   font-bold
                   uppercase
                   rounded
-                  shadow-lg
+                   
                   mb-4
                   transition
                   duration-150
@@ -202,7 +202,7 @@
         lg:w-1/4
         mdlg:w-1/4
         sm:w-full sm:mr-4
-        shadow-lg
+         
         rounded-lg
         transform
         transition

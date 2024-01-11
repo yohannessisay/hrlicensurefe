@@ -44,7 +44,7 @@
                 uppercase
                 border
                 rounded-md
-                shadow-lg
+                 
                 hover:bg-white hover:text-primary-600 hover:border-primary-600
                 transition
                 duration-150
@@ -176,7 +176,7 @@
                     </ul>
 
                     <div
-                      class="tab-content shadow-xl w-4/5"
+                      class="tab-content   w-4/5"
                       id="tabs-tabContentVertical"
                     >
                       <div
@@ -190,7 +190,7 @@
                             bg-white
                             p-6
                             rounded-lg
-                            shadow-lg
+                             
                             overflow-x-scroll
                           "
                         >
@@ -198,7 +198,7 @@
                             class="
                               inline-block
                               min-w-full
-                              shadow-md
+                               
                               rounded-lg
                               overflow-hidden
                               bg-primary-800
@@ -228,7 +228,7 @@
                             bg-white
                             p-6
                             rounded-lg
-                            shadow-lg
+                             
                             overflow-x-scroll
                           "
                         >
@@ -236,7 +236,7 @@
                             class="
                               inline-block
                               min-w-full
-                              shadow-md
+                               
                               rounded-lg
                               overflow-hidden
                               bg-primary-800
@@ -266,7 +266,7 @@
                             bg-white
                             p-6
                             rounded-lg
-                            shadow-lg
+                             
                             overflow-x-scroll
                           "
                         >
@@ -274,7 +274,7 @@
                             class="
                               inline-block
                               min-w-full
-                              shadow-md
+                               
                               rounded-lg
                               overflow-hidden
                               bg-primary-800
@@ -408,7 +408,7 @@ export default {
               width: "10%",
               display: function (row) {
                 return (
-                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-region bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
+                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-region bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded   hover:   transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i> View/Edit</button>'
                 );
@@ -491,7 +491,7 @@ export default {
               width: "10%",
               display: function (row) {
                 return (
-                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-woreda bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
+                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-woreda bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded   hover:   transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i> View/Edit</button>'
                 );
@@ -565,7 +565,7 @@ export default {
               width: "10%",
               display: function (row) {
                 return (
-                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-zone bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
+                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-zone bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded   hover:   transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i> View/Edit</button>'
                 );
@@ -582,8 +582,7 @@ export default {
       });
     };
 
-    const regionTableLoadingFinish = () => {
-      regionsTable.value.isLoading = false;
+    const regionTableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn-region");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-region")) {
@@ -619,8 +618,7 @@ export default {
         : {};
     };
 
-    const zoneTableLoadingFinish = () => {
-      zonesTable.value.isLoading = false;
+    const zoneTableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn-zone");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-zone")) {
@@ -669,8 +667,7 @@ export default {
         : {};
     };
 
-    const woredaTableLoadingFinish = () => {
-      woredasTable.value.isLoading = false;
+    const woredaTableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn-woreda");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-woreda")) {

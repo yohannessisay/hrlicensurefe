@@ -1,18 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="staticBackdrop"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -22,41 +11,12 @@
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
           <button
             type="button"
-            class="
-                  px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -80,7 +40,7 @@
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -89,40 +49,19 @@
                   <div class="grow-0 shrink-0 basis-auto w-full">
                     <div class="flex flex-wrap">
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                mb-12
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex mb-12 items-center justify-center"
                             >
                               <picture>
                                 <source
                                   :srcset="
-                                    modalData.profile &&
-                                    modalData.profile.profilePicture
+                                    modalData.profile && modalData.profile.profilePicture
                                       ? googleApi +
-                                        modalData.profile.profilePicture
-                                          .filePath
+                                        modalData.profile.profilePicture.filePath
                                       : ''
                                   "
                                   type="image/jpg"
@@ -135,25 +74,18 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-extrabold text-2xl mb-1">
-                              Personal Info
-                            </h2>
+                            <h2 class="font-extrabold text-2xl mb-1">Personal Info</h2>
                             <div class="border text-primary-600 rounded-lg p-2">
                               <p class="text-gray-500">
-                                <span
-                                  class="
-                                  font-semibold
-                                  text-lg text-primary-700
-                                  mb-1
-                                "
+                                <span class="font-semibold text-lg text-primary-700 mb-1"
                                   >Full Name:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.name }}</span>
+                                  {{ modalData.name }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Gender:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
@@ -161,32 +93,32 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Nationality:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.nationality }}</span>
+                                  {{ modalData.nationality }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Date Of Birth:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{
-                                  modalData.dateOfBirth
-                                    ? modalData.dateOfBirth.slice(0, 10)
-                                    : ""
-                                }}</span>
+                                  {{
+                                    modalData.dateOfBirth
+                                      ? modalData.dateOfBirth.slice(0, 10)
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
+                                <span class="font-semibold text-primary-700 mb-1"
+                                  >Marital Status:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.maritalStatus }}</span>
+                                  {{ modalData.maritalStatus }}</span
+                                >
                               </p>
                             </div>
                           </div>
@@ -194,120 +126,75 @@
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-40
-                                h-40
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-40 h-40 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x text-white"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1 text-2xl ">Contact Info</h2>
+                            <h2 class="font-bold mb-1 text-2xl">Contact Info</h2>
                             <div class="border text-primary-600 rounded-lg p-2">
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Mobile Number:</span
-                              >
-                              <span class="font-semibold text-grey-800 mb-1">
-                              {{ modalData.mobileNumber }}</span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Email:</span
-                              >
-                              <span class="font-semibold text-grey-800 mb-1">
-                              {{ modalData.email }}</span>
-                            </p>
-                          </div>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Mobile Number:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                  {{ modalData.mobileNumber }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Email:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                  {{ modalData.email }}</span
+                                >
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-64
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-64 flex items-center justify-center"
                             >
                               <i class="fa fa-building fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6 mb-4">
-                            <h2 class="font-bold mb-1 text-2xl ">Education Detail</h2>
+                            <h2 class="font-bold mb-1 text-2xl">Education Detail</h2>
 
                             <div
-                              class="
-                                border-2
-                                p-2
-                                rounded-lg
-                                m-1
-                                shadow-md
-                                text-primary-500
-                              "
+                              class="border-2 p-2 rounded-lg m-1 text-primary-500"
                               v-for="education in modalData.data
                                 ? modalData.data.educations
                                 : []"
                               :key="education.id"
                             >
                               <p class="">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
-                                <span style="color:black">
+                                <span style="color: black">
                                   {{
-                                    education.department
-                                      ? education.department.name
-                                      : ""
+                                    education.department ? education.department.name : ""
                                   }}
                                 </span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
-                                <span style="color:black">
+                                <span style="color: black">
                                   {{
                                     education.educationLevel
                                       ? education.educationLevel.name
@@ -316,11 +203,10 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
-                                <span style="color:black">
+                                <span style="color: black" class="break-all">
                                   {{
                                     education.professionType
                                       ? education.professionType.name
@@ -329,11 +215,10 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
-                                <span style="color:black">
+                                <span style="color: black">
                                   {{
                                     education.institution
                                       ? education.institution.name
@@ -345,32 +230,17 @@
                           </div>
                         </div>
                       </div>
-                      <div>
+
+                      <div
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
+                      >
                         <label class="font-bold text-lg text-primary-600 mb-1"
                           >Actions</label
                         >
                         <br />
                         <button
-                        v-if="adminRole!='REV'"
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-yellow-300
-                            text-white
-                            hover:bg-ywhite hover:text-yellow-300
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            focus:shadow-lg focus:outline-none focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          v-if="adminRole != 'REV'"
+                          class="inline-block px-6 py-2.5 bg-yellow-300 text-white hover:bg-ywhite hover:text-yellow-300 font-medium text-xs leading-tight uppercase rounded focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#suspendLicense"
@@ -379,26 +249,8 @@
                           Suspend
                         </button>
                         <button
-                        v-if="adminRole!='REV'"
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-red-300
-                            hover:text-white hover:bg-white hover:text-red-300
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            focus:shadow-lg focus:outline-none focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          v-if="adminRole != 'REV'"
+                          class="inline-block px-6 py-2.5 bg-red-300 hover:text-white hover:bg-white hover:text-red-300 text-white font-medium text-xs leading-tight uppercase rounded focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#revokeLicense"
@@ -408,51 +260,27 @@
                         </button>
                         <button
                           v-if="showGenerate"
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-primary-700
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-white hover:text-primary-600
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#generatePdf"
-                          @click="changePrintType(modalData&&modalData.data&&modalData.data.applicantType&&
-                          modalData.data.applicantType.code=='FOR'?'foreigners':'')"
+                          @click="
+                            changePrintType(
+                              modalData &&
+                                modalData.data &&
+                                modalData.data.applicantType &&
+                                modalData.data.applicantType.code == 'FOR'
+                                ? 'foreigners'
+                                : ''
+                            )
+                          "
                         >
                           <i class="fa fa-file-text"></i>
                           Generate License
                         </button>
                         <button
-                          v-if="showGenerate&&adminExpLevel!='REG'"
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-yellow-400
-                            text-primary-600
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-white hover:text-primary-600
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          v-if="showGenerate && adminExpLevel != 'REG'"
+                          class="inline-block px-6 py-2.5 bg-yellow-400 text-primary-600 font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#generatePdf"
@@ -462,83 +290,67 @@
                           Externship
                         </button>
                         <button
-                          v-if="showGenerate&&adminExpLevel!='REG'"
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-primary-400
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-white hover:text-primary-600
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          class="inline-block px-6 py-2.5 bg-primary-400 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#generatePdf"
                           @click="changePrintType('temporary')"
                         >
                           <i class="fa fa-file-circle-check"></i>
-                          Temporary
+                          Designation
                         </button>
                         <button
                           v-if="showPreviousLicense"
                           type="button"
-                          class="
-                            inline-block
-                            px-6
-                            text-white
-                            bg-primary-600
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:text-primary-600 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          class="inline-block px-6 text-white bg-primary-600 font-medium text-xs leading-tight uppercase rounded hover:text-primary-600 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
                           data-bs-toggle="modal"
                           data-bs-target="#returnPreviousLicense"
                         >
                           Return Previous License
                         </button>
+                        <button
+                          class="inline-block mt-4 px-6 py-2.5 bg-grey-500 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#requestStatus"
+                        >
+                          <i class="fa fa-file-archive"></i>
+                          Request Status Change
+                        </button>
                       </div>
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="block p-6 rounded-lg bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
                         <div class="grid grid-cols-4 gap-4">
                           <div
-                            class="mt-4 mb-8 bg-white shadow-lg"
+                            class="mt-4 mb-8 bg-white"
                             style="border-radius: 15px; padding: 10px"
                             v-for="document in modalData.documents"
                             :key="document.id"
                           >
-                            <div class="flex justify-center">
+                            <div
+                              v-if="
+                                document &&
+                                document.fileType &&
+                                document.fileType.split('/')[1] == 'pdf'
+                              "
+                            >
+                              <button
+                                class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-400 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-white hover:text-primary-600"
+                                @click="openPdfInNewTab(document.filePath)"
+                              >
+                                See pdf in detail
+                              </button>
+                            </div>
+                            <div class="flex justify-center" v-else>
                               <div class="mt-large bg-white">
                                 <a
                                   :href="
-                                    document.filePath
-                                      ? googleApi + document.filePath
-                                      : ''
+                                    document.filePath ? googleApi + document.filePath : ''
                                   "
                                   :data-title="
                                     document.documentType
@@ -578,33 +390,10 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-primary-700
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#collapseExample"
@@ -616,22 +405,7 @@
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
@@ -642,10 +416,9 @@
   </div>
   <generate-pdf :modalData="modalData"></generate-pdf>
   <revoke-license-modal :modalData="modalData"></revoke-license-modal>
+  <request-status-change-modal :modalData="modalData"></request-status-change-modal>
   <suspend-license-modal :modalData="modalData"></suspend-license-modal>
-  <previous-license
-    :previousLicenseData="previousLicenseData"
-  ></previous-license>
+  <previous-license :previousLicenseData="previousLicenseData"></previous-license>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -654,11 +427,11 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
-
 import generatePdf from "./generateLicensedPdf.vue";
-import revokeLicenseModal from "./revokeLicenseModal.vue";
-import suspendLicenseModal from "./suspendLicenseModal.vue";
-import previousLicense from "./returnPreviousLicense.vue";
+import revokeLicenseModal from "./sharedComponents/byYou/revokeLicenseModal.vue";
+import requestStatusChangeModal from "./sharedComponents/byYou/requestStatusChange.vue";
+import suspendLicenseModal from "./sharedComponents/byYou/suspendLicenseModal.vue";
+import previousLicense from "./sharedComponents/byYou/returnPreviousLicense.vue";
 
 export default {
   props: ["modalDataId"],
@@ -668,6 +441,7 @@ export default {
     revokeLicenseModal,
     suspendLicenseModal,
     previousLicense,
+    requestStatusChangeModal,
   },
   computed: {
     moment: () => moment,
@@ -677,7 +451,7 @@ export default {
     let adminRole = localStorage.getItem("role");
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-    let adminExpLevel=JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code;
+    let adminExpLevel = JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code;
     let userId = ref("");
     let isLoading = ref(false);
     let reviewerAdminId = ref(0);
@@ -685,13 +459,22 @@ export default {
     const showModal = () => {
       show.value = true;
     };
+    let pdfFilePath = ref("");
     let showGenerate = ref(false);
     let previousLicenseData = ref([]);
-    const modalData = ref({ educations: [] });
+    let modalData = ref({ educations: [] });
     let result = {};
     let toBeGeneratedProfs = [];
+
+    let regionExpDate = localStorage.getItem("regionExpDate")
+      ? JSON.parse(localStorage.getItem("regionExpDate"))
+      : "";
     const changePrintType = (type) => {
       modalData.value.printType = type;
+    };
+    const openPdfInNewTab = (pdfPath) => {
+      pdfFilePath.value = pdfPath;
+      window.open(googleApi + "" + pdfPath, "_blank");
     };
     const check = () => {
       modalData.value = {};
@@ -704,10 +487,7 @@ export default {
 
             userId.value = result.profile ? result.profile.userId : "";
             store
-              .dispatch(
-                "reviewerNewLicense/getNewLicenseByUserId",
-                userId.value
-              )
+              .dispatch("reviewerNewLicense/getNewLicenseByUserId", userId.value)
               .then((res) => {
                 let tempEd = [];
                 if (res.data && res.data.data && res.data.data.length > 0) {
@@ -730,7 +510,7 @@ export default {
                     }
                   });
                   tempEd.forEach((element) => {
-                    if (element.length < 2) {
+                    if (element.length == 1) {
                       toBeGeneratedProfs.push(element[0]);
                     } else {
                       element.forEach((element) => {
@@ -738,9 +518,7 @@ export default {
                       });
                     }
                   });
-                  modalData.value.previousEducations = [
-                    ...new Set(toBeGeneratedProfs),
-                  ];
+                  modalData.value.previousEducations = [...new Set(toBeGeneratedProfs)];
                   if (tempEvaluateResult > 1) {
                     showGenerate.value = false;
                     showPreviousLicense.value = true;
@@ -784,13 +562,10 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.newEducations = result.educations
-              ? result.educations
-              : {};
+            modalData.value.newEducations = result.educations ? result.educations : {};
             modalData.value.profile = result.profile;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate =
-              result.licenseExpirationDate;
+
             modalData.value.documents = result.documents;
             modalData.value.data = result;
             modalData.value.id = result.id;
@@ -798,6 +573,9 @@ export default {
               result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
                 : "";
+            const inputDate = new Date(result.certifiedDate);
+            inputDate.setFullYear(inputDate.getFullYear() + regionExpDate);
+            modalData.value.licenseExpirationDate = inputDate.toISOString();
             isLoading.value = false;
           }
         });
@@ -817,8 +595,10 @@ export default {
       showPreviousLicense,
       previousLicenseData,
       check,
+      pdfFilePath,
       isLoading,
       modalData,
+      openPdfInNewTab,
       adminRole,
       googleApi,
       changePrintType,
@@ -826,8 +606,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>

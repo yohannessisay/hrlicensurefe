@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <router-link to="/admin/review">
-       <div class="logo-details">
+      <div class="logo-details">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 39.082 39.096"
@@ -40,23 +40,50 @@
       <span class="header_text ml-4">Report</span>
     </li>
     <ul class="nav-links">
-      <router-link to="admin/report">
+      <router-link to="/admin/report">
         <li :class="$route.fullPath === '/admin/report' ? 'mb-2 active' : ''">
           <a href="#Report">
             <i class="bx bx-table"></i>
 
-            <span class="links_name">Report</span>
+            <span class="links_name">General Report</span>
           </a>
         </li>
       </router-link>
     </ul>
-  <ul class="nav-links">
-      <div
-        class="profile-details mb-8 ml-4"
-     
-      >
+    <ul class="nav-links" v-if="adminData ? adminData.role.code != 'REV' : ''">
+      <router-link to="/admin/report/individualReport">
+        <li
+          :class="
+            $route.fullPath === '/admin/report/individualReport' ? 'mb-2 active' : ''
+          "
+        >
+          <a href="#IndividualReport">
+            <i class="bx bx-user"></i>
+
+            <span class="links_name">Reviewer Report</span>
+          </a>
+        </li>
+      </router-link>
+    </ul>
+    <ul class="nav-links">
+      <router-link to="/admin/report/professionReport">
+        <li
+          :class="
+            $route.fullPath === '/admin/report/professionReport' ? 'mb-2 active' : ''
+          "
+        >
+          <a href="#ProfessionReport">
+            <i class="bx bx-briefcase-alt-2"></i>
+
+            <span class="links_name">Profession Report</span>
+          </a>
+        </li>
+      </router-link>
+    </ul>
+    <ul class="nav-links">
+      <div class="profile-details mb-8 ml-4">
         <router-link to="/admin/review/">
-          <li  style="margin-top:100px;">
+          <li style="margin-top: 100px">
             <a href="" class="ml-6">
               <i class="bx bx-arrow-to-left text-white"></i>
 
@@ -69,5 +96,12 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  setup() {
+    const adminData = JSON.parse(localStorage.getItem("allAdminData"));
+    return {
+      adminData,
+    };
+  },
+};
 </script>

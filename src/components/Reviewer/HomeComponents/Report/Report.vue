@@ -14,9 +14,7 @@
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Report</a
-          >
+          <a href="#" class="pointer-events-none text-lg text-grey-300">Report</a>
         </li>
       </ol>
     </reviewer-nav-bar>
@@ -31,24 +29,7 @@
           </p>
           <p class="absolute right-0">
             <button
-              class="
-                px-6
-                text-white
-                bg-primary-600
-                hover:text-primary-600
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                rounded
-                shadow-md
-                focus:shadow-lg focus:outline-none focus:ring-0
-                transition
-                duration-150
-                mt-0
-                ease-in-out
-                text-right
-              "
+              class="px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded focus: focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right"
               @click="exportTable()"
             >
               <i class="fa fa-file-excel text-xl"></i>
@@ -61,34 +42,12 @@
             <div class="mb-3 xl:w-full">
               <label for="" class="ml-4">License Type</label>
               <select
-                class="
-                  form-select
-                  appearance-none
-                  block
-                  w-full
-                  px-6
-                  ml-4
-                  py-2
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                class="form-select appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 v-model="licenseTypeFilter"
                 @change="handleFilterByApplication()"
               >
                 <option disabled>Application Type</option>
-                <option selected value="newLicense">
-                  New License Applications
-                </option>
+                <option selected value="newLicense">New License Applications</option>
                 <option value="goodstanding">Goodstanding Applications</option>
                 <option value="renewal">Renewed Applications</option>
                 <!-- <option value="verification">
@@ -100,40 +59,11 @@
               <div class="mb-3 xl:w-full">
                 <label for="" class="ml-4">Search By Name</label>
                 <div
-                  class="
-                    input-group
-                    relative
-                    flex flex-wrap
-                    items-stretch
-                    w-full
-                    mb-4
-                  "
+                  class="input-group relative flex flex-wrap items-stretch w-full mb-4"
                 >
                   <input
                     type="search"
-                    class="
-                      ml-4
-                      form-control
-                      relative
-                      flex-auto
-                      min-w-0
-                      block
-                      w-full
-                      px-6
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      bg-white bg-clip-padding
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-blue-600
-                      focus:outline-none
-                    "
+                    class="ml-4 form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     placeholder="Start Searching For Name"
                     aria-label="Search"
                     aria-describedby="button-addon2"
@@ -141,58 +71,14 @@
                     @keyup.enter="searchApplication()"
                   />
                   <button
-                    class="
-                      inline-block
-                      px-6
-                      mr-4
-                      py-2
-                      bg-primary-700
-                      text-white
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-md
-                      hover:bg-blue-700 hover:shadow-lg
-                      focus:bg-blue-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-blue-800 active:shadow-lg
-                      transition
-                      duration-150
-                      ease-in-out
-                      items-center
-                    "
+                    class="inline-block px-6 mr-4 py-2 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out items-center"
                   >
                     <i class="fa fa-user fa-2x"></i>
                   </button>
 
                   <input
                     type="search"
-                    class="
-                      form-control
-                      relative
-                      flex-auto
-                      min-w-0
-                      block
-                      w-full
-                      px-6
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      bg-white bg-clip-padding
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-blue-600
-                      focus:outline-none
-                    "
+                    class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     placeholder="Search for profession"
                     aria-label="Search"
                     aria-describedby="button-addon2"
@@ -201,29 +87,7 @@
                   />
 
                   <button
-                    class="
-                      inline-block
-                      px-6
-                      py-2
-                      bg-primary-700
-                      text-white
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-md
-                      hover:bg-blue-700 hover:shadow-lg
-                      focus:bg-blue-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-blue-800 active:shadow-lg
-                      transition
-                      duration-150
-                      ease-in-out
-                      items-center
-                    "
+                    class="inline-block px-6 py-2 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out items-center"
                   >
                     <i class="fa fa-briefcase fa-2x"></i>
                   </button>
@@ -232,27 +96,7 @@
                   <div class="mb-3 xl:w-full ml-2">
                     <label for="" class="ml-4">License Status</label>
                     <select
-                      class="
-                        form-select
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                      class="form-select appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       v-model="searchTermStatus"
                       aria-label="Default select example"
                       @change="searchApplication()"
@@ -272,27 +116,7 @@
                   <div class="mb-3 xl:w-full ml-4">
                     <label for="" class="ml-4">Gender</label>
                     <select
-                      class="
-                        form-select
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                      class="form-select appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       v-model="searchTermGender"
                       @change="searchApplication()"
                       aria-label="Default select example"
@@ -307,32 +131,13 @@
                   <div class="mb-3 xl:w-full ml-4">
                     <label for="" class="ml-4">Region</label>
                     <select
-                      class="
-                        form-select
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                      class="form-select appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       @change="searchApplication()"
                       v-model="searchTermRegion"
                       aria-label="Default select example"
                     >
                       <option value="">All</option>
+                      <option value="0">Federal</option>
                       <option
                         v-for="region in regions"
                         :value="region.id"
@@ -349,26 +154,7 @@
                     <input
                       v-model="searchTermFromDate"
                       type="date"
-                      class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                      class="appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       aria-label="Default select example"
                     />
                   </div>
@@ -376,26 +162,7 @@
                     <label for="" class="ml-4"> To</label>
                     <input
                       type="date"
-                      class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                      class="appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       v-model="searchTermToDate"
                       @change="searchApplication()"
                       aria-label="Default select example"
@@ -404,24 +171,7 @@
                   <div class="ml-8 mt-4">
                     <button
                       type="button"
-                      class="
-                        inline-block
-                        px-6
-                        py-2
-                        mt-2
-                        border-2 border-primary-600
-                        text-primary-600
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                      class="inline-block px-6 py-2 mt-2 border-2 border-primary-600 text-primary-600 font-medium text-xs leading-tight uppercase rounded hover:bg-primary-600 hover:bg-opacity-5 hover:text-white focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                       @click="clearFilters()"
                     >
                       <i class="fa fa-close"></i>
@@ -434,16 +184,9 @@
               </div>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-sm ">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
               <div
-                class="
-                  inline-block
-                  min-w-full
-                  shadow-md
-                  rounded-lg
-                  overflow-hidden
-                  bg-primary-800
-                "
+                class="inline-block min-w-full rounded-lg overflow-hidden bg-primary-800"
               >
                 <vue-table-lite
                   @do-search="doSearch"
@@ -452,7 +195,6 @@
                   :rows="reportTable.rows"
                   :total="reportTable.totalRecordCount"
                   :sortable="reportTable.sortable"
-                  
                 >
                 </vue-table-lite>
               </div>
@@ -503,16 +245,14 @@ export default {
     let zones = ref([]);
     let woredas = ref([]);
     let applicationStatuses = ref([]);
-
-    const fetchNewLicenseReport = (apiParameters) => {
+    let tempProf = "";
+    const fetchNewLicenseReport = async (apiParameters) => {
       reportTable.value.isLoading = true;
-      store
+      await store
         .dispatch("report/getNewLicenseReport", [{ params: apiParameters }])
         .then((res) => {
           let tempData =
-            res.data && res.data.data && res.data.data.rows
-              ? res.data.data.rows
-              : [];
+            res.data && res.data.data && res.data.data.rows ? res.data.data.rows : [];
           tableData = [];
           allData.value = [];
           exportData.value.data = [];
@@ -520,26 +260,26 @@ export default {
           exportData.value.data = tempData;
 
           tempData.forEach((element) => {
-            let prof = element.educations.map((prof) => {
-              return prof.professionType ? prof.professionType.name : "";
+            tempProf = "";
+            element.educations.map((prof) => {
+              prof.professionType ? (tempProf += prof.professionType.name + ", ") : "";
             });
-
             tableData.push({
-              id: element.id ? +element.id : "",
+              LicenseNumber: element.newLicenseCode ? element.newLicenseCode : "",
               FirstName: element.name ? element.name : "",
               MiddleName: element.fatherName ? element.fatherName : "",
               LastName: element.grandFatherName ? element.grandFatherName : "",
+              Email: element.applicant ? element.applicant.emailAddress : "",
+              Phone: element.applicant ? element.applicant.phoneNumber : "",
               LicenseStatus: element.applicationStatus
                 ? element.applicationStatus.name
                 : "",
-              LicenseNumber: element.newLicenseCode
-                ? element.newLicenseCode
-                : "",
+
               CertifiedDate: element.certifiedDate
                 ? element.certifiedDate.slice(0, 10)
                 : "",
 
-              ProfessionalType: prof ? prof.join(",") : "",
+              ProfessionalType: tempProf,
               Gender: element.gender ? element.gender : "",
               OrganizationalUnit: element.region ? element.region.name : "",
               data: element ? element : {},
@@ -549,28 +289,39 @@ export default {
           reportTable.value = reactive({
             columns: [
               {
-                label: "ID",
-                field: "id",
+                label: "License Number",
+                field: "LicenseNumber",
                 width: "5%",
                 sortable: true,
-                isKey: true,
               },
               {
                 label: "First Name",
                 field: "FirstName",
-                width: "10%",
+                width: "5%",
                 sortable: true,
               },
               {
                 label: "Father Name",
                 field: "MiddleName",
-                width: "10%",
+                width: "5%",
                 sortable: true,
               },
               {
                 label: "Grandfather Name",
                 field: "LastName",
-                width: "10%",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Email",
+                field: "Email",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Phone",
+                field: "Phone",
+                width: "5%",
                 sortable: true,
               },
               {
@@ -582,15 +333,9 @@ export default {
               {
                 label: "Professional Type",
                 field: "ProfessionalType",
-                width: "35%",
-                sortable: true,
+                width: "50%",
               },
-              {
-                label: "License Number",
-                field: "LicenseNumber",
-                width: "5%",
-                sortable: true,
-              },
+
               {
                 label: "Certified Date",
                 field: "CertifiedDate",
@@ -686,39 +431,38 @@ export default {
         : "";
     };
 
-    const fetchRenewalReport = (apiParameters) => {
+    const fetchRenewalReport = async (apiParameters) => {
       reportTable.value.isLoading = true;
-      store
+      await store
         .dispatch("report/getRenewalReport", [{ params: apiParameters }])
         .then((res) => {
           let tempData =
-            res.data && res.data.data && res.data.data.rows
-              ? res.data.data.rows
-              : [];
+            res.data && res.data.data && res.data.data.rows ? res.data.data.rows : [];
           tableData = [];
           allData.value = [];
           exportData.value.data = [];
           exportData.value.type = "renewal";
           exportData.value.data = tempData;
-
+          let tempProf = "";
           tempData.forEach((element) => {
-            let prof = element.educations.map((prof) => {
-              return prof.professionType ? prof.professionType.name : "";
+            tempProf = "";
+            element.educations.map((prof) => {
+              prof.professionType ? (tempProf += prof.professionType.name + ", ") : "";
             });
             tableData.push({
-              id: element.id ? +element.id : "",
+              LicenseNumber: element.renewalCode ? element.renewalCode : "",
               FirstName: element.name ? element.name : "",
               MiddleName: element.fatherName ? element.fatherName : "",
               LastName: element.grandFatherName ? element.grandFatherName : "",
+              Email: element.applicant ? element.applicant.emailAddress : "",
+              Phone: element.applicant ? element.applicant.phoneNumber : "",
               LicenseStatus: element.applicationStatus
                 ? element.applicationStatus.name
                 : "",
-              LicenseNumber: element.renewalCode ? element.renewalCode : "",
-              IssuedDate: element.certifiedDate
-                ? element.certifiedDate.slice(0, 10)
-                : "",
 
-              ProfessionalType: prof ? prof.join(" , ") : "",
+              IssuedDate: element.certifiedDate ? element.certifiedDate.slice(0, 10) : "",
+
+              ProfessionalType: tempProf,
               Gender: element.gender ? element.gender : "",
               OrganizationalUnit: element.region ? element.region.name : "",
               data: element ? element : {},
@@ -728,11 +472,10 @@ export default {
           reportTable.value = {
             columns: [
               {
-                label: "ID",
-                field: "id",
+                label: "License Number",
+                field: "LicenseNumber",
                 width: "5%",
                 sortable: true,
-                isKey: true,
               },
               {
                 label: "First Name",
@@ -753,6 +496,18 @@ export default {
                 sortable: true,
               },
               {
+                label: "Email",
+                field: "Email",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Phone",
+                field: "Phone",
+                width: "5%",
+                sortable: true,
+              },
+              {
                 label: "License Status",
                 field: "LicenseStatus",
                 width: "5%",
@@ -764,12 +519,7 @@ export default {
                 width: "35%",
                 sortable: true,
               },
-              {
-                label: "License Number",
-                field: "LicenseNumber",
-                width: "5%",
-                sortable: true,
-              },
+
               {
                 label: "Issued Date",
                 field: "IssuedDate",
@@ -994,15 +744,13 @@ export default {
     //   });
     // };
 
-    const fetchGoodstandingReport = (apiParameters) => {
+    const fetchGoodstandingReport = async (apiParameters) => {
       reportTable.value.isLoading = true;
-      store
+      await store
         .dispatch("report/getGoodstandingReport", [{ params: apiParameters }])
         .then((res) => {
           let tempData =
-            res.data && res.data.data && res.data.data.rows
-              ? res.data.data.rows
-              : [];
+            res.data && res.data.data && res.data.data.rows ? res.data.data.rows : [];
           tableData = [];
           allData.value = [];
           exportData.value.data = [];
@@ -1014,16 +762,16 @@ export default {
               ? element.GSProfessionals.professionalTypes.name
               : "";
             tableData.push({
-              id: element.id ? +element.id : "",
+              LicenseNumber: element.goodStandingCode ? element.goodStandingCode : "",
               FirstName: element.name ? element.name : "",
               MiddleName: element.fatherName ? element.fatherName : "",
               LastName: element.grandFatherName ? element.grandFatherName : "",
+              Email: element.applicant ? element.applicant.emailAddress : "",
+              Phone: element.applicant ? element.applicant.phoneNumber : "",
               LicenseStatus: element.applicationStatus
                 ? element.applicationStatus.name
                 : "",
-              LicenseNumber: element.goodStandingCode
-                ? element.goodStandingCode
-                : "",
+
               PrintedDate: element.certifiedDate
                 ? element.certifiedDate.slice(0, 10)
                 : "",
@@ -1037,11 +785,10 @@ export default {
           reportTable.value = {
             columns: [
               {
-                label: "ID",
-                field: "id",
+                label: "License Number",
+                field: "LicenseNumber",
                 width: "5%",
                 sortable: true,
-                isKey: true,
               },
               {
                 label: "First Name",
@@ -1062,6 +809,18 @@ export default {
                 sortable: true,
               },
               {
+                label: "Email",
+                field: "Email",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Phone",
+                field: "Phone",
+                width: "5%",
+                sortable: true,
+              },
+              {
                 label: "License Status",
                 field: "LicenseStatus",
                 width: "5%",
@@ -1073,12 +832,7 @@ export default {
                 width: "35%",
                 sortable: true,
               },
-              {
-                label: "License Number",
-                field: "LicenseNumber",
-                width: "5%",
-                sortable: true,
-              },
+
               {
                 label: "Printed Date",
                 field: "PrintedDate",
@@ -1116,7 +870,7 @@ export default {
 
     const fetchRegion = () => {
       store.dispatch("report/getRegions").then((res) => {
-        regions.value = res.data.data; 
+        regions.value = res.data.data;
       });
     };
 
@@ -1147,9 +901,63 @@ export default {
       });
     };
 
-    const exportTable = () => {
+    const exportTable = async () => {
       let tempData = [];
-       
+      licenseTypeFilter.value == "newLicense"
+        ? await fetchNewLicenseReport([
+            { key: "page", value: 0 },
+            { key: "size", value: 0 },
+            { key: "profession", value: searchTermProf.value },
+            { key: "status", value: searchTermStatus.value },
+            { key: "gender", value: searchTermGender.value },
+            { key: "region", value: searchTermRegion.value },
+            { key: "value", value: searchTermName.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            {
+              key: "toDate",
+              value:
+                searchTermFromDate.value && searchTermFromDate.value != ""
+                  ? searchTermToDate.value
+                  : new Date().toISOString().slice(0, 10),
+            },
+          ])
+        : licenseTypeFilter.value == "renewal"
+        ? await fetchRenewalReport([
+            { key: "page", value: 0 },
+            { key: "size", value: 0 },
+            { key: "profession", value: searchTermProf.value },
+            { key: "status", value: searchTermStatus.value },
+            { key: "gender", value: searchTermGender.value },
+            { key: "region", value: searchTermRegion.value },
+            { key: "value", value: searchTermName.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            {
+              key: "toDate",
+              value:
+                searchTermFromDate.value && searchTermFromDate.value != ""
+                  ? searchTermToDate.value
+                  : new Date().toISOString().slice(0, 10),
+            },
+          ])
+        : licenseTypeFilter.value == "goodstanding"
+        ? await fetchGoodstandingReport([
+            { key: "page", value: 0 },
+            { key: "size", value: 0 },
+            { key: "profession", value: searchTermProf.value },
+            { key: "status", value: searchTermStatus.value },
+            { key: "gender", value: searchTermGender.value },
+            { key: "region", value: searchTermRegion.value },
+            { key: "value", value: searchTermName.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            {
+              key: "toDate",
+              value:
+                searchTermFromDate.value && searchTermFromDate.value != ""
+                  ? searchTermToDate.value
+                  : new Date().toISOString().slice(0, 10),
+            },
+          ])
+        : "";
       exportData.value.data.forEach((element) => {
         let tempdEdu = "";
         element.educations
@@ -1176,9 +984,7 @@ export default {
             "Father Name": element.fatherName,
             "Grand Father Name": element.grandFatherName,
             Gender: element.gender ? element.gender : "",
-            "Birth Date": element.dateOfBirth
-              ? element.dateOfBirth.slice(0, 10)
-              : "",
+            "Birth Date": element.dateOfBirth ? element.dateOfBirth.slice(0, 10) : "",
             Nationality: element.nationality ? element.nationality.name : "",
             Region: element.region ? element.region.name : "",
             Professions: tempdEdu,
@@ -1202,7 +1008,7 @@ export default {
       tableData = [];
       setTimeout(() => {
         reportTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc" && licenseTypeFilter.value == "newLicense") {
           fetchNewLicenseReport([
             { key: "page", value: offset },
@@ -1296,7 +1102,7 @@ export default {
     const searchApplication = () => {
       reportTable.value.isLoading = true;
       reportTable.value.rows = [];
-      tableData = []; 
+      tableData = [];
       licenseTypeFilter.value == "newLicense"
         ? fetchNewLicenseReport([
             { key: "page", value: 0 },
@@ -1310,7 +1116,7 @@ export default {
             {
               key: "toDate",
               value:
-              searchTermFromDate.value && searchTermFromDate.value != ""
+                searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },
@@ -1328,7 +1134,7 @@ export default {
             {
               key: "toDate",
               value:
-              searchTermFromDate.value && searchTermFromDate.value != ""
+                searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },
@@ -1346,7 +1152,7 @@ export default {
             {
               key: "toDate",
               value:
-              searchTermFromDate.value && searchTermFromDate.value != ""
+                searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },

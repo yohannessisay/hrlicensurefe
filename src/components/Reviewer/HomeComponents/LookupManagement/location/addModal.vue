@@ -32,7 +32,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -186,7 +186,7 @@
                                     focus:bg-white
                                     focus:text-primary-600
                                     focus:font-bold
-                                    focus:drop-shadow-lg
+                                    focus:drop- 
                                   "
                                   required
                                   placeholder="Enter name"
@@ -272,7 +272,7 @@
                                           focus:bg-white
                                           focus:text-primary-600
                                           focus:font-bold
-                                          focus:drop-shadow-lg
+                                          focus:drop- 
                                         "
                                         required
                                         placeholder="Start Typing region name"
@@ -301,7 +301,7 @@
                                       max-height-12
                                       overflow-hidden overflow-y-scroll
                                       rounded-lg
-                                      shadow-lg
+                                       
                                       text-left
                                       dropdown-menu
                                     "
@@ -377,7 +377,7 @@
                                           focus:bg-white
                                           focus:text-primary-600
                                           focus:font-bold
-                                          focus:drop-shadow-lg
+                                          focus:drop- 
                                         "
                                         required
                                         :placeholder="
@@ -413,7 +413,7 @@
                                       max-height-12
                                       overflow-hidden overflow-y-scroll
                                       rounded-lg
-                                      shadow-lg
+                                       
                                       text-left
                                       dropdown-menu
                                     "
@@ -451,7 +451,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -463,8 +463,8 @@
             type="button"
             :class="
               locationTypeSelected
-                ? 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded shadow-lg hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out'
-                : 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded shadow-lg hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out pointer-events-none opacity-75'
+                ? 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded   hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out'
+                : 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded   hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out pointer-events-none opacity-75'
             "
             @click="saveLocation()"
           >
@@ -484,7 +484,7 @@
               uppercase
               border
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600 hover:border-primary-600
               transition
               duration-150
@@ -735,8 +735,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

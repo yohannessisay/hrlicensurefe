@@ -1,74 +1,23 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
-    id="returnPreviousLicense"
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+    id="returnPreviousLicenseOther"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="returnPreviousLicenseLabel"
+    aria-labelledby="returnPreviousLicenseOtherLabel"
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
           <button
             type="button"
-            class="
-                  px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -93,31 +42,17 @@
                   </div>
                 </div>
 
-                <div
-                  class="container my-12 mx-auto px-4 md:px-12 border-b" 
-                >
+                <div class="container my-12 mx-auto px-4 md:px-12 border-b">
                   <div class="flex flex-wrap -mx-1 lg:-mx-4">
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-lg">
+                      <article class="overflow-hidden rounded-lg">
                         <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-tight p-2 md:p-4"
                         >
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Applicant Profile
                             </a>
                           </h1>
@@ -131,15 +66,15 @@
                             <div>Applicant Name</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                (licenseData&&licenseData.profile
+                                (licenseData && licenseData.profile
                                   ? licenseData.profile.name
                                   : "") +
                                 " " +
-                                (licenseData&&licenseData.profile
+                                (licenseData && licenseData.profile
                                   ? licenseData.profile.fatherName
                                   : "") +
                                 " " +
-                                (licenseData&&licenseData.profile
+                                (licenseData && licenseData.profile
                                   ? licenseData.profile.grandFatherName
                                   : "")
                               }}
@@ -149,7 +84,7 @@
                             <div>Applicant Email</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&&licenseData.applicant
+                                licenseData && licenseData.applicant
                                   ? licenseData.applicant.emailAddress
                                   : ""
                               }}
@@ -159,7 +94,7 @@
                             <div>Applicant Phone</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&&licenseData.applicant
+                                licenseData && licenseData.applicant
                                   ? "+251" + licenseData.applicant.phoneNumber
                                   : ""
                               }}
@@ -168,14 +103,7 @@
                         </div>
 
                         <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-none p-2 md:p-4"
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -183,26 +111,14 @@
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-lg">
+                      <article class="overflow-hidden rounded-lg">
                         <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-tight p-2 md:p-4"
                         >
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Reviewer Detail
                             </a>
                           </h1>
@@ -221,8 +137,7 @@
                                 licenseData.licenseReviewer &&
                                 licenseData.licenseReviewer.reviewer &&
                                 licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .expertLevel.name
+                                  ? licenseData.licenseReviewer.reviewer.expertLevel.name
                                   : ""
                               }}
                             </div>
@@ -231,7 +146,7 @@
                             <div>Reviewer Name</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&& licenseData.licenseReviewer
+                                licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer.name
                                   : ""
                               }}
@@ -241,9 +156,8 @@
                             <div>Phone Number</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&&licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .phoneNumber
+                                licenseData && licenseData.licenseReviewer
+                                  ? licenseData.licenseReviewer.reviewer.phoneNumber
                                   : ""
                               }}
                             </div>
@@ -251,14 +165,7 @@
                         </div>
 
                         <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-none p-2 md:p-4"
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -268,26 +175,16 @@
                     <!-- Column -->
                     <div
                       v-for="education in licenseData.educations"
-                      :key="education?education.id:''"
+                      :key="education ? education.id : ''"
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-lg">
+                      <article class="overflow-hidden rounded-lg">
                         <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-tight p-2 md:p-4"
                         >
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Applicants Education Detail
                             </a>
                           </h1>
@@ -299,7 +196,7 @@
                             <div>Department</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                education&& education.department
+                                education && education.department
                                   ? education.department.name
                                   : ""
                               }}
@@ -309,7 +206,7 @@
                             <div>Institution</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                education&&education.institution
+                                education && education.institution
                                   ? education.institution.name
                                   : ""
                               }}
@@ -319,7 +216,7 @@
                             <div>Education Level</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                education&&education.educationLevel
+                                education && education.educationLevel
                                   ? education.educationLevel.name
                                   : ""
                               }}
@@ -328,14 +225,7 @@
                         </div>
 
                         <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-none p-2 md:p-4"
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -343,26 +233,14 @@
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-lg">
+                      <article class="overflow-hidden rounded-lg">
                         <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-tight p-2 md:p-4"
                         >
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               License Detail
                             </a>
                           </h1>
@@ -374,7 +252,7 @@
                             <div>Applicant Type</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&&licenseData.applicantType
+                                licenseData && licenseData.applicantType
                                   ? licenseData.applicantType.name
                                   : ""
                               }}
@@ -384,7 +262,7 @@
                             <div>Application Status</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&&licenseData.applicationStatus
+                                licenseData && licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
                                   : ""
                               }}
@@ -394,7 +272,7 @@
                             <div>Certified Status</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&& licenseData.certified
+                                licenseData && licenseData.certified
                                   ? "Certified"
                                   : "Not Certified"
                               }}
@@ -404,7 +282,7 @@
                             <div>Certified Date</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&& licenseData.applicationStatus
+                                licenseData && licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
                                   : ""
                               }}
@@ -414,7 +292,7 @@
                             <div>Expiration Date</div>
                             <div class="text-primary-600 font-bold">
                               {{
-                                licenseData&& licenseData.applicationStatus
+                                licenseData && licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
                                   : ""
                               }}
@@ -423,14 +301,7 @@
                         </div>
 
                         <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-none p-2 md:p-4"
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -443,69 +314,18 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-                  px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             @click="returnLicense()"
           >
             Return
           </button>
           <button
             type="button"
-            class="
-              inline-block
-                  px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
@@ -559,13 +379,16 @@ export default {
         .then((res) => {
           if (res.statusText == "Created") {
             isLoading.value = true;
-            toast.success("Application reviewed Successfully", {
+            toast.success("Application returned Successfully", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             isLoading.value = true;
             toast.error("Please try again", {
@@ -575,6 +398,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -586,16 +412,17 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         });
     };
     watch(props.previousLicenseData, () => {
-      if (props.previousLicenseData) { 
+      if (props.previousLicenseData) {
         let toBeReturned = [];
- 
+
         toBeReturned = Math.min(
-          ...props.previousLicenseData.map((item) =>
-            Date.parse(item.certifiedDate)
-          )
+          ...props.previousLicenseData.map((item) => Date.parse(item.certifiedDate))
         );
         let toBeReturnedDate = new Date(toBeReturned).toISOString();
         toBeReturned = props.previousLicenseData.filter(
@@ -607,7 +434,7 @@ export default {
             "reviewerNewLicense/getNewLicenseApplicationById",
             toBeReturned && toBeReturned[0] ? toBeReturned[0].id : ""
           )
-          .then((res) => { 
+          .then((res) => {
             licenseData.value = res.data.data;
           })
           .catch((err) => console.log(err));
@@ -621,9 +448,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>

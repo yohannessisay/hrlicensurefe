@@ -15,126 +15,241 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
 
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Dashboard</a
-          >
+          <a href="#" class="pointer-events-none text-lg text-grey-300">Dashboard</a>
         </li>
       </ol></reviewer-nav-bar
     >
     <!-- Header -->
 
     <!-- Main Content -->
-    <div class="home-content">
+    <div class="home-content bg-grey-100 shadow-none p-2">
       <div class="grid grid-cols-2">
-        <div class="bg-white shadow-md m-2 rounded-md p-2">
-          <h2 class="text-primary-600 font-bold text-2xl">
-            Applicants gender chart
-          </h2>
-          <apexchart
-            type="bar"
-            height="350"
-            :options="genderChartOption"
-            :series="genderSeries"
-          ></apexchart>
+        <div class="bg-white m-2 rounded-md p-2 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <h2 class="text-primary-600 font-bold text-2xl">Applicants gender chart</h2>
+            <apexchart
+              type="bar"
+              height="350"
+              :options="genderChartOption"
+              :series="genderSeries"
+            ></apexchart>
+          </div>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2">
-          <h2 class="text-primary-600 font-bold text-2xl">
-            Total Applications
-          </h2>
-          <apexchart
-            type="bar"
-            height="350"
-            :options="applicationChartOption"
-            :series="applicationSeries"
-          ></apexchart>
+        <div class="bg-white m-2 rounded-md p-2 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <h2 class="text-primary-600 font-bold text-2xl">Total Applications</h2>
+            <apexchart
+              type="bar"
+              height="350"
+              :options="applicationChartOption"
+              :series="applicationSeries"
+            ></apexchart>
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1  ">
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20 ">
-          <h2 class="text-primary-600 font-bold text-2xl">
-            Applications based on regions
-          </h2>
+      <div class="grid grid-cols-1">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <h2 class="text-primary-600 font-bold text-2xl">
+              Applications based on regions
+            </h2>
 
-          <apexchart
-            type="bar"
-            height="830"
-            :options="regionChartOptions"
-            :series="regionSeries"
-          ></apexchart>
+            <apexchart
+              type="bar"
+              height="630"
+              :options="regionChartOptions"
+              :series="regionSeries"
+            ></apexchart>
+          </div>
         </div>
       </div>
-      <div class="grid grid-cols-6 ">
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
-          <apexchart
-            type="donut"
-            :options="pieChartOption"
-            :series="approvedSeries"
-          ></apexchart>
-          <div class="flex justify-center">
-            <h2 class="text-2xl font-bold text-primary-600 mt-2 ">
-              Approved Licenses/Letters
-            </h2>
+      <div class="grid grid-cols-3 lg:grid-cols-3">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <apexchart
+              type="pie"
+              :options="pieChartOption"
+              :series="approvedSeries"
+            ></apexchart>
+            <h2 class="text-primary-600 font-bold text-2xl">Approved Applications</h2>
           </div>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
-          <apexchart
-            type="donut"
-            :options="pieChartOption"
-            :series="declinedSeries"
-          ></apexchart>
-          <div class="flex justify-center">
-            <h2 class="text-2xl font-bold text-yellow-300 mt-2">
-              Declined Licenses/Letters
-            </h2>
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <apexchart
+              type="pie"
+              :options="pieChartOption"
+              :series="declinedSeries"
+            ></apexchart>
+
+            <h2 class="font-bold text-2xl text-yellow-300">Declined Licenses/Letters</h2>
           </div>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
-          <apexchart
-            type="donut"
-            :options="pieChartOption"
-            :series="revokedSeries"
-          ></apexchart>
-          <div class="flex justify-center">
-            <h2 class="text-2xl font-bold text-red-300 mt-2">
-              Revoked Licenses/Letters
-            </h2>
+
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <apexchart
+              type="pie"
+              :options="pieChartOption"
+              :series="revokedSeries"
+            ></apexchart>
+
+            <h2 class="text-2xl font-bold text-red-300 mt-2">Revoked Licenses/Letters</h2>
           </div>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
-          <apexchart
-            type="donut"
-            :options="pieChartOption"
-            :series="susupendedSeries"
-          ></apexchart>
-          <div class="flex justify-center">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <apexchart
+              type="pie"
+              :options="pieChartOption"
+              :series="susupendedSeries"
+            ></apexchart>
+
             <h2 class="text-2xl font-bold text-main-400 mt-2">
               Suspended Licenses/Letters
             </h2>
           </div>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
-          <apexchart
-            type="donut"
-            :options="pieChartOption"
-            :series="underSupervisionSeries"
-          ></apexchart>
-          <div class="flex justify-center">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <apexchart
+              type="pie"
+              :options="pieChartOption"
+              :series="underSupervisionSeries"
+            ></apexchart>
+
             <h2 class="text-2xl font-bold text-yellow-400 mt-2">
               Licenses Under-Supervision
             </h2>
           </div>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
-          <apexchart
-            type="donut"
-            :options="pieChartOption"
-            :series="unassignedSeries"
-          ></apexchart>
-          <div class="flex justify-center">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <apexchart
+              type="pie"
+              :options="pieChartOption"
+              :series="unassignedSeries"
+            ></apexchart>
+
             <h2 class="text-2xl font-bold text-grey-800 mt-2">
               Unassigned Licenses/Letters
             </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 mb-8 gap-4">
+        <div class="p-4 rounded-md shadow-md bg-white">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <h2 class="text-primary-600 font-bold text-2xl">
+              New License Department Map
+            </h2>
+            <apexchart
+              type="bar"
+              height="600"
+              class="p-4"
+              :options="professionChartOptions"
+              :series="professionSeries"
+            ></apexchart>
+          </div>
+        </div>
+        <div class="p-4 rounded-md mt-2 shadow-md bg-white">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <h2 class="text-primary-600 font-bold text-2xl">Renewal Department Map</h2>
+            <apexchart
+              type="bar"
+              height="600"
+              class="p-4"
+              :options="RNprofessionChartOptions"
+              :series="renewalProfessionSeries"
+            ></apexchart>
+          </div>
+        </div>
+        <div class="p-4 rounded-md mt-2 shadow-md bg-white">
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <h2 class="text-primary-600 font-bold text-2xl">
+              Goodstanding Department Map
+            </h2>
+            <apexchart
+              type="bar"
+              height="600"
+              class="p-4"
+              :options="GSprofessionChartOptions"
+              :series="goodStandingProfessionSeries"
+            ></apexchart>
           </div>
         </div>
       </div>
@@ -149,14 +264,19 @@ import { ref, onMounted } from "vue";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import { useStore } from "vuex";
+import apexchart from "vue3-apexcharts";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
+    apexchart,
+    Loading,
   },
   setup() {
     const store = useStore();
-
+    let isLoading = ref(false);
     let chartOption = {
       chart: {
         type: "bar",
@@ -177,26 +297,16 @@ export default {
     };
     let pieChartOption = {
       chart: {
-        type: "donut",
+        width: 380,
+        type: "pie",
       },
-      plotOptions: {
-        pie: {
-          startAngle: -90,
-          endAngle: 90,
-          offsetY: 10,
-        },
-      },
-      grid: {
-        padding: {
-          bottom: -40,
-        },
-      },
+      labels: ["New License", "Renewal", "Goodstanding"],
       responsive: [
         {
           breakpoint: 480,
           options: {
             chart: {
-              width: 300,
+              width: 200,
             },
             legend: {
               position: "bottom",
@@ -204,7 +314,6 @@ export default {
           },
         },
       ],
-      labels: ["New License", "Renewal", "Goodstandng"],
     };
     let genderSeries = ref([
       {
@@ -300,6 +409,63 @@ export default {
         opacity: 1,
       },
     };
+    let professionSeries = ref([
+      {
+        name: "NewLicense",
+        data: [],
+      },
+    ]);
+    let renewalProfessionSeries = ref([
+      {
+        name: "Renewal",
+        data: [],
+      },
+    ]);
+    let goodStandingProfessionSeries = ref([
+      {
+        name: "Goodstanding",
+        data: [],
+      },
+    ]);
+    let professionChartOptions = ref({
+      chart: {
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      xaxis: {
+        categories: [],
+      },
+    });
+    let RNprofessionChartOptions = ref({
+      chart: {
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      xaxis: {
+        categories: [],
+      },
+    });
+    let GSprofessionChartOptions = ref({
+      chart: {
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      xaxis: {
+        categories: [],
+      },
+    });
 
     let approvedSeries = ref([]);
     let declinedSeries = ref([]);
@@ -313,11 +479,10 @@ export default {
     Object.assign(genderChartOption, chartOption);
     Object.assign(applicationChartOption, chartOption);
 
-   
     genderChartOption.xaxis = {
       categories: ["Male", "Female"],
     };
-    genderChartOption.colors = ["#0bf303", "#f303cb"];
+    genderChartOption.colors = ["#10A04C", "#A702A7"];
     applicationChartOption.xaxis = {
       categories: ["New License", "Renewal", "Goodstanding"],
     };
@@ -346,29 +511,48 @@ export default {
         }
       });
     };
+    const getLicensesCountByDepartment = async () => {
+      await store.dispatch("stats/getLicensesCountByDepartment").then((res) => {
+        if (res && res.data) {
+          res.data.newLicense.forEach((newL) => {
+            professionSeries.value[0].data.push(newL.departmentCount);
+            professionChartOptions.value.xaxis.categories.push(newL.departmentName);
+          });
+          res.data.renewal.forEach((renw) => {
+            renewalProfessionSeries.value[0].data.push(renw.departmentCount);
+            RNprofessionChartOptions.value.xaxis.categories.push(renw.departmentName);
+          });
+          res.data.goodStanding.forEach((gsp) => {
+            goodStandingProfessionSeries.value[0].data.push(gsp.departmentCount);
+            GSprofessionChartOptions.value.xaxis.categories.push(gsp.departmentName);
+          });
+        }
+        isLoading.value = false;
+      });
+    };
     const getApplicationsCount = () => {
       store.dispatch("stats/getApplicationsCount").then((res) => {
         if (res && res.data) {
           res.data.newLicense.forEach((element) => {
             switch (element.name) {
               case "Approve":
-                approvedSeries.value.push([element.count]);
+                approvedSeries.value.push(element.count);
                 break;
               case "Decline":
-                declinedSeries.value.push([element.count]);
+                declinedSeries.value.push(element.count);
                 break;
 
               case "Revoked":
-                revokedSeries.value.push([element.count]);
+                revokedSeries.value.push(element.count);
                 break;
               case "Suspended":
-                susupendedSeries.value.push([element.count]);
+                susupendedSeries.value.push(element.count);
                 break;
               case "Submit":
-                unassignedSeries.value.push([element.count]);
+                unassignedSeries.value.push(element.count);
                 break;
               case "Under Supervision":
-                underSupervisionSeries.value.push([element.count]);
+                underSupervisionSeries.value.push(element.count);
                 break;
 
               default:
@@ -378,23 +562,23 @@ export default {
           res.data.renewal.forEach((element) => {
             switch (element.name) {
               case "Approve":
-                approvedSeries.value.push([element.count]);
+                approvedSeries.value.push(element.count);
                 break;
               case "Decline":
-                declinedSeries.value.push([element.count]);
+                declinedSeries.value.push(element.count);
                 break;
 
               case "Revoked":
-                revokedSeries.value.push([element.count]);
+                revokedSeries.value.push(element.count);
                 break;
               case "Suspended":
-                susupendedSeries.value.push([element.count]);
+                susupendedSeries.value.push(element.count);
                 break;
               case "Submit":
-                unassignedSeries.value.push([element.count]);
+                unassignedSeries.value.push(element.count);
                 break;
               case "Under Supervision":
-                underSupervisionSeries.value.push([element.count]);
+                underSupervisionSeries.value.push(element.count);
                 break;
 
               default:
@@ -404,20 +588,20 @@ export default {
           res.data.goodStanding.forEach((element) => {
             switch (element.name) {
               case "Approve":
-                approvedSeries.value.push([element.count]);
+                approvedSeries.value.push(element.count);
                 break;
               case "Decline":
-                declinedSeries.value.push([element.count]);
+                declinedSeries.value.push(element.count);
                 break;
 
               case "Revoked":
-                revokedSeries.value.push([element.count]);
+                revokedSeries.value.push(element.count);
                 break;
               case "Suspended":
-                susupendedSeries.value.push([element.count]);
+                susupendedSeries.value.push(element.count);
                 break;
               case "Submit":
-                unassignedSeries.value.push([element.count]);
+                unassignedSeries.value.push(element.count);
                 break;
               default:
                 break;
@@ -568,13 +752,16 @@ export default {
       });
     };
 
-    onMounted(() => {
+    onMounted(async () => {
+      isLoading.value = true;
       getGenderStat();
       getLicensesCount();
       getApplicationsCount();
       getRegionsCount();
+      await getLicensesCountByDepartment();
     });
     return {
+      isLoading,
       genderSeries,
       pieChartOption,
       genderChartOption,
@@ -589,6 +776,12 @@ export default {
       regionSeries,
       chartOption,
       regionChartOptions,
+      professionSeries,
+      professionChartOptions,
+      renewalProfessionSeries,
+      RNprofessionChartOptions,
+      goodStandingProfessionSeries,
+      GSprofessionChartOptions,
     };
   },
 };
@@ -604,5 +797,14 @@ export default {
 .parent iframe {
   border: none;
   flex-grow: 1;
+}
+
+.shadow-md {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.apexcharts-tooltip {
+  white-space: pre-wrap !important;
+  max-width: 200px;
 }
 </style>

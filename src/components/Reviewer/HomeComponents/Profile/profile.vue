@@ -35,7 +35,7 @@
               <div class="w-full md:w-9/12 mx-2 h-64">
                 <!-- Profile tab -->
                 <!-- About Section -->
-                <div class="bg-white p-3 shadow-xl rounded-sm">
+                <div class="bg-white p-3   rounded-sm">
                   <div class="vld-parent mt-4">
                     <loading
                       :active="isLoadingUserInfo"
@@ -330,7 +330,7 @@
 
                 <!-- When education feature is added to reviewer  -->
                 <!-- Experience and education -->
-                <!--   <div class="bg-white p-3 shadow-lg rounded-sm">
+                <!--   <div class="bg-white p-3   rounded-sm">
                  <div class="grid grid-cols-2">
                     <div>
                       <div

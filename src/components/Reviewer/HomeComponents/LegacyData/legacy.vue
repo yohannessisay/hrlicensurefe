@@ -6,17 +6,17 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar
-      ><ol class="list-reset flex">
+      ><ol class="flex list-reset">
         <li>
           <router-link to="/admin/review"
-            ><span class="text-primary-600 text-base">Home</span></router-link
+            ><span class="text-base text-primary-600">Home</span></router-link
           >
         </li>
-        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li><span class="mx-2 text-gray-500">/</span></li>
 
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Legacy Data</a
+          <a href="#" class="text-lg pointer-events-none text-grey-300"
+            >FMOH Legacy Data</a
           >
         </li>
       </ol></reviewer-nav-bar
@@ -25,51 +25,27 @@
 
     <!-- Main Content -->
     <div class="home-content">
-      <div class="container mx-auto px-4 sm:px-8">
+      <div class="container px-4 mx-auto sm:px-8">
         <div class="relative py-4">
-          <p class="absolute left-0 text-2xl font-semibold leading-tight">
-            View legacy licenses
-          </p>
+          <h2 class="absolute left-0 text-2xl font-semibold leading-tight">
+            View FMOH legacy licenses
+          </h2>
           <p class="absolute right-0">
             <button
-              class="
-                inline-block
-                px-6
-                text-white
-                bg-primary-700
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                border
-                rounded
-                shadow-md
-                hover:bg-white hover:text-primary-600
-                transition
-                duration-150
-                ease-in-out
-              "
+              class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out border rounded   bg-primary-700 hover:bg-white hover:text-primary-600"
               @click="exportTable()"
             >
-              <i class="fa fa-file-excel text-xl"></i>
+              <i class="text-xl fa fa-file-excel"></i>
               Generate Report
             </button>
           </p>
         </div>
         <div class="py-8">
-          <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 overflow-x-auto">
+          <div class="px-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
             <div class="flex justify-left">
               <div class="mb-3 xl:w-full">
                 <div
-                  class="
-                    input-group
-                    relative
-                    flex flex-wrap
-                    items-stretch
-                    w-full
-                    mb-4
-                    ml-4
-                  "
+                  class="relative flex flex-wrap items-stretch w-full mb-4 ml-4 input-group"
                 >
                   <input
                     type="search"
@@ -164,31 +140,11 @@
                     @keyup.enter="applyFilter()"
                   />
                 </div>
-                <div class="grid grid-cols-6 w-full">
+                <div class="grid w-full grid-cols-6">
                   <div class="mb-3 xl:w-full">
                     <label for="" class="ml-4">License Type</label>
                     <select
-                      class="
-                        form-select
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                      class="block w-full px-6 py-2 ml-4 text-base font-normal text-gray-700 transition ease-in-out bg-white bg-no-repeat border border-gray-300 border-solid rounded appearance-none form-select bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       v-model="licenseTypeFilter"
                       @change="applyFilter()"
                     >
@@ -203,30 +159,10 @@
                     </select>
                   </div>
 
-                  <div class="mb-3 xl:w-full ml-2">
+                  <div class="mb-3 ml-2 xl:w-full">
                     <label for="" class="ml-4">License Prefix</label>
                     <select
-                      class="
-                        form-select
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                      class="block w-full px-6 py-2 ml-4 text-base font-normal text-gray-700 transition ease-in-out bg-white bg-no-repeat border border-gray-300 border-solid rounded appearance-none form-select bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       @change="applyFilter()"
                       v-model="licensePrefixesFilter"
                     >
@@ -241,30 +177,10 @@
                     </select>
                   </div>
 
-                  <div class="mb-3 xl:w-full ml-2">
+                  <div class="mb-3 ml-2 xl:w-full">
                     <label for="" class="ml-4">Gender</label>
                     <select
-                      class="
-                        form-select
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                      class="block w-full px-6 py-2 ml-4 text-base font-normal text-gray-700 transition ease-in-out bg-white bg-no-repeat border border-gray-300 border-solid rounded appearance-none form-select bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       v-model="genderFilter"
                       @change="applyFilter()"
                     >
@@ -274,27 +190,10 @@
                     </select>
                   </div>
 
-                  <div class="ml-8 mt-4">
+                  <div class="mt-4 ml-8">
                     <button
                       type="button"
-                      class="
-                        inline-block
-                        px-6
-                        py-2
-                        mt-2
-                        border-2 border-primary-600
-                        text-primary-600
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                      class="inline-block px-6 py-2 mt-2 text-xs font-medium leading-tight uppercase transition duration-150 ease-in-out border-2 rounded border-primary-600 text-primary-600 hover:bg-primary-600 hover:bg-opacity-5 hover:text-white focus:outline-none focus:ring-0"
                       @click="clearFilters()"
                     >
                       <i class="fa fa-close"></i>
@@ -305,16 +204,9 @@
               </div>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="p-6 bg-white rounded-lg  ">
               <div
-                class="
-                  inline-block
-                  min-w-full
-                  shadow-md
-                  rounded-lg
-                  overflow-hidden
-                  bg-primary-800
-                "
+                class="inline-block min-w-full overflow-hidden rounded-lg   bg-primary-800"
               >
                 <vue-table-lite
                   :is-loading="reportTable.isLoading"
@@ -333,116 +225,46 @@
 
     <div
       id="printable"
-      class="shadow-md rounded-lg min-w-full"
+      class="min-w-full rounded-lg  "
       style="display: none"
     >
       <table class="w-full" id="myTable">
         <thead>
           <tr class="">
             <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
+              class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200 "
             >
               First Name
             </th>
             <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
+              class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200 "
             >
               Middle Name
             </th>
             <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
+              class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200 "
             >
               Last Name
             </th>
             <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
+              class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200 "
             >
               License Number
             </th>
             <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
+              class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200 "
             >
               License Status
             </th>
 
             <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
+              class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200 "
             >
               Professional Type
             </th>
 
             <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
+              class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200 "
             >
               Issued Date
             </th>
@@ -450,7 +272,7 @@
         </thead>
         <tbody>
           <tr v-for="item in reportTable.rows" :key="item">
-            <td class="px-5 py-5 border-gray-200 bg-white text-sm">
+            <td class="px-5 py-5 text-sm bg-white border-gray-200">
               <div class="flex">
                 <div class="ml-3">
                   <p class="text-gray-900 whitespace-no-wrap">
@@ -459,7 +281,7 @@
                 </div>
               </div>
             </td>
-            <td class="px-5 py-5 border-gray-200 bg-white text-sm">
+            <td class="px-5 py-5 text-sm bg-white border-gray-200">
               <div class="flex">
                 <div class="ml-3">
                   <p class="text-gray-900 whitespace-no-wrap">
@@ -468,7 +290,7 @@
                 </div>
               </div>
             </td>
-            <td class="px-5 py-5 border-gray-200 bg-white text-sm">
+            <td class="px-5 py-5 text-sm bg-white border-gray-200">
               <div class="flex">
                 <div class="ml-3">
                   <p class="text-gray-900 whitespace-no-wrap">
@@ -477,7 +299,7 @@
                 </div>
               </div>
             </td>
-            <td class="px-5 py-5 border-gray-200 bg-white text-sm text-right">
+            <td class="px-5 py-5 text-sm text-right bg-white border-gray-200">
               <div class="flex">
                 <div class="ml-3">
                   <p class="text-gray-900 whitespace-no-wrap">
@@ -486,7 +308,7 @@
                 </div>
               </div>
             </td>
-            <td class="px-5 py-5 border-gray-200 bg-white text-sm text-right">
+            <td class="px-5 py-5 text-sm text-right bg-white border-gray-200">
               <div class="flex">
                 <div class="ml-3">
                   <p class="text-gray-900 whitespace-no-wrap">
@@ -496,7 +318,7 @@
               </div>
             </td>
 
-            <td class="px-5 py-5 border-gray-200 bg-white text-sm text-right">
+            <td class="px-5 py-5 text-sm text-right bg-white border-gray-200">
               <div class="flex">
                 <div class="ml-3">
                   <p class="text-gray-900 whitespace-no-wrap">
@@ -506,7 +328,7 @@
               </div>
             </td>
 
-            <td class="px-5 py-5 border-gray-200 bg-white text-sm text-right">
+            <td class="px-5 py-5 text-sm text-right bg-white border-gray-200">
               <div class="flex">
                 <div class="ml-3">
                   <p class="text-gray-900 whitespace-no-wrap">
@@ -586,7 +408,7 @@ export default {
             : "";
           tempData.forEach((element) => {
             tableData.push({
-              EmployeeId: element.employee_id ? element.employee_id : "",
+              EmployeeId: element.emp_number ? element.emp_number : "",
               FirstName: element.emp_first_name ? element.emp_first_name : "",
               MiddleName: element.emp_middle_name
                 ? element.emp_middle_name
@@ -768,7 +590,7 @@ export default {
       tableData = [];
       setTimeout(() => {
         reportTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           fetchLicenseReport([
             { key: "page", value: offset },

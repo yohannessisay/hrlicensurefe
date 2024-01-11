@@ -93,7 +93,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         duration-150
@@ -174,6 +174,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplication()"
                       v-model="searchTermToDate"
                       aria-label="Default select example"
                     />
@@ -212,14 +213,13 @@
                 class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
                   "
               >
                 <vue-table-lite
-                  
                   :is-loading="toYouTable.isLoading"
                   :columns="toYouTable.columns"
                   :rows="toYouTable.rows"
@@ -229,10 +229,7 @@
                   @row-clicked="rowClicked"
                   @do-search="doSearch"
                 ></vue-table-lite>
-                <edit-modal
-                  v-if="showModal"
-                  :modalDataId="modalDataId" 
-                >
+                <edit-modal v-if="showModal" :modalDataId="modalDataId">
                 </edit-modal>
               </div>
             </div>
@@ -273,13 +270,13 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = ref({}); 
-    const searchTerm = ref("");
+    let allInfo = [];
+    let searchTerm = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
-    let toYouTableData = ref([]);
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
     };
@@ -293,7 +290,7 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+      toYouTableData = [];
       licensed([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -308,10 +305,10 @@ export default {
           apiParameters
         )
         .then((res) => {
-          allInfo.value = res && res.rows ? res.rows : [];
-
-          allInfo.value.forEach((element) => {
-            toYouTableData.value.push({
+          allInfo = res && res.rows ? res.rows : [];
+          toYouTableData = [];
+          allInfo.forEach((element) => {
+            toYouTableData.push({
               LicenseNumber: element ? element.newLicenseCode : "",
               ApplicantName:
                 (element.profile ? element.profile.name : "------") +
@@ -323,10 +320,14 @@ export default {
                 (element.profile.grandFatherName
                   ? element.profile.grandFatherName
                   : "------"),
-              ApplicationType: element.applicationType
-                ? element.applicationType.name
+              ApplicationType: element.applicantType
+                ? element.applicantType.name
                 : "",
-              Date: new Date(element.createdAt)
+              ReviewerName:
+                element.licenseReviewer && element.licenseReviewer.reviewer
+                  ? element.licenseReviewer.reviewer.name
+                  : "",
+              AppliedDate: new Date(element.createdAt)
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
@@ -356,8 +357,14 @@ export default {
                 sortable: true,
               },
               {
-                label: "Date",
-                field: "Date",
+                label: "Reviewer Name",
+                field: "ReviewerName",
+                width: "40%",
+                sortable: true,
+              },
+              {
+                label: "Applied Date",
+                field: "AppliedDate",
                 width: "15%",
                 sortable: true,
               },
@@ -367,14 +374,14 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View</button>'
                   );
                 },
               },
             ],
-            rows: toYouTableData.value,
+            rows: toYouTableData,
             totalRecordCount: res.count,
           };
         });
@@ -388,13 +395,10 @@ export default {
           element.addEventListener("click", rowClicked());
         }
       });
-      toYouTable.value.isLoading = false;
     };
 
     const rowClicked = (row) => {
       if (row != undefined) {
-    
-
         row = JSON.parse(JSON.stringify(row));
 
         modalDataId.value.id = row.data ? row.data.id : "-----";
@@ -432,7 +436,7 @@ export default {
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           licensed([
             { key: "page", value: offset },
@@ -464,7 +468,7 @@ export default {
       searchTermFromDate,
       searchTermToDate,
       toYouTable,
-      showModal, 
+      showModal,
       tableLoadingFinish,
       rowClicked,
       modalDataId,

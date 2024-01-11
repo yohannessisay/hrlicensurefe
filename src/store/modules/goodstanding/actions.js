@@ -1,65 +1,37 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
-
+import axios from "axios";
 import {
-  SET_APPLICATION_ID,
-  SET_LICENSE,
-  SET_BUTTONS,
-  SET_DOCUMENT_SPEC,
-  SET_DRAFT,
-  SET_DECLINED_FIELDS,
-  SET_ACCEPTED_FIELDS,
-  SET_REMARK,
-  SET_TEMP_DOCS,
-  SET_LICENSE_COPY,
-  SET_GOODSTANDING_LETTER,
-  SET_SERVICE_FEE,
+  SET_UPLOAD_PROGRESS,
   SET_GENERAL_INFO,
+  SET_TEMP_DOCS,
+  SET_BUTTONS
 } from "./mutation-types";
 
 const userId = +localStorage.getItem("userId");
-
+function authHeaders(needsAuth) {
+  const token = localStorage.getItem("token");
+  return needsAuth
+    ? {
+        Authorization: token ? `Bearer ${token}` : ""
+      }
+    : {};
+}
 export default {
-  setApplicationId({ commit }, id) {
-    commit(SET_APPLICATION_ID, id);
-  },
   setTempDocs({ commit }, docs) {
     commit(SET_TEMP_DOCS, docs);
-  },
-  setLicense({ commit }, license) {
-    commit(SET_LICENSE, license);
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
   },
-  setDocumentSpecs({ commit }, documentSpecs) {
-    commit(SET_DOCUMENT_SPEC, documentSpecs);
+  setUploadProgress({ commit }, uploadProgress) {
+    commit(SET_UPLOAD_PROGRESS, uploadProgress);
   },
-  setDraft({ commit }, draft) {
-    commit(SET_DRAFT, draft);
-  },
-  async storeDeclinedFields({ commit }, fields) {
-    commit(SET_DECLINED_FIELDS, fields);
-  },
-  async storeAcceptedFields({ commit }, fields) {
-    commit(SET_ACCEPTED_FIELDS, fields);
-  },
-  async storeRemark({ commit }, remark) {
-    commit(SET_REMARK, remark);
-  },
-  set_License_Copy({ commit }, licenseCopy) {
-    commit(SET_LICENSE_COPY, licenseCopy);
-  },
-  set_Goodstanding_Letter({ commit }, verificationLetter) {
-    commit(SET_GOODSTANDING_LETTER, verificationLetter);
-  },
-  set_Service_Fee({ commit }, serviceFee) {
-    commit(SET_SERVICE_FEE, serviceFee);
-  },
+
   setGeneralInfo({ commit }, generalInfo) {
     commit(SET_GENERAL_INFO, generalInfo);
   },
-  async addGoodstandingLicense({ commit }, license) {
+  async addGoodstandingLicense(context, license) {
     try {
       const resp = await ApiService.post(
         baseUrl + "/goodStandings/add",
@@ -70,7 +42,7 @@ export default {
       return error;
     }
   },
-  async editGoodstandingLicense({ commit }, license) {
+  async editGoodstandingLicense(context, license) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/goodStandings/" + license.data.id,
@@ -83,45 +55,63 @@ export default {
   },
   async uploadDocuments({ commit }, documents) {
     try {
-      const resp = await ApiService.post(
+      var config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          ...authHeaders(true)
+        },
+        onUploadProgress: function(progressEvent) {
+          var progress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          commit(SET_UPLOAD_PROGRESS, progress);
+        }
+      };
+
+      const resp = await axios.post(
         baseUrl + "/documentUploads/goodStandingDocument/" + documents.id,
         documents.document,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        config
       );
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async updateDocuments({ commit }, documents) {
+  async updateDocuments({commit}, documents) {
     try {
-      const resp = await ApiService.put(
+      var config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          ...authHeaders(true)
+        },
+        onUploadProgress: function(progressEvent) {
+          var progress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          commit(SET_UPLOAD_PROGRESS, progress);
+        }
+      };
+
+      const resp = await axios.put(
         baseUrl + "/documentUploads/goodStandingDocument/" + documents.id,
         documents.document,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        config
       );
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async updateDraft({ commit }, payload) {
+  async updateDraft(context, payload) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/goodStandings/" + payload.licenseId,
         payload.draftData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
-          },
+            "Content-Type": "multipart/form-data"
+          }
         }
       );
       return resp;
@@ -129,15 +119,15 @@ export default {
       return error;
     }
   },
-  async updateDeclined({ commit }, payload) {
+  async updateDeclined(context, payload) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/goodStandings/" + payload.licenseId,
         payload.declinedData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
-          },
+            "Content-Type": "multipart/form-data"
+          }
         }
       );
       return resp;
@@ -169,7 +159,7 @@ export default {
       return error;
     }
   },
-  async getProfile({ commit }, id) {
+  async getProfile(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
       return resp;
@@ -193,7 +183,7 @@ export default {
       return error;
     }
   },
-  async getDocumentSpecs({ commit }, id) {
+  async getDocumentSpecs(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/documentSpecs/" + id);
       return resp;
@@ -201,7 +191,7 @@ export default {
       return error;
     }
   },
-  async getApplicantTitle({ commit }, id) {
+  async getApplicantTitle() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/ApplicantTitles");
       return resp;
@@ -210,7 +200,7 @@ export default {
     }
   },
 
-  async getGoodStandingLicense({ commit }) {
+  async getGoodStandingLicense() {
     try {
       const resp = await ApiService.get(
         baseUrl + "/goodStandings/user/" + userId
@@ -220,15 +210,15 @@ export default {
       return error;
     }
   },
-  async getGoodStandingLicenseById({ commit }, id) {
+  async getGoodStandingLicenseById(context, id) {
     try {
-      const resp = await ApiService.get(baseUrl + "/goodStandings/" + id); 
+      const resp = await ApiService.get(baseUrl + "/goodStandings/" + id);
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async getDraft({ commit }, id) {
+  async getDraft(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/goodStandings/" + id);
       return resp;
@@ -237,7 +227,7 @@ export default {
     }
   },
 
-  async withdraw({ commit }, payload) {
+  async withdraw(context, payload) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/goodStandings/" + payload.licenseId,
@@ -304,7 +294,7 @@ export default {
       return resp;
     }
   },
-  async getCommonGSdocuments({ commit }, docsParam) {
+  async getCommonGSdocuments(context, docsParam) {
     try {
       const resp = await ApiService.get(
         baseUrl + `/documentSpecs/common/${docsParam[0]}/${docsParam[1]}/true`
@@ -315,7 +305,7 @@ export default {
       return resp;
     }
   },
-  async getGSdocuments({ commit }, appCategory) {
+  async getGSdocuments(context, appCategory) {
     try {
       const resp = await ApiService.get(
         baseUrl + `/documentSpecs/${appCategory}`
@@ -325,5 +315,5 @@ export default {
       const resp = error;
       return resp;
     }
-  },
+  }
 };

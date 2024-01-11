@@ -1,18 +1,7 @@
 <template>
   <div class="vld-parent">
     <div
-      class="
-        modal
-        fade
-        fixed
-        top-0
-        left-0
-        hidden
-        w-full
-        h-full
-        outline-none
-        overflow-x-hidden overflow-y-auto
-      "
+      class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
       id="staticBackdropReSubmitted"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
@@ -21,27 +10,10 @@
       aria-hidden="true"
     >
       <div
-        class="
-          modal-dialog modal-dialog-centered modal-xl
-          relative
-          w-auto
-          pointer-events-none
-        "
+        class="modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none"
       >
         <div
-          class="
-            modal-content
-            border-none
-            shadow-lg
-            relative
-            flex flex-col
-            w-full
-            pointer-events-auto
-            bg-white bg-clip-padding
-            rounded-md
-            outline-none
-            text-current
-          "
+          class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
         >
           <loading
             :active="isLoading"
@@ -51,12 +23,10 @@
             :color="'#2F639D'"
             :opacity="0.7"
           ></loading>
-          <div
-            class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-          >
+          <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
             <button
               type="button"
-              class="btn-close border-none rounded-lg "
+              class="btn-close border-none rounded-lg"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -78,7 +48,19 @@
                         <span class="text-2xl font-bold px-6">
                           {{ modalData.name ? modalData.name : "" }}
                         </span>
-                        's License Data
+                        's Application
+                      </h2>
+                      <h2
+                        v-if="
+                          modalData &&
+                          modalData.data &&
+                          modalData.data.documents.length == 0
+                        "
+                        class="text-2xl text-yellow-300 border rounded-md p-2 font-bold mb-8 px-6"
+                      >
+                        Application has no image uploaded, proceed with caution when
+                        assigning and please inform the applicant to upload documents by
+                        editing the submitted application from their side
                       </h2>
                     </div>
                   </div>
@@ -87,31 +69,12 @@
                     <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                       <div class="flex flex-wrap">
                         <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
+                          class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                         >
                           <div class="flex items-start">
                             <div class="shrink-0">
                               <div
-                                class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                  shadow-lg
-                                  w-48
-                                  h-48
-                                  flex
-                                  mb-12
-                                  items-center
-                                  justify-center
-                                "
+                                class="p-4 bg-blue-600 rounded-md w-48 h-48 flex mb-12 items-center justify-center"
                               >
                                 <img
                                   src="../../../../../assets/showLicense/profile.png"
@@ -121,41 +84,27 @@
                               </div>
                             </div>
                             <div class="grow ml-6">
-                              <h2 class="font-extrabold text-2xl mb-1">
-                                Personal Info
-                              </h2>
+                              <h2 class="font-extrabold text-2xl mb-1">Personal Info</h2>
                               <p class="text-gray-500">
-                                <span
-                                  class="
-                                    font-semibold
-                                    text-lg text-primary-700
-                                    mb-1
-                                  "
+                                <span class="font-semibold text-lg text-primary-700 mb-1"
                                   >Full Name:</span
                                 >
                                 {{ modalData.name ? modalData.name : "" }}
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Gender:</span
                                 >
                                 {{ modalData.gender ? modalData.gender : "" }}
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Nationality:</span
                                 >
-                                {{
-                                  modalData.nationality
-                                    ? modalData.nationality
-                                    : ""
-                                }}
+                                {{ modalData.nationality ? modalData.nationality : "" }}
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Date Of Birth:</span
                                 >
                                 {{
@@ -165,14 +114,11 @@
                                 }}
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
+                                <span class="font-semibold text-primary-700 mb-1"
+                                  >Marital Status:</span
                                 >
                                 {{
-                                  modalData.maritalStatus
-                                    ? modalData.maritalStatus
-                                    : ""
+                                  modalData.maritalStatus ? modalData.maritalStatus : ""
                                 }}
                               </p>
                             </div>
@@ -180,52 +126,24 @@
                         </div>
 
                         <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
+                          class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                         >
                           <div class="flex align-center">
                             <div class="shrink-0">
                               <div
-                                class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                  shadow-lg
-                                  w-48
-                                  h-48
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
+                                class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                               >
                                 <i class="fa fa-link fa-4x"></i>
                               </div>
                             </div>
 
-                            <div
-                              class="grow ml-6"
-                              v-if="adminRole && adminRole != 'REV'"
-                            >
+                            <div class="grow ml-6" v-if="adminRole && adminRole != 'REV'">
                               <h2 class="font-bold mb-1">Assign To</h2>
 
                               <div class="flex items-center">
                                 <label
                                   for="email"
-                                  class="
-                                    block
-                                    text-sm
-                                    font-medium
-                                    leading-5
-                                    text-gray-700
-                                    sr-only
-                                  "
+                                  class="block text-sm font-medium leading-5 text-gray-700 sr-only"
                                 >
                                   Users
                                 </label>
@@ -234,15 +152,7 @@
                                 <div>
                                   <div class="w-full relative">
                                     <div
-                                      class="
-                                        mt-1
-                                        ml-1
-                                        relative
-                                        border border-gray-300
-                                        overflow-hidden
-                                        rounded-md
-                                        shadow-sm
-                                      "
+                                      class="mt-1 ml-1 relative border border-gray-300 overflow-hidden rounded-md shadow-sm"
                                     >
                                       <input
                                         id="email"
@@ -256,22 +166,8 @@
                                     </div>
 
                                     <div
-                                      v-show="
-                                        resultQuery().length && showOptions
-                                      "
-                                      class="
-                                        w-full
-                                        bg-white
-                                        border border-gray-300
-                                        mt-2
-                                        ml-1
-                                        max-height-12
-                                        overflow-hidden overflow-y-scroll
-                                        rounded-lg
-                                        shadow-lg
-                                        text-left
-                                        dropdown-menu
-                                      "
+                                      v-show="resultQuery().length && showOptions"
+                                      class="w-full bg-white border border-gray-300 mt-2 ml-1 max-height-12 overflow-hidden overflow-y-scroll rounded-lg text-left dropdown-menu"
                                       style="height: 148px; border: none"
                                     >
                                       <ul class="py-1">
@@ -279,14 +175,7 @@
                                           v-for="value in resultQuery()"
                                           :key="value.id"
                                           @click="setInput(value)"
-                                          class="
-                                            dropdown-toggle
-                                            px-4
-                                            py-2
-                                            cursor-pointer
-                                            hover:bg-primary-700
-                                            hover:text-white
-                                          "
+                                          class="dropdown-toggle px-4 py-2 cursor-pointer hover:bg-primary-700 hover:text-white"
                                         >
                                           {{ value.name }}
                                         </li>
@@ -298,23 +187,12 @@
                                     >
                                       <button
                                         v-if="button.code == 'AT'"
-                                        class="
-                                          inline-block
-                                          px-6
-                                          py-2.5
-                                          mt-4
-                                          bg-primary-700
-                                          text-white
-                                          font-medium
-                                          text-xs
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-lg
-                                          hover:bg-white hover:text-primary-600
-                                          transition
-                                          duration-150
-                                          ease-in-out
+                                        :class="
+                                          modalData &&
+                                          modalData.data &&
+                                          modalData.data.documents.length != 0
+                                            ? 'inline-block px-6 py-2.5 mt-4 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out'
+                                            : 'pointer-events-none inline-block px-6 py-2.5 mt-4 bg-grey-200 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out'
                                         "
                                         @click="
                                           assignReviewer({
@@ -323,11 +201,7 @@
                                           })
                                         "
                                       >
-                                        {{
-                                          button && button.name
-                                            ? button.name
-                                            : ""
-                                        }}
+                                        {{ button && button.name ? button.name : "" }}
                                       </button>
                                     </div>
                                   </div>
@@ -336,31 +210,16 @@
                             </div>
 
                             <div v-if="adminRole && adminRole == 'REV'">
-                              <div
-                                v-for="button in modalData.buttons"
-                                :key="button.id"
-                              >
+                              <div v-for="button in modalData.buttons" :key="button.id">
                                 <button
                                   v-if="button.code == 'AT'"
-                                  class="
-                                          inline-block
-                                          px-6
-                                          py-2.5
-                                          mt-4
-                                          bg-primary-700
-                                          text-white
-                                          font-medium
-                                          text-xs
-                                          ml-4
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-lg
-                                          hover:bg-white hover:text-primary-600
-                                          transition
-                                          duration-150
-                                          ease-in-out
-                                        "
+                                  :class="
+                                    modalData &&
+                                    modalData.data &&
+                                    modalData.data.documents.length != 0
+                                      ? 'inline-block px-6 py-2.5 mt-4 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out'
+                                      : 'pointer-events-none inline-block px-6 py-2.5 mt-4 bg-grey-200 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out'
+                                  "
                                   @click="
                                     assignReviewer({
                                       action: button.action,
@@ -377,86 +236,53 @@
                         </div>
 
                         <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
+                          class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                         >
                           <div class="flex align-center">
                             <div class="shrink-0">
                               <div
-                                class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                  shadow-lg
-                                  w-48
-                                  h-48
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
+                                class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                               >
                                 <i class="fa fa-building fa-4x"></i>
                               </div>
                             </div>
                             <div class="grow ml-6">
                               <h2 class="font-bold mb-1">Education Info</h2>
-                              <div
-                                class="
-                                  border-2
-                                  p-2
-                                  rounded-lg
-                                  m-1
-                                  shadow-md
-                                  text-primary-500
-                                "
-                              >
+                              <div class="border-2 p-2 rounded-lg m-1 text-primary-500">
                                 <p class="text-gray-500">
-                                  <span
-                                    class="font-medium text-primary-700 mb-1"
+                                  <span class="font-medium text-primary-700 mb-1"
                                     >Profession Name:</span
                                   >
                                   <span class="text-grey-800 ml-2">
                                     {{
-                                      modalData.data &&
-                                      modalData.data.GSProfessionals
-                                        ? modalData.data.GSProfessionals
-                                            .professionalTypes.name
+                                      modalData.data && modalData.data.GSProfessionals
+                                        ? modalData.data.GSProfessionals.professionalTypes
+                                            .name
                                         : ""
                                     }}</span
                                   >
                                 </p>
                                 <p class="text-gray-500">
-                                  <span
-                                    class="font-medium text-primary-700 mb-1"
+                                  <span class="font-medium text-primary-700 mb-1"
                                     >Department:</span
                                   >
                                   <span class="text-grey-800 ml-2">
                                     {{
-                                      modalData.data &&
-                                      modalData.data.department
+                                      modalData.data && modalData.data.department
                                         ? modalData.data.department.name
                                         : ""
                                     }}</span
                                   >
                                 </p>
                                 <p class="text-gray-500">
-                                  <span
-                                    class="font-medium text-primary-700 mb-1"
+                                  <span class="font-medium text-primary-700 mb-1"
                                     >Education Level:</span
                                   >
                                   <span class="text-grey-800 ml-2">
                                     {{
-                                      modalData.data &&
-                                      modalData.data.GSProfessionals
-                                        ? modalData.data.GSProfessionals
-                                            .educationLevel.name
+                                      modalData.data && modalData.data.GSProfessionals
+                                        ? modalData.data.GSProfessionals.educationLevel
+                                            .name
                                         : ""
                                     }}</span
                                   >
@@ -467,30 +293,12 @@
                         </div>
 
                         <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
+                          class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                         >
                           <div class="flex items-start">
                             <div class="shrink-0">
                               <div
-                                class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                  shadow-lg
-                                  w-48
-                                  h-48
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
+                                class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                               >
                                 <i class="fa fa-phone fa-4x"></i>
                               </div>
@@ -520,33 +328,11 @@
             </div>
           </div>
           <div
-            class="
-              modal-footer
-              flex flex-shrink-0 flex-wrap
-              items-center
-              justify-end
-              border-t border-grey-100
-              rounded-b-md
-            "
+            class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
           >
             <button
               type="button"
-              class="
-                inline-block
-                px-6
-                text-white
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                rounded
-                shadow-lg
-              bg-primary-700
-              hover:text-primary-600
-                transition
-                duration-150
-                ease-in-out
-              "
+              class="inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded bg-primary-700 hover:text-primary-600 transition duration-150 ease-in-out"
               data-bs-dismiss="modal"
             >
               Close
@@ -565,6 +351,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 export default {
   props: ["modalDataIdResub", "reviewers"],
   components: {
@@ -574,6 +361,7 @@ export default {
     moment: () => moment,
   },
   setup(props) {
+    const router = useRouter();
     const store = useStore();
     const toast = useToast();
     let adminRole = localStorage.getItem("role");
@@ -646,62 +434,47 @@ export default {
       };
       store
         .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
-        .then((response) => {
-          if (response.statusText == "Created") {
-            store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Selected Rviewer assigned Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-              store
-                .dispatch("notification/notifyApplicant", userNotification)
-                .then((res) => {
-                  if (res && res.status == "Success") {
-                    let notification = {
-                      user_id:
-                        modalData.value.data && modalData.value.data.applicant
-                          ? modalData.value.data.applicant.id
-                          : null,
-                      reviewer_id: assign.value.reviewerId,
-                      goodstanding_id: modalData.value.data
-                        ? modalData.value.data.id
-                        : null,
-                      message: modalData.value.data
-                        ? // eslint-disable-next-line prettier/prettier
-                          `Dear reviewer , a re-submitted goodstanding application with code ${modalData.value.data.goodStandingCode} has been assigned to you.`
-                        : "",
-                      type: "reviewer_good_standing",
-                      status: "new",
-                    };
-                    store.dispatch("notification/notifyReviewer", notification);
-                  } else {
-                    isLoading.value = false;
-                  }
-                });
+        .then(() => {
+          store.dispatch("sms/sendSms", smsData).then(() => {
+            toast.success("Selected Rviewer assigned Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
-          } else {
-            toast.error(
-              "Sorry there seems to be a problem, please try again.",
-              {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
             isLoading.value = false;
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          }
+
+            store
+              .dispatch("notification/notifyApplicant", userNotification)
+              .then((res) => {
+                if (res && res.status == "Success") {
+                  let notification = {
+                    user_id:
+                      modalData.value.data && modalData.value.data.applicant
+                        ? modalData.value.data.applicant.id
+                        : null,
+                    reviewer_id: assign.value.reviewerId,
+                    goodstanding_id: modalData.value.data
+                      ? modalData.value.data.id
+                      : null,
+                    message: modalData.value.data
+                      ? // eslint-disable-next-line prettier/prettier
+                        `Dear reviewer , a re-submitted goodstanding application with code ${modalData.value.data.goodStandingCode} has been assigned to you.`
+                      : "",
+                    type: "reviewer_good_standing",
+                    status: "new",
+                  };
+                  store.dispatch("notification/notifyReviewer", notification);
+                  router.push({ path: "/admin/goodStanding/assigned" });
+                  setTimeout(() => {
+                    location.reload();
+                  }, 100);
+                } else {
+                  isLoading.value = false;
+                }
+              });
+          });
         })
         .catch(() => {
           toast.error("Sorry there seems to be a problem, please try again.", {
@@ -751,10 +524,7 @@ export default {
 
     const check = () => {
       store
-        .dispatch(
-          "reviewer/getGoodStandingApplication",
-          props.modalDataIdResub.id
-        )
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataIdResub.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -762,9 +532,7 @@ export default {
               (result.profile ? result.profile.name + " " : "") +
               (result.profile ? result.profile.fatherName + "  " : " ") +
               (result.profile ? result.profile.grandFatherName : "");
-            modalData.value.gender = result.profile
-              ? result.profile.gender
-              : "-----";
+            modalData.value.gender = result.profile ? result.profile.gender : "-----";
             modalData.value.nationality =
               result.profile && result.profile.nationality
                 ? result.profile.nationality?.name
@@ -799,14 +567,11 @@ export default {
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate =
-              result.licenseExpirationDate;
+            modalData.value.licenseExpirationDate = result.licenseExpirationDate;
             modalData.value.data = result;
             licenseData.value = result;
             modalData.value.buttons =
-              result && result.applicationStatus
-                ? result.applicationStatus.buttons
-                : [];
+              result && result.applicationStatus ? result.applicationStatus.buttons : [];
             isLoadingStart.value = false;
           }
         });
@@ -845,9 +610,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>

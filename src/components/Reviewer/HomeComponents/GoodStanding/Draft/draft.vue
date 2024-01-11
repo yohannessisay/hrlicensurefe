@@ -94,7 +94,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -175,6 +175,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplication()"
                           v-model="searchTermToDate"
                           aria-label="Default select example"
                         />
@@ -214,14 +215,13 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="assignedToYouTable.isLoading"
                     :columns="assignedToYouTable.columns"
                     :rows="assignedToYouTable.rows"
@@ -303,7 +303,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -385,6 +385,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplicationResub()"
                         v-model="searchTermToDateResub"
                         aria-label="Default select example"
                       />
@@ -423,26 +424,24 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="assignedToOthersTable.isLoading"
                     :columns="assignedToOthersTable.columns"
                     :rows="assignedToOthersTable.rows"
                     :total="assignedToOthersTable.totalRecordCount"
                     :sortable="assignedToOthersTable.sortable"
-                    @is-finished="tableLoadingFinish"
+                    @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOth"
-                    @do-search="doSearchResub"
+                    @do-search="doSearchOthers"
                   ></vue-table-lite>
                   <edit-modal-resubmitted
-                    v-if="showModalResubmitted"
-                    :modalDataIdResub="modalDataIdResub"
+                    :modalDataIdOthers="modalDataIdOthers"
                     :reviewers="reviewers"
                   >
                   </edit-modal-resubmitted>
@@ -479,7 +478,6 @@ export default {
   setup() {
     const store = useStore();
     const showModal = ref(true);
-    const showModalResubmitted = ref(true);
     const reviewers = ref([]);
     const include = ref(false);
     const includeResub = ref(false);
@@ -499,13 +497,12 @@ export default {
       id: "",
       change: 0,
     });
-    let modalDataIdResub = ref({
+    let modalDataIdOthers = ref({
       id: "",
       change: 0,
     });
 
-    let allInfo = ref({});
-    let allInfoRes = ref({});
+    let allInfo = [];
 
     const assignedToYouTable = ref({});
     const assignedToOthersTable = ref([]);
@@ -515,15 +512,15 @@ export default {
     assignedToOthersTable.value = {
       isLoading: true,
     };
-    let tableData = ref([]); 
-    let othersTable = ref([]);
+    let tableData = [];
+    let othersTable = [];
     const clearFilters = () => {
       searchTerm.value = "";
       searchTermFromDate.value = "";
       searchTermToDate.value = "";
       assignedToYouTable.value.isLoading = true;
       assignedToYouTable.value.rows = [];
-      tableData.value = [];
+
       assignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -539,7 +536,7 @@ export default {
       searchTermToDateResub.value = "";
       assignedToOthersTable.value.isLoading = true;
       assignedToOthersTable.value.rows = [];
-      othersTable.value = [];
+
       assignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -553,37 +550,36 @@ export default {
       let subId = statuses
         ? statuses.filter((stat) => stat.code == "REVDRA")[0].id
         : "";
-
+      tableData = [];
       store
         .dispatch("reviewerGoodStanding/getGoodstandingsByStatus", [
           { statusId: subId },
           { params: apiParameters },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          if (allInfo.value) {
-            allInfo.value.forEach((element) => {
-              tableData.value.push({
-                LicenseNumber: element.goodStandingCode,
-                ApplicantName:
-                  (element.profile ? element.profile.name : "") +
-                  " " +
-                  (element.profile ? element.profile.fatherName : "") +
-                  " " +
-                  (element.profile ? element.profile.grandFatherName : ""),
-                ApplicantType: element.applicantType
-                  ? element.applicantType.name
-                  : "",
-                Date: new Date(element.createdAt)
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, "/"),
-                data: element,
-              });
-            });
-          }
+          allInfo = res ? res.rows : [];
 
-            assignedToYouTable.value = {
+          allInfo.forEach((element) => {
+            tableData.push({
+              LicenseNumber: element.goodStandingCode,
+              ApplicantName:
+                (element.profile ? element.profile.name : "") +
+                " " +
+                (element.profile ? element.profile.fatherName : "") +
+                " " +
+                (element.profile ? element.profile.grandFatherName : ""),
+              ApplicantType: element.applicantType
+                ? element.applicantType.name
+                : "",
+              Date: new Date(element.createdAt)
+                .toJSON()
+                .slice(0, 10)
+                .replace(/-/g, "/"),
+              data: element,
+            });
+          });
+
+          assignedToYouTable.value = {
             columns: [
               {
                 label: "License Number",
@@ -616,14 +612,14 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 },
               },
             ],
-            rows: tableData.value,
+            rows: tableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -637,16 +633,17 @@ export default {
       let updId = statuses
         ? statuses.filter((stat) => stat.code == "REVDRA")[0].id
         : "";
+      othersTable = [];
       store
         .dispatch("reviewerGoodStanding/getOtherGoodstandingsByStatus", [
           { statusId: updId },
           { params: apiParameters },
         ])
         .then((res) => {
-          allInfoRes.value = res && res.rows ? res.rows : [];
+          allInfo = res && res.rows ? res.rows : [];
 
-          allInfoRes.value.forEach((element) => {
-            othersTable.value.push({
+          allInfo.forEach((element) => {
+            othersTable.push({
               LicenseNumber: element.goodStandingCode,
               ApplicantName:
                 (element.profile ? element.profile.name : "") +
@@ -697,14 +694,14 @@ export default {
                   return (
                     '<button  data-set="' +
                     row +
-                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white  hover:shadow-lg hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-white  hover:  hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 },
               },
             ],
-            rows: othersTable.value,
+            rows: othersTable,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -720,20 +717,16 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      assignedToYouTable.value.isLoading = false;
+      }); 
     };
 
-    const tableLoadingFinishResub = () => {
-      let elementsResub = document.getElementsByClassName(
-        "edit-btn-resubmitted"
-      );
+    const tableLoadingFinishOthers = () => {
+      let elementsResub = document.getElementsByClassName("edit-btn-others");
       Array.prototype.forEach.call(elementsResub, function(element) {
-        if (element.classList.contains("edit-btn-resubmitted")) {
+        if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOth());
         }
-      });
-      assignedToOthersTable.value.isLoading = false;
+      }); 
     };
 
     const rowClicked = (row) => {
@@ -746,14 +739,14 @@ export default {
     const rowClickedOth = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        modalDataIdResub.value.change++;
-        modalDataIdResub.value.id = row.data.id ? row.data.id : "";
+        modalDataIdOthers.value.change++;
+        modalDataIdOthers.value.id = row.data.id ? row.data.id : "";
       }
     };
     const searchApplication = () => {
       assignedToYouTable.value.isLoading = true;
       assignedToYouTable.value.rows = [];
-      tableData.value = [];
+      
       assignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -771,7 +764,7 @@ export default {
     const searchApplicationResub = () => {
       assignedToOthersTable.value.isLoading = true;
       assignedToOthersTable.value.rows = [];
-      othersTable.value = [];
+    
       assignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -802,8 +795,9 @@ export default {
       assignedToYouTable.value.isLoading = true;
 
       setTimeout(() => {
-        assignedToYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        assignedToYouTable.value.isReSearch =
+          offset == undefined ? true : false;
+        offset = offset / 10;
         if (sort == "asc") {
           assignedToYou([
             { key: "page", value: offset },
@@ -825,12 +819,13 @@ export default {
         assignedToYouTable.value.sortable.sort = sort;
       }, 600);
     };
-    const doSearchResub = (offset, limit, order, sort) => {
+    const doSearchOthers = (offset, limit, order, sort) => {
       assignedToOthersTable.value.isLoading = true;
 
       setTimeout(() => {
-        assignedToOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        assignedToOthersTable.value.isReSearch =
+          offset == undefined ? true : false;
+        offset = offset / 10;
         if (sort == "asc") {
           assignedToOthers([
             { key: "page", value: offset },
@@ -866,21 +861,20 @@ export default {
       searchApplicationResub,
       clearFiltersResub,
       doSearch,
-      doSearchResub,
+      doSearchOthers,
       searchTermFromDate,
       searchTermToDate,
       searchTermFromDateResub,
       searchTermToDateResub,
       reviewers,
-      showModalResubmitted,
       searchedReviewer,
       tableLoadingFinish,
-      tableLoadingFinishResub, 
-      rowClicked, 
+      tableLoadingFinishOthers,
+      rowClicked,
       rowClickedOth,
       modalDataId,
       adminLevel,
-      modalDataIdResub,
+      modalDataIdOthers,
     };
   },
 };

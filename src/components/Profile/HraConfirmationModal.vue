@@ -1,57 +1,68 @@
 <template>
   <div
-    class="
-      card-wrapper
+    class="   card-wrapper
       max-w-4xl
-      bg-white
-      sm:rounded-lg
-      p-large
-      flex flex-row
+      bg-white 
+      p-4
+      mb-4 
       justify-center
-      items-center
+      tracking-wide
       relative
-      pt-8
-      pb-8
-      shadow-lg
-    "
+       "
   >
-    <div></div>
-    <div id="holder" class="flex justify-center rounded mb-medium pb-4">
-      <div>
-        <div class="flex flex-col pt-medium rounded mb-medium w-72">
-          <div class="text-center">
-            <span class="text-lg">
-              <h2><b>Did You Register On HRA Before ?</b></h2>
-            </span>
-          </div>
-        </div>
-        <div class="flex items-center justify-center">
-          <button
-            class="
+    <div class="border p-4 rounded-md">
+      <h2 class="text-main-400 font-bold text-xl  tracking-wide">
+        Kindly note that if you are currently employed as a public servant and
+        your information is already registered in the Ministry of Health Human
+        Resource Administration (HRA) database through your health facility,
+        please click on the "YES" button to fetch your data from the HRA
+        database by providing your Employee ID and File Number.
+      </h2>
+      OR
+      <h2 class="text-main-400 font-bold text-xl  tracking-wide">
+        You can click on "NO" and fill out your profile as new
+      </h2>
+    </div>
+
+    <div class="flex flex-col pt-medium rounded mb-medium w-72">
+      <div class="text-center">
+        <span class="text-lg">
+          <h2 class="text-xl">
+            Are you registed on HRA ( Human Resource Administration System )
+            Before ?
+          </h2>
+        </span>
+      </div>
+    </div>
+    <div class="flex items-center justify-center">
+      <button
+        class="
             inline-block
               px-6
               py-2.5
-              bg-primary-600
-              hover:text-primary-600
-              hover:border 
-              text-white
+              bg-white
+              hover:text-white
+              hover:bg-primary-600
+              hover:text-white 
+              text-primary-600
+              border
               font-medium
               text-xs
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               transition
               duration-150
               ease-in-out
             "
-            @click="$emit('approvalModal', 1)"
-            type="button"
-          >
-            Yes
-          </button>
-          <button
-            class="
+        @click="$emit('approvalModal', 1)"
+        type="button"
+      >
+        Yes
+      </button>
+      <button
+        class="
               inline-block
               px-6
               py-2.5
@@ -63,88 +74,29 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               transition
               duration-150
               ease-in-out
             "
-            @click="$emit('approvalModal', 2)"
-            type="button" 
-          >
-            No
-          </button>
-        </div>
-      </div>
+        @click="$emit('approvalModal', 2)"
+        type="button"
+      >
+        No
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted } from "vue";
 
 export default {
   components: {},
-  setup(props, { emit }) {
-    const store = useStore();
-    const route = useRoute();
-    const router = useRouter();
-
+  setup() {
     onMounted(() => {});
     return {};
   },
 };
 </script>
-<style>
-.card-wrapper {
-  width: auto;
-  height: auto;
-}
-#holder {
-  width: auto;
-  height: auto;
-}
-.photoFile {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 260px;
-  position: absolute;
-  cursor: pointer;
-  border-radius: 0%;
-}
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
-}
-
-img {
-  width: 250px;
-  height: 250px;
-  border-radius: 0px;
-}
-.withdraw {
-  background-image: linear-gradient(to right, #d63232, #e63636) !important;
-  color: white;
-  border-color: tomato;
-}
-.close-svg {
-  width: 16px;
-}
-</style>
+<style></style>

@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -58,13 +58,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -102,7 +102,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-lg">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -187,7 +187,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-lg">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -272,7 +272,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-lg">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -347,7 +347,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-lg">
+                      <article class="overflow-hidden rounded-lg  ">
                         <header
                           class="
                             flex
@@ -444,7 +444,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -466,13 +466,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -495,13 +495,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -559,17 +559,13 @@ export default {
         .then((res) => {
           if (res.statusText == "Created") {
             isLoading.value = true;
-            toast.success("Application returned Successfully", {
+            toast.success("Application reviewed Successfully", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload()
-            }, 3000);
-           
           } else {
             isLoading.value = true;
             toast.error("Please try again", {
@@ -579,9 +575,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload()
-            }, 3000);
           }
         })
         .catch(() => {
@@ -593,9 +586,6 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-          setTimeout(() => {
-              window.location.reload()
-            }, 3000);
         });
     };
     watch(props.previousLicenseData, () => {
@@ -632,8 +622,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

@@ -49,7 +49,7 @@
               mt-2
               w-56
               rounded-md
-              shadow-lg
+               
               bg-white
               focus:outline-none
             "
@@ -81,7 +81,7 @@
 </template>
 
 <script scoped>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 

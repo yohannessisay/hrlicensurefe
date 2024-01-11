@@ -1,6 +1,6 @@
 <template>
   <main-content :url="'goodstanding'">
-    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-2 sm:mb-8" id="topNav">
       <ol class="list-reset flex">
         <li>
           <router-link to="/menu">
@@ -10,11 +10,11 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/GoodStanding">
-            <a href="#" class="text-main-400 hover:text-blue-700"
-              >Goodstanding</a
-            >
+            <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
           </router-link>
         </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li class="text-gray-500">Draft</li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Edit</li>
       </ol>
@@ -22,330 +22,277 @@
 
     <div
       v-if="activeState == 1"
-      class="
-        block
-        p-6
-        rounded-lg
-        shadow-lg
-        bg-primary-200
-        max-w-full
-        mr-8
-        mb-8
-        sm:p-4
-      "
+      class="block p-6 rounded-lg max-w-full mr-0 sm:mr-8 mb-8 sm:p-4"
     >
-      <div class="mt-small flex justify-center">
-        <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
-      </div>
-      <div class="vld-parent mt-4">
+      <div class="vld-parent mt-2">
         <loading
           :active="isLoading"
           :is-full-page="false"
           :color="'#2F639D'"
           :opacity="1"
         ></loading>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
-          <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
-            <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  min-w-full
-                  rounded-xl
-                  p-6
-                  bg-gray-100
-                "
-                >
-                  <div>
-                    <label class="text-main-400">Applicant Type</label>
+        <form @submit.prevent="submit" class="sm:mx-auto max-w-4xl p-2 w-full mt-2">
+          <div class="flex justify-start">
+            <h2 class="text-main-400 sm:text-3xl text-2xl font-bold">
+              General Information
+            </h2>
+          </div>
+          <div class="mt-2 sm:mt-8 rounded-sm bg-white">
+            <div class="container mx-auto border-b-2">
+              <div
+                class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
+              >
+                <div>
+                  <label class="text-main-400">Applicant Type</label>
+                  <select
+                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    aria-label="Default select example"
+                    @change="checkApplicantType(generalInfo.applicantType)"
+                    v-model="generalInfo.applicantType"
+                    required
+                  >
+                    <option
+                      :value="
+                        generalInfo && generalInfo.applicantTypeId
+                          ? generalInfo.applicantTypeId
+                          : null
+                      "
+                      selected
+                    >
+                      {{
+                        generalInfo && generalInfo.applicantType
+                          ? generalInfo.applicantType.name
+                          : ""
+                      }}
+                    </option>
+
+                    <option
+                      v-for="applicant in applicantTypes"
+                      :key="applicant.name"
+                      :value="applicant"
+                    >
+                      {{ applicant.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div>
+                  <div class="overflow-hidden shadow-sm">
+                    <label for class="text-main-400">Applicant Title</label>
+
                     <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       aria-label="Default select example"
-                      @change="checkApplicantType(generalInfo.applicantType)"
-                      v-model="generalInfo.applicantType"
+                      v-model="generalInfo.applicantTitle"
                       required
                     >
                       <option
                         :value="
-                          generalInfo && generalInfo.applicantTypeId
-                            ? generalInfo.applicantTypeId
+                          generalInfo && generalInfo.applicantTitleId
+                            ? generalInfo.applicantTitleId
                             : null
                         "
-                        selected
                       >
                         {{
-                          generalInfo && generalInfo.applicantType
-                            ? generalInfo.applicantType.name
+                          generalInfo && generalInfo.applicantTitle
+                            ? generalInfo.applicantTitle.name
                             : ""
                         }}
                       </option>
-
                       <option
-                        v-for="applicant in applicantTypes"
-                        :key="applicant.name"
-                        :value="applicant"
+                        v-for="title in applicantTitle"
+                        :key="title.name"
+                        :value="title"
                       >
-                        {{ applicant.name }}
+                        {{ title.name }}
                       </option>
                     </select>
-                  </div>
-                </div>
-
-                <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  rounded-none
-                  p-2
-                  bg-gray-100
-                "
-                >
-                  <div>
-                    <div class="overflow-hidden shadow-sm">
-                      <label for="" class="text-main-400"
-                        >Applicant Title</label
-                      >
-
-                      <select
-                        class="
-                        form-select
-                        appearance-none
-                        block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        hover:text-main-500 hover:border-main-500
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-main-400
-                        focus:outline-none
-                      "
-                        aria-label="Default select example"
-                        v-model="generalInfo.applicantTitle"
-                        required
-                      >
-                        <option
-                          :value="
-                            generalInfo && generalInfo.applicantTitleId
-                              ? generalInfo.applicantTitleId
-                              : null
-                          "
-                        >
-                          {{
-                            generalInfo && generalInfo.applicantTitle
-                              ? generalInfo.applicantTitle.name
-                              : ""
-                          }}
-                        </option>
-                        <option
-                          v-for="title in applicantTitle"
-                          :key="title.name"
-                          :value="title"
-                        >
-                          {{ title.name }}
-                        </option>
-                      </select>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <div
-                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-                >
-                  <div>
-                    <label class="text-main-400">Department</label>
-                    <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
-                      v-model="generalInfo.department"
-                      @change="setDepartment()"
+            <!-- region -->
+            <div v-if="showLocation" class="rounded bg-white border-b-2">
+              <h2 class="text-yellow-300 text-xl">
+                ***Please select the region you are applying for, not where you are
+                currently living***
+              </h2>
+              <div
+                class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
+              >
+                <div class="flex flex-col">
+                  <label class="text-main-400">Region</label>
+                  <select
+                    class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    v-model="generalInfo.regionSelected"
+                    @change="regionChangeHandler()"
+                    required
+                  >
+                    <option
+                      :value="
+                        generalInfo && generalInfo.regionSelected
+                          ? generalInfo.regionSelected.id
+                          : null
+                      "
+                      selected
                     >
-                      <option
-                        :value="
-                          generalInfo && generalInfo.departmentId
-                            ? generalInfo.departmentId
-                            : null
-                        "
-                      >
-                        {{
-                          generalInfo && generalInfo.department
-                            ? generalInfo.department.name
-                            : ""
-                        }}
-                      </option>
-                      <option
-                        v-for="department in departments"
-                        v-bind:key="department.id"
-                        v-bind:value="department"
-                      >
-                        {{ department.name }}
-                      </option>
-                    </select>
-                  </div>
+                      {{
+                        generalInfo && generalInfo.regionSelected
+                          ? generalInfo.regionSelected.name
+                          : ""
+                      }}
+                    </option>
+                    <option v-for="region in regions" :key="region.name" :value="region">
+                      {{ region.name }}
+                    </option>
+                  </select>
                 </div>
                 <div
-                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                  class="flex flex-col"
+                  v-if="
+                    generalInfo.regionSelected &&
+                    generalInfo.regionSelected.code != 'FED' &&
+                    generalInfo.regionSelected.code != 'HAR'
+                  "
                 >
-                  <div>
-                    <label class="text-main-400">Education Level</label>
-                    <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
-                      v-model="generalInfo.GSProfessionals.educationLevel"
-                      @change="educationalLevelChange()"
+                  <label class="text-main-400">Zone</label>
+                  <select
+                    class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    @change="zoneChangeHandler()"
+                    v-model="generalInfo.zoneSelected"
+                  >
+                    <option
+                      :value="
+                        generalInfo && generalInfo.zoneSelected
+                          ? generalInfo.zoneSelected.id
+                          : null
+                      "
+                      selected
                     >
-                      <option
-                        :value="
-                          generalInfo && generalInfo.GSProfessionals
-                            ? generalInfo.GSProfessionals.educationLevelId
-                            : null
-                        "
-                        selected
-                      >
-                        {{
-                          generalInfo &&
-                          generalInfo.GSProfessionals &&
-                          generalInfo.GSProfessionals.educationLevel
-                            ? generalInfo.GSProfessionals.educationLevel.name
-                            : ""
-                        }}
-                      </option>
-
-                      <option
-                        v-for="edLevel in educationLevels"
-                        v-bind:key="edLevel.name"
-                        v-bind:value="edLevel"
-                      >
-                        {{ edLevel.name }}
-                      </option>
-                    </select>
-                  </div>
+                      {{
+                        generalInfo && generalInfo.zoneSelected
+                          ? generalInfo.zoneSelected.name
+                          : ""
+                      }}
+                    </option>
+                    <option v-for="zone in zones" :key="zone.name" :value="zone">
+                      {{ zone.name }}
+                    </option>
+                  </select>
                 </div>
                 <div
-                  class="
-                  grid grid-rows-3
-                  justify-center
-                  text-6xl
-                  rounded-xl
-                  p-2
-                  bg-gray-100
-                "
+                  class="flex flex-col"
+                  v-if="
+                    generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
+                  "
                 >
+                  <label class="text-main-400">Woreda</label>
+                  <select
+                    class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    v-model="generalInfo.woredaSelected"
+                    required
+                  >
+                    <option
+                      :value="
+                        generalInfo && generalInfo.woredaSelected
+                          ? generalInfo.woredaSelected.id
+                          : null
+                      "
+                      selected
+                    >
+                      {{
+                        generalInfo && generalInfo.woredaSelected
+                          ? generalInfo.woredaSelected.name
+                          : ""
+                      }}
+                    </option>
+                    <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
+                      {{ woreda.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- end -->
+            <div class="container mx-auto border-b-2">
+              <div
+                class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
+              >
+                <div>
+                  <label class="text-main-400">Department</label>
+                  <select
+                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    v-model="generalInfo.department"
+                    @change="setDepartment()"
+                  >
+                    <option
+                      :value="
+                        generalInfo && generalInfo.departmentId
+                          ? generalInfo.departmentId
+                          : null
+                      "
+                    >
+                      {{
+                        generalInfo && generalInfo.department
+                          ? generalInfo.department.name
+                          : ""
+                      }}
+                    </option>
+                    <option
+                      v-for="department in departments"
+                      :key="department.id"
+                      :value="department"
+                    >
+                      {{ department.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="text-main-400">Education Level</label>
+                  <select
+                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    v-model="generalInfo.GSProfessionals.educationLevel"
+                    @change="educationalLevelChange()"
+                  >
+                    <option
+                      :value="
+                        generalInfo && generalInfo.GSProfessionals
+                          ? generalInfo.GSProfessionals.educationLevelId
+                          : null
+                      "
+                      selected
+                    >
+                      {{
+                        generalInfo &&
+                        generalInfo.GSProfessionals &&
+                        generalInfo.GSProfessionals.educationLevel
+                          ? generalInfo.GSProfessionals.educationLevel.name
+                          : ""
+                      }}
+                    </option>
+
+                    <option
+                      v-for="edLevel in educationLevels"
+                      :key="edLevel.name"
+                      :value="edLevel"
+                    >
+                      {{ edLevel.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="grid grid-cols-1">
                   <div class="mb-4">
                     <label class="text-main-400">Profession</label>
                     <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       @change="checkOtherProfession()"
                       v-model="generalInfo.GSProfessionals.professionalTypes"
                     >
                       <option
                         :value="
-                          generalInfo &&
-                          generalInfo.GSProfessionals.professionalTypes
+                          generalInfo && generalInfo.GSProfessionals.professionalTypes
                             ? generalInfo.GSProfessionals.professionalTypes.id
                             : null
                         "
@@ -361,573 +308,158 @@
                       </option>
                       <option
                         v-for="profession in professionalTypes"
-                        v-bind:key="profession.name"
-                        v-bind:value="profession"
+                        :key="profession.name"
+                        :value="profession"
                       >
                         {{ profession.name }}
                       </option>
-                      <option value=""></option>
+                      <option value></option>
                     </select>
                   </div>
 
-                  <div v-show="showOtherProfession">
+                  <div
+                    v-if="
+                      generalInfo.GSProfessionals.professionalTypes &&
+                      generalInfo.GSProfessionals.professionalTypes.name == 'other'
+                    "
+                  >
                     <label class="text-main-400">Other Profession</label>
                     <input
                       type="text"
                       v-model="generalInfo.GSProfessionals.otherProfessionType"
-                      class="
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       autocomplete="off"
-                      placeholder=""
-                      required
+                      placeholder
                     />
                   </div>
 
-                  <div v-show="showOtherProfession">
-                    <label class="text-main-400"
-                      >Other Profession Amharic</label
-                    >
+                  <div
+                    v-if="
+                      generalInfo.GSProfessionals.professionalTypes &&
+                      generalInfo.GSProfessionals.professionalTypes.name == 'other'
+                    "
+                  >
+                    <label class="text-main-400">Other Profession Amharic</label>
                     <input
                       type="text"
-                      v-model="
-                        generalInfo.GSProfessionals.otherProfessionTypeAmharic
-                      "
-                      class="
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      v-model="generalInfo.GSProfessionals.otherProfessionTypeAmharic"
+                      class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       autocomplete="off"
-                      placeholder=""
-                      required
+                      placeholder
                     />
                   </div>
                 </div>
 
-                <div
-                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-                >
-                  <div>
-                    <label class="text-main-400">Applicant Position</label>
-                    <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
-                      v-model="generalInfo.applicantPosition"
-                      required
+                <div>
+                  <label class="text-main-400">Applicant Position</label>
+                  <select
+                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    v-model="generalInfo.applicantPosition"
+                    required
+                    @change="checkOtherApplicantPosition"
+                  >
+                    <option
+                      v-for="position in applicationPositions"
+                      :key="position.id"
+                      :value="position"
                     >
-                      <option
-                        :value="
-                          generalInfo && generalInfo.applicantPositionId
-                            ? generalInfo.applicantPositionId
-                            : null
-                        "
-                        selected
-                      >
-                        {{
-                          generalInfo && generalInfo.applicantPosition
-                            ? generalInfo.applicantPosition.name
-                            : ""
-                        }}
-                      </option>
-                      <option
-                        v-for="position in applicationPositions"
-                        v-bind:key="position.id"
-                        v-bind:value="position"
-                      >
-                        {{ position.name }}
-                      </option>
-                    </select>
-                  </div>
+                      {{ position.name }}
+                    </option>
+                  </select>
+                </div>
+                <div v-if="showOtherApplicantPosition" class="mt-5">
+                  <input
+                    type="text"
+                    name="otherProfAmh"
+                    required
+                    v-model="generalInfo.otherApplicantPosition"
+                    class="mt-1 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder="Other Applicant Position"
+                  />
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- region -->
-          <div
-            v-if="showLocation"
-            class="pt-8 mt-12 rounded bg-white shadow-lg"
-          >
-            <div class="flex">
-              <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-                <label class="text-main-400">Region</label>
-                <select
-                  class="
-                  form-select
-                  appearance-none
-                  block
-                  max-w-3xl
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                  v-model="generalInfo.regionSelected"
-                  @change="regionChangeHandler()"
-                  required
-                >
-                  <option
-                    :value="
-                      generalInfo && generalInfo.regionSelected
-                        ? generalInfo.regionSelected.id
-                        : null
-                    "
-                    selected
-                  >
-                    {{
-                      generalInfo && generalInfo.regionSelected
-                        ? generalInfo.regionSelected.name
-                        : ""
-                    }}
-                  </option>
-                  <option
-                    v-for="region in regions"
-                    v-bind:key="region.name"
-                    v-bind:value="region"
-                  >
-                    {{ region.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="flex flex-col mb-medium w-2/5 mr-12">
-                <label class="text-main-400">Zone</label>
-                <select
-                  class="
-                  form-select
-                  appearance-none
-                  block
-                  max-w-3xl
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                  @change="zoneChangeHandler()"
-                  v-model="generalInfo.zoneSelected"
-                >
-                  <option
-                    :value="
-                      generalInfo && generalInfo.zoneSelected
-                        ? generalInfo.zoneSelected.id
-                        : null
-                    "
-                    selected
-                  >
-                    {{
-                      generalInfo && generalInfo.zoneSelected
-                        ? generalInfo.zoneSelected.name
-                        : ""
-                    }}
-                  </option>
-                  <option
-                    v-for="zone in zones"
-                    v-bind:key="zone.name"
-                    v-bind:value="zone"
-                  >
-                    {{ zone.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="flex">
-              <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-                <label class="text-main-400">Woreda</label>
-                <select
-                  class="
-                  form-select
-                  appearance-none
-                  block
-                  max-w-3xl
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                  v-model="generalInfo.woredaSelected"
-                  required
-                >
-                  <option
-                    :value="
-                      generalInfo && generalInfo.woredaSelected
-                        ? generalInfo.woredaSelected.id
-                        : null
-                    "
-                    selected
-                  >
-                    {{
-                      generalInfo && generalInfo.woredaSelected
-                        ? generalInfo.woredaSelected.name
-                        : ""
-                    }}
-                  </option>
-                  <option
-                    v-for="woreda in woredas"
-                    v-bind:key="woreda.name"
-                    v-bind:value="woreda"
-                  >
-                    {{ woreda.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <!-- end -->
 
           <!-- GS details -->
-          <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
-            <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  rounded-xl
-                  ml-4
-                  p-2
-                  bg-gray-100
-                "
-                >
-                  <div>
-                    <div class="overflow-hidden shadow-sm">
-                      <label for="" class="text-main-400"
-                        >Organization Letter written for</label
-                      >
 
-                      <input
-                        type="text"
-                        v-model="generalInfo.whomGoodStandingFor"
-                        class="
-                        appearance-none
-                        block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        hover:text-main-500 hover:border-main-500
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-main-400
-                        focus:outline-none
-                      "
-                        autocomplete="off"
-                        placeholder=""
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
+          <div class="container mx-auto bg-white">
+            <div
+              class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
+            >
+              <div>
+                <div class="overflow-hidden shadow-sm">
+                  <label for class="text-main-400">Organization Letter written for</label>
 
-                <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  rounded-xl
-                  ml-4
-                  p-2
-                  bg-gray-100
-                "
-                >
-                  <div>
-                    <div class="overflow-hidden shadow-sm">
-                      <label for="" class="text-main-400"
-                        >Who Issued Previous License</label
-                      >
-
-                      <select
-                        class="
-                        form-select
-                        appearance-none
-                        block
-                        max-w-3xl
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
-                        v-model="generalInfo.whoIssuedId"
-                        required
-                      >
-                        <option
-                          v-for="region in regions"
-                          v-bind:key="region.id"
-                          v-bind:value="region"
-                        >
-                          {{ region.name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
+                  <input
+                    type="text"
+                    v-model="generalInfo.whomGoodStandingFor"
+                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder
+                    required
+                  />
                 </div>
               </div>
-            </div>
 
-            <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  ml-4
-                  mb-4
-                  rounded-xl
-                  p-2
-                  bg-gray-100
-                "
-                >
-                  <div>
-                    <div class="overflow-hidden shadow-sm">
-                      <label for="" class="text-main-400"
-                        >License Registration Number</label
-                      >
+              <div>
+                <div class="overflow-hidden shadow-sm">
+                  <label for class="text-main-400">Who Issued Previous License</label>
 
-                      <input
-                        type="text"
-                        v-model="generalInfo.licenseRegistrationNumber"
-                        class="
-                        appearance-none
-                        block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        hover:text-main-500 hover:border-main-500
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-main-400
-                        focus:outline-none
-                      "
-                        autocomplete="off"
-                        placeholder=""
-                        required
-                      />
-                    </div>
-                  </div>
+                  <select
+                    class="form-select w-full appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    v-model="generalInfo.whoIssuedId"
+                    required
+                  >
+                    <option v-for="region in regions" :key="region.id" :value="region">
+                      {{ region.name }}
+                    </option>
+                  </select>
                 </div>
+              </div>
+              <div>
+                <div class="overflow-hidden shadow-sm">
+                  <label for class="text-main-400">License Registration Number</label>
 
-                <div
-                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-                >
-                  <div>
-                    <div class="overflow-hidden shadow-sm">
-                      <label for="" class="text-main-400"
-                        >License Issued Date</label
-                      >
+                  <input
+                    type="text"
+                    v-model="generalInfo.licenseRegistrationNumber"
+                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <div class="overflow-hidden shadow-sm">
+                  <label for class="text-main-400">License Issued Date</label>
 
-                      <input
-                        type="date"
-                        v-model="generalInfo.licenseIssuedDate"
-                        class="
-                        appearance-none
-                        block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        hover:text-main-500 hover:border-main-500
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-main-400
-                        focus:outline-none
-                      "
-                        autocomplete="off"
-                        placeholder="example-MR,MRS"
-                        required
-                      />
-                    </div>
-                  </div>
+                  <input
+                    type="date"
+                    v-model="generalInfo.licenseIssuedDate"
+                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder="example-MR,MRS"
+                    required
+                  />
                 </div>
               </div>
             </div>
           </div>
+
           <!-- GS details -->
           <div class="flex justify-end mb-2 mr-1">
             <button
-              class="
-              float-right
-              mt-8
-              inline-block
-              px-6
-              py-2.5
-              bg-blue-700
-              text-main-400
-              max-w-3xl
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-md
-              bg-white
-              border
-              hover:text-white hover:border-main-500 hover:bg-main-400
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
               type="submit"
               @click="saveDraft()"
             >
               Update
             </button>
             <button
-              class="
-              float-right
-              mt-8
-              inline-block
-              px-6
-              py-2.5
-              bg-blue-700
-              text-main-400
-              max-w-3xl
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-md
-              bg-white
-              border
-              hover:text-white hover:border-main-500 hover:bg-main-400
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-main-400 border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
               type="submit"
               @click="apply()"
             >
@@ -969,7 +501,7 @@ import { useToast } from "vue-toastification";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import Loading from "vue3-loading-overlay";
 export default {
-  components: { MainContent, LicenseSummary, Upload,Loading  },
+  components: { MainContent, LicenseSummary, Upload, Loading },
 
   setup() {
     const store = useStore();
@@ -999,7 +531,9 @@ export default {
       zoneSelected: "",
       woredaSelected: "",
       departmentId: "",
+      applicantTypeSelected: "",
       expertLevelId: "",
+      otherApplicantPosition: "",
       licenseFile: [],
     });
 
@@ -1009,6 +543,7 @@ export default {
     let localData = ref([]);
     let regions = ref([]);
     let isDepartmentSelected = ref(false);
+    let showOtherApplicantPosition = ref(false);
     let isEdLevelSelected = ref(false);
     let isAppTypeSelected = ref(false);
     let educationLevels = ref([]);
@@ -1041,7 +576,25 @@ export default {
       fetchWoredas();
     };
     const regionChangeHandler = () => {
-      fetchZones();
+      if (generalInfo.value.regionSelected && generalInfo.value.regionSelected.code) {
+        switch (generalInfo.value.regionSelected.code) {
+          case "FED":
+            generalInfo.value.zoneSelected = null;
+            generalInfo.value.woredaSelected = null;
+            break;
+          case "HAR":
+            generalInfo.value.zoneSelected = {
+              name: "Default Harar",
+              id: 464,
+              code: "ZN_HAR_DEF_54",
+            };
+            fetchWoredas();
+            break;
+          default:
+            fetchZones();
+            break;
+        }
+      }
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
@@ -1052,7 +605,6 @@ export default {
     };
     const fetchZones = () => {
       store
-
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
         .then((res) => {
           const zonesResult = res.data.data;
@@ -1061,16 +613,27 @@ export default {
     };
     const checkOtherProfession = () => {
       if (
-        generalInfo.value.professionType &&
-        generalInfo.value.professionType.professionTypeId &&
-        generalInfo.value.professionType.professionTypeId.code == "OTH"
+        generalInfo.value.GSProfessionals &&
+        generalInfo.value.GSProfessionals.professionTypeId &&
+        generalInfo.value.GSProfessionals.professionTypeId.name &&
+        generalInfo.value.GSProfessionals.professionTypeId.name.toLowerCase() == "other"
       ) {
         showOtherProfession.value = true;
       } else {
         showOtherProfession.value = false;
       }
     };
-
+    const checkOtherApplicantPosition = () => {
+      if (
+        generalInfo.value.applicantPosition.name &&
+        generalInfo.value.applicantPosition.name.toLowerCase() == "other"
+      ) {
+        showOtherApplicantPosition.value = true;
+      } else {
+        showOtherApplicantPosition.value = false;
+        generalInfo.value.otherApplicantPosition = "";
+      }
+    };
     const fetchApplicantType = () => {
       store.dispatch("goodstanding/getApplicantType").then((res) => {
         applicantTypes.value = res.data.data;
@@ -1092,17 +655,32 @@ export default {
         applicationPositions.value = res.data.data;
       });
     };
-    const fetchRegions = () => {
-      store.dispatch("goodstanding/getRegions").then((res) => {
+    const fetchRegions = async () => {
+      await store.dispatch("goodstanding/getRegions").then((res) => {
         regions.value = res.data.data;
       });
     };
+    const convertOtherProf = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+      let formattedString = trimmedString.replace(/\b\w/g, function (match) {
+        return match.toUpperCase();
+      });
+
+      return inputString != "" ? formattedString : inputString;
+    };
+    const convertOtherProfAmh = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+
+      return inputString != "" ? trimmedString : inputString;
+    };
     const fetchZone = () => {
-      store
-        .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then((res) => {
-          zones.value = res.data.data;
-        });
+      generalInfo.value.regionId
+        ? store
+            .dispatch("goodstanding/getZones", generalInfo.value.regionId)
+            .then((res) => {
+              zones.value = res.data.data;
+            })
+        : "";
     };
     const fetchWoredas = () => {
       store
@@ -1116,27 +694,49 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store
-        .dispatch("newlicense/getProfessionalTypes", profession)
-        .then((res) => {
-          professionalTypes.value = res.data.data;
-        });
+      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
     };
 
     const apply = () => {
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code == "FED"
+      ) {
+        generalInfo.value.expertLevelId = 3;
+      } else if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code != "FED"
+      ) {
+        generalInfo.value.expertLevelId = 4;
+      }
+
+      (generalInfo.value.GSProfessionals.otherProfessionType = generalInfo.value
+        .GSProfessionals.otherProfessionType
+        ? convertOtherProf(generalInfo.value.GSProfessionals.otherProfessionType)
+        : ""),
+        (generalInfo.value.GSProfessionals.otherProfessionTypeAmharic = generalInfo.value
+          .GSProfessionals.otherProfessionTypeAmharic
+          ? convertOtherProfAmh(
+              generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+            )
+          : "");
+      generalInfo.value.otherApplicantPosition = generalInfo.value
+        .other_applicant_position
+        ? convertOtherProf(generalInfo.value.other_applicant_position)
+        : "";
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          activeState.value++;
-        });
+      store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
+        activeState.value++;
+      });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("GSApplicationData");
@@ -1153,6 +753,17 @@ export default {
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
       isLoading.value = true;
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code == "FED"
+      ) {
+        generalInfo.value.expertLevelId = 3;
+      } else if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code != "FED"
+      ) {
+        generalInfo.value.expertLevelId = 4;
+      }
       let license = {
         action: "DraftEvent",
         data: {
@@ -1193,7 +804,8 @@ export default {
               generalInfo.value.GSProfessionals &&
               generalInfo.value.GSProfessionals.professionalTypes
                 ? generalInfo.value.GSProfessionals.professionalTypes.id
-                : generalInfo.value.GSProfessionals.professionalTypeId
+                : generalInfo.value.GSProfessionals &&
+                  generalInfo.value.GSProfessionals.professionalTypeId
                 ? generalInfo.value.GSProfessionals.professionalTypeId
                 : null,
             educationLevelId:
@@ -1203,55 +815,56 @@ export default {
                 : generalInfo.value.GSProfessionals.educationLevelId
                 ? generalInfo.value.GSProfessionals.educationLevelId
                 : null,
+            otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
+              ? convertOtherProf(generalInfo.value.GSProfessionals.otherProfessionType)
+              : "",
+            otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
+              .otherProfessionTypeAmharic
+              ? convertOtherProfAmh(
+                  generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+                )
+              : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
             : null,
           islegal: true,
-          otherProfessionalType: generalInfo.value.otherProfessionType
-            ? generalInfo.value.otherProfessionType
-            : "",
-          otherProfessionalTypeAmharic: generalInfo.value
-            .otherProfessionTypeAmharic
-            ? generalInfo.value.otherProfessionTypeAmharic
+          other_applicant_position: generalInfo.value.otherApplicantPosition
+            ? convertOtherProf(generalInfo.value.otherApplicantPosition)
             : "",
           departmentId: generalInfo.value.department
             ? generalInfo.value.department.id
             : generalInfo.value.departmentId
             ? generalInfo.value.departmentId
             : null,
-          feedback: generalInfo.value.feedback
-            ? generalInfo.value.feedback
-            : "",
+          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           id: route.params.id,
         },
       };
 
-      store
-        .dispatch("goodstanding/editGoodstandingLicense", license)
-        .then((res) => {
-          if (res.data.status == "Success") {
-            toast.success("Applied successfuly", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-            localStorage.removeItem("GSApplicationData");
-            loadFunctions();
-          } else {
-            toast.error("Error occured, please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-          }
-        });
+      store.dispatch("goodstanding/editGoodstandingLicense", license).then((res) => {
+        if (res.data.status == "Success") {
+          toast.success("Updated successfuly", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
+          localStorage.removeItem("GSApplicationData");
+          loadFunctions();
+        } else {
+          toast.error("Error occured, please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
+        }
+      });
     };
     const fetchLanguages = () => {
       store.dispatch("lookups/getNativeLanguage").then((res) => {
@@ -1275,32 +888,24 @@ export default {
         showLanguage.value = false;
       }
     };
-    const loadFunctions =  () => {
+    const loadFunctions = async () => {
       isLoading.value = true;
-      fetchApplicantType();
-      fetchDepartments();
-      fetchProfessionalType();
-      fetchEducationLevel();
 
-      fetchRegions();
-      fetchZone();
-      fetchWoredas();
-      fetchApplicantTitle();
-      fetchApplicationPositions();
-      store
+      await store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
         .then((res) => {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
           generalInfo.value.whoIssuedId = res.data.data.whoIssued;
-          generalInfo.value.licenseIssuedDate = res.data.data.licenseIssuedDate.slice(
-            0,
-            10
-          );
+          generalInfo.value.licenseIssuedDate = res.data.data.licenseIssuedDate
+            ? res.data.data.licenseIssuedDate.slice(0, 10)
+            : "";
           generalInfo.value.regionSelected =
-            res.data.data && res.data.data.woreda
-              ? res.data.data.woreda.zone.region
-              : "";
+            res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
+          generalInfo.value.otherApplicantPosition = generalInfo.value
+            .other_applicant_position
+            ? generalInfo.value.other_applicant_position
+            : "";
 
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
@@ -1337,6 +942,31 @@ export default {
 
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
           educationalLevelChange();
+          if (
+            res.data.data.residenceWoredaId == null &&
+            res.data.data.applicantTypeId == 1
+          ) {
+            generalInfo.value.regionSelected = regions.value.filter(
+              (el) => el.code == "FED"
+            )
+              ? regions.value.filter((el) => el.code == "FED")[0]
+              : [];
+          }
+          checkOtherApplicantPosition();
+          fetchProfessionalType(generalInfo.value.departmentId.id);
+          checkOtherProfession();
+
+          isDepartmentSelected.value = true;
+          isEdLevelSelected.value = true;
+          fetchApplicantType();
+          fetchDepartments();
+          fetchEducationLevel();
+
+          fetchRegions();
+          fetchZone();
+          fetchWoredas();
+          fetchApplicantTitle();
+          fetchApplicationPositions();
           isLoading.value = false;
         });
     };
@@ -1373,6 +1003,8 @@ export default {
       applicantTypes,
       departments,
       clearLocalData,
+      showOtherApplicantPosition,
+      checkOtherApplicantPosition,
       localData,
     };
   },

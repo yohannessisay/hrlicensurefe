@@ -30,7 +30,7 @@
           >
             <div v-if="userInfo != {}" class="w-12 h-12">
               <img
-                v-bind:src="
+                :src="
                  userInfo.profilePicturePath
                     ? googleApi + userInfo.profilePicturePath
                     : ''
@@ -66,7 +66,7 @@
               w-56
               p-4
               rounded-md
-              shadow-lg
+               
               bg-white
               focus:outline-none
             "

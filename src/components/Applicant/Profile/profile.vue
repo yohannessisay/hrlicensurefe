@@ -4,12 +4,12 @@
     <div class="home-content">
       <div class="parent">
         <div class="bg-gray-100">
-          <div class="container mx-auto my-5 p-5">
+          <div class="container mx-auto my-5 ">
             <div class="md:flex no-wrap md:-mx-2">
               <!-- Left Side -->
               <div class="w-full md:w-3/12 md:mx-2 mt-5">
                 <!-- Profile Card -->
-                <div class="bg-white p-3 shadow-xl border-green-400">
+                <div class="bg-white p-3   border-green-400">
                   <div class="vld-parent mt-4">
                     <loading
                       :active="isLoadingProfile"
@@ -17,9 +17,11 @@
                       :color="'#2F639D'"
                       :opacity="1"
                     ></loading>
-                    <div class="image overflow-hidden">
-                      <img :src="userInfo ? userInfo.pic : ''" />
-                    </div>
+
+                    <img
+                      class="roundProfile"
+                      :src="userInfo ? userInfo.pic : ''"
+                    />
                   </div>
                   <div class="flex justify-center mt-4">
                     <input
@@ -43,7 +45,7 @@
                         bg-main-400
                         font-semibold
                         rounded-lg
-                        hover:bg-white hover:text-main-400 hover:shadow-lg
+                        hover:bg-white hover:text-main-400 hover: 
                       "
                     >
                       <i class="fa fa-camera"></i>
@@ -53,7 +55,13 @@
                   <div class="break-words">
                     <span id="fileChosen">No file chosen</span>
                   </div>
-
+                  <h2
+                    class="text-xl text-justify  bg-yellow-300 rounded-md p-2 m-2"
+                  >
+                    Note when changing your own personal picture, the prefered
+                    size is in 3 X 4 format and make sure it is your own photo
+                    as this photo will be used in your generated license
+                  </h2>
                   <ul
                     class="
                       bg-gray-100
@@ -83,7 +91,7 @@
                       >
                     </li>
                     <li class="flex items-center py-3">
-                      <span>Registered</span>
+                      <span>Member since</span>
                       <span class="ml-auto">{{
                         userInfo && userInfo.createdAt
                           ? userInfo.createdAt.slice(0, 10)
@@ -96,7 +104,7 @@
                 <div class="my-4"></div>
               </div>
               <!-- Right Side -->
-              <div class="w-full md:w-9/12 mx-2 mt-1 ">
+              <div class="w-full md:w-9/12  mt-1 ">
                 <!-- About Section -->
                 <div class="vld-parent mt-4">
                   <loading
@@ -106,7 +114,7 @@
                     :opacity="1"
                   ></loading>
                   <form @submit.prevent="submit">
-                    <div class="bg-white p-3 shadow-xl rounded-sm mb-4">
+                    <div class="bg-white p-3   rounded-sm mb-4">
                       <div
                         class="
                           flex
@@ -324,7 +332,7 @@
                                 text-main-400
                               "
                             >
-                              Martial Status
+                              marital Status
                             </div>
                             <div class="mb-3 xl:w-96">
                               <select
@@ -492,7 +500,7 @@
                       </div>
                     </div>
 
-                    <div class="bg-white p-3 shadow-xl rounded-sm">
+                    <div class="bg-white p-3   rounded-sm">
                       <div
                         class="
                           flex
@@ -646,7 +654,7 @@
                           text-base
                           font-bold
                           rounded-lg
-                          hover:bg-white hover:text-main-400 hover:shadow-lg
+                          hover:bg-white hover:text-main-400 hover: 
                           p-3
                           my-4
                         "
@@ -660,7 +668,7 @@
                 </div>
                 <!-- When education feature is added to reviewer  -->
                 <!-- Experience and education -->
-                <!--   <div class="bg-white p-3 shadow-lg rounded-sm">
+                <!--   <div class="bg-white p-3   rounded-sm">
                  <div class="grid grid-cols-2">
                     <div>
                       <div
@@ -835,11 +843,11 @@ export default {
     const updateProfilePicture = () => {
       let formData = new FormData();
       formData.append("document", photoFile.value);
-     
+
       let payload = { document: formData, id: userId };
       store
         .dispatch("profile/updateProfilePicture", payload)
-        .then((res) => { 
+        .then((res) => {
           if (res.status == 200) {
             toast.success("Profile Photo Updated successfuly", {
               timeout: 5000,
@@ -882,7 +890,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          async function () {
+          async function() {
             var base64 = reader.result;
             userInfo.value.photo = base64;
           },
@@ -917,7 +925,7 @@ export default {
 
       const fileChosen = document.getElementById("fileChosen");
 
-      actualBtn.addEventListener("change", function () {
+      actualBtn.addEventListener("change", function() {
         fileChosen.textContent = this.files[0].name;
       });
     };
@@ -937,3 +945,11 @@ export default {
   },
 };
 </script>
+<style>
+.roundProfile {
+  border-radius: 0.5rem 0.5rem 0 0;
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+}
+</style>

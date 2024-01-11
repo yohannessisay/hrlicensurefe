@@ -13,6 +13,7 @@ export default {
     commit(ADD_ADMIN_LOADING);
     try {
       const resp = await ApiService.post(baseUrl + "/admins/login", admin, {});
+      window.localStorage.clear();
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("adminId", resp.data.data["id"]);
       window.localStorage.setItem("role", resp.data.data["role"]["code"]);
@@ -43,7 +44,15 @@ export default {
       console.log(error);
     }
   },
-  async getRole({ commit }) {
+  async getAdminStatus() {
+    try {
+      const AdminStats = await ApiService.get(baseUrl + "/admins/adminStats");
+      return AdminStats;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async getRole() {
     // commit(ADD_ADMIN_LOADING);
     try {
       const resp = await ApiService.get(baseUrl + "/roles");
@@ -115,6 +124,20 @@ export default {
         }&expertLevel=${
           parameters[3] && parameters[3] != "all" ? parameters[3] : ""
         }`;
+      const resp = await ApiService.get(url);
+      return resp.data.data;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getAllAdminsForReport(id, parameters) {
+    try {
+      let url =
+        baseUrl +
+        `/admins/getAllAdminsForReport?page=${parameters[0]}&size=${
+          parameters[1]
+        }&value=${parameters[2] ? parameters[2] : ""}`;
       const resp = await ApiService.get(url);
       return resp.data.data;
     } catch (error) {

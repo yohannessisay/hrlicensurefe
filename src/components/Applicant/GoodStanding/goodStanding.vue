@@ -119,8 +119,7 @@ export default {
         const renewalData = applicationCategories.value.filter((item) => {
           return item.name == "Renewal Application";
         });
-        applicationId.value = renewalData[0]["id"];
-        store.dispatch("renewal/setApplicationId", applicationId.value);
+        applicationId.value = renewalData[0]["id"]; 
       });
     };
 

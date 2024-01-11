@@ -25,7 +25,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -59,13 +59,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-md
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out"
@@ -91,7 +91,7 @@
                 </h2>
               </div>
               <div class="grid grid-cols-2 p-2">
-                <div class=" p-2 mr-2 rounded-lg shadow-md bg-white ">
+                <div class=" p-2 mr-2 rounded-lg   bg-white ">
                   <div class="form-group mb-6">
                     <label for="region" class="ml-4"
                       >Select Application Type</label
@@ -161,8 +161,8 @@
                         type="submit"
                         :class="
                           licenseType != ''
-                            ? 'px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right'
-                            : 'px-6 text-white bg-grey-300 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right pointer-events-none'
+                            ? 'px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded   focus:  focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right'
+                            : 'px-6 text-white bg-grey-300 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded   focus:  focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right pointer-events-none'
                         "
                         @click="searchLicense()"
                       >
@@ -179,7 +179,7 @@
                     :opacity="0.7"
                   >
                   </loading>
-                  <div class=" p-2 rounded-lg shadow-md bg-white ">
+                  <div class=" p-2 rounded-lg   bg-white ">
                     <h3>License Detail</h3>
                     <div class="grid grid-cols-2">
                       <h2>Applicant Name</h2>
@@ -284,8 +284,8 @@
                   >
                     <option
                       v-for="region in allRegions"
-                      v-bind:key="region.name"
-                      v-bind:value="region.id"
+                      :key="region.name"
+                      :value="region.id"
                     >
                       {{ region.name }}
                     </option>
@@ -296,8 +296,8 @@
                     type="submit"
                     :class="
                       licenseData && licenseData.id
-                        ? 'px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right'
-                        : 'px-6 text-white bg-grey-300 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right pointer-events-none'
+                        ? 'px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded   focus:  focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right'
+                        : 'px-6 text-white bg-grey-300 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded   focus:  focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right pointer-events-none'
                     "
                     @click="submit()"
                   >
@@ -311,7 +311,7 @@
 
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
@@ -495,8 +495,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-md {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

@@ -29,10 +29,10 @@ export default {
       return resp;
     }
   },
-  async getLicenseExpirationDateByRegionId(context,regionId) {
+  async getLicenseExpirationDateByRegionId(context, regionId) {
     try {
       const resp = await ApiService.get(
-        baseUrl + "/lookups/licenseExpirationDates/byRegionId/"+regionId
+        baseUrl + "/lookups/licenseExpirationDates/byRegionId/" + regionId
       );
       return resp;
     } catch (error) {
@@ -40,18 +40,33 @@ export default {
       return resp;
     }
   },
-  async getProfessionalType() {
+  async getProfessionalType(context,apiParameter) {
     try {
-      const resp = await ApiService.get(
-        baseUrl + "/lookups/professionalTypes"
-      );
+      let url = `${baseUrl + "/lookups/professionalTypes"}?`;
+      let parameters = apiParameter[0].params ? apiParameter[0].params : [];
+    
+      if (parameters) {
+        parameters.forEach((param) => {
+          url += param ? `${param.key}=${param.value}&` : "";
+        });
+      }
+      url = url.substring(0, url.length - 1);
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       const resp = error;
       return resp;
     }
   },
-
+  async getDocumentType() {
+    try {
+      const resp = await ApiService.get(baseUrl + "/documentTypes");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async getGovernment() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/OccupationTypes");
@@ -80,6 +95,23 @@ export default {
     try {
       const resp = await ApiService.get(baseUrl + "/documentSpecs");
       commit(SET_ALL_DOCUMENT_SPECS, resp.data.data);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getDocSpecWithFilter(context, apiParameter) {
+    try {
+      let url = `${baseUrl}/documentSpecs/filter?`;
+
+      if (apiParameter) {
+        apiParameter.forEach((param) => {
+          url += param ? `${param.key}=${param.value}&` : "";
+        });
+      }
+      url = url.substring(0, url.length - 1);
+      const resp = await ApiService.get(url);
+
       return resp;
     } catch (error) {
       return error;
@@ -148,7 +180,9 @@ export default {
   },
   async getApplicantPositions() {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/applicantPositions");
+      const resp = await ApiService.get(
+        baseUrl + "/lookups/applicantPositions"
+      );
       return resp;
     } catch (error) {
       const resp = error;
@@ -185,7 +219,10 @@ export default {
   },
   async addLicenseExpirationDate(id, data) {
     try {
-      const resp = await ApiService.post(baseUrl + "/lookups/addLicenseExpirationDate", data);
+      const resp = await ApiService.post(
+        baseUrl + "/lookups/addLicenseExpirationDate",
+        data
+      );
       return resp;
     } catch (error) {
       const resp = error;
@@ -236,6 +273,22 @@ export default {
       return error;
     }
   },
+  async addDocumentType(id, data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/documentTypes/add", data);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async addDocumentSpec(id, data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/documentSpecs/add", data);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async addApplicantTitle(id, data) {
     try {
       const resp = await ApiService.post(
@@ -281,7 +334,7 @@ export default {
       return error;
     }
   },
-  async updateZone({ commit }, data) {
+  async updateZone(context, data) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/zone/" + data.id,
@@ -292,7 +345,7 @@ export default {
       return error;
     }
   },
-  async updateWoreda({ commit }, data) {
+  async updateWoreda(context, data) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/woreda/" + data.id,
@@ -303,7 +356,7 @@ export default {
       return error;
     }
   },
-  async updateRegion({ commit }, data) {
+  async updateRegion(context, data) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/region/" + data.id,
@@ -314,7 +367,7 @@ export default {
       return error;
     }
   },
-  async updateEducationLevel({ commit }, data) {
+  async updateEducationLevel(context, data) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/educationalLevel/" + data.id,
@@ -325,7 +378,7 @@ export default {
       return error;
     }
   },
-  async updateProfessionalType({ commit }, data) {
+  async updateProfessionalType(context, data) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/professionalType/" + data.id,
@@ -336,7 +389,29 @@ export default {
       return error;
     }
   },
-  async updateProfessionalPrefix({ commit }, data) {
+  async updateDocumentSpec(context, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/documentSpecs/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateDocumentType(id, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/documentTypes/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateProfessionalPrefix(context, data) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/professionalPrefix/" + data.id,
@@ -347,7 +422,7 @@ export default {
       return error;
     }
   },
-  async updateApplicantTitle({ commit }, data) {
+  async updateApplicantTitle(context, data) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/applicantTitle/" + data.id,
@@ -358,7 +433,7 @@ export default {
       return error;
     }
   },
-  async updateApplicantPosition({ commit }, data) {
+  async updateApplicantPosition(context, data) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/applicantPosition/" + data.id,

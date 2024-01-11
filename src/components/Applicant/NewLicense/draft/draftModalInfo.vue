@@ -30,8 +30,8 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -49,13 +49,13 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -103,8 +103,8 @@
                       <article
                         :class="
                           isDarkMode
-                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-lg'
-                            : 'overflow-hidden rounded-lg shadow-xl'
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg  '
+                            : 'overflow-hidden rounded-lg  '
                         "
                       >
                         <header
@@ -224,8 +224,8 @@
                       <article
                         :class="
                           isDarkMode
-                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-lg'
-                            : 'overflow-hidden rounded-lg shadow-xl'
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg  '
+                            : 'overflow-hidden rounded-lg  '
                         "
                       >
                         <header
@@ -364,8 +364,8 @@
                       <article
                         :class="
                           isDarkMode
-                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-lg'
-                            : 'overflow-hidden rounded-lg shadow-xl'
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg  '
+                            : 'overflow-hidden rounded-lg  '
                         "
                       >
                         <header
@@ -486,8 +486,8 @@
                       <article
                         :class="
                           isDarkMode
-                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-lg'
-                            : 'overflow-hidden rounded-lg shadow-xl'
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg  '
+                            : 'overflow-hidden rounded-lg  '
                         "
                       >
                         <header

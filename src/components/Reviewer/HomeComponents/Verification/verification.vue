@@ -50,8 +50,8 @@
                       leading-tight
                       uppercase
                       rounded
-                      shadow-md
-                      focus:shadow-lg focus:outline-none focus:ring-0
+                       
+                      focus:  focus:outline-none focus:ring-0
                       transition
                       duration-150
                       mt-0
@@ -288,7 +288,7 @@
                           class="
                             inline-block
                             min-w-full
-                            shadow-md
+                             
                             rounded-lg
                             overflow-hidden
                             bg-primary-800
@@ -513,7 +513,7 @@
                           class="
                             inline-block
                             min-w-full
-                            shadow-md
+                             
                             rounded-lg
                             overflow-hidden
                             bg-primary-800
@@ -633,6 +633,8 @@ export default {
                     ? element.renewal.renewalCode
                     : "-------",
                   IsVerified: element.isVerified ? "Verified" : "Not Verified",
+
+              RequestedDate: element.createdAt?element.createdAt.slice(0,10):'----',
                   data: element,
                 });
               })
@@ -671,14 +673,19 @@ export default {
                 width: "20%",
                 sortable: true,
               },
-
+              {
+                label: "Requested Date",
+                field: "RequestedDate",
+                width: "20%",
+                sortable: true,
+              },
               {
                 label: "",
                 field: "quick",
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row +
                     '" >View</button>'
                   );
@@ -724,6 +731,7 @@ export default {
                 ? element.renewal.renewalCode
                 : "-------",
               IsVerified: element.isVerified ? "Verified" : "Not Verified",
+              RequestedDate: element.createdAt?element.createdAt.slice(0,10):'----',
               data: element,
             });
           });
@@ -760,14 +768,19 @@ export default {
                 width: "20%",
                 sortable: true,
               },
-
+              {
+                label: "Requested Date",
+                field: "RequestedDate",
+                width: "20%",
+                sortable: true,
+              },
               {
                 label: "",
                 field: "quick",
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
                     row +
                     '" >View</button>'
                   );
@@ -791,8 +804,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      verificationTable.value.isLoading = false;
+      }); 
     };
     const tableLoadingFinishOthers = () => {
       let elements = document.getElementsByClassName("edit-btn-others");
@@ -801,8 +813,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      });
-      verificationTableOthers.value.isLoading = false;
+      }); 
     };
 
     const rowClicked = (row) => {
@@ -898,7 +909,7 @@ export default {
     const doSearch = (offset, limit, order, sort) => {
       setTimeout(() => {
         verificationTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           getVerification([
             { key: "page", value: offset },
@@ -997,7 +1008,7 @@ export default {
       setTimeout(() => {
         verificationTableOthers.value.isReSearch =
           offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           getVerificationOthers([
             { key: "page", value: offset },
