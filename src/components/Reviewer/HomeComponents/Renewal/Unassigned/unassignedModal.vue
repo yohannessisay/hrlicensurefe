@@ -38,9 +38,10 @@
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6">
                       Showing
-                      {{ modalData.name ? modalData.name : "" }}
-
-                      's License Data
+                      <span class="text-2xl font-bold px-6">
+                        {{ modalData.name ? modalData.name : "" }}
+                      </span>
+                      's Application
                     </h2>
                     <h2
                       v-if="
@@ -51,8 +52,8 @@
                       class="text-2xl text-yellow-300 border rounded-md p-2 font-bold mb-8 px-6"
                     >
                       Application has no image uploaded, proceed with caution when
-                        assigning and please inform the applicant to upload documents by
-                        editing the submitted application from their side
+                      assigning and please inform the applicant to upload documents by
+                      editing the submitted application from their side
                     </h2>
                   </div>
                 </div>
@@ -127,7 +128,7 @@
                                 </p>
                                 <p class="text-gray-500">
                                   <span class="font-semibold text-primary-700 mb-1"
-                                    >marital Status:</span
+                                    >Marital Status:</span
                                   >
                                   <span class="text-grey-800 ml-1">{{
                                     modalData.maritalStatus ? modalData.maritalStatus : ""

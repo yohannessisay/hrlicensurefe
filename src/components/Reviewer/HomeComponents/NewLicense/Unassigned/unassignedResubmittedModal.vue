@@ -37,11 +37,12 @@
               <section class="text-gray-800">
                 <div class="flex justify-center">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 class="text-2xl font-bold mb-8 px-6">
+                    <h2 class="text-xl font-bold mb-8 px-6">
                       Showing
-                      {{ modalData.name ? modalData.name : "" }}
-
-                      's License Data
+                      <a class="text-2xl font-bold px-6 text-yellow-300">
+                        {{ modalData.name }}
+                      </a>
+                      's Application
                     </h2>
                     <h2
                       v-if="
@@ -52,8 +53,8 @@
                       class="text-2xl text-yellow-300 border rounded-md p-2 font-bold mb-8 px-6"
                     >
                       Application has no image uploaded, proceed with caution when
-                        assigning and please inform the applicant to upload documents by
-                        editing the submitted application from their side
+                      assigning and please inform the applicant to upload documents by
+                      editing the submitted application from their side
                     </h2>
                   </div>
                 </div>
@@ -126,7 +127,7 @@
                                 </p>
                                 <p class="text-gray-500">
                                   <span class="font-semibold text-primary-700 mb-1"
-                                    >marital Status:</span
+                                    >Marital Status:</span
                                   >
                                   <span class="text-grey-800 ml-1">{{
                                     modalData.maritalStatus ? modalData.maritalStatus : ""
@@ -148,7 +149,7 @@
                               </div>
                             </div>
                             <div class="grow ml-6" v-if="adminRole && adminRole != 'REV'">
-                              <h2 class="font-bold mb-1">Assign To</h2>
+                              <h2 class="font-extrabold text-2xl mb-1">Assign To</h2>
 
                               <div class="flex items-center">
                                 <label
@@ -255,7 +256,7 @@
                               </div>
                             </div>
                             <div class="grow ml-6">
-                              <h2 class="font-bold mb-1">Contact Info</h2>
+                              <h2 class="ffont-extrabold text-2xl mb-1">Contact Info</h2>
                               <div class="border-2 p-2 rounded-lg m-1 text-primary-500">
                                 <p class="text-gray-500">
                                   <span class="font-semibold text-primary-700 mb-1"
@@ -292,7 +293,9 @@
                               </div>
                             </div>
                             <div class="grow ml-6 mb-4">
-                              <h2 class="font-bold mb-1">Education Detail</h2>
+                              <h2 class="font-extrabold text-2xl mb-1">
+                                Education Detail
+                              </h2>
 
                               <div
                                 class="border-2 p-2 rounded-lg m-1 text-primary-500"
@@ -305,39 +308,39 @@
                                   <span class="font-semibold text-primary-700 mb-1"
                                     >Department:</span
                                   >
-                                  {{
+                                  <span class="text-grey-800 ml-2">{{
                                     education.department ? education.department.name : ""
-                                  }}
+                                  }}</span>
                                 </p>
                                 <p class="text-gray-500">
                                   <span class="font-semibold text-primary-700 mb-1"
                                     >Education Level:</span
                                   >
-                                  {{
+                                  <span class="text-grey-800 ml-2">{{
                                     education.educationLevel
                                       ? education.educationLevel.name
                                       : ""
-                                  }}
+                                  }}</span>
                                 </p>
                                 <p class="text-gray-500">
                                   <span class="font-semibold text-primary-700 mb-1"
                                     >Profession:</span
                                   >
-                                  {{
+                                  <span class="text-grey-800 ml-2">{{
                                     education.professionType
                                       ? education.professionType.name
                                       : ""
-                                  }}
+                                  }}</span>
                                 </p>
                                 <p class="text-gray-500">
                                   <span class="font-semibold text-primary-700 mb-1"
                                     >Institution:</span
                                   >
-                                  {{
+                                  <span class="text-grey-800 ml-2">{{
                                     education.institution
                                       ? education.institution.name
                                       : ""
-                                  }}
+                                  }}</span>
                                 </p>
                               </div>
                             </div>

@@ -1071,7 +1071,8 @@ export default {
       return alreadySubmitted ? alreadySubmitted : tempError;
     };
     const clearLocalData = () => {
-      window.localStorage.removeItem("NLApplicationData");
+      localStorage.removeItem("NLApplicationData");
+      localStorage.removeItem("isLicenseDesignation");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1127,6 +1128,7 @@ export default {
             });
             isLoading.value = false;
             localStorage.removeItem("NLApplicationData");
+            localStorage.removeItem("isLicenseDesignation");
             localStorage.removeItem("tempNL");
             location.reload();
           } else {

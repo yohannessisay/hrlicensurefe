@@ -39,10 +39,10 @@
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6">
                       Showing
-
-                      {{ modalData.name ? modalData.name : "" }}
-
-                      's License Data
+                      <span class="text-2xl font-bold px-6">
+                        {{ modalData.name ? modalData.name : "" }}
+                      </span>
+                      's Application
                     </h2>
                     <h2
                       v-if="
@@ -127,7 +127,7 @@
                                 </p>
                                 <p class="text-gray-500">
                                   <span class="font-semibold text-primary-700 mb-1"
-                                    >marital Status:</span
+                                    >Marital Status:</span
                                   >
                                   <span class="text-grey-800 ml-1">{{
                                     modalData.maritalStatus ? modalData.maritalStatus : ""

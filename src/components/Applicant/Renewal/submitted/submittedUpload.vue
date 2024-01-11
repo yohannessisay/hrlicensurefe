@@ -6,6 +6,10 @@
       :color="'#2F639D'"
       :opacity="0.7"
     ></loading>
+    <h2 class="text-yellow-300 border p-2 rounded-md mb-4 font-bold text-xl mt-12">
+      Note:- Please upload only the documents marked with a red asterisk
+      <small class="text-red-300 text-xl"> (*) </small> to proceed to the next step.
+    </h2>
     <div class="accordion mr-8" id="FilesAccordion">
       <span v-if="errorDocuments && errorDocuments.length > 0" class="text-red-300"
         >Please upload files highlighted in red borders to proceed</span

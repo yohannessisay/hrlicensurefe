@@ -93,7 +93,7 @@
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name ? modalData.name : "" }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -194,7 +194,7 @@
                             <p class="text-gray-500">
                               <span
                                 class="font-bold text-xl text-primary-700 mb-1"
-                                >marital Status:</span
+                                >Marital Status:</span
                               >
                               {{
                                 modalData.maritalStatus

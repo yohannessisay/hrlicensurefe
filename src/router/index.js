@@ -311,7 +311,7 @@ const routes = [
 
   {
     path: "/Applicant/GoodStanding/declined",
-    name: "ApplicantDeclined",
+    name: "ApplicantGoodStandingDeclined",
     component: () =>
       import("../components/Applicant/GoodStanding/declined/declined.vue"),
   },
@@ -335,6 +335,8 @@ const routes = [
     component: () =>
       import("../components/Applicant/GoodStanding/draft/draftDetail.vue"),
   },
+
+  
 
   //Applicant Profile Management
   {
@@ -838,7 +840,6 @@ router.beforeEach(async (to, from, next) => {
   ) {
     next("/admin/list");
   }
- 
 
   if (to.matched.some((record) => record.meta.RedirectExternalUrl)) {
     const url = to.meta.RedirectExternalUrl;
@@ -864,7 +865,6 @@ router.beforeResolve((to, from, next) => {
   if (to.name) {
     // Start the route progress bar.
     // eslint-disable-next-line no-undef
-   
   }
   next();
 });
@@ -872,7 +872,6 @@ router.beforeResolve((to, from, next) => {
 router.afterEach(() => {
   // Complete the animation of the route progress bar.
   // eslint-disable-next-line no-undef
- 
 });
 
 export default router;

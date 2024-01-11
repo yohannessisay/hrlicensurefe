@@ -40,7 +40,7 @@
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name }}
                       </span>
-                      's License Data
+                      's Application
                     </h2>
                   </div>
                 </div>
@@ -114,7 +114,7 @@
                               </p>
                               <p class="text-gray-500">
                                 <span class="font-semibold text-primary-700 mb-1"
-                                  >marital Status:</span
+                                  >Marital Status:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
                                   {{ modalData.maritalStatus }}</span
@@ -290,7 +290,6 @@
                           Externship
                         </button>
                         <button
-                          v-if="showGenerate && adminExpLevel != 'REG'"
                           class="inline-block px-6 py-2.5 bg-primary-400 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
                           type="button"
                           data-bs-toggle="modal"
@@ -298,7 +297,7 @@
                           @click="changePrintType('temporary')"
                         >
                           <i class="fa fa-file-circle-check"></i>
-                          Temporary
+                          Designation
                         </button>
                         <button
                           v-if="showPreviousLicense"

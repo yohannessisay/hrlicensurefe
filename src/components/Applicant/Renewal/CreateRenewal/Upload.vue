@@ -13,7 +13,7 @@
       <div class="accordion-item bg-white border border-grey-200 p-4 rounded-lg">
         <h2 class="accordion-header mb-0" id="headingOne">
           <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
+            class="accordion-button relative flex items-center w-full p-4 border text-gray-800 text-xl rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -30,7 +30,7 @@
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
-          <div class="accordion-body py-4 px-5">
+          <div class="accordion-body py-1 px-5">
             <div class="bg-red-800 py-5">
               <div class="overflow-x-auto w-full p-4">
                 <table
@@ -181,8 +181,8 @@
           </div>
         </div>
       </div>
-      <div class="accordion-item bg-white border border-grey-200 p-4 mt-8 rounded-lg">
-        <h2 class="accordion-header mb-0" id="headingTwo">
+      <div class="accordion-item bg-white border border-grey-200 p-1 mt-8 rounded-lg">
+        <h2 class="accordion-header mb-0 mr-1">
           <button
             class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
@@ -205,9 +205,9 @@
             <div
               v-for="table in educationalDocs"
               :key="table"
-              class="border-b-4 text-main-400 mb-8"
+              class="border-b-4 text-main-400 mb-8 border p-1 rounded-md"
             >
-              <h4 class="text-main-400 font-bold">
+              <h4 class="text-grey-800 font-bold border-b">
                 {{ table.educationalLevel ? table.educationalLevel.name : "" }}
                 Related Files
               </h4>

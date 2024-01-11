@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="letterType == 'FED'">
     <div contenteditable="true" class="p-2 m-2" id="temporaryPrintedDiv">
       <div class="grid grid-cols-2 mb-8 mt-24">
         <div class="flex justify-start" contenteditable="false">
@@ -104,10 +104,97 @@
       <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
     </div>
   </div>
+  <div class="p-8" v-else id="temporaryPrintedDiv">
+    <div class="flex justify-end p-2 mt-40">
+      <div class="grid grid-cols1">
+        <h2 contenteditable="true">ቁጥር <span class="underline">አ/አ/ም/መ/ጤ/ክ/አስ</span></h2>
+        <h2>Ref No</h2>
+        <h2>
+          ቀን
+          <span class="underline">{{ new Date().toISOString().slice(0, 10) }}</span>
+        </h2>
+        <h2>Date</h2>
+        <h2>
+          File Number
+          <span class="underline">{{
+            modalData && modalData.data ? modalData.data.newLicenseCode : ""
+          }}</span>
+        </h2>
+      </div>
+    </div>
+    <div class="p2">
+      <h2 contenteditable="true">ለ <span class="underline">_______</span></h2>
+      <h2 contenteditable="true" class="underline">አዲስ አበባ</h2>
+    </div>
+
+    <div class="flex justify-center">
+      <h2 class="underline" contenteditable="true">ጉዳዩ:- የ ሙያ ስያሜን ይመለከታል</h2>
+    </div>
+
+    <div class="mt-12" contenteditable="true">
+      {{
+        modalData && modalData.data && modalData.data.profile
+          ? `${modalData.data.profile.alternativeName} ${modalData.data.profile.alternativeFatherName} ${modalData.data.profile.alternativeGrandFatherName}`
+          : ""
+      }}
+      የተባሉት የጤና ባለሙያ የሙያ ስያሜ ጠቅሰን እንድናሳዉቅ በቀን
+      <span>{{ new Date().toISOString().slice(0, 10) }}</span>
+      በተፃፈ ደብዳቤ በጠየቃቸሁን መሰረት ያቀረቡት ማስረጃ በቀን
+      <span>{{ new Date().toISOString().slice(0, 10) }}</span>
+      በእዲስ አበባ የምግብ እና መድኃኒት ባለሰልጣን ባለሙያዎች ብቃት ማረጋገጫ ዳይሬከቶሬት ያቀረቡት የትምህርት ማስረጃ ቀርቦ ከተመረመረ
+      በኋላ በ
+      <span contenteditable="false">
+        <span
+          v-for="education in modalData && modalData.data && modalData.data.educations
+            ? modalData && modalData.data && modalData.data.educations
+            : []"
+          :key="education.id"
+        >
+          {{ education.professionType.name }}
+        </span>
+        <span class="ml-1" contenteditable="false">{{
+          modalData && modalData.data ? modalData.data.newLicenseCode : ""
+        }}</span>
+      </span>
+      ሙያ የተመዘገቡ መሆኑን ተረጋግጧል፡፡ ስለዚህ የሙያ ስያሜያቸው
+      <span
+        contenteditable="false"
+        v-for="education in modalData && modalData.data && modalData.data.educations
+          ? modalData && modalData.data && modalData.data.educations
+          : []"
+        :key="education.id"
+      >
+        {{ education.professionType.name }}
+      </span>
+      <span class="ml-1" contenteditable="false">{{
+        modalData && modalData.data ? modalData.data.newLicenseCode : ""
+      }}</span>
+      መሆኑን እንገልፃለን፡፡
+    </div>
+    <div class="flex justify-end mt-20 mb-24">
+      <div class="grid grid-cols-1">
+        <h2 class="mr-8">ከሰላምታ ጋር</h2>
+        <h2 class="mr-8 mt-12">
+          {{
+            modalData && modalData.data && modalData.data.licenseReviewer
+              ? modalData.data.licenseReviewer.reviewer.name
+              : ""
+          }}
+        </h2>
+        የጤና ባለሙያዎች ፍቃድ አሰጣጥ ኦፊሰር
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
-  props: ["modalData", "qrSrc"],
+  props: ["modalData", "qrSrc", "letterType"],
   setup() {},
 };
 </script>
+<style scoped>
+@import url("https://fonts.cdnfonts.com/css/times-new-roman");
+* {
+  font-family: "Times New Roman", sans-serif !important;
+}
+</style>

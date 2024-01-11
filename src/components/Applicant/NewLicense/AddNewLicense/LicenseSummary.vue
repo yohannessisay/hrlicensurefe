@@ -282,6 +282,7 @@ export default {
     let tempDocs = ref({});
     let allowSave = ref(false);
     const showModal = ref(false);
+
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (agreed.value != false) {
@@ -345,6 +346,9 @@ export default {
               ? generalInfo.value.expertLevelId
               : null,
             isLegal: true,
+            is_license_designation: localStorage.getItem("isLicenseDesignation")
+              ? JSON.parse(localStorage.getItem("isLicenseDesignation"))
+              : false,
             feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           },
         };
@@ -363,6 +367,7 @@ export default {
                 localStorage.removeItem("applicantTypeSelected");
                 localStorage.removeItem("NLApplicationData");
                 localStorage.removeItem("tempNL");
+                localStorage.removeItem("isLicenseDesignation");
                 indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
@@ -410,6 +415,7 @@ export default {
                   localStorage.removeItem("applicantTypeSelected");
                   localStorage.removeItem("NLApplicationData");
                   localStorage.removeItem("tempNL");
+                  localStorage.removeItem("isLicenseDesignation");
                   indexedDB.deleteDatabase("NLdocumentUploads");
                   toast.success("Applied successfuly", {
                     timeout: 5000,

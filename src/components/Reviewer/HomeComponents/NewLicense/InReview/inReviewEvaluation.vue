@@ -6,7 +6,13 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Evaluate</h2>
+      <h2 class="text-2xl">
+        Evaluate
+
+        {{
+          newLicense && newLicense.is_license_designation ? "( License Designation )" : ""
+        }}
+      </h2>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -27,9 +33,9 @@
               (newLicense.applicationStatus.code == 'IRV' ||
                 newLicense.applicationStatus.code == 'REVDRA')
             "
-            class="w-full rounded-lg bg-primary-800"
+            class="w-full rounded-lg bg-primary-800 p-2"
           >
-            <h2 class="ml-4 text-xl text-white">
+            <h2 class="text-2xl text-white border-b-2">
               Evaluating
               {{
                 newLicense && newLicense.profile && newLicense.profile.name
@@ -38,12 +44,17 @@
               }}
               's License
             </h2>
-
+            <h2
+              v-if="newLicense && newLicense.is_license_designation"
+              class="text-xl text-white mb-4 mt-2"
+            >
+              **This is a License Designation application**
+            </h2>
             <div class="w-full">
-              <div class="box-shadow-pop bg-lightGrey-100">
+              <div class="box-shadow-pop bg-lightGrey-100 rounded-md">
                 <div class="grid grid-cols-1 sm:grid-cols-8">
                   <div
-                    class="sm:col-span-2 col-span-8 container w-64 h-40 p-4 mt-8 ml-8 rounded-lg box-shadow-pop"
+                    class="sm:col-span-2 col-span-8 container w-64 h-40 p-4 mt-8 ml-8 rounded-lg"
                   >
                     <!-- Accepted Documents -->
                     <div class="mt-8">
@@ -136,55 +147,46 @@
                   <div class="sm:col-span-4 col-span-8 w-full p-4 mt-4">
                     <div class="p-4 mb-8 box-shadow-pop bg-lightGrey-100">
                       <div class="flex justify-center">
-                        <h1 class="text-primary-600">Evaluation</h1>
-                      </div>
-                      <!-- Back icon -->
-                      <div class="">
-                        <svg
-                          width="40"
-                          height="60"
-                          xmlns="http://www.w3.org/2000/svg"
-                          version="1.1"
-                          @click="previous()"
-                          v-if="index != 0"
-                        >
-                          <polyline
-                            points="30 10 10 30 30 50"
-                            stroke="rgba(103,128,159,1)"
-                            stroke-width="3"
-                            stroke-linecap="butt"
-                            fill="none"
-                            stroke-linejoin="round"
-                          >
-                            &gt;
-                          </polyline>
-                        </svg>
-                      </div>
-                      <!-- Back icon -->
-
-                      <div class="flex flex-col items-center justify-center">
-                        <label v-if="!showButtons" class="text-2xl text-grey-800">
-                          <h5 class="text-2xl text-grey-800 c">
+                        <div class="grid grid-cols-1" v-if="!showButtons">
+                          <h1 class="text-primary-600 text-2xl p-2">
+                            Uploaded document name
+                          </h1>
+                          <h2 class="text-2xl text-grey-800 border rounded-md p-2">
                             {{
                               docs[index] && docs[index].documentType
                                 ? docs[index].documentType.name
                                 : ""
                             }}
-                          </h5>
-                        </label>
+                          </h2>
+                        </div>
+                        <div v-else>
+                          <h1 class="text-primary-600 text-2xl">License Summary</h1>
+                        </div>
+                      </div>
+                      <!-- Back icon -->
+                      <span
+                        @click="previous(index)"
+                        class="p-4 border rounded-md text-grey-300 shadow-md bg-grey-300 cursor-pointer hover:bg-white"
+                        v-if="index != 0"
+                      >
+                        <i class="fa-solid fa-arrow-left text-3xl text-grey-700 mt-3">
+                        </i>
+                      </span>
+                      <!-- Back icon -->
 
+                      <div class="flex flex-col items-center justify-center w-full">
                         <!-- Review images/pdf section -->
                         <div
-                          class="container px-4 mx-auto my-2 md:px-4 flex content-center justify-center"
+                          class="container px-4 mx-auto my-2 md:px-4 flex content-center justify-center w-full"
                           v-if="showButtons"
                         >
-                          <div class="flex flex-wrap md:-mx-4 lg:-mx-8">
+                          <div class="flex flex-wrap md:-mx-4 lg:-mx-8 w-full">
                             <!-- Personal Info card -->
                             <div class="w-full mx-4 my-1 mb-4">
                               <!-- Article -->
-                              <article class="overflow-hidden rounded-lg">
+                              <article class="overflow-hidden rounded-lg w-full">
                                 <header
-                                  class="flex items-center justify-between p-2 leading-tight md:p-4"
+                                  class="flex items-center justify-between p-2 leading-tight md:p-4 w-full"
                                 >
                                   <h2 class="font-bold">
                                     Personal Information
@@ -648,8 +650,15 @@
                         </div>
                         <!-- Review images/pdf section -->
                         <!-- Final summary -->
-                        <div v-else class="flex content-center justify-center">
+
+                        <div
+                          v-else
+                          class="flex content-center justify-center border mt-4 p-2 rounded-md m-2 w-full"
+                        >
                           <div v-if="docs.length > 0">
+                            <div class="flex justify-center">
+                              <h2 class="text-xl text-primary-600">Uploaded Image</h2>
+                            </div>
                             <div
                               v-if="
                                 docs[index] &&
@@ -678,25 +687,21 @@
                               </button>
                             </div>
 
-                            <div v-else>
-                              <div>
-                                <img
-                                  @click="
-                                    viewImage(
-                                      docs[index] ? googleApi + docs[index].filePath : ''
-                                    )
-                                  "
-                                  class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
-                                  :src="
+                            <div v-else class="w-full">
+                              <img
+                                @click="
+                                  viewImage(
                                     docs[index] ? googleApi + docs[index].filePath : ''
-                                  "
-                                  style="height: 400px; width: 400px"
-                                />
-                                <small class="ml-12 font-bold text-base text-green-200">
-                                  <i class="fa-regular fa-circle-question"></i>
-                                  Click the image to zoom</small
-                                >
-                              </div>
+                                  )
+                                "
+                                class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
+                                :src="docs[index] ? googleApi + docs[index].filePath : ''"
+                                style="height: 400px; width: 400px"
+                              />
+                              <small class="ml-12 font-bold text-base text-green-200">
+                                <i class="fa-regular fa-circle-question"></i>
+                                Click the image to zoom</small
+                              >
                             </div>
                           </div>
                           <div class="flex content-center justify-center pb-large" v-else>
@@ -831,7 +836,7 @@
                     :opacity="1"
                   ></loading>
                   <div
-                    class="flex items-center justify-center mb-medium"
+                    class="flex items-center justify-center"
                     v-if="showButtons && !showLoadingButtons"
                   >
                     <div v-for="button in buttons" :key="button.name" :value="button.id">
@@ -839,7 +844,7 @@
                         v-if="button.code == 'DEC'"
                         :class="
                           declineButtonStatus
-                            ? 'inline-block px-6 text-white bg-primary-600 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out'
+                            ? 'inline-block px-6  mb-8 text-white bg-primary-600 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out'
                             : 'inline-block px-6 text-white bg-grey-300 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
                         "
                         @click="action(button.action)"
@@ -848,7 +853,7 @@
                       </button>
                       <button
                         v-else
-                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-primary-400 hover:text-white"
+                        class="inline-block px-6 mb-8 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-primary-400 hover:text-white"
                         :data-bs-toggle="button.code == 'US' ? 'modal' : ''"
                         :data-bs-target="button.code == 'US' ? '#superviseModal' : ''"
                         @click="
@@ -1363,16 +1368,19 @@ export default {
         nextClickable.value = true;
       }
     };
-    const previous = () => {
-      if (index.value == docs.value.length - 1) {
+    const previous = (ind) => {
+      if (index.value == docs.value.length) {
         showButtons.value = false;
       }
-      index.value = index.value - 1;
-      completedSteps.value -= 1;
-      amount.value = ((index.value + 1) / docs.value.length) * 100;
-      width.value = "width:" + amount.value + "%";
-      findDocumentType(documentTypes.value, docs.value[index.value]);
+
+      accepted.value = accepted.value.filter((el) => el != docs.value[ind - 1].fileName);
+      rejected.value = rejected.value.filter((el) => el != docs.value[ind - 1].fileName);
+
       nextClickable.value = true;
+      index.value = accepted.value.length + rejected.value.length;
+      completedSteps.value = index.value;
+      completedSteps.value < 0 ? (completedSteps.value = 0) : 0;
+      index.value < 0 ? (index.value = 0) : 0;
     };
     const nextRemark = () => {
       if (ind.value != rejectedObj.value.length - 1) {
@@ -1438,45 +1446,32 @@ export default {
       nextClickable.value = true;
       completedSteps.value += 1;
       if (accepted.value.length > 0) {
-        if (!accepted.value.includes(doc.documentTypeCode)) {
+        if (!accepted.value.includes(doc.fileName)) {
           accepted.value.push(doc.fileName);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
-          if (rejected.value.includes(doc.documentTypeCode)) {
-            rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
-            rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
+          if (rejected.value.includes(doc.fileName)) {
+            rejected.value = rejected.value.filter((el) => el != doc.fileName);
+            rejectedObj.value = rejectedObj.value.filter((el) => el != doc.fileName);
           }
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
         }
       } else {
         accepted.value.push(doc.fileName);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
-        } else {
-          index.value = index.value + 1;
-          amount.value = ((index.value + 1) / docs.value.length) * 100;
-          width.value = "width:" + amount.value + "%";
-          findDocumentType(documentTypes.value, docs.value[index.value]);
         }
-        if (rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+
+        if (rejected.value.includes(doc.fileName)) {
           rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
+          rejectedObj.value = rejectedObj.value.filter((el) => el != doc.fileName);
         }
       }
+      index.value = accepted.value.length + rejected.value.length;
     };
 
     const reject = (doc) => {
@@ -1490,45 +1485,29 @@ export default {
       }
 
       if (rejected.value.length > 0) {
-        if (!rejected.value.includes(doc.documentTypeCode)) {
+        if (!rejected.value.includes(doc.fileName)) {
           rejected.value.push(doc.fileName);
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
-          if (accepted.value.includes(doc.documentTypeCode)) {
-            accepted.value.splice(accepted.value.indexOf(doc.documentTypeCode), 1);
+          if (accepted.value.includes(doc.fileName)) {
+            accepted.value = accepted.value.filter((el) => el != doc.fileName);
           }
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
         }
       } else {
-        rejected.value.push(doc.fileName);
-        rejectedObj.value.push(doc);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
-        } else {
-          index.value = index.value + 1;
-          amount.value = ((index.value + 1) / docs.value.length) * 100;
-          width.value = "width:" + amount.value + "%";
-          findDocumentType(documentTypes.value, docs.value[index.value]);
         }
-        if (accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.splice(accepted.value.indexOf(doc.documentTypeCode), 1);
+        if (accepted.value.includes(doc.fileName)) {
+          accepted.value = accepted.value.filter((el) => el != doc.fileName);
         }
       }
+      index.value = accepted.value.length + rejected.value.length;
     };
     const setOtherProfession = (education, id, event, type) => {
       if (type == "english") {

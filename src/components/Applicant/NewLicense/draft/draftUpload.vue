@@ -6,9 +6,13 @@
       :color="'#2F639D'"
       :opacity="0.7"
     ></loading>
+    <h2 class="text-yellow-300 border p-2 rounded-md mb-4 font-bold text-xl mt-12">
+      Note:- Upload all the documents marked with a red asterisk
+      <small class="text-red-300 text-xl"> (*) </small> to proceed to the next step.
+    </h2>
     <div class="accordion mr-8" id="FilesAccordion">
       <span v-if="errorDocuments && errorDocuments.length > 0" class="text-red-300"
-        >Please upload files highlighted in red borders to proceed</span
+        >Upload all files highlighted in red borders to proceed</span
       >
       <div class="accordion-item bg-white border border-grey-200 p-4 rounded-lg">
         <h2 class="accordion-header mb-0" id="headingOne">
@@ -1534,7 +1538,7 @@ export default {
     };
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
-        if (obj[key] === undefined || obj[key] == null) return hash;
+        if (obj[key] === undefined || obj[key] == null || obj[key] == "") return hash;
         return Object.assign(hash, {
           [obj[key]]: (hash[obj[key]] || []).concat(obj),
         });
@@ -1578,6 +1582,10 @@ export default {
         .then((res) => {
           if (res.data.data) {
             let localData = JSON.parse(localStorage.getItem("NLApplicationData"));
+            let isLicenseDesignation = localData
+              ? localData.is_license_designation
+              : false;
+
             let professionChanged = localData.professionChanged;
             if (professionChanged && professionChanged == true) {
               documentsUploaded.value = [];
@@ -1617,6 +1625,13 @@ export default {
                   ])
                   .then((res) => {
                     let resp = res.data.data;
+                    if (isLicenseDesignation == true) {
+                      resp = resp.filter(
+                        (ed) =>
+                          ed.documentType.code == "SUPINST" ||
+                          ed.documentType.code == "SENSUP"
+                      );
+                    }
                     newLicenseDocuments.value = res.data.data;
                     educationalDocs.value.push({
                       professionType:
@@ -1624,7 +1639,10 @@ export default {
                       educationalLevel: element.educationLevel
                         ? element.educationLevel
                         : "",
-                      docs: resp.filter((element) => element.parentDocument == null),
+                      docs: resp.filter(
+                        (element) =>
+                          element.parentDocument == null || element.parentDocument == ""
+                      ),
                       parentDoc: groupByKey(resp, "parentDocument"),
                     });
                     isLoading.value = false;
@@ -1639,6 +1657,9 @@ export default {
                 ])
                 .then((res) => {
                   let result = res.data.data;
+                  if (isLicenseDesignation == true) {
+                    result = result.filter((el) => el.documentType.code == "PSP");
+                  }
                   commonDocuments.value = result;
                 });
             });
@@ -1691,7 +1712,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-.shadwo-md {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

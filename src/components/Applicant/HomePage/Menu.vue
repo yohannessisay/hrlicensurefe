@@ -3,7 +3,7 @@
     <side-nav></side-nav>
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
-      <div class="mt-8 sm:ml-8 sm:mr-8">
+      <div class="ml-4 mr-4 sm:mt-8 sm:ml-8 sm:mr-8">
         <nav class="bg-grey-100 p-4 rounded-md w-full mt-24">
           <ol class="list-reset flex">
             <li>
@@ -15,17 +15,22 @@
           </ol>
         </nav>
 
-        <div id="home" class="flex flex-row justify-center sm:ml-4 mt-12">
+        <div id="home" class="sm:mt-12">
           <!-- <div class="float-container" @click="modeToggle()">
             <a href="#" class="icon one"> </a>
           </div> -->
-          <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
-            <div class="mr-0 sm:mr-12 mb-8 overview-boxes rounded-xl">
+          <div class="grid grid-cols-1 sm:grid-cols-4 mr-8 ml-8 sm:m-0 gap-8">
+            <!-- New license box -->
+            <div class="w-full overview-boxes rounded-md">
               <div
-                class="bg-main-400 hover:bg-white box w-full rounded-lg transition duration-500 transform hover:scale-110 cursor-pointer cart"
+                :class="
+                  isDarkMode
+                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                "
                 data-bs-toggle="modal"
-                data-bs-target="#newLicenseDetail"
-                style="height: 200px; width: 300px"
+                data-bs-target="#NewLicenseModal"
+                @mouseover="changeModalData('NewLicense')"
               >
                 <p
                   class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
@@ -42,13 +47,18 @@
                 </div>
               </div>
             </div>
-
-            <div class="sm:mr-12 mb-8 overview-boxes">
+            <!-- New license box -->
+            <!-- Renewal box -->
+            <div class="overview-boxes">
               <div
-                class="bg-main-400 box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer"
+                :class="
+                  isDarkMode
+                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                "
+                @mouseover="changeModalData('Renewal')"
                 data-bs-toggle="modal"
-                data-bs-target="#renewalDetail"
-                style="height: 200px; width: 300px"
+                data-bs-target="#RenewalModal"
               >
                 <p
                   class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
@@ -65,13 +75,18 @@
                 </div>
               </div>
             </div>
-
-            <div class="sm:mr-12 mb-8 overview-boxes">
+            <!-- Renewal box -->
+            <!-- Goodstanding box -->
+            <div class="overview-boxes">
               <div
-                class="bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer"
+                :class="
+                  isDarkMode
+                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                "
                 data-bs-toggle="modal"
-                data-bs-target="#goodStandingDetail"
-                style="height: 200px; width: 300px"
+                data-bs-target="#GoodStandingModal"
+                @mouseover="changeModalData('GoodStanding')"
               >
                 <p
                   class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
@@ -88,1332 +103,95 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            <!-- Goodstanding box -->
+            <!--  License designation box -->
+            <div class="mb-8 overview-boxes">
+              <div
+                :class="
+                  isDarkMode
+                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                "
+                data-bs-target="#LicenseDesignationModal"
+                @mouseover="changeModalData('LicenseDesignation')"
+                data-bs-toggle="modal"
+              >
+                <p
+                  class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
+                >
+                  <i class="fa fa-tasks text-main-400" style="font-size: 111px"></i>
+                </p>
 
-  <!-- Modal Section -->
-  <!-- New License -->
-  <div
-    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-    id="newLicenseDetail"
-    tabindex="-1"
-    aria-labelledby="newLicenseLabel"
-    aria-modal="true"
-    role="dialog"
-  >
-    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
-      <div
-        :class="
-          isDarkMode
-            ? 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
-        "
-      >
-        <div
-          class="modal-header flex flex-shrink-0 items-center justify-between p-1 border-b border-grey-100 rounded-t-md"
-        >
-          <h2
-            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl ml-4 font-medium text-main-400 mb-2 sm:text-base md:mb-6"
-          >
-            Required Documents for New License Application
-          </h2>
-          <button
-            type="button"
-            class="inline-block px-4 py-2.5 bg-main-400 text-white font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            X
-          </button>
-        </div>
-        <div class="modal-body relative p-1 sm:p-4">
-          <div
-            :class="
-              isDarkMode ? 'bg-primaryDark rounded-lg p-4' : 'bg-white rounded-lg  '
-            "
-          >
-            <div class="container mx-auto px-1 sm:px-4">
-              <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
-                  <div
-                    :class="
-                      isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto   transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg    text-center max-w-full mx-auto  transition-colors duration-300'
-                    "
-                  >
-                    <div class="p-2 md:py-4">
-                      <h4
-                        :class="
-                          isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
-                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
-                        "
-                      >
-                        Ethiopian
-                      </h4>
-                    </div>
-                    <div class="pricing-amount transition-colors duration-300">
-                      <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-white font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-
-                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Residence Id
-                        </li>
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="not lasting three months"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Medical Certificate
-                        </li>
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Only for diploma graduates"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          COC Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=""
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          8th, 10th, 12th Grade Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Diploma,transcript for both undergraduates and postgraduates"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Academic Document
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Authenticated Professional License
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          9th - 10th Grade Transcript
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=""
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          11th - 12th Grade Transcript
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Non-government Institutions"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Payroll Document
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="For those upgraded by the sponsorship of an Institution"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Support Letter from Sponsored Institution
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Non-government Institutions"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Work Experience
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Non-government Institutions"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Academic Transcript
-                        </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/NewLicense">
-                          <button
-                            class="font-medium leading-tight rounded-md hover:border-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out text-xl text-white pt-2 pb-4 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4"
-                            @click="setApplicantType('Ethiopian')"
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
-                  <div
-                    :class="
-                      isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                    "
-                  >
-                    <div class="p-2 md:py-4">
-                      <h4
-                        :class="
-                          isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
-                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
-                        "
-                      >
-                        Foreign Applicants
-                      </h4>
-                    </div>
-                    <div class="pricing-amount transition-colors duration-300">
-                      <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-white font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-
-                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Passport
-                        </li>
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="not lasting three months"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Medical Certificate
-                        </li>
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="For non english speaking countries only"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          English Language Proficiency Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Equivalence letter"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Higher Education Relevance and Quality Agency
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Diploma,transcript for both undergraduates and postgraduates"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Authenticated Academic Document
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Authenticated Professional License from Country of Origin
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="More than two years"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Current Work Experience / Goodstanding Letter
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Foun in ethiopia"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Request Letter from Hiring Health Facility
-                        </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/NewLicense">
-                          <button
-                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
-                            @click="setApplicantType('Foreign')"
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6">
-                  <div
-                    :class="
-                      isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                    "
-                  >
-                    <div class="p-2 md:py-4">
-                      <h4
-                        :class="
-                          isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
-                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
-                        "
-                      >
-                        Ethiopian From Abroad
-                      </h4>
-                    </div>
-                    <div class="pricing-amount transition-colors duration-300">
-                      <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-white font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Equivalence letter"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Higher Education Relevance and Quality Agency
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Diploma,transcript for both undergraduates and postgraduates"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Authenticated Academic Document
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Proof of Ethiopian decent"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Residence ID or Passport or Yellow Card
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Authenticated Professional License from Country of Origin
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="More than two years"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Current Work Experience/ Goodstanding Letter
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Support Letter from Sponsored Institution
-                        </li>
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="not lasting three months"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Medical Certificate
-                        </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/NewLicense">
-                          <button
-                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
-                            @click="setApplicantType('EthiopianFromAbroad')"
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                <div class="flex justify-center px-5 mb-2 text-sm mt-1">
+                  <h1 class="text-2xl text-main-400">License Designation</h1>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Renewal -->
-  <div
-    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-    id="renewalDetail"
-    tabindex="-1"
-    aria-labelledby="renewalLabel"
-    aria-modal="true"
-    role="dialog"
-  >
-    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
-      <div
-        :class="
-          isDarkMode
-            ? 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
-        "
-      >
-        <div
-          class="modal-header flex flex-shrink-0 items-center justify-between p-1 border-b border-grey-100 rounded-t-md"
-        >
-          <h2
-            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl ml-4 font-medium text-main-400 mb-2 sm:text-base md:mb-6"
-          >
-            Document specification for license renewal
-          </h2>
-
-          <button
-            type="button"
-            class="inline-block px-4 py-2.5 bg-main-400 text-white font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            X
-          </button>
-        </div>
-        <div class="modal-body relative p-1 sm:p-4 overflow-y-scroll">
-          <div
-            :class="
-              isDarkMode
-                ? 'bg-primaryDark  rounded-lg p-4 md:py-12'
-                : 'bg-white rounded-lg  md:py-12'
-            "
-          >
-            <div class="container mx-auto px-1 sm:px-4">
-              <div class="flex justify-center"></div>
-
-              <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
-                  <div
-                    :class="
-                      isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                    "
-                  >
-                    <div class="p-2 md:py-4">
-                      <h4
-                        :class="
-                          isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
-                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
-                        "
-                      >
-                        Ethiopian Applicants
-                      </h4>
-                    </div>
-                    <div class="pricing-amount transition-colors duration-300">
-                      <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-white font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-                    <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=""
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Health Exam Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Found in Ethiopia"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Letter from Hiring Organization
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Previous License
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          CPD Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="More than two years"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Work Experience
-                        </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/Renewal">
-                          <button
-                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
-                            @click="setApplicantType('Ethiopian')"
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
-                  <div
-                    :class="
-                      isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                    "
-                  >
-                    <div class="p-2 md:py-4">
-                      <h4
-                        :class="
-                          isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
-                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
-                        "
-                      >
-                        Ethiopian From Abroad
-                      </h4>
-                    </div>
-                    <div class="pricing-amount transition-colors duration-300">
-                      <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-white font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-                    <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=""
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Health Exam Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          CPD Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Previous License
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Work Experience
-                        </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/Renewal">
-                          <button
-                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
-                            @click="setApplicantType('EthiopianFromAbroad')"
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6">
-                  <div
-                    :class="
-                      isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                    "
-                  >
-                    <div class="p-2 md:py-4">
-                      <h4
-                        :class="
-                          isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
-                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
-                        "
-                      >
-                        Foreign Applicants
-                      </h4>
-                    </div>
-                    <div class="pricing-amount transition-colors duration-300">
-                      <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-white font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-                    <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=""
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Health Exam Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          CPD Certificate
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Previous License
-                        </li>
-
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          Work Experience
-                        </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/Renewal">
-                          <button
-                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
-                            @click="setApplicantType('Foreign')"
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <!-- License designation box -->
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Good Standing -->
-  <div
-    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-    id="goodStandingDetail"
-    tabindex="-1"
-    aria-labelledby="goodStandingDetailLabel"
-    aria-modal="true"
-    role="dialog"
-  >
-    <div class="modal-dialog modal-lg relative w-auto pointer-events-none">
-      <div
-        :class="
-          isDarkMode
-            ? 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
-        "
-      >
-        <div
-          class="modal-header flex flex-shrink-0 items-center justify-between p-1 border-b border-grey-200 rounded-t-md"
-        >
-          <h2 class="text-xl ml-4 font-bold leading-normal text-main-400">
-            Required Documents for Goodstanding letter
-          </h2>
-          <button
-            type="button"
-            class="inline-block px-4 py-2.5 bg-main-400 text-white font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
-            data-bs-dismiss="modal"
-            aria-label="Close"
+  <Modal :modalType="modalType" :isDarkMode="isDarkMode" :list="currentList">
+    <template v-slot:ethiopianDetail>
+      <div class="p-6 mb-2">
+        <div class="mt-6 py-4">
+          <a
+            :href="`/Applicant/${
+              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
+            }`"
           >
-            X
-          </button>
-        </div>
-        <div class="modal-body relative p-1 sm:p-4">
-          <div
-            :class="
-              isDarkMode
-                ? 'bg-primaryDark  rounded-lg md:py-12'
-                : 'bg-white rounded-lg md:py-12'
-            "
-          >
-            <div class="container mx-auto px-1 sm:px-4">
-              <div class="max-w-3xl mx-auto text-center">
-                <h1
-                  class="text-3xl md:text-4xl font-medium text-main-400 mb-4 md:mb-6"
-                ></h1>
-              </div>
-              <div class="flex justify-center"></div>
-
-              <div class="lg:flex lg:-mx-4 mt-2 md:mt-2 justify-center">
-                <div class="pricing-plan-wrap w-full my-2 md:my-2">
-                  <div
-                    :class="
-                      isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                    "
-                  >
-                    <div class="p-6 md:py-8">
-                      <h4
-                        :class="
-                          isDarkMode
-                            ? '  font-medium text-white leading-tight text-2xl border-b-4 mb-2'
-                            : '  font-medium text-main-400 leading-tight text-2xl border-b-4 mb-2'
-                        "
-                      >
-                        For all applicants
-                      </h4>
-                    </div>
-                    <div
-                      class="pricing-amount bg-indigo-100 p-6 transition-colors duration-300"
-                    >
-                      <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-2xl text-white font-semibold'
-                              : 'text-2xl text-black font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-                    <ul class="m-4">
-                      <li
-                        :class="
-                          isDarkMode
-                            ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                            : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                        "
-                        data-bs-toggle="tooltip"
-                        title=""
-                      >
-                        <i
-                          :class="
-                            isDarkMode
-                              ? 'text-white  fa fa-arrow-right-long'
-                              : 'fa fa-arrow-right-long text-grey-800'
-                          "
-                        ></i>
-                        License Copy
-                      </li>
-                      <li
-                        :class="
-                          isDarkMode
-                            ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                            : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                        "
-                        data-bs-toggle="tooltip"
-                        title=""
-                      >
-                        <i
-                          :class="
-                            isDarkMode
-                              ? 'text-white  fa fa-arrow-right-long'
-                              : 'fa fa-arrow-right-long text-grey-800'
-                          "
-                        ></i>
-                        Work Experiance
-                      </li>
-                    </ul>
-                    <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 p-2">
-                      <a href="/Applicant/GoodStanding">
-                        <button
-                          class="text-base text-white py-3 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
-                          @click="setApplicantType('Ethiopian')"
-                        >
-                          Ethiopian
-                        </button>
-                      </a>
-                      <a href="/Applicant/GoodStanding">
-                        <button
-                          class="text-base text-white py-3 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
-                          @click="setApplicantType('EthiopianFromAbroad')"
-                        >
-                          Ethiopian From Abroad
-                        </button>
-                      </a>
-                      <a href="/Applicant/GoodStanding">
-                        <button
-                          class="text-base text-white py-3 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
-                          @click="setApplicantType('Foreign')"
-                        >
-                          Foreigner
-                        </button>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <button
+              class="font-medium leading-tight rounded-md hover:border-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out text-xl text-white pt-2 pb-4 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4"
+              @click="setApplicantType('Ethiopian')"
+            >
+              Get Started
+            </button>
+          </a>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+    <template v-slot:foreignerDetail>
+      <div class="p-6 mb-2">
+        <div class="mt-6 py-4">
+          <a
+            :href="`/Applicant/${
+              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
+            }`"
+          >
+            <button
+              class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
+              @click="setApplicantType('Foreign')"
+            >
+              Get Started
+            </button>
+          </a>
+        </div>
+      </div>
+    </template>
+    <template v-slot:ethAbroadDetail>
+      <div class="p-6 mb-2">
+        <div class="mt-6 py-4">
+          <a
+            :href="`/Applicant/${
+              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
+            }`"
+          >
+            <button
+              class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
+              @click="setApplicantType('EthiopianFromAbroad')"
+            >
+              Get Started
+            </button>
+          </a>
+        </div>
+      </div>
+    </template>
+  </Modal>
+
+  -
 </template>
 
 <script>
@@ -1423,30 +201,44 @@ import TopNav from "../Shared/Header.vue";
 import { googleApi } from "@/composables/baseURL";
 import "../../../styles/applicant.css";
 import { useStore } from "vuex";
+import Modal from "./Shared/Modal.vue";
+import {
+  newLicenseList,
+  renewalList,
+  goodStandingList,
+  licenseDesignationList,
+} from "./Shared/documentSpecs";
 export default {
-  components: { SideNav, TopNav },
+  components: { SideNav, TopNav, Modal },
   setup() {
     const store = useStore();
     const id = +localStorage.getItem("userId");
     let isFirstTime = ref(false);
     let userInfo = ref({});
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
+    let modalType = ref("");
+    let currentList = ref({});
+    const changeModalData = (type) => {
+      switch (type) {
+        case "NewLicense":
+          currentList.value = newLicenseList;
+          break;
+        case "Renewal":
+          currentList.value = renewalList;
+          break;
+        case "GoodStanding":
+          currentList.value = goodStandingList;
+          break;
+        case "LicenseDesignation":
+          currentList.value = licenseDesignationList;
+          break;
 
-    let NLdocumentSpecs = ref({
-      ethiopian: {},
-      foreigner: {},
-      ethiopianAbroad: {},
-    });
-    let RNdocumentSpecs = ref({
-      ethiopian: {},
-      foreigner: {},
-      ethiopianAbroad: {},
-    });
-    let GSdocumentSpecs = ref({
-      ethiopian: {},
-      foreigner: {},
-      ethiopianAbroad: {},
-    });
+        default:
+          break;
+      }
+
+      modalType.value = type;
+    };
     const getProfile = () => {
       store.dispatch("profile/getProfileByUserId", id).then((res) => {
         getImage(res.data.data);
@@ -1515,6 +307,9 @@ export default {
         default:
           break;
       }
+      if (modalType.value && modalType.value === "LicenseDesignation") {
+        localStorage.setItem("isLicenseDesignation", JSON.stringify(true));
+      }
     };
     onMounted(() => {
       getProfile();
@@ -1570,14 +365,15 @@ export default {
         dark();
       }
     };
+
     return {
       userInfo,
-      NLdocumentSpecs,
-      RNdocumentSpecs,
-      GSdocumentSpecs,
+      currentList,
       modeToggle,
       isDarkMode,
       setApplicantType,
+      modalType,
+      changeModalData,
     };
   },
 };
@@ -1586,7 +382,6 @@ export default {
 .overview-boxes .box:hover {
   align-items: center;
   justify-content: center;
-  width: calc(100% / 4 - 15px);
   padding: 15px 14px;
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.884);
