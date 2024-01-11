@@ -67,6 +67,11 @@
             v-if="modalData && modalData.printType && modalData.printType == 'temporary'"
             :modalData="modalData"
             :qrSrc="qrSrc"
+            :letterType="
+              finalData && finalData.data && finalData.data.applicantType
+                ? finalData.data.applicantType.code
+                : ''
+            "
           ></temporary>
         </div>
         <div

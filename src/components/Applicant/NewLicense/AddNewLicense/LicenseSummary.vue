@@ -345,8 +345,8 @@ export default {
               ? generalInfo.value.expertLevelId
               : null,
             isLegal: true,
-            is_license_delegation: localStorage.getItem("isLicenseDelegation")
-              ? JSON.parse(localStorage.getItem("isLicenseDelegation"))
+            is_license_designation: localStorage.getItem("isLicenseDesignation")
+              ? JSON.parse(localStorage.getItem("isLicenseDesignation"))
               : false,
             feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           },
@@ -366,7 +366,7 @@ export default {
                 localStorage.removeItem("applicantTypeSelected");
                 localStorage.removeItem("NLApplicationData");
                 localStorage.removeItem("tempNL");
-                localStorage.removeItem("isLicenseDelegation");
+                localStorage.removeItem("isLicenseDesignation");
                 indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
@@ -414,7 +414,7 @@ export default {
                   localStorage.removeItem("applicantTypeSelected");
                   localStorage.removeItem("NLApplicationData");
                   localStorage.removeItem("tempNL");
-                  localStorage.removeItem("isLicenseDelegation");
+                  localStorage.removeItem("isLicenseDesignation");
                   indexedDB.deleteDatabase("NLdocumentUploads");
                   toast.success("Applied successfuly", {
                     timeout: 5000,

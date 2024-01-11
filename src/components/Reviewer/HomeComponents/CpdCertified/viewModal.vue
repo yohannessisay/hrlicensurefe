@@ -84,7 +84,7 @@
                     <span class="text-2xl font-bold px-6">
                       {{ modalData.fullName }}
                     </span>
-                    's License Data
+                    's Application
                   </h2>
                 </div>
               </div>

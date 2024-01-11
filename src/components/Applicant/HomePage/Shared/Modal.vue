@@ -50,7 +50,7 @@
                 v-if="
                   modalType &&
                   modalType != 'GoodStanding' &&
-                  modalType != 'LicenseDelegation'
+                  modalType != 'LicenseDesignation'
                 "
               >
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">

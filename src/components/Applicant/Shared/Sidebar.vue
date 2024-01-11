@@ -808,7 +808,7 @@
     <!--End of Goodstanding routes -->
 
     <!-- License Designation routes -->
-    <ul class="mt-5" v-if="finalUrl == 'licenseDelegation'">
+    <ul class="mt-5" v-if="finalUrl == 'licenseDesignation'">
       <div class="parentList flex justify-start">
         <a
           href="#"
@@ -821,14 +821,14 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/LicenseDelegation' ? 'list active' : 'list'
+          $route.fullPath === '/Applicant/LicenseDesignation' ? 'list active' : 'list'
         "
-        :id="$route.fullPath === '/Applicant/LicenseDelegation' ? 'activeMenu' : ''"
+        :id="$route.fullPath === '/Applicant/LicenseDesignation' ? 'activeMenu' : ''"
       >
         <b></b>
         <b></b>
-        <a class="ml-4" href="#LicenseDelegation">
-          <router-link class="link" to="/Applicant/LicenseDelegation">
+        <a class="ml-4" href="#LicenseDesignation">
+          <router-link class="link" to="/Applicant/LicenseDesignation">
             <span class="icon"><i class="bx bx-plus"></i></span>
             <span class="text text-white font-bold break-all"
               >Apply for License Designation</span
@@ -839,22 +839,24 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/LicenseDelegation/submitted'
+          $route.fullPath === '/Applicant/LicenseDesignation/submitted'
             ? 'list active'
             : 'list'
         "
         :id="
-          $route.fullPath === '/Applicant/LicenseDelegation/submitted' ? 'activeMenu' : ''
+          $route.fullPath === '/Applicant/LicenseDesignation/submitted'
+            ? 'activeMenu'
+            : ''
         "
       >
         <b></b>
         <b></b>
-        <a class="ml-4" href="#LicenseDelegation">
-          <router-link class="link" to="/Applicant/LicenseDelegation/submitted">
+        <a class="ml-4" href="#LicenseDesignation">
+          <router-link class="link" to="/Applicant/LicenseDesignation/submitted">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/LicenseDelegation/submitted'
+                  $route.fullPath === '/Applicant/LicenseDesignation/submitted'
                     ? 'bx bxs-save'
                     : 'bx bx-save'
                 "
@@ -866,20 +868,22 @@
       </li>
       <li
         :class="
-          $route.fullPath === '/Applicant/LicenseDelegation/draft'
+          $route.fullPath === '/Applicant/LicenseDesignation/draft'
             ? 'list active'
             : 'list'
         "
-        :id="$route.fullPath === '/Applicant/LicenseDelegation/draft' ? 'activeMenu' : ''"
+        :id="
+          $route.fullPath === '/Applicant/LicenseDesignation/draft' ? 'activeMenu' : ''
+        "
       >
         <b></b>
         <b></b>
-        <a class="ml-4" href="#LicenseDelegation">
-          <router-link class="link" to="/Applicant/LicenseDelegation/draft">
+        <a class="ml-4" href="#LicenseDesignation">
+          <router-link class="link" to="/Applicant/LicenseDesignation/draft">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/LicenseDelegation/draft'
+                  $route.fullPath === '/Applicant/LicenseDesignation/draft'
                     ? 'bx bxs-paste'
                     : 'bx bx-paste'
                 "
@@ -891,22 +895,22 @@
       </li>
       <li
         :class="
-          $route.fullPath === '/Applicant/LicenseDelegation/withdraw'
+          $route.fullPath === '/Applicant/LicenseDesignation/withdraw'
             ? 'list active'
             : 'list'
         "
         :id="
-          $route.fullPath === '/Applicant/LicenseDelegation/withdraw' ? 'activeMenu' : ''
+          $route.fullPath === '/Applicant/LicenseDesignation/withdraw' ? 'activeMenu' : ''
         "
       >
         <b></b>
         <b></b>
-        <a class="ml-4" href="#LicenseDelegation">
-          <router-link class="link" to="/Applicant/LicenseDelegation/withdraw">
+        <a class="ml-4" href="#LicenseDesignation">
+          <router-link class="link" to="/Applicant/LicenseDesignation/withdraw">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/LicenseDelegation/withdraw'
+                  $route.fullPath === '/Applicant/LicenseDesignation/withdraw'
                     ? 'bx bxs-x-circle'
                     : 'bx bx-x-circle'
                 "
@@ -919,22 +923,22 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/LicenseDelegation/assigned'
+          $route.fullPath === '/Applicant/LicenseDesignation/assigned'
             ? 'list active'
             : 'list'
         "
         :id="
-          $route.fullPath === '/Applicant/LicenseDelegation/assigned' ? 'activeMenu' : ''
+          $route.fullPath === '/Applicant/LicenseDesignation/assigned' ? 'activeMenu' : ''
         "
       >
         <b></b>
         <b></b>
         <a class="ml-4" href="#">
-          <router-link class="link" to="/Applicant/LicenseDelegation/assigned">
+          <router-link class="link" to="/Applicant/LicenseDesignation/assigned">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/LicenseDelegation/assigned'
+                  $route.fullPath === '/Applicant/LicenseDesignation/assigned'
                     ? 'bx bx-refresh'
                     : 'bx bx-refresh'
                 "
@@ -947,22 +951,22 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/LicenseDelegation/approved'
+          $route.fullPath === '/Applicant/LicenseDesignation/approved'
             ? 'list active'
             : 'list'
         "
         :id="
-          $route.fullPath === '/Applicant/LicenseDelegation/approved' ? 'activeMenu' : ''
+          $route.fullPath === '/Applicant/LicenseDesignation/approved' ? 'activeMenu' : ''
         "
       >
         <b></b>
         <b></b>
         <a class="ml-4" href="#">
-          <router-link class="link" to="/Applicant/LicenseDelegation/approved">
+          <router-link class="link" to="/Applicant/LicenseDesignation/approved">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/LicenseDelegation/approved'
+                  $route.fullPath === '/Applicant/LicenseDesignation/approved'
                     ? 'bx bxs-badge-check'
                     : 'bx bx-badge-check'
                 "
@@ -975,22 +979,22 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/LicenseDelegation/declined'
+          $route.fullPath === '/Applicant/LicenseDesignation/declined'
             ? 'list active mb-20'
             : 'list mb-20'
         "
         :id="
-          $route.fullPath === '/Applicant/LicenseDelegation/declined' ? 'activeMenu' : ''
+          $route.fullPath === '/Applicant/LicenseDesignation/declined' ? 'activeMenu' : ''
         "
       >
         <b></b>
         <b></b>
         <a class="ml-4" href="#">
-          <router-link class="link" to="/Applicant/LicenseDelegation/declined">
+          <router-link class="link" to="/Applicant/LicenseDesignation/declined">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/LicenseDelegation/declined'
+                  $route.fullPath === '/Applicant/LicenseDesignation/declined'
                     ? 'bx bxs-shield-x'
                     : 'bx bx-shield-x'
                 "

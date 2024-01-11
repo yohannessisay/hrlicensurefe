@@ -899,8 +899,8 @@ export default {
     let newLicenseDocuments = ref([]);
     let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
-    let isLicenseDelegation = localStorage.getItem("isLicenseDelegation")
-      ? ref(JSON.parse(localStorage.getItem("isLicenseDelegation")))
+    let isLicenseDesignation = localStorage.getItem("isLicenseDesignation")
+      ? ref(JSON.parse(localStorage.getItem("isLicenseDesignation")))
       : false;
     const handleCommonFileUpload = (data, event) => {
       if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
@@ -1571,7 +1571,7 @@ export default {
               isLoading.value = false;
               localStorage.removeItem("NLApplicationData");
               indexedDB.deleteDatabase("NLdocumentUploads");
-              localStorage.removeItem("isLicenseDelegation");
+              localStorage.removeItem("isLicenseDesignation");
               localStorage.removeItem("tempNL");
               location.reload();
             } else {
@@ -1682,7 +1682,7 @@ export default {
                 let result = res.data ? await res.data.data : [];
                 let resp = [];
                 newLicenseDocuments.value = result;
-                if (isLicenseDelegation.value == true) {
+                if (isLicenseDesignation.value == true) {
                   resp = result.filter(
                     (ed) =>
                       ed.documentType.code == "SUPINST" ||
@@ -1764,7 +1764,7 @@ export default {
             ])
             .then((res) => {
               let result = res.data.data;
-              if (isLicenseDelegation.value == true) {
+              if (isLicenseDesignation.value == true) {
                 result = result.filter((el) => el.documentType.code == "PSP");
               }
               commonDocuments.value = result;

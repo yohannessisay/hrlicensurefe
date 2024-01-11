@@ -221,7 +221,7 @@ export const goodStandingList = [
   },
 ];
 
-export const licenseDelegationList = [
+export const licenseDesignationList = [
   {
     name: "Senate letter",
     tooltip: "Support letter from the senate",

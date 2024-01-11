@@ -112,8 +112,8 @@
                     ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
                     : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
                 "
-                data-bs-target="#LicenseDelegationModal"
-                @mouseover="changeModalData('LicenseDelegation')"
+                data-bs-target="#LicenseDesignationModal"
+                @mouseover="changeModalData('LicenseDesignation')"
                 data-bs-toggle="modal"
               >
                 <p
@@ -140,7 +140,7 @@
         <div class="mt-6 py-4">
           <a
             :href="`/Applicant/${
-              modalType && modalType !== 'LicenseDelegation' ? modalType : 'NewLicense'
+              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
             }`"
           >
             <button
@@ -158,7 +158,7 @@
         <div class="mt-6 py-4">
           <a
             :href="`/Applicant/${
-              modalType && modalType !== 'LicenseDelegation' ? modalType : 'NewLicense'
+              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
             }`"
           >
             <button
@@ -176,7 +176,7 @@
         <div class="mt-6 py-4">
           <a
             :href="`/Applicant/${
-              modalType && modalType !== 'LicenseDelegation' ? modalType : 'NewLicense'
+              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
             }`"
           >
             <button
@@ -206,7 +206,7 @@ import {
   newLicenseList,
   renewalList,
   goodStandingList,
-  licenseDelegationList,
+  licenseDesignationList,
 } from "./Shared/documentSpecs";
 export default {
   components: { SideNav, TopNav, Modal },
@@ -229,8 +229,8 @@ export default {
         case "GoodStanding":
           currentList.value = goodStandingList;
           break;
-        case "LicenseDelegation":
-          currentList.value = licenseDelegationList;
+        case "LicenseDesignation":
+          currentList.value = licenseDesignationList;
           break;
 
         default:
@@ -307,8 +307,8 @@ export default {
         default:
           break;
       }
-      if (modalType.value && modalType.value === "LicenseDelegation") {
-        localStorage.setItem("isLicenseDelegation", JSON.stringify(true));
+      if (modalType.value && modalType.value === "LicenseDesignation") {
+        localStorage.setItem("isLicenseDesignation", JSON.stringify(true));
       }
     };
     onMounted(() => {

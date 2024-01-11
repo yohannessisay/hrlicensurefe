@@ -1035,7 +1035,7 @@ export default {
     };
     const clearLocalData = () => {
       localStorage.removeItem("NLApplicationData");
-      localStorage.removeItem("isLicenseDelegation");
+      localStorage.removeItem("isLicenseDesignation");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1091,7 +1091,7 @@ export default {
             });
             isLoading.value = false;
             localStorage.removeItem("NLApplicationData");
-            localStorage.removeItem("isLicenseDelegation");
+            localStorage.removeItem("isLicenseDesignation");
             localStorage.removeItem("tempNL");
             location.reload();
           } else {
