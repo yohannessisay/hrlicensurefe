@@ -112,7 +112,7 @@ pipelines:
             runs-on:
             - self.hosted
             - linux.shell
-            - wingu-fe-be
+            - wingufebe
             name: Build & Run
             script:
             - export DOCKER_HOST=""
