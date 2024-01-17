@@ -227,7 +227,17 @@ export const licenseDesignationList = [
     tooltip: "Support letter from the senate",
   },
   {
-    name: " Support letter from the sponsoring institution",
+    name: "Support letter from the sponsoring institution",
+    tooltip: "",
+  },
+];
+export const lostLicenseList = [
+  {
+    name: "Police report",
+    tooltip: "Official police report on the lost license",
+  },
+  {
+    name: "Photo or copy of the lost license (Optional)",
     tooltip: "",
   },
 ];

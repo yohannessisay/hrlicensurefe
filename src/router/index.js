@@ -345,6 +345,13 @@ const routes = [
     component: () => import("../components/Applicant/Profile/profile.vue"),
   },
 
+    //Applicant Lost License Management
+    {
+      path: "/applicant/lostLicense",
+      name: "ApplicantLostLicenseManagement",
+      component: () => import("../components/Applicant/LostLicense/lostLicense.vue"),
+    },
+
   /******************************************************************************************************************************************/
   /**************1-END OF APPLICANT SIDE ROUTES*****************/
   /******************************************************************************************************************************************/

@@ -47,11 +47,7 @@
             <div class="container mx-auto px-1 sm:px-4">
               <div
                 class="lg:flex lg:-mx-4 mt-6 md:mt-12"
-                v-if="
-                  modalType &&
-                  modalType != 'GoodStanding' &&
-                  modalType != 'LicenseDesignation'
-                "
+                v-if="(modalType && modalType == 'Renewal') || modalType == 'NewLicense'"
               >
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
                   <div

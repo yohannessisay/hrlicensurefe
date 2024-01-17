@@ -1,10 +1,11 @@
 <template>
-  <main-content :url="'goodstanding'">
+  <main-content :url="'lostLicense'">
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1" class="">
         <GeneralInfo
           @dark-mode="modeToggle()"
           :activeState="1"
+          :applicationCategories="applicationCategories"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
         />
@@ -22,7 +23,7 @@
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 3" class="">
-        <GoodStandingSummary
+        <LostLicenseSummary
           @dark-mode="modeToggle()"
           :activeState="4"
           @changeActiveState="activeState++"
@@ -33,19 +34,20 @@
   </main-content>
 </template>
 
+//
 <script>
-import GeneralInfo from "./AddGoodStanding/generalInformation.vue";
-import Upload from "./AddGoodStanding/Upload.vue";
+import GeneralInfo from "./AddLostLicense/generalInformation.vue";
+import Upload from "./AddLostLicense/Upload.vue";
 import MainContent from "../Shared/Menu.vue";
-import GoodStandingSummary from "./AddGoodStanding/LicenseSummary.vue";
+import LostLicenseSummary from "./AddLostLicense/LicenseSummary.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
+    MainContent,
     GeneralInfo,
     Upload,
-    GoodStandingSummary,
-    MainContent,
+    LostLicenseSummary,
   },
   setup() {
     let store = useStore();
@@ -114,7 +116,10 @@ export default {
     const fetchApplicationCategory = () => {
       store.dispatch("goodstanding/getApplicationCategories").then((res) => {
         const results = res.data.data;
-        applicationCategories.value = results;
+
+        applicationCategories.value = results.filter(
+          (el) => el.code === "NA" || el.code === "RA"
+        );
       });
     };
 
