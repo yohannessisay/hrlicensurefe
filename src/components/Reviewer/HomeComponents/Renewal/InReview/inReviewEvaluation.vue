@@ -633,10 +633,12 @@
                                     >
                                       <i class="fa fa-calendar"></i>
                                       {{
-                                        licenseExpirationDate +
-                                        " (After " +
-                                        expirationDateYear +
-                                        " years)"
+                                        licenseExpirationDate
+                                          ? licenseExpirationDate.slice(0, 10) +
+                                            " (After " +
+                                            expirationDateYear +
+                                            " years)"
+                                          : "----"
                                       }}</span
                                     >
                                   </div>
@@ -1414,6 +1416,8 @@ export default {
           accepted.value.push(doc.fileName);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
           }
           if (rejected.value.includes(doc.fileName)) {
             rejected.value = rejected.value.filter((el) => el != doc.fileName);
@@ -1422,12 +1426,16 @@ export default {
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
           }
         }
       } else {
         accepted.value.push(doc.fileName);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
+        } else {
+          index.value = index.value + 1;
         }
 
         if (rejected.value.includes(doc.fileName)) {
@@ -1435,12 +1443,12 @@ export default {
           rejectedObj.value = rejectedObj.value.filter((el) => el != doc.fileName);
         }
       }
-      index.value = accepted.value.length + rejected.value.length;
     };
 
     const reject = (doc) => {
       completedSteps.value += 1;
       nextClickable.value = true;
+
       for (let i = 0; i < buttons.value.length; i++) {
         if (buttons.value[i].code === "APP") {
           buttons.value.splice(i, 1);
@@ -1454,6 +1462,8 @@ export default {
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
           }
           if (accepted.value.includes(doc.fileName)) {
             accepted.value = accepted.value.filter((el) => el != doc.fileName);
@@ -1461,17 +1471,20 @@ export default {
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
           }
         }
       } else {
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
+        } else {
+          index.value = index.value + 1;
         }
         if (accepted.value.includes(doc.fileName)) {
           accepted.value = accepted.value.filter((el) => el != doc.fileName);
         }
       }
-      index.value = accepted.value.length + rejected.value.length;
     };
     const setOtherProfession = (education, id, event, type) => {
       if (type == "english") {
