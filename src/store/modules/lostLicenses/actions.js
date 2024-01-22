@@ -156,18 +156,7 @@ export default {
     } catch (error) {
       return error;
     }
-  },
-  async getCommonLLdocuments(context, docsParam) {
-    try {
-      const resp = await ApiService.get(
-        baseUrl + `/documentSpecs/common/${docsParam[0]}/${docsParam[1]}/true`
-      );
-      return resp;
-    } catch (error) {
-      const resp = error;
-      return resp;
-    }
-  },
+  }, 
   async getLLdocuments(context, appCategory) {
     try {
       const resp = await ApiService.get(

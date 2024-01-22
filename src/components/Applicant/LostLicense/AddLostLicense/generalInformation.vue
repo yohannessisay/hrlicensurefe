@@ -3,7 +3,9 @@
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
-          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'">Home</a>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Home</a
+          >
         </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
@@ -32,7 +34,10 @@
       :color="'#2F639D'"
       :opacity="1"
     ></loading>
-    <form @submit.prevent="submit" class="mx-auto max-w-4xl rounded-md w-full mt-10">
+    <form
+      @submit.prevent="submit"
+      class="mx-auto max-w-4xl rounded-md w-full mt-10"
+    >
       <div
         :class="
           isDarkMode
@@ -74,7 +79,9 @@
 
             <div>
               <div class="overflow-hidden shadow-sm">
-                <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                <label
+                  for=""
+                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >License Loss Date</label
                 >
                 <span class="text-red-300">*</span>
@@ -92,8 +99,8 @@
           </div>
           <div class="mb-4" v-if="showLicenses">
             <h2 class="text-yellow-300 text-lg">
-              Here you can find your previous applied licenses in the system, select the
-              one you want to apply as a lost one
+              Here you can find your previous applied licenses in the system,
+              select the one you want to apply as a lost one
             </h2>
             <div class="vld-parent mt-4">
               <loading
@@ -102,13 +109,14 @@
                 :color="'#2F639D'"
                 :opacity="1"
               ></loading>
-              <div class="grid grid-cols-1 sm:grid-cols-3">
-                <div
-                  v-if="
-                    (approvedNewLicenses && approvedNewLicenses.length > 0) ||
-                    (approvedRenewals && approvedRenewals.length > 0)
-                  "
-                >
+
+              <div
+                v-if="
+                  (approvedNewLicenses && approvedNewLicenses.length > 0) ||
+                  (approvedRenewals && approvedRenewals.length > 0)
+                "
+              >
+                <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-4">
                   <div
                     v-for="license in approvedNewLicenses || approvedRenewals"
                     :key="license.id"
@@ -131,7 +139,10 @@
                       </h2>
                       <h2 class="text-grey-800 text-lg">Profession</h2>
                       <h2 class="text-main-400 text-lg mb-2">
-                        <span v-for="education in license.educations" :key="education.id">
+                        <span
+                          v-for="education in license.educations"
+                          :key="education.id"
+                        >
                           {{
                             education && education.professionType
                               ? education.professionType.name + " "
@@ -139,7 +150,9 @@
                           }}</span
                         >
                       </h2>
-                      <h2 class="text-grey-800 text-lg mb-2">License Expiry Date</h2>
+                      <h2 class="text-grey-800 text-lg mb-2">
+                        License Expiry Date
+                      </h2>
                       <h2 class="text-main-400 text-lg">
                         {{
                           license.licenseExpirationDate
@@ -157,7 +170,9 @@
                       type="button"
                       @click="
                         selectLicense(
-                          license && license.newLicenseCode ? 'newLicense' : 'renewal',
+                          license && license.newLicenseCode
+                            ? 'newLicense'
+                            : 'renewal',
                           license.id,
                           license
                         )
@@ -167,18 +182,18 @@
                     </button>
                   </div>
                 </div>
+              </div>
 
-                <div v-else class="p-2 border rounded-md shadow-md">
-                  No licenses found, Select this if you do not have any license or renewal
-                  application approved prior
-                  <button
-                    class="mb-2 w-full col-span-12 block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded hover:text-main-400 hover:border-main-500 hover:bg-white transition duration-150 ease-in-out"
-                    type="button"
-                    @click="selectLicense('none')"
-                  >
-                    Select
-                  </button>
-                </div>
+              <div v-else class="p-2 border rounded-md shadow-md">
+                No licenses found, Select this if you do not have any license or
+                renewal application approved prior
+                <button
+                  class="mb-2 w-full col-span-12 block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded hover:text-main-400 hover:border-main-500 hover:bg-white transition duration-150 ease-in-out"
+                  type="button"
+                  @click="selectLicense('none')"
+                >
+                  Select
+                </button>
               </div>
             </div>
           </div>
@@ -186,12 +201,14 @@
         <!-- region -->
         <div
           v-if="showLocation"
-          :class="isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '"
+          :class="
+            isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '
+          "
         >
           <h2 class="text-yellow-300 font-bold text-lg">
-            ***Please select the region where you have lost the license (you can select
-            random woreda if you do not exactly know the woreda name where you lost the
-            license)***
+            ***Please select the region where you have lost the license (you can
+            select random woreda if you do not exactly know the woreda name
+            where you lost the license)***
           </h2>
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
@@ -206,7 +223,11 @@
                 @change="regionChangeHandler()"
                 required
               >
-                <option v-for="region in regions" :key="region.name" :value="region">
+                <option
+                  v-for="region in regions"
+                  :key="region.name"
+                  :value="region"
+                >
                   {{ region.name }}
                 </option>
               </select>
@@ -235,7 +256,8 @@
             <div
               class="flex flex-col"
               v-if="
-                generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
+                generalInfo.regionSelected &&
+                generalInfo.regionSelected.code != 'FED'
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
@@ -246,7 +268,11 @@
                 v-model="generalInfo.woredaSelected"
                 required
               >
-                <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
+                <option
+                  v-for="woreda in woredas"
+                  :key="woreda.name"
+                  :value="woreda"
+                >
                   {{ woreda.name }}
                 </option>
               </select>
@@ -264,13 +290,7 @@
           :opacity="1"
         ></loading>
         <div class="flex justify-end mb-2 mr-1 bg-white">
-          <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
-            type="submit"
-            @click="saveDraft()"
-          >
-            Save as draft
-          </button>
+      
           <button
             class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             type="submit"
@@ -323,19 +343,29 @@ export default {
 
     let showLocation = ref(false);
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
-    const selectLicense = (type, id, license) => {
+    const selectLicense = (type, id, license) => { 
       switch (type) {
         case "newLicense":
           generalInfo.value.new_license_id = id;
           generalInfo.value.renewal_id = null;
           generalInfo.value.has_previous_license_in_system = true;
-          license.isSelected = !license.isSelected;
+
+          approvedNewLicenses.value.forEach((element) => { 
+            element.id != id
+              ? element.isSelected = false
+              : (license.isSelected = !license.isSelected);
+          });
+           
           break;
         case "renewal":
           generalInfo.value.renewal_id = id;
           generalInfo.value.new_license_id = null;
           generalInfo.value.has_previous_license_in_system = true;
-          license.isSelected = !license.isSelected;
+          approvedRenewals.value.forEach((element) => {
+            element.id != id
+              ? element.isSelected == false
+              : (license.isSelected = !license.isSelected);
+          });
           break;
         case "none":
           generalInfo.value.renewal_id = null;
@@ -366,7 +396,10 @@ export default {
     };
 
     const regionChangeHandler = () => {
-      if (generalInfo.value.regionSelected && generalInfo.value.regionSelected.code) {
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code
+      ) {
         switch (generalInfo.value.regionSelected.code) {
           case "FED":
             generalInfo.value.zoneSelected = null;
@@ -403,9 +436,11 @@ export default {
       });
     };
     const fetchZone = () => {
-      store.dispatch("goodstanding/getZones", generalInfo.value.regionId).then((res) => {
-        zones.value = res.data.data;
-      });
+      store
+        .dispatch("goodstanding/getZones", generalInfo.value.regionId)
+        .then((res) => {
+          zones.value = res.data.data;
+        });
     };
     const fetchWoredas = () => {
       store
@@ -433,9 +468,11 @@ export default {
         "LLApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store.dispatch("lostLicenses/setGeneralInfo", generalInfo.value).then(() => {
-        emit("changeActiveState");
-      });
+      store
+        .dispatch("lostLicenses/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          emit("changeActiveState");
+        });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("LLApplicationData");
@@ -451,9 +488,15 @@ export default {
 
       if (applicationType) {
         if (applicationType.code === "NA") {
-          fetchAndProcessLicenses("newlicense/getNewLicense", approvedNewLicenses);
+          fetchAndProcessLicenses(
+            "newlicense/getNewLicense",
+            approvedNewLicenses
+          );
         } else if (applicationType.code === "RA") {
-          fetchAndProcessLicenses("renewal/getRenewalLicense", approvedRenewals);
+          fetchAndProcessLicenses(
+            "renewal/getRenewalLicense",
+            approvedRenewals
+          );
         }
       }
     };
@@ -495,9 +538,12 @@ export default {
       }
       if (
         localStorage.getItem("applicantTypeSelected") &&
-        Object.keys(JSON.parse(localStorage.getItem("applicantTypeSelected"))).length != 0
+        Object.keys(JSON.parse(localStorage.getItem("applicantTypeSelected")))
+          .length != 0
       ) {
-        checkApplicantType(JSON.parse(localStorage.getItem("applicantTypeSelected")));
+        checkApplicantType(
+          JSON.parse(localStorage.getItem("applicantTypeSelected"))
+        );
       }
     });
     return {

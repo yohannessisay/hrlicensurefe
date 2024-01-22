@@ -3,7 +3,7 @@
     <!-- Heading start -->
     <header class="text-center mx-auto mb-2 sm:mb-4 mt-2 lg:px-20">
       <h2 class="text-2xl leading-normal mb-2 font-bold text-main-400">
-        Summary For Good Standing Letter
+        Summary For Lost License
       </h2>
 
       <h3 class="text-grey-800 leading-relaxed font-light text-lg mx-auto pb-2">
@@ -585,11 +585,11 @@ export default {
         generalInfo.value.regionSelected &&
         generalInfo.value.regionSelected.code == "FED"
       ) {
-        generalInfo.value.expertLevelId = 3;
-      } else if (generalInfo.value.applicantTypeId.id == 1) {
-        generalInfo.value.expertLevelId = 4;
+        generalInfo.value.expert_level = 3;
+      } else if (generalInfo.value.applicationType.id == 1) {
+        generalInfo.value.expert_level = 4;
       } else {
-        generalInfo.value.expertLevelId = 3;
+        generalInfo.value.expert_level = 3;
       }
     });
     return {
