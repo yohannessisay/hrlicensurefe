@@ -32,14 +32,16 @@
         <div class="m-2 grid grid-row-2 grid-flow-col">
           <div class="rounded-lg">
             <h1 class="mt-4 ml-2 text-white text-lg">
-              Import the required document and view the reults before finalizing it and
-              saving.(Allowed file types are files name ending wit .XLSX and .CSV
-              Eg-template.xlsx or template.csv)
+              Import the required document and view the reults before finalizing
+              it and saving.(Allowed file types are files name ending wit .XLSX
+              and .CSV Eg-template.xlsx or template.csv)
             </h1>
             <label
               class="flex flex-col items-center mt-3 py-4 rounded-lg uppercase ease-linear cursor-pointer bg-main-400 transition-all duration-150"
             >
-              <i class="fas fa-cloud-upload-alt fa-2x text-white">Select a file</i>
+              <i class="fas fa-cloud-upload-alt fa-2x text-white"
+                >Select a file</i
+              >
 
               <input
                 type="file"
@@ -55,7 +57,9 @@
       </div>
 
       <hr />
-      <div style="text-align: center; font-weight: bold; font-size: 24px">OR</div>
+      <div style="text-align: center; font-weight: bold; font-size: 24px">
+        OR
+      </div>
 
       <hr />
       <div class="bg-grey-200 p-4 rounded-lg mb-8">
@@ -65,9 +69,9 @@
         <div class="m-2 grid grid-row-2 grid-flow-col">
           <div class="bg-grey-200 rounded-lg">
             <h1 class="mt-4 ml-2 text-white text-lg">
-              Download a template file and fill it with your data by following the
-              structure of the template file and come back here to upload your final
-              result.
+              Download a template file and fill it with your data by following
+              the structure of the template file and come back here to upload
+              your final result.
             </h1>
             <a href="/template/importTemplate.xlsx" download>
               <label
@@ -84,12 +88,26 @@
       <div class="p-4 mb-8 max-w-full bg-white rounded-lg">
         <div class="relative overflow-x-auto sm:rounded-lg">
           <hr />
-          <h1 class="ml-4 mt-4 text-xl">These are the previously added records</h1>
+          <h1 class="ml-4 mt-4 text-xl">
+            These are the previously added records
+          </h1>
 
           <div>
             <div class="p-4 bg-grey-200 mb-4 rounded-lg">
               <h1 class="text-2xl mb-1">Filters</h1>
               <div class="grid lg:grid-cols-4 xl:gap-6 mt-4">
+                <div class="mb-3 xl:w-full mr-2">
+                  <label for="" class="">Name of Applicant</label>
+                  <input
+                    type="search"
+                    class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    @keyup.enter="applyFilter()"
+                    placeholder="Start Searching For Name"
+                    aria-label="Search"
+                    aria-describedby="button-addon2"
+                    v-model="searchTermName"
+                  />
+                </div>
                 <div class="mb-3 xl:w-full">
                   <label for="" class="">Name of institution</label>
                   <input
@@ -131,7 +149,7 @@
                   </select>
                 </div>
               </div>
-              <h2 class="text-primary-800 text-lg">Applied Date</h2>
+              <h2 class="text-primary-800 text-lg">Date of Examination</h2>
               <div class="grid grid-cols-4">
                 <div class="mb-3">
                   <label for="" class="ml-2">From</label>
@@ -183,14 +201,19 @@
   </section>
   <view-result :result="resultData"></view-result>
 
-  <div class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="errorModal">
+  <div
+    class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
+    id="errorModal"
+  >
     <div
       class="flex items-center justify-center min-height-100vh min-w-full pt-4 px-4 pb-20 text-center sm:block sm:p-0"
     >
       <div class="fixed inset-0 transition-opacity">
         <div class="absolute inset-0 bg-gray-900 opacity-75" />
       </div>
-      <span class="hidden md:inline-block md:align-middle md:h-screen">&#8203;</span>
+      <span class="hidden md:inline-block md:align-middle md:h-screen"
+        >&#8203;</span
+      >
       <div
         class="inline-block align-center bg-white rounded-lg text-left overflow-hidden transform max-w-3xl transition-all sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full"
         role="dialog"
@@ -199,11 +222,15 @@
       >
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <h1 class="text-primary-600 font-bold m-4">
-            This are the errors in the file you imported, please correct them accordingly
+            This are the errors in the file you imported, please correct them
+            accordingly
           </h1>
           <hr />
 
-          <table class="w-full" style="display: block; height: 500px; overflow-y: scroll">
+          <table
+            class="w-full"
+            style="display: block; height: 500px; overflow-y: scroll"
+          >
             <thead>
               <tr>
                 <th
@@ -230,11 +257,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="row in Finalerrors" :key="row.id">
+              <tr v-for="row in Finalerrors" :key="row">
                 <td
                   class="px-5 py-5 border-gray-200 text-sm"
                   v-for="item in row"
-                  :key="item.id"
+                  :key="item"
                 >
                   <div class="flex">
                     <div class="ml-3">
@@ -268,7 +295,9 @@
       <div class="fixed inset-0 transition-opacity">
         <div class="absolute inset-0 bg-gray-900 opacity-75" />
       </div>
-      <span class="hidden md:inline-block md:align-middle md:h-screen">&#8203;</span>
+      <span class="hidden md:inline-block md:align-middle md:h-screen"
+        >&#8203;</span
+      >
       <div
         class="inline-block align-center bg-white rounded-lg text-left overflow-hidden transform max-w-3xl transition-all sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full"
         role="dialog"
@@ -346,8 +375,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="row in finalData" :key="row.id">
-                  <td v-for="item in row" :key="item.id">
+                <tr v-for="row in finalData" :key="row">
+                  <td v-for="item in row" :key="item">
                     <div class="flex">
                       <div class="ml-3">
                         <p
@@ -431,7 +460,7 @@ export default {
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let importModal = ref(false);
-
+    let searchTermName = ref("");
     let tableData = [];
     let searchTerm = ref("");
     // let professions = ref([]);
@@ -473,7 +502,9 @@ export default {
           allData = res && res.rows ? res.rows : [];
           allData.forEach((element) => {
             tableData.push({
-              RegistrationNumber: element.registrationNo ? element.registrationNo : "",
+              RegistrationNumber: element.registrationNo
+                ? element.registrationNo
+                : "",
               Institution: element.institution ? element.institution : "",
               FirstName: element.firstName ? element.firstName : "",
               LastName: element.lastName ? element.lastName : "",
@@ -578,7 +609,9 @@ export default {
         middleName.value = row.MiddleName ? row.MiddleName : "";
         institution.value = row.Institution ? row.Institution : "";
         sex.value = row.Sex ? row.Sex.replace(/\s/g, "") : "";
-        registrationNumber.value = row.RegistrationNumber ? row.RegistrationNumber : "";
+        registrationNumber.value = row.RegistrationNumber
+          ? row.RegistrationNumber
+          : "";
         department.value = row.Department ? row.Department : "";
         dateOfExamination.value = row.DateOfExamination
           ? row.DateOfExamination.slice(0, 10)
@@ -618,11 +651,16 @@ export default {
           let workbook = read(data, { type: "binary" });
 
           let sheets = workbook.Sheets;
-          let tempDate = new Date(sheets.Sheet1.A1.w);
-          tempDate = tempDate.toISOString().slice(0, 10);
-          let transformed = await transformSheets(sheets, workbook);
+          let tempDate = sheets.Sheet1.A1.w;
+          var dateParts = tempDate.split("/");
+          let finalDate = new Date(
+            dateParts[2],
+            dateParts[1] - 1,
+            dateParts[0]
+          );
 
-          let department = transformed[1][0];
+          finalDate = finalDate.toISOString().slice(0, 10);
+          let transformed = await transformSheets(sheets, workbook);
 
           if (transformed.length < 2) {
             transformed.shift();
@@ -632,70 +670,106 @@ export default {
             transformed.shift();
             transformed.shift();
           }
-
+          let tempTransformed = [];
           for (let i = 0; i < transformed.length; i++) {
-            transformed[i][7] = department;
-            transformed[i][9] = tempDate;
+            tempTransformed.push([
+              i + 1,
+              transformed[i]["__EMPTY"],
+              transformed[i]["__EMPTY_1"],
+              transformed[i]["__EMPTY_2"],
+              transformed[i]["__EMPTY_3"],
+              transformed[i]["__EMPTY_4"],
+              transformed[i]["__EMPTY_5"],
+              transformed[i]["__EMPTY_6"],
+              transformed[i]["__EMPTY_7"],
+              finalDate,
+            ]);
+          }
 
-            if (hasNumber.test(transformed[i][2])) {
+          for (let i = 0; i < tempTransformed.length; i++) {
+            if (
+              hasNumber.test(
+                tempTransformed[i][2] || tempTransformed[i][2].length === 0
+              )
+            ) {
               errors.push({
                 row: i,
                 column: 3,
                 columnData: transformed[i][2],
-                errorMessage: "Number is not allowed in name",
+                errorMessage:
+                  "Name can not be empty or number is not allowed in name",
               });
             }
-            if (hasNumber.test(transformed[i][3])) {
+            if (
+              hasNumber.test(
+                tempTransformed[i][2] || tempTransformed[i][2].length === 0
+              )
+            ) {
               errors.push({
                 row: i,
                 column: 4,
-                columnData: transformed[i][3],
-                errorMessage: "Number is not allowed in name",
+                columnData: tempTransformed[i][2],
+                errorMessage:
+                  "Father name can not be empty or number is not allowed in father name",
               });
             }
 
-            if (hasNumber.test(transformed[i][4])) {
+            if (
+              hasNumber.test(
+                tempTransformed[i][3] || tempTransformed[i][3].length === 0
+              )
+            ) {
               errors.push({
                 row: i,
                 column: 5,
-                columnData: transformed[i][4],
-                errorMessage: "Number is not allowed in name",
+                columnData: tempTransformed[i][3],
+                errorMessage:
+                  "Grandfather name can not be empty or number is not allowed in grandfather name",
               });
             }
-            if (hasNumber.test(transformed[i][5])) {
+            if (
+              hasNumber.test(
+                tempTransformed[i][4] || tempTransformed[i][4].length === 0
+              )
+            ) {
               errors.push({
                 row: i,
                 column: 6,
-                columnData: transformed[i][5],
+                columnData: tempTransformed[i][4],
                 errorMessage:
-                  "Number is not allowed in gender(only female or male is allowed)",
+                  "Sex column can not be empty or number is not allowed",
               });
             }
 
-            if (hasNumber.test(transformed[i][8])) {
+            if (
+              hasNumber.test(
+                tempTransformed[i][8] || tempTransformed[i][8].length === 0
+              )
+            ) {
               errors.push({
                 row: i,
                 column: 8,
-                columnData: transformed[i][8],
+                columnData: tempTransformed[i][8],
                 errorMessage:
                   "Number is not allowed in result(only pass or fail is allowed)",
               });
             }
 
-            if (transformed[i][10] === "Pass" || transformed[i][9] === "pass") {
-              transformed[i].result = "pass";
-            } else transformed[i].result = "fail";
+            if (tempTransformed[i][[8]] === "Pass") {
+              tempTransformed[i].result = "pass";
+            } else tempTransformed[i].result = "fail";
           }
-          console.log(transformed);
-          content.value = transformed;
 
+          content.value = tempTransformed;
+          console.log(tempTransformed);
           if (errors.length > 0) {
             errorModal.value = true;
             Finalerrors.value = errors;
             toggleErrorModal();
             return;
           } else {
-            finalData.value = transformed;
+            finalData.value = tempTransformed;
+
             importModal.value = true;
             toggleModal();
           }
@@ -720,6 +794,7 @@ export default {
       let createdAt = today.toISOString();
       let updatedAt = today.toISOString();
       add.forEach((element) => {
+        console.log(element);
         let tempObj = {
           registrationNo: element[1],
           firstName: element[2],
@@ -748,13 +823,17 @@ export default {
         if (res.data.status === "Success") {
           for (let i = 0; i < finalArray.length; i++) {
             for (let j = 0; j < checkforExisting.length; j++) {
-              if (finalArray[i].registrationNo === checkforExisting[j].registrationNo) {
+              if (
+                finalArray[i].registrationNo ===
+                checkforExisting[j].registrationNo
+              ) {
                 timeOut += 2000;
                 errorForExisting.push({
                   row: i,
                   column: 1,
                   columnData: finalArray[i].registrationNo,
-                  errorMessage: "There is an already existing record with that id",
+                  errorMessage:
+                    "There is an already existing record with that id",
                 });
                 toast.error(
                   "There is an already existing record with id" +
@@ -802,6 +881,7 @@ export default {
       getResults([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
+        { key: "name", value: searchTermName.value },
         { key: "institution", value: searchTerm.value },
         { key: "gender", value: genderFilterValue.value },
         { key: "result", value: resultFilterValue.value },
@@ -827,6 +907,7 @@ export default {
       getResults([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
+           { key: "name", value: searchTermName.value },
         { key: "institution", value: searchTerm.value },
         { key: "gender", value: genderFilterValue.value },
         { key: "result", value: resultFilterValue.value },
@@ -843,6 +924,7 @@ export default {
       getResults([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
+           { key: "name", value: searchTermName.value },
         { key: "institution", value: searchTerm.value },
         { key: "gender", value: genderFilterValue.value },
         { key: "result", value: resultFilterValue.value },
@@ -866,6 +948,7 @@ export default {
           getResults([
             { key: "page", value: offset },
             { key: "size", value: limit },
+               { key: "name", value: searchTermName.value },
             { key: "institution", value: searchTerm.value },
             { key: "gender", value: genderFilterValue.value },
             { key: "result", value: resultFilterValue.value },
@@ -883,6 +966,7 @@ export default {
           getResults([
             { key: "page", value: offset },
             { key: "size", value: limit },
+               { key: "name", value: searchTermName.value },
             { key: "institution", value: searchTerm.value },
             { key: "gender", value: genderFilterValue.value },
             { key: "result", value: resultFilterValue.value },
@@ -948,6 +1032,7 @@ export default {
       toggleErrorModal,
       Finalerrors,
       expertLevelFilter,
+      searchTermName,
     };
   },
 };
