@@ -723,8 +723,7 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import Compressor from "compressorjs";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import { boolean } from "yargs";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 import Loading from "vue3-loading-overlay";
@@ -742,13 +741,7 @@ export default {
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let educationalDocs = ref([]);
-    let fileUploadError = ref([]);
-    let filePreviewData = ref({
-      isImage: boolean,
-      isPdf: boolean,
-      file: "",
-      name: "",
-    });
+    let fileUploadError = ref([]); 
     const toast = useToast();
     let files = ref("");
     let maxFileSize = ref(5000000);
@@ -770,12 +763,7 @@ export default {
     let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
 
-    const previewFile = (code, name) => {
-      filePreviewData.value.isImage = isImage.value[code];
-      filePreviewData.value.isPdf = isPdf.value[code];
-      filePreviewData.value.file = previewDocuments.value[code];
-      filePreviewData.value.name = name;
-    };
+ 
 
     const handleCommonFileUpload = (data, event) => {
       if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
@@ -1683,16 +1671,14 @@ export default {
       handleFileUpload,
       showImage,
       previewDocuments,
-      showPreview,
-      previewFile,
+      showPreview, 
       handleCommonFileUpload,
       generalInfo,
       back,
       isLoading,
       goToNext,
       educationalDocs,
-      imageUploader,
-      filePreviewData,
+      imageUploader, 
       next,
       documentsSaved,
       googleApi,

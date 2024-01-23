@@ -197,8 +197,7 @@
 <script>
 import { ref, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import { boolean } from "yargs";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
@@ -215,13 +214,7 @@ export default {
     let goToNext = ref(false);
     let departmentDocuments = [];
     let isLoading = ref(false);
-    let documents = ref([]);
-    let filePreviewData = ref({
-      isImage: boolean,
-      isPdf: boolean,
-      file: "",
-      name: "",
-    });
+    let documents = ref([]); 
     let localData = ref();
     let files = ref("");
     let documentError = ref([]);
@@ -662,8 +655,7 @@ export default {
       goToNext,
       departmentDocuments,
       imageUploader,
-      documents,
-      filePreviewData,
+      documents, 
       errorDocuments,
       next,
       isLoading,

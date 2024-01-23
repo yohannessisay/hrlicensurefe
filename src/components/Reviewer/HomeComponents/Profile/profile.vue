@@ -32,10 +32,10 @@
               <!-- Left Side -->
 
               <!-- Right Side -->
-              <div class="w-full md:w-9/12 mx-2 h-64">
+              <div class="w-full md:w-4/5 mx-2 h-64">
                 <!-- Profile tab -->
                 <!-- About Section -->
-                <div class="bg-white p-3   rounded-sm">
+                <div class="bg-white p-3 rounded-sm">
                   <div class="vld-parent mt-4">
                     <loading
                       :active="isLoadingUserInfo"
@@ -44,14 +44,7 @@
                       :opacity="1"
                     ></loading>
                     <div
-                      class="
-                        flex
-                        items-center
-                        space-x-2
-                        font-semibold
-                        text-gray-900
-                        leading-8
-                      "
+                      class="flex items-center space-x-2 font-semibold text-gray-900 leading-8"
                     >
                       <span clas="text-green-500">
                         <svg
@@ -74,122 +67,35 @@
                     <div class="text-gray-700">
                       <div class="grid md:grid-cols-2 text-sm">
                         <div class="grid grid-cols-2">
-                          <div class="px-4 py-2 font-semibold">First Name</div>
+                          <div class="px-4 py-2 font-semibold">Full Name</div>
                           <div class="mb-3 xl:w-96">
                             <input
                               type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
+                              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-primary-600 focus:outline-none"
                               id="firstName"
-                              placeholder="First name"
-                              v-model="userInfo.firstName"
+                              placeholder="Full name"
+                              v-model="userInfo.name"
                             />
                           </div>
                         </div>
                         <div class="grid grid-cols-2">
-                          <div class="px-4 py-2 font-semibold">Last Name</div>
+                          <div class="px-4 py-2 font-semibold">Full Amharic Name</div>
                           <div class="mb-3 xl:w-96">
                             <input
                               type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
+                              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-primary-600 focus:outline-none"
                               id="fatherName"
-                              placeholder="Father Name"
-                              v-model="userInfo.fatherName"
+                              placeholder="Full Amharic Name"
+                              v-model="userInfo.amharic_name"
                             />
                           </div>
                         </div>
-                        <div class="grid grid-cols-2">
-                          <div class="px-4 py-2 font-semibold">
-                            Grandfather Name
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
-                              id="grandFatherName"
-                              placeholder="Grand Father Name"
-                              v-model="userInfo.grandFatherName"
-                            />
-                          </div>
-                        </div>
+                    
                         <div class="grid grid-cols-2">
                           <div class="px-4 py-2 font-semibold">Gender</div>
                           <div class="mb-3 xl:w-96">
                             <select
-                              class="
-                                form-select
-                                appearance-none
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding bg-no-repeat
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:text-gray-700
-                                focus:bg-white
-                                focus:border-blue-600
-                                focus:outline-none
-                              "
+                              class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                               v-model="userInfo.gender"
                               aria-label="Default select example"
                             >
@@ -203,30 +109,12 @@
                         </div>
                         <div class="grid grid-cols-2">
                           <div class="px-4 py-2 font-semibold">
-                           Office Phone Number
+                            Office Phone Number
                           </div>
                           <div class="mb-3 xl:w-96">
                             <input
                               type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
+                              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-primary-600 focus:outline-none"
                               id="phoneNumber"
                               placeholder="Office Phone Number"
                               v-model="userInfo.phoneNumber"
@@ -238,25 +126,7 @@
                           <div class="mb-3 xl:w-96">
                             <input
                               type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
+                              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-primary-600 focus:outline-none"
                               id="address"
                               placeholder="Address"
                               v-model="userInfo.address"
@@ -268,25 +138,7 @@
                           <div class="mb-3 xl:w-96">
                             <input
                               type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
+                              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-primary-600 focus:outline-none"
                               id="firstName"
                               placeholder="First name"
                               v-model="userInfo.email"
@@ -308,17 +160,7 @@
                       </div>
                     </div>
                     <button
-                      class="
-                        block
-                        w-full
-                        text-white
-                        bg-primary-600
-                        font-semibold
-                        rounded-lg
-                        hover:bg-white hover:text-primary-600 hover:shadow-xs
-                        p-3
-                        my-4
-                      "
+                      class="block w-full text-white bg-primary-600 font-semibold rounded-lg hover:bg-white hover:text-primary-600 hover:shadow-xs p-3 my-4"
                       @click="updateUserInfo()"
                     >
                       <i class="fa fa-save"></i>
@@ -458,20 +300,14 @@ export default {
     const store = useStore();
     const toast = useToast();
     let display = ref("dashboard");
-    let userInfo = ref({ firstName: "", fatherName: "", grandFatherName: "" });
+    let userInfo = ref({ name: "" ,amharic_name:""});
     let userId = +window.localStorage.getItem("adminId");
     let isLoadingUserInfo = ref(true);
     let minimumBirthDate = new Date(`${new Date().getFullYear() - 18}`)
       .toISOString()
       .slice(0, 10);
     const updateUserInfo = () => {
-      isLoadingUserInfo.value = true;
-      userInfo.value.name =
-        userInfo.value.firstName +
-        " " +
-        userInfo.value.fatherName +
-        " " +
-        userInfo.value.grandFatherName;
+      isLoadingUserInfo.value = true; 
       store.dispatch("admin/updateAdmin", userInfo.value).then((res) => {
         if (res.data.status == "Success") {
           toast.success("Profile Updated successfuly", {
@@ -499,12 +335,8 @@ export default {
     const getProfile = () => {
       store.dispatch("admin/getAdminById", userId).then((res) => {
         userInfo.value = res.data.data;
-        if (userInfo.value) {
-          userInfo.value.firstName = userInfo.value.name.split(" ")[0];
-          userInfo.value.fatherName = userInfo.value.name.split(" ")[1];
-          userInfo.value.grandFatherName = userInfo.value.name.split(" ")[2];
-          isLoadingUserInfo.value = false;
-        }
+
+        userInfo.value ? (isLoadingUserInfo.value = false) : "";
       });
     };
     onMounted(() => {

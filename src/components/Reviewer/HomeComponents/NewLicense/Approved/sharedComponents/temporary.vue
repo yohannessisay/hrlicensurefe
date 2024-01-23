@@ -177,7 +177,7 @@
         <h2 class="mr-8 mt-12">
           {{
             modalData && modalData.data && modalData.data.licenseReviewer
-              ? modalData.data.licenseReviewer.reviewer.name
+              ? modalData.data.licenseReviewer.reviewer.amharic_name
               : ""
           }}
         </h2>
