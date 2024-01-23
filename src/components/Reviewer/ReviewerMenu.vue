@@ -83,7 +83,11 @@
 
       <router-link
         to="/admin/userManagement"
-        v-if="adminData ? adminData.role.code == 'UM' || adminData.role.code == 'SA' : ''"
+        v-if="
+          adminData
+            ? adminData.role.code == 'UM' || adminData.role.code == 'SA'
+            : ''
+        "
       >
         <li class="mb-2">
           <a href="#UserManagement">
@@ -102,20 +106,15 @@
         </li>
       </router-link>
 
-      <router-link
-        to="/admin/importResults"
-        v-if="
-          adminData
-            ? adminData.role.code != 'SA' &&
-              adminData.role.code != 'REV' &&
-              adminData.expertLevel.code == 'FED'
-            : ''
-        "
-      >
+      <router-link to="/admin/importResults">
         <li class="mb-2">
           <a href="#ImportResults">
             <i class="bx bx-import"></i>
-            <span class="links_name">National Licensure Exam Import</span>
+            <span class="links_name">{{
+              adminData.expertLevel.code == "FED"
+                ? "National Licensure Exam Import"
+                : "National Licensure Exam"
+            }}</span>
           </a>
         </li>
       </router-link>
@@ -210,7 +209,9 @@ export default {
       var ua = navigator.userAgent,
         tem,
         M =
-          ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+          ua.match(
+            /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
+          ) || [];
       if (/trident/i.test(M[1])) {
         tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
         return {

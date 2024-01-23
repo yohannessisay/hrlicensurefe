@@ -25,70 +25,81 @@
 
     <!-- Main Content -->
     <div class="home-content" id="mainContent">
-      <div class="bg-grey-200 p-4 rounded-lg">
-        <div class="text-center">
-          <h1 class="text-main-400 font-bold text-3xl">Upload</h1>
-        </div>
-        <div class="m-2 grid grid-row-2 grid-flow-col">
-          <div class="rounded-lg">
-            <h1 class="mt-4 ml-2 text-white text-lg">
-              Import the required document and view the reults before finalizing
-              it and saving.(Allowed file types are files name ending wit .XLSX
-              and .CSV Eg-template.xlsx or template.csv)
-            </h1>
-            <label
-              class="flex flex-col items-center mt-3 py-4 rounded-lg uppercase ease-linear cursor-pointer bg-main-400 transition-all duration-150"
-            >
-              <i class="fas fa-cloud-upload-alt fa-2x text-white"
-                >Select a file</i
-              >
-
-              <input
-                type="file"
-                onclick="this.value=null;"
-                @change="importExcel"
-                id="upload"
-                class="hidden"
-                accept=".xlsx, .csv"
-              />
-            </label>
+      <div
+        v-if="
+          adminData
+            ? adminData.role.code != 'SA' &&
+              adminData.role.code != 'REV' &&
+              adminData.expertLevel.code == 'FED'
+            : ''
+        "
+      >
+        <div class="bg-grey-200 p-4 rounded-lg">
+          <div class="text-center">
+            <h1 class="text-main-400 font-bold text-3xl">Upload</h1>
           </div>
-        </div>
-      </div>
-
-      <hr />
-      <div style="text-align: center; font-weight: bold; font-size: 24px">
-        OR
-      </div>
-
-      <hr />
-      <div class="bg-grey-200 p-4 rounded-lg mb-8">
-        <div class="text-center">
-          <h1 class="text-primary-600 font-bold text-3xl">Download Template</h1>
-        </div>
-        <div class="m-2 grid grid-row-2 grid-flow-col">
-          <div class="bg-grey-200 rounded-lg">
-            <h1 class="mt-4 ml-2 text-white text-lg">
-              Download a template file and fill it with your data by following
-              the structure of the template file and come back here to upload
-              your final result.
-            </h1>
-            <a href="/template/importTemplate.xlsx" download>
+          <div class="m-2 grid grid-row-2 grid-flow-col">
+            <div class="rounded-lg">
+              <h1 class="mt-4 ml-2 text-white text-lg">
+                Import the required document and view the reults before
+                finalizing it and saving.(Allowed file types are files name
+                ending wit .XLSX and .CSV Eg-template.xlsx or template.csv)
+              </h1>
               <label
-                class="flex flex-col items-center mt-3 py-4 bg-primary-600 rounded-lg cursor-pointer uppercase hover:bg-purple-600 hover:text-lightBlue-1000 ease-linear transition-all duration-150"
+                class="flex flex-col items-center mt-3 py-4 rounded-lg uppercase ease-linear cursor-pointer bg-main-400 transition-all duration-150"
               >
-                <i class="fas fa-cloud-download-alt fa-2x text-white"
-                  >Click to download a template</i
+                <i class="fas fa-cloud-upload-alt fa-2x text-white"
+                  >Select a file</i
                 >
+
+                <input
+                  type="file"
+                  onclick="this.value=null;"
+                  @change="importExcel"
+                  id="upload"
+                  class="hidden"
+                  accept=".xlsx, .csv"
+                />
               </label>
-            </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <h2 class="text-3xl text-grey-800">OR</h2>
+        </div>
+
+        <div class="bg-grey-200 p-4 rounded-lg mb-8">
+          <div class="text-center">
+            <h1 class="text-primary-600 font-bold text-3xl">
+              Download Template
+            </h1>
+          </div>
+          <div class="m-2 grid grid-row-2 grid-flow-col">
+            <div class="bg-grey-200 rounded-lg">
+              <h1 class="mt-4 ml-2 text-white text-lg">
+                Download a template file and fill it with your data by following
+                the structure of the template file and come back here to upload
+                your final result.
+              </h1>
+              <a href="/template/importTemplate.xlsx" download>
+                <label
+                  class="flex flex-col items-center mt-3 py-4 bg-primary-600 rounded-lg cursor-pointer uppercase hover:bg-purple-600 hover:text-lightBlue-1000 ease-linear transition-all duration-150"
+                >
+                  <i class="fas fa-cloud-download-alt fa-2x text-white"
+                    >Click to download a template</i
+                  >
+                </label>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="p-4 mb-8 max-w-full bg-white rounded-lg">
         <div class="relative overflow-x-auto sm:rounded-lg">
-          <hr />
-          <h1 class="ml-4 mt-4 text-xl">
+        
+          <h1 class="ml-1 mb-4 mt-4 text-2xl">
             These are the previously added records
           </h1>
 
@@ -444,6 +455,7 @@ export default {
     const toast = useToast();
     let searchData = ref();
     let expertLevelFilter = ref();
+    const adminData = JSON.parse(localStorage.getItem("allAdminData"));
     const isUserManager = localStorage.getItem("role") == "UM";
     let expertLevels = ref([
       { name: "All", code: "all" },
@@ -907,7 +919,7 @@ export default {
       getResults([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
-           { key: "name", value: searchTermName.value },
+        { key: "name", value: searchTermName.value },
         { key: "institution", value: searchTerm.value },
         { key: "gender", value: genderFilterValue.value },
         { key: "result", value: resultFilterValue.value },
@@ -924,7 +936,7 @@ export default {
       getResults([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
-           { key: "name", value: searchTermName.value },
+        { key: "name", value: searchTermName.value },
         { key: "institution", value: searchTerm.value },
         { key: "gender", value: genderFilterValue.value },
         { key: "result", value: resultFilterValue.value },
@@ -948,7 +960,7 @@ export default {
           getResults([
             { key: "page", value: offset },
             { key: "size", value: limit },
-               { key: "name", value: searchTermName.value },
+            { key: "name", value: searchTermName.value },
             { key: "institution", value: searchTerm.value },
             { key: "gender", value: genderFilterValue.value },
             { key: "result", value: resultFilterValue.value },
@@ -966,7 +978,7 @@ export default {
           getResults([
             { key: "page", value: offset },
             { key: "size", value: limit },
-               { key: "name", value: searchTermName.value },
+            { key: "name", value: searchTermName.value },
             { key: "institution", value: searchTerm.value },
             { key: "gender", value: genderFilterValue.value },
             { key: "result", value: resultFilterValue.value },
@@ -1033,6 +1045,7 @@ export default {
       Finalerrors,
       expertLevelFilter,
       searchTermName,
+      adminData,
     };
   },
 };
