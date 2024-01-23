@@ -136,7 +136,7 @@
       </div>
     </div>
     <div
-      class="text-yellow-300 p-2 m-4 rounded-md border"
+      class="shadow-md p-2 m-4 rounded-md border"
       v-if="errorDocuments && errorDocuments.length > 0"
     >
       <h2 class="text-yellow-300 font-bold text-3xl">

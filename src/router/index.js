@@ -347,7 +347,7 @@ const routes = [
 
     //Applicant Lost License Management
     {
-      path: "/applicant/lostLicense",
+      path: "/Applicant/LostLicense",
       name: "ApplicantLostLicenseManagement",
       component: () => import("../components/Applicant/LostLicense/lostLicense.vue"),
     },

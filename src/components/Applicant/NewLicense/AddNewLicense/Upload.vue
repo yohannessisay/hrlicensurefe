@@ -808,7 +808,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
+      <div class="shadow-md p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
         <h2 class="text-yellow-300 font-bold text-3xl">
           Please attach the following files to proceed
         </h2>

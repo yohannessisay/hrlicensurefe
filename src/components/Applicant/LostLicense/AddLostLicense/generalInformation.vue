@@ -332,6 +332,7 @@ export default {
       zoneSelected: "",
       woredaSelected: "",
       expertLevelId: "",
+      applicantType:""
     });
     let approvedNewLicenses = ref([]);
     let approvedRenewals = ref([]);
@@ -390,6 +391,7 @@ export default {
         generalInfo.value.expertLevelId = 3;
         showLocation.value = false;
       }
+      generalInfo.value.applicantType=applicantType;
     };
     const zoneChangeHandler = () => {
       fetchWoredas();

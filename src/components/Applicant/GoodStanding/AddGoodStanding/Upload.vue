@@ -149,14 +149,14 @@
       </div>
     </div>
     <div
-      class="bg-yellow-300 p-2 m-4 rounded-md"
+      class="shadow-md p-2 m-4 rounded-md"
       v-if="errorDocuments && errorDocuments.length > 0"
     >
-      <h2 class="text-white font-bold text-3xl">
+      <h2 class="text-yellow-300 font-bold text-3xl">
         Please attach the following files to proceed
       </h2>
       <li
-        class="text-white text-xl font-bold border-2 rounded-md p-2 m-1"
+        class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
         v-for="error in errorDocuments"
         :key="error"
       >

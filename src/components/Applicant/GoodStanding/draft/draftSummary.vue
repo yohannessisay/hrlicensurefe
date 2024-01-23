@@ -579,7 +579,9 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
-                localStorage.removeItem("GSApplicationData");
+                     localStorage.removeItem("GSApplicationData"); 
+                  localStorage.removeItem("applicantTypeSelected");
+                  indexedDB.deleteDatabase("GSdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
