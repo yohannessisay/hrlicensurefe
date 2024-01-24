@@ -1640,6 +1640,7 @@ export default {
         } else {
           index.value = index.value + 1;
           rejected.value.push(doc.fileName);
+          rejectedObj.value.push(doc);
         }
 
         if (accepted.value.includes(doc.fileName)) {
