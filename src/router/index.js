@@ -336,8 +336,6 @@ const routes = [
       import("../components/Applicant/GoodStanding/draft/draftDetail.vue"),
   },
 
-  
-
   //Applicant Profile Management
   {
     path: "/applicant/profile",
@@ -345,17 +343,27 @@ const routes = [
     component: () => import("../components/Applicant/Profile/profile.vue"),
   },
 
-    //Applicant Lost License Management
-    {
-      path: "/Applicant/LostLicense",
-      name: "ApplicantLostLicense",
-      component: () => import("../components/Applicant/LostLicense/lostLicense.vue"),
-    },
-    {
-      path: "/Applicant/LostLicense/submitted",
-      name: "ApplicantSubmittedLostLicense",
-      component: () => import("../components/Applicant/LostLicense/submitted/submitted.vue"),
-    },
+  //Applicant Lost License Management
+  {
+    path: "/Applicant/LostLicense",
+    name: "ApplicantLostLicense",
+    component: () =>
+      import("../components/Applicant/LostLicense/lostLicense.vue"),
+  },
+  {
+    path: "/Applicant/LostLicense/submitted",
+    name: "ApplicantSubmittedLostLicense",
+    component: () =>
+      import("../components/Applicant/LostLicense/submitted/submitted.vue"),
+  },
+  {
+    path: "/Applicant/LostLicense/submitted/detail/:id",
+    name: "ApplicantLostLicenseSubmittedDetail",
+    component: () =>
+      import(
+        "../components/Applicant/LostLicense/submitted/submittedDetail.vue"
+      )
+  },
 
   /******************************************************************************************************************************************/
   /**************1-END OF APPLICANT SIDE ROUTES*****************/
