@@ -7,7 +7,7 @@ import {
   SET_TEMP_DOCS,
   SET_BUTTONS
 } from "./mutation-types";
- 
+const userId = +localStorage.getItem("userId");
 function authHeaders(needsAuth) {
   const token = localStorage.getItem("token");
   return needsAuth
@@ -135,7 +135,16 @@ export default {
     }
   },
   
- 
+  async getLostLicense() {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/lostLicense/user/" + userId
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getLostLicenseById(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/lostLicenses/" + id);

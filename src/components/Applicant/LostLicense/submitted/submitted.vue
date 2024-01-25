@@ -1,14 +1,14 @@
 <template>
-  <main-content :url="'goodstanding'">
+  <main-content :url="'lostLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
       <ol class="list-reset flex">
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Lost License</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Assigned</li>
+        <li class="text-gray-500">Submitted</li>
       </ol>
     </nav>
 
@@ -19,118 +19,69 @@
         <!-- Column -->
 
         <div
-          v-for="license in inReviewLicenses"
+          v-for="license in userSubmittedLicenses"
           :key="license.id"
-          class="
-            bg-white
-            my-1
-            px-1
-            md:w-1/4
-            lg:w-1/4
-            mdlg:w-1/4
-            sm:w-full sm:mr-4
-             
-            rounded-lg
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
-          "
+          class="bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <!-- Article -->
           <div>
             <h2 class="text-grey-800 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.goodStandingCode
+                license.lost_license_code
               }}</span>
             </h2>
 
             <header
-              class="
-                flex
-                items-center
-                justify-between
-                leading-tight
-                p-2
-                md:p-2
-                mt-2
-              "
+              class="flex items-center justify-between leading-tight p-2 md:p-2 mt-2"
             ></header>
 
             <div class="border-b-2 text-main-400">
               <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  leading-tight
-                  p-2
-                  md:p-2
-                "
+                class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline  text-grey-800"
-                    href="#"
-                  >
+                  <a class="no-underline text-grey-800" href="#">
                     Who Issued the letter
                   </a>
                 </h1>
                 <p class="text-black text-sm">
-                  {{ license&&license.whoIssued ? license.whoIssued.name : "Waiting for review" }}
+                  <!-- {{
+                    license && license.whoIssued
+                      ? license.whoIssued.name
+                      : "Waiting for review"
+                  }} -->
                 </p>
               </div>
 
               <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  leading-tight
-                  p-2
-                  md:p-2
-                "
+                class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline text-grey-800"
-                    href="#"
-                  >
+                  <a class="no-underline text-grey-800" href="#">
                     License Registration Number
                   </a>
                 </h1>
                 <p class="text-black text-sm">
-                  {{
+                  <!-- {{
                     license
                       ? license.licenseRegistrationNumber
                       : "Waiting for review"
-                  }}
+                  }} -->
                 </p>
               </div>
               <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  leading-tight
-                  p-2
-                  md:p-2
-                "
+                class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline text-grey-800"
-                    href="#"
-                  >
+                  <a class="no-underline text-grey-800" href="#">
                     To whom the goodstanding is
                   </a>
                 </h1>
                 <p class="text-black text-sm">
-                  {{
+                  <!-- {{
                     license ? license.whomGoodStandingFor : "Waiting for review"
-                  }}
+                  }} -->
                 </p>
               </div>
             </div>
@@ -166,30 +117,23 @@
 
             <div class="flex justify-center">
               <button
-                class="
-                  inline-block
-                  px-6
-                  text-white
-                  bg-main-400
-                  hover:text-main-400 hover:border
-                  text-sm
-                  font-bold
-                  uppercase
-                  rounded
-                   
-                  mb-4
-                  transition
-                  duration-150
-                  ease-in-out
-                "
-                @click="openAssignedDetail(license.id)"
+                class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
+                @click="openSubmittedDetail(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#assignedModalInfo"
+                data-bs-target="#submittedModalInfo"
               >
                 View Detail
               </button>
 
-           
+              <router-link
+                :to="'/Applicant/LostLicense/submitted/detail/' + license.id"
+              >
+                <button
+                  class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
+                >
+                  Edit
+                </button>
+              </router-link>
             </div>
           </div>
 
@@ -202,30 +146,15 @@
     </div>
     <div
       v-else
-      class="
-        bg-white
-        my-1
-        px-1
-        md:w-1/4
-        lg:w-1/4
-        mdlg:w-1/4
-        sm:w-full sm:mr-4
-         
-        rounded-lg
-        transform
-        transition
-        duration-300
-        ease-in-out
-        hover:-translate-y-2
-      "
+      class="bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
     >
       <!-- Article -->
 
       <h2 class="text-main-400 border-b-2 text-xl p-2">
-        There are no assigned applications currently.
+        There are no submitted applications currently.
       </h2>
     </div>
-    <assignedDetail :modalDataId="modalDataId"></assignedDetail>
+    <submitted-modal-info :modalDataId="modalDataId"></submitted-modal-info>
   </main-content>
 </template>
 
@@ -234,15 +163,15 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../../Shared/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
-import assignedDetail from "./assignedDetail.vue";
+import submittedModalInfo from "./submittedModalInfo.vue";
 
 export default {
-  components: { MainContent, assignedDetail },
+  components: { MainContent, submittedModalInfo },
   setup() {
     let store = useStore();
-    let inReviewLicenses = ref([]);
+    let userSubmittedLicenses = ref([]);
     let userInfo = ref({});
-    let isLoading = ref(false);
+    let isLoading = ref(true);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
 
@@ -250,15 +179,20 @@ export default {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
 
-      store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
+      store.dispatch("lostLicenses/getLostLicense").then((res) => {
         const results = res.data.data ? res.data.data : [];
-
-        if (results.length > 0) {
-          inReviewLicenses.value = results.filter((approvedLicense) => {
-            return approvedLicense.applicationStatus.code === "IRV";
+        if (results && results.length > 0) {
+          userSubmittedLicenses.value = results.filter((submittedLicense) => {
+            return (
+              submittedLicense.applicationStatus.code == "UPD" ||
+              submittedLicense.applicationStatus.code == "SUB"
+            );
           });
 
-          if (inReviewLicenses.value.length === 0) {
+          if (
+            userSubmittedLicenses.value &&
+            userSubmittedLicenses.value.length == 0
+          ) {
             noData.value = true;
           }
 
@@ -270,22 +204,20 @@ export default {
       });
     });
 
-
-    const openAssignedDetail = (id) => {
+    const openSubmittedDetail = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
 
     return {
-      inReviewLicenses,
+      userSubmittedLicenses,
       googleApi,
       userInfo,
-      isLoading,
       noData,
-      openAssignedDetail,
+      isLoading,
+      openSubmittedDetail,
       modalDataId,
     };
   },
 };
 </script>
-  

@@ -304,8 +304,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => {
-      generalInfo.value.licenseFile = [];
+    const checkFinalStatus = (action) => { 
       documents.value = localFileData.value;
 
       if (agreed.value == true || action == "DraftEvent") {
@@ -325,16 +324,18 @@ export default {
         // };
         generalInfo.value.applicant_type_id =
           generalInfo.value.applicantType.id;
+           generalInfo.value.residence_woreda_id =
+          generalInfo.value.woredaSelected.id;
         let license = {
           action: action,
-          data: { generalInfo },
+          data: generalInfo.value,
         };
         showModal.value = true;
-        store.dispatch("lostLicense/addLostLicense", license).then((res) => {
+        store.dispatch("lostLicenses/addLostLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("lostLicense/uploadDocuments", payload)
+            .dispatch("lostLicenses/uploadDocuments", payload)
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
@@ -349,7 +350,7 @@ export default {
                   icon: true,
                 });
 
-                router.push({ path: "/Applicant/LostLicense" });
+                router.push({ path: "/Applicant/LostLicense/submitted" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -376,8 +377,8 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
-      buttons.value = store.getters["goodstanding/getButtons"];
-      tempDocs.value = store.getters["goodstanding/getTempDocs"];
+      buttons.value = store.getters["lostLicenses/getButtons"];
+      tempDocs.value = store.getters["lostLicenses/getTempDocs"];
       localData.value = window.localStorage.getItem("LLApplicationData")
         ? JSON.parse(window.localStorage.getItem("LLApplicationData"))
         : {};
@@ -398,7 +399,8 @@ export default {
             evt.target.result && evt.target.result[0]
               ? evt.target.result[0].data
               : {};
-          localFileData.value[0].data.forEach((element) => {
+
+          localFileData.value.forEach((element) => {
             totalSize.value += Number(
               Math.ceil((element.image.length * 6) / 8 / 1000)
             );

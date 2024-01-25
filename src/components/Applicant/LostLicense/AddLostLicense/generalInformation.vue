@@ -49,6 +49,35 @@
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4 p-4">
             <div>
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Applicant Type</label
+              ><span class="text-red-300">*</span>
+              <select
+                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                aria-label="Default select example"
+                @change="checkApplicantType(generalInfo.applicantType)"
+                v-model="generalInfo.applicantType"
+                required
+              >
+                <option
+                  v-for="type in applicantTypes"
+                  :key="type.name"
+                  :value="type"
+                >
+                  {{ type.name }}
+                </option>
+              </select>
+              <button
+                v-show="Object.keys(localData).length != 0"
+                type="button"
+                class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded hover:border-main-500 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+                @click="clearLocalData()"
+              >
+                <i class="fa fa-close"></i>
+                Clear Form
+              </button>
+            </div>
+            <div>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                 >License Type</label
               ><span class="text-red-300">*</span>
               <select
@@ -290,7 +319,6 @@
           :opacity="1"
         ></loading>
         <div class="flex justify-end mb-2 mr-1 bg-white">
-      
           <button
             class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             type="submit"
@@ -317,11 +345,12 @@ export default {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
+    let applicantTypes = ref([]);
     let isLoading = ref(false);
     let licensesLoading = ref(false);
     let licenseIsSelected = ref(false);
     let showLicenses = ref(false);
-    let generalInfo = ref({
+    let generalInfo = ref({ 
       applicationType: "",
       renewal_id: null,
       new_license_id: null,
@@ -332,7 +361,7 @@ export default {
       zoneSelected: "",
       woredaSelected: "",
       expertLevelId: "",
-      applicantType:""
+      applicantType: "",
     });
     let approvedNewLicenses = ref([]);
     let approvedRenewals = ref([]);
@@ -344,19 +373,19 @@ export default {
 
     let showLocation = ref(false);
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
-    const selectLicense = (type, id, license) => { 
+    const selectLicense = (type, id, license) => {
       switch (type) {
         case "newLicense":
           generalInfo.value.new_license_id = id;
           generalInfo.value.renewal_id = null;
           generalInfo.value.has_previous_license_in_system = true;
 
-          approvedNewLicenses.value.forEach((element) => { 
+          approvedNewLicenses.value.forEach((element) => {
             element.id != id
-              ? element.isSelected = false
+              ? (element.isSelected = false)
               : (license.isSelected = !license.isSelected);
           });
-           
+
           break;
         case "renewal":
           generalInfo.value.renewal_id = id;
@@ -391,7 +420,7 @@ export default {
         generalInfo.value.expertLevelId = 3;
         showLocation.value = false;
       }
-      generalInfo.value.applicantType=applicantType;
+      generalInfo.value.applicantType = applicantType;
     };
     const zoneChangeHandler = () => {
       fetchWoredas();
@@ -525,10 +554,14 @@ export default {
         instance?.proxy?.forceUpdate();
       }
     };
-
+    const fetchApplicantType = () => {
+      store.dispatch("goodstanding/getApplicantType").then((res) => {
+        applicantTypes.value = res.data.data;
+      });
+    };
     onMounted(async () => {
       fetchRegions();
-
+      fetchApplicantType();
       localData.value = window.localStorage.getItem("LLApplicationData")
         ? await JSON.parse(window.localStorage.getItem("LLApplicationData"))
         : {};
@@ -571,6 +604,7 @@ export default {
       showLicenses,
       licenseIsSelected,
       selectLicense,
+      applicantTypes,
     };
   },
 };

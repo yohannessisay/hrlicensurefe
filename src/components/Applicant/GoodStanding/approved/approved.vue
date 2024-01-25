@@ -149,7 +149,7 @@
               >
                 <img
                   alt="Placeholder"
-                  class="block rounded-full h-8"
+                  class="block rounded-full h-8 w-8"
                   :src="
                     userInfo.profilePicturePath
                       ? googleApi + userInfo.profilePicturePath

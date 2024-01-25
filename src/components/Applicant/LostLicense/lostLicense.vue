@@ -132,7 +132,7 @@ export default {
           return e.code == "INIT";
         });
         buttons.value = status[0]["buttons"];
-        store.dispatch("goodstanding/setButtons", buttons.value);
+        store.dispatch("lostLicenses/setButtons", buttons.value);
       });
     };
     onMounted(async () => {
