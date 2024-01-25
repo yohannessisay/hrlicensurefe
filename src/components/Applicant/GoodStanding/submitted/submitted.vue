@@ -129,33 +129,13 @@
                 </p>
               </div>
             </div>
-            <footer
+             <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
             >
-              <a
-                class="
-                  flex
-                  items-center
-                  no-underline
-                  hover:underline
-                  text-black
-                "
-                href="#"
-              >
-                <img
-                  alt="Placeholder"
-                  class="block rounded-full h-8 w-8"
-                  :src="
-                    userInfo.profilePicturePath
-                      ? googleApi + userInfo.profilePicturePath
-                      : ''
-                  "
-                />
-                <p class="ml-2 text-sm text-main-400">{{ userInfo.name }}</p>
-              </a>
+              <h2 class="text-lg text-grey-800">Applied Date</h2>
 
               <span class="text-main-400 text-sm">{{
-                license.createdAt.slice(0, 10)
+                license.created_at.slice(0, 10)
               }}</span>
             </footer>
 

@@ -44,7 +44,7 @@ export default {
   async editLostLicense(context, license) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/lostLicenses/" + license.data.id,
+        baseUrl + "/lostLicense/" + license.data.id,
         license
       );
       return resp;
@@ -105,7 +105,7 @@ export default {
   async updateDraft(context, payload) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/lostLicenses/" + payload.licenseId,
+        baseUrl + "/lostLicense/" + payload.licenseId,
         payload.draftData,
         {
           headers: {
@@ -121,7 +121,7 @@ export default {
   async updateDeclined(context, payload) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/lostLicenses/" + payload.licenseId,
+        baseUrl + "/lostLicense/" + payload.licenseId,
         payload.declinedData,
         {
           headers: {
@@ -147,7 +147,7 @@ export default {
   },
   async getLostLicenseById(context, id) {
     try {
-      const resp = await ApiService.get(baseUrl + "/lostLicenses/" + id);
+      const resp = await ApiService.get(baseUrl + "/lostLicense/" + id);
       return resp;
     } catch (error) {
       return error;
@@ -158,7 +158,7 @@ export default {
   async withdraw(context, payload) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/lostLicenses/" + payload.licenseId,
+        baseUrl + "/lostLicense/" + payload.licenseId,
         payload.withdrawData
       );
       return resp;

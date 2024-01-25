@@ -220,32 +220,22 @@
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer.name
+                                licenseData && licenseData.reviewer
+                                  ? licenseData.reviewer.name
                                   : "Not Assigned Yet"
                               }}
                             </div>
                           </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Phone Number</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .phoneNumber
-                                  : "Not Assigned Yet"
-                              }}
-                            </div>
-                          </div>
+                      
                           <div class="flex justify-between px-4 py-1">
                             <div>Expert Level</div>
                             <div class="text-main-400 font-bold">
                               {{
                                 licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
+                                licenseData.reviewer &&
+                                licenseData.reviewer&&
+                                licenseData.reviewer.expertLevel
+                                  ? licenseData.reviewer
                                       .expertLevel.name
                                   : "Not Assigned Yet"
                               }}
@@ -256,10 +246,10 @@
                             <div class="text-main-400 font-bold">
                               {{
                                 licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.region
-                                  ? licenseData.licenseReviewer.reviewer.region
+                                licenseData.reviewer &&
+                                licenseData.reviewer&&
+                                licenseData.reviewer.region
+                                  ? licenseData.reviewer.region
                                       .name
                                   : "Not Assigned Yet"
                               }}
@@ -282,73 +272,7 @@
                     </div>
                     <!-- END Column -->
 
-                    <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
-                      <!-- Article -->
-                      <article class="overflow-hidden rounded-lg  ">
-                        <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
-                        >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              Applicants Education Detail
-                            </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">Active</p>
-                        </header>
-
-                        <div class="flex justify-between px-4 py-1">
-                          <div>Department</div>
-                          <div class="text-main-400 font-bold">
-                            {{
-                              licenseData && licenseData.department
-                                ? licenseData.department.name
-                                : "-"
-                            }}
-                          </div>
-                        </div>
-
-                        <div class="flex justify-between px-4 py-1">
-                          <div>Profession Level</div>
-                          <div class="text-main-400 font-bold">
-                            {{
-                              licenseData && licenseData.GSProfessionals
-                                ? licenseData.GSProfessionals.professionalTypes
-                                    .name
-                                : "-"
-                            }}
-                          </div>
-                        </div>
-
-                        <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
-                        ></footer>
-                      </article>
-                      <!-- END Article -->
-                    </div>
-
-                    <!-- END Column -->
+            
 
                     <!-- Column -->
                     <div
@@ -447,7 +371,7 @@ export default {
       isLoading.value = true;
       store
         .dispatch(
-          "goodstanding/getGoodStandingLicenseById",
+          "lostLicenses/getLostLicenseById",
           props.modalDataId.id
         )
         .then((res) => {

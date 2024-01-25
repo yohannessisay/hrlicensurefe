@@ -85,33 +85,13 @@
                 </p>
               </div>
             </div>
-            <footer
+                <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
             >
-              <a
-                class="
-                  flex
-                  items-center
-                  no-underline
-                  hover:underline
-                  text-black
-                "
-                href="#"
-              >
-                <img
-                  alt="Placeholder"
-                  class="block rounded-full h-8 w-8"
-                  :src="
-                    userInfo.profilePicturePath
-                      ? googleApi + userInfo.profilePicturePath
-                      : ''
-                  "
-                />
-                <p class="ml-2 text-sm text-main-400">{{ userInfo.name }}</p>
-              </a>
+              <h2 class="text-lg text-grey-800">Applied Date</h2>
 
               <span class="text-main-400 text-sm">{{
-                license.createdAt.slice(0, 10)
+                license.created_at.slice(0, 10)
               }}</span>
             </footer>
 
@@ -161,23 +141,20 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MainContent from "../../Shared/Menu.vue";
-import { googleApi } from "@/composables/baseURL";
+import MainContent from "../../Shared/Menu.vue"; 
 import submittedModalInfo from "./submittedModalInfo.vue";
 
 export default {
   components: { MainContent, submittedModalInfo },
   setup() {
     let store = useStore();
-    let userSubmittedLicenses = ref([]);
-    let userInfo = ref({});
+    let userSubmittedLicenses = ref([]); 
     let isLoading = ref(true);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
 
     onMounted(() => {
-      isLoading.value = true;
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
+      isLoading.value = true; 
 
       store.dispatch("lostLicenses/getLostLicense").then((res) => {
         const results = res.data.data ? res.data.data : [];
@@ -210,9 +187,7 @@ export default {
     };
 
     return {
-      userSubmittedLicenses,
-      googleApi,
-      userInfo,
+      userSubmittedLicenses,  
       noData,
       isLoading,
       openSubmittedDetail,
