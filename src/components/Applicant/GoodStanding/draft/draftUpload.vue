@@ -177,8 +177,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import { boolean } from "yargs";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
 import { useToast } from "vue-toastification";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
@@ -194,13 +193,7 @@ export default {
     let goToNext = ref(false);
     let departmentDocuments = [];
     let isLoading = ref(false);
-    let documents = ref([]);
-    let filePreviewData = ref({
-      isImage: boolean,
-      isPdf: boolean,
-      file: "",
-      name: "",
-    });
+    let documents = ref([]); 
     let errorDocuments = ref([]);
     let localData = ref();
     let files = ref("");
@@ -219,13 +212,7 @@ export default {
     let showPreview = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let generalInfo = ref({});
-    let documentUploaded = ref([]);
-    const previewFile = (code, name) => {
-      filePreviewData.value.isImage = isImage.value[code];
-      filePreviewData.value.isPdf = isPdf.value[code];
-      filePreviewData.value.file = previewDocuments.value[code];
-      filePreviewData.value.name = name;
-    };
+    let documentUploaded = ref([]); 
     let formData = new FormData();
 
     const handleFileUpload = (data, event) => {
@@ -637,8 +624,7 @@ export default {
       previewDocuments,
       showPreview,
       documentsSaved,
-      documentsUploaded,
-      previewFile,
+      documentsUploaded, 
       saveDraft,
       documentError,
       generalInfo,
@@ -647,8 +633,7 @@ export default {
       imageUploader,
       documents,
       isLoading,
-      errorDocuments,
-      filePreviewData,
+      errorDocuments, 
       next,
       back,
     };

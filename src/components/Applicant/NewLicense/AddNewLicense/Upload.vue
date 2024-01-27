@@ -1688,6 +1688,8 @@ export default {
                       ed.documentType.code == "SUPINST" ||
                       ed.documentType.code == "SENSUP"
                   );
+                } else {
+                  resp = result;
                 }
                 resp.forEach((ed, index) => {
                   if (
@@ -1699,6 +1701,7 @@ export default {
                     resp.splice(index, 1);
                   }
                 });
+
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
                   professionType: element.professionalType,
