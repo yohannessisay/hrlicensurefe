@@ -91,7 +91,7 @@
                         <span
                           class="document-name"
                           v-if="documentsSaved[item.documentType.code]"
-                          >{{ documentsSaved[item.documentType.code].name }}</span
+                          >{{ documentsSaved[item.documentType.code].fileName }}</span
                         >
                       </td>
                       <td class="px-6 py-4 text-center">

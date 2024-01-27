@@ -32,59 +32,9 @@
               }}</span>
             </h2>
 
-            <header
-              class="flex items-center justify-between leading-tight p-2 md:p-2 mt-2"
-            ></header>
+         
 
-            <div class="border-b-2 text-main-400">
-              <div
-                class="flex items-center justify-between leading-tight p-2 md:p-2"
-              >
-                <h1 class="text-lg">
-                  <a class="no-underline text-grey-800" href="#">
-                    Who Issued the letter
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
-                  <!-- {{
-                    license && license.whoIssued
-                      ? license.whoIssued.name
-                      : "Waiting for review"
-                  }} -->
-                </p>
-              </div>
-
-              <div
-                class="flex items-center justify-between leading-tight p-2 md:p-2"
-              >
-                <h1 class="text-lg">
-                  <a class="no-underline text-grey-800" href="#">
-                    License Registration Number
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
-                  <!-- {{
-                    license
-                      ? license.licenseRegistrationNumber
-                      : "Waiting for review"
-                  }} -->
-                </p>
-              </div>
-              <div
-                class="flex items-center justify-between leading-tight p-2 md:p-2"
-              >
-                <h1 class="text-lg">
-                  <a class="no-underline text-grey-800" href="#">
-                    To whom the goodstanding is
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
-                  <!-- {{
-                    license ? license.whomGoodStandingFor : "Waiting for review"
-                  }} -->
-                </p>
-              </div>
-            </div>
+       
                 <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
             >

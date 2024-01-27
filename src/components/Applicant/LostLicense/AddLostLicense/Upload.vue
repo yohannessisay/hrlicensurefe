@@ -224,7 +224,6 @@ import { useStore } from "vuex";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
 import { useToast } from "vue-toastification";
-import { useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
@@ -233,19 +232,12 @@ export default {
   emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     let store = useStore();
-    let toast = useToast();
-    const router = useRouter();
+    let toast = useToast(); 
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
     let isLoading = ref(false);
-    let documents = ref([]);
-    let filePreviewData = ref({
-      isImage: boolean,
-      isPdf: boolean,
-      file: "",
-      name: ""
-    });
+    let documents = ref([]); 
     let localData = ref();
     let files = ref("");
     let documentError = ref([]);
@@ -529,106 +521,7 @@ export default {
       emit("changeActiveStateMinus");
     };
 
-    // const saveDraft = () => {
-    //   generalInfo.value.licenseFile = [];
-    //   isLoading.value = true;
-    //   let license = {
-    //     action: "DraftEvent",
-    //     data: {
-    //       applicantId: generalInfo.value.applicantId,
-    //       applicantTypeId: generalInfo.value.applicantTypeId.id,
-    //       residenceWoredaId: generalInfo.value.woredaSelected
-    //         ? generalInfo.value.woredaSelected.id
-    //         : null,
-    //       applicantTitleId: generalInfo.value.applicantTitleId
-    //         ? generalInfo.value.applicantTitleId.id
-    //         : "",
-    //       whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
-    //         ? generalInfo.value.whomGoodStandingFor
-    //         : "",
-    //       applicantPositionId: generalInfo.value.applicantPosition
-    //         ? generalInfo.value.applicantPosition.id
-    //         : null,
-    //       licenseIssuedDate: generalInfo.value.licenseIssuedDate
-    //         ? generalInfo.value.licenseIssuedDate
-    //         : null,
-    //       whoIssued: generalInfo.value.whoIssued ? generalInfo.value.whoIssued : "",
-    //       licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
-    //         ? generalInfo.value.licenseRegistrationNumber
-    //         : "",
-    //       professionType: {
-    //         professionTypeId: generalInfo.value
-    //           ? generalInfo.value.professionTypeId.id
-    //           : null,
-    //         educationLevelId: generalInfo.value
-    //           ? generalInfo.value.educationLevelId.id
-    //           : null,
-    //         otherProfessionalType: generalInfo.value.otherProfessionType
-    //           ? generalInfo.value.otherProfessionType
-    //           : "",
-    //         otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
-    //           ? generalInfo.value.otherProfessionTypeAmharic
-    //           : "",
-    //       },
-    //       regionId: generalInfo.value.regionSelected
-    //         ? generalInfo.value.regionSelected.id
-    //         : "",
-    //       regionCode: generalInfo.value.regionSelected
-    //         ? generalInfo.value.regionSelected.code
-    //         : "FED",
-    //       expertLevelId: generalInfo.value.expertLevelId
-    //         ? generalInfo.value.expertLevelId
-    //         : null,
-    //       islegal: true,
-    //       other_applicant_position: generalInfo.value.otherApplicantPosition
-    //         ? generalInfo.value.otherApplicantPosition
-    //         : "",
-    //       departmentId: generalInfo.value.departmentId.id
-    //         ? generalInfo.value.departmentId.id
-    //         : null,
-    //       feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
-    //     },
-    //   };
-
-    //   store.dispatch("goodstanding/addGoodstandingLicense", license).then((res) => {
-    //     let licenseId = res.data.data.id;
-    //     let payload = { document: formData, id: licenseId };
-    //     store
-    //       .dispatch("goodstanding/updateDocuments", payload)
-    //       .then((res) => {
-    //         isLoading.value = false;
-    //         if (res.data.status == "Success") {
-    //           toast.success("Applied successfuly", {
-    //             timeout: 5000,
-    //             position: "bottom-center",
-    //             pauseOnFocusLoss: true,
-    //             pauseOnHover: true,
-    //             icon: true,
-    //           });
-    //           localStorage.removeItem("GSApplicationData");
-    //           router.push({ path: "/Applicant/GoodStanding/draft" });
-    //         } else {
-    //           toast.error("Error occured, please try again", {
-    //             timeout: 5000,
-    //             position: "bottom-center",
-    //             pauseOnFocusLoss: true,
-    //             pauseOnHover: true,
-    //             icon: true,
-    //           });
-    //         }
-    //       })
-    //       .catch(() => {
-    //         toast.error("Error occured, please try again", {
-    //           timeout: 5000,
-    //           position: "bottom-center",
-    //           pauseOnFocusLoss: true,
-    //           pauseOnHover: true,
-    //           icon: true,
-    //         });
-    //       });
-    //   });
-    // };
-
+ 
     onMounted(() => {
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {
@@ -698,8 +591,7 @@ export default {
       goToNext,
       departmentDocuments,
       imageUploader,
-      documents,
-      filePreviewData,
+      documents, 
       errorDocuments,
       next,
       isLoading,

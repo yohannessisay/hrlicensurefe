@@ -95,15 +95,7 @@
                   {{ application.name }}
                 </option>
               </select>
-              <button
-                v-show="Object.keys(localData).length != 0"
-                type="button"
-                class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded hover:border-main-500 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
-                @click="clearLocalData()"
-              >
-                <i class="fa fa-close"></i>
-                Clear Form
-              </button>
+            
             </div>
 
             <div>

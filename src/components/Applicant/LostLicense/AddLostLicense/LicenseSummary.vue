@@ -276,7 +276,7 @@ export default {
     const router = useRouter();
     const totalSteps = ref(100);
     let progress = computed(
-      () => store.getters["goodstanding/getUploadProgress"]
+      () => store.getters["lostLicenses/getUploadProgress"]
     );
     let totalSize = ref(0);
     let localData = ref({});
@@ -324,7 +324,7 @@ export default {
         // };
         generalInfo.value.applicant_type_id =
           generalInfo.value.applicantType.id;
-           generalInfo.value.residence_woreda_id =
+           generalInfo.value.residence_woreda =
           generalInfo.value.woredaSelected.id;
         let license = {
           action: action,
@@ -338,7 +338,7 @@ export default {
             .dispatch("lostLicenses/uploadDocuments", payload)
             .then((res) => {
               isLoading.value = false;
-              if (res.data.status == "Success") {
+              if (res.data) {
                 localStorage.removeItem("LLApplicationData");
                 localStorage.removeItem("applicantTypeSelected");
                 indexedDB.deleteDatabase("LLdocumentUploads");

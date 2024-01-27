@@ -134,109 +134,6 @@
                   </div>
                 </div>
               </div>
-              <div class="mb-4" v-if="showLicenses">
-                <h2 class="text-yellow-300 text-lg">
-                  Here you can find your previous applied licenses in the
-                  system, select the one you want to apply as a lost one
-                </h2>
-                <div class="vld-parent mt-4">
-                  <loading
-                    :active="licensesLoading"
-                    :is-full-page="false"
-                    :color="'#2F639D'"
-                    :opacity="1"
-                  ></loading>
-
-                  <div
-                    v-if="
-                      (approvedNewLicenses && approvedNewLicenses.length > 0) ||
-                        (approvedRenewals && approvedRenewals.length > 0)
-                    "
-                  >
-                    <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-4">
-                      <div
-                        v-for="license in approvedNewLicenses ||
-                          approvedRenewals"
-                        :key="license.id"
-                        :class="
-                          license.isSelected
-                            ? 'rounded-md p-2 shadow-md bg-primary-300'
-                            : 'rounded-md p-2 shadow-md'
-                        "
-                      >
-                        <div class="grid grid-cols-1 sm:grid-cols-2">
-                          <h2 class="text-grey-800 text-lg mb-2">
-                            License Number
-                          </h2>
-                          <h2 class="text-main-400 text-lg">
-                            {{
-                              license.newLicenseCode
-                                ? license.newLicenseCode
-                                : license.renewalCode
-                                ? license.renewalCode
-                                : ""
-                            }}
-                          </h2>
-                          <h2 class="text-grey-800 text-lg">Profession</h2>
-                          <h2 class="text-main-400 text-lg mb-2">
-                            <span
-                              v-for="education in license.educations"
-                              :key="education.id"
-                            >
-                              {{
-                                education && education.professionType
-                                  ? education.professionType.name + " "
-                                  : ""
-                              }}</span
-                            >
-                          </h2>
-                          <h2 class="text-grey-800 text-lg mb-2">
-                            License Expiry Date
-                          </h2>
-                          <h2 class="text-main-400 text-lg">
-                            {{
-                              license.licenseExpirationDate
-                                ? license.licenseExpirationDate.slice(0, 10)
-                                : ""
-                            }}
-                          </h2>
-                        </div>
-                        <button
-                          :class="
-                            !license.isSelected
-                              ? 'mb-2 w-full col-span-12 block px-6 py-2.5 bg-main-400 text-white   font-medium text-xs leading-tight uppercase rounded hover:text-main-400 hover:border-main-500 hover:bg-white transition duration-300 ease-in-out'
-                              : 'mb-2 w-full col-span-12 block px-6 py-2.5 bg-red-300 text-white   font-medium text-xs leading-tight uppercase rounded hover:text-main-400 hover:border-main-500 hover:bg-white transition duration-300 ease-in-out'
-                          "
-                          type="button"
-                          @click="
-                            selectLicense(
-                              license && license.newLicenseCode
-                                ? 'newLicense'
-                                : 'renewal',
-                              license.id,
-                              license
-                            )
-                          "
-                        >
-                          {{ license.isSelected ? "Remove" : "Select" }}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div v-else class="p-2 border rounded-md shadow-md">
-                    No licenses found, Select this if you do not have any
-                    license or renewal application approved prior
-                    <button
-                      class="mb-2 w-full col-span-12 block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded hover:text-main-400 hover:border-main-500 hover:bg-white transition duration-150 ease-in-out"
-                      type="button"
-                      @click="selectLicense('none')"
-                    >
-                      Select
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
             <!-- region -->
             <div
@@ -276,13 +173,14 @@
                   class="flex flex-col"
                   v-if="
                     generalInfo.regionSelected &&
-                      generalInfo.regionSelected.code != 'FED' &&
-                      generalInfo.regionSelected.code != 'HAR'
+                    generalInfo.regionSelected.code != 'FED' &&
+                    generalInfo.regionSelected.code != 'HAR'
                   "
                 >
                   <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >Zone<span class="text-red-300">*</span></label
                   >
+                
                   <select
                     class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     @change="zoneChangeHandler()"
@@ -301,7 +199,7 @@
                   class="flex flex-col"
                   v-if="
                     generalInfo.regionSelected &&
-                      generalInfo.regionSelected.code != 'FED'
+                    generalInfo.regionSelected.code != 'FED'
                   "
                 >
                   <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
@@ -326,21 +224,13 @@
             <!-- end -->
           </div>
 
-          <div class="vld-parent">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="1"
-            ></loading>
-            <div class="flex justify-end mb-2 mr-1 bg-white">
-              <button
-                class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
-                type="submit"
-              >
-                Next
-              </button>
-            </div>
+          <div class="flex justify-end mb-2 mr-1 bg-white">
+            <button
+              class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+              type="submit"
+            >
+              Next
+            </button>
           </div>
         </form>
       </div>
@@ -381,14 +271,20 @@ export default {
     MainContent,
     LicenseSummary,
     Upload,
-    Loading
+    Loading,
   },
   emits: ["changeActiveState", "changeActiveStateMinus", "activeState"],
   setup() {
     const store = useStore();
     const route = useRoute();
     let isLoading = ref(false);
-    let generalInfo = ref({});
+    let generalInfo = ref({
+      regionSelected: "",
+      zoneSelected: "",
+      woredaSelected: "",
+      applicantType: "",
+      applicationType: "",
+    });
     let localData = ref([]);
     let regions = ref([]);
     let isAppTypeSelected = ref(false);
@@ -397,8 +293,13 @@ export default {
     let applicantTypes = ref([]);
     let showLocation = ref(false);
     let activeState = ref(1);
-
-    const checkApplicantType = applicantType => {
+    let applicationCategories = ref("");
+    const isDarkMode = ref(
+      localStorage.getItem("darkMode")
+        ? JSON.parse(localStorage.getItem("darkMode"))
+        : false
+    );
+    const checkApplicantType = (applicantType) => {
       generalInfo.value.regionId = null;
       generalInfo.value.zoneId = null;
       generalInfo.value.woredaId = null;
@@ -428,7 +329,7 @@ export default {
             generalInfo.value.zoneSelected = {
               name: "Default Harar",
               id: 464,
-              code: "ZN_HAR_DEF_54"
+              code: "ZN_HAR_DEF_54",
             };
             fetchWoredas();
             break;
@@ -442,21 +343,21 @@ export default {
     const fetchZones = () => {
       store
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then(res => {
+        .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
     };
 
     const fetchRegions = async () => {
-      await store.dispatch("goodstanding/getRegions").then(res => {
+      await store.dispatch("goodstanding/getRegions").then((res) => {
         regions.value = res.data.data;
       });
     };
     const fetchZone = () => {
       store
-        .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then(res => {
+        .dispatch("goodstanding/getZones", generalInfo.value.regionSelected.id)
+        .then((res) => {
           zones.value = res.data.data;
         });
     };
@@ -464,12 +365,12 @@ export default {
     const fetchWoredas = () => {
       store
         .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
-        .then(res => {
+        .then((res) => {
           woredas.value = res.data.data;
         });
     };
 
-    const apply = () => {
+    const submit = () => {
       if (
         generalInfo.value.regionSelected &&
         generalInfo.value.regionSelected.code == "FED"
@@ -484,71 +385,104 @@ export default {
 
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
-        "GSApplicationData",
+        "LLApplicationData",
         JSON.stringify(tempApplicationData)
       );
 
       store
-        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
+        .dispatch("lostLicenses/setGeneralInfo", generalInfo.value)
         .then(() => {
           activeState.value++;
         });
     };
     const clearLocalData = () => {
-      window.localStorage.removeItem("GSApplicationData");
+      window.localStorage.removeItem("LLApplicationData");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
     };
 
     const applicantTypeChangeHandler = async () => {
-      if (generalInfo.value.applicantType.code == "ETH") {
+      if (
+        generalInfo.value.applicantType &&
+        generalInfo.value.applicantType.code == "ETH"
+      ) {
         showLocation.value = true;
       } else {
         showLocation.value = false;
       }
     };
+    const fetchApplicationCategory = async () => {
+      const res = store
+        .dispatch("goodstanding/getApplicationCategories")
+        .then((res) => {
+          const results = res.data.data;
+
+          applicationCategories.value = results.filter(
+            (el) => el.code === "NA" || el.code === "RA"
+          );
+          return results;
+        });
+      return res;
+    };
+    const fetchApplicantType = () => {
+      store.dispatch("goodstanding/getApplicantType").then((res) => {
+        applicantTypes.value = res.data.data;
+      });
+    };
     const loadFunctions = async () => {
       isLoading.value = true;
 
       await store
-        .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
-        .then(res => {
+        .dispatch("lostLicenses/getLostLicenseById", route.params.id)
+        .then(async (res) => {
           generalInfo.value = res.data.data;
 
           generalInfo.value.regionSelected =
-            res.data.data && res.data.data.woreda
-              ? res.data.data.woreda.zone.region
-              : "";
+            res?.data?.data?.residenceWoreda?.zone?.region;
 
           generalInfo.value.zoneSelected =
-            res.data.data && res.data.data.woreda
-              ? res.data.data.woreda.zone
-              : "";
-          generalInfo.value.woredaSelected =
-            res.data.data && res.data.data.woreda ? res.data.data.woreda : "";
+            res?.data?.data?.residenceWoreda?.zone;
+          delete generalInfo.value.zoneSelected.region;
 
-          applicantTypeChangeHandler();
-          regionChangeHandler();
-          zoneChangeHandler();
-          generalInfo.value.education = JSON.parse(
-            JSON.stringify(res.data.data.GSProfessionals)
-          );
+          generalInfo.value.woredaSelected = res?.data?.data?.residenceWoreda;
+          delete generalInfo.value.woredaSelected.zone;
+          generalInfo.value.loss_date = new Date(generalInfo.value.loss_date)
+            .toISOString()
+            .slice(0, 10);
+
+          const applicationCategory = await fetchApplicationCategory();
+
+          if (generalInfo.value.newLicense) {
+            generalInfo.value.applicationType = applicationCategory.filter(
+              (el) => el.code === "NA"
+            )[0];
+          } else if (generalInfo.value.renewal) {
+            generalInfo.value.applicationType = applicationCategory.filter(
+              (el) => el.code === "RA"
+            )[0];
+          }
+
           if (
             res.data.data.residenceWoredaId == null &&
             res.data.data.applicantTypeId == 1
           ) {
             generalInfo.value.regionSelected = regions.value.filter(
-              el => el.code == "FED"
+              (el) => el.code == "FED"
             )
-              ? regions.value.filter(el => el.code == "FED")[0]
+              ? regions.value.filter((el) => el.code == "FED")[0]
               : [];
           }
-          generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
-
+          fetchApplicantType();
+          applicantTypeChangeHandler();
           fetchRegions();
-          fetchZone();
-          fetchWoredas();
+          if (generalInfo.value.residenceWoreda) {
+            fetchZone();
+            fetchWoredas();
+            regionChangeHandler();
+            zoneChangeHandler();
+          }
+
           isLoading.value = false;
         });
     };
@@ -560,7 +494,7 @@ export default {
       regionChangeHandler,
       applicantTypeChangeHandler,
       zoneChangeHandler,
-      apply,
+      submit,
       fetchZone,
       isAppTypeSelected,
       showLocation,
@@ -572,9 +506,11 @@ export default {
       applicantTypes,
       isLoading,
       clearLocalData,
-      localData
+      localData,
+      isDarkMode,
+      applicationCategories,
     };
-  }
+  },
 };
 </script>
 <style>

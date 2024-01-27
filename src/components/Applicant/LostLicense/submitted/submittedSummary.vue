@@ -3,7 +3,7 @@
     <!-- Heading start -->
     <header class="text-center mx-auto mb-2 lg:px-20">
       <h2 class="text-2xl leading-normal mb-2 font-bold text-main-400">
-        Summary For Good Standing Letter
+        Summary For Lost License Letter
       </h2>
 
       <p class="text-grey-800 leading-relaxed font-light text-lg mx-auto pb-2">
@@ -12,9 +12,9 @@
     </header>
     <!-- End heading -->
     <!-- row -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div class="grid grid-cols-1 gap-4">
       <div
-        class="py-2 px-12 mb-2 bg-white mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-2 px-12 mb-2 sm:mb-12 bg-white mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -39,7 +39,9 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantType ? localData.applicantType.name : ""
+                localData && localData.applicantType
+                  ? localData.applicantType.name
+                  : ""
               }}</span
             >
           </div>
@@ -49,13 +51,13 @@
             <span
               class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
             >
-              Department</span
+              License Loss Date</span
             >
           </div>
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.department ? localData.department.name : ""
+                localData && localData.loss_date ? localData.loss_date : ""
               }}</span
             >
           </div>
@@ -64,133 +66,17 @@
           <div>
             <span
               class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >Profession</span
+              >The region in which the license is lost</span
             >
           </div>
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.GSProfessionals
-                  ? localData.GSProfessionals.professionalTypes.name
+                localData && localData.regionSelected
+                  ? localData.regionSelected.name
                   : ""
               }}
             </span>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-          <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >Education Level</span
-            >
-          </div>
-          <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.GSProfessionals
-                  ? localData.GSProfessionals.educationLevel.name
-                  : ""
-              }}
-            </span>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-          <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              Applicant Title</span
-            >
-          </div>
-          <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.applicantTitle ? localData.applicantTitle.name : ""
-              }}</span
-            >
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="py-2 px-12 mb-2 bg-white rounded-lg mt-2 text-main-400 transform transition duration-300 ease-in-out hover:-translate-y-2"
-      >
-        <div class="border-b-2 text-main-400 mb-4">
-          <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-envelope fa-3x text-main-400"></i>
-          </div>
-          <div class="flex justify-center text-gray-900 mb-4">
-            <h3
-              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
-            >
-              Letter Detail
-            </h3>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-          <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              Who issued the letter</span
-            >
-          </div>
-          <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ localData && localData.whoIssued ? localData.whoIssued.name : "" }}</span
-            >
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-          <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >To whom the letter is written for</span
-            >
-          </div>
-          <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.whomGoodStandingFor
-                  ? localData.whomGoodStandingFor
-                  : ""
-              }}</span
-            >
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-          <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >License Registration Number</span
-            >
-          </div>
-          <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.licenseRegistrationNumber
-                  ? localData.licenseRegistrationNumber
-                  : ""
-              }}</span
-            >
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-          <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              License IssuedDate</span
-            >
-          </div>
-          <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.licenseIssuedDate
-                  ? localData.licenseIssuedDate
-                  : ""
-              }}</span
-            >
           </div>
         </div>
       </div>
@@ -239,7 +125,10 @@
                     :data-title="changed.docName"
                     data-lightbox="example-1"
                   >
-                    <img :src="changed.prevFile" class="w-full h-48 object-cover" />
+                    <img
+                      :src="changed.prevFile"
+                      class="w-full h-48 object-cover"
+                    />
                   </a>
                 </div>
 
@@ -335,7 +224,9 @@
       >
         <div class="mb-4">
           <div class="flex justify-center">
-            <label for="feedback" class="form-label inline-block mb-2 text-main-400"
+            <label
+              for="feedback"
+              class="form-label inline-block mb-2 text-main-400"
               >Feedback on the process and system
               <span class="text-yellow-300">(optional*)</span>
             </label>
@@ -363,8 +254,8 @@
               />
             </div>
             <h3 class="text-grey-800 mb-2 localFileData sm:text-lg text-sm">
-              By checking here I hereby verify the documents and details filled in here
-              are legal.
+              By checking here I hereby verify the documents and details filled
+              in here are legal.
             </h3>
           </div>
         </div>
@@ -381,7 +272,7 @@
       <div class="flex justify-center mb-8">
         <span v-for="button in buttons" :key="button.id">
           <button
-            v-if="button.action != 'DraftEvent'"
+            v-if="button.action !== 'DraftEvent' || 'WithdrawEvent'"
             type="button"
             :class="
               allowSave
@@ -426,9 +317,10 @@
       <div>
         <div class="flex border justify-center text-yellow-300 p-2 rounded-md">
           <h2 class="text-xl">
-            Please wait patiently as your files are being uploaded, if for any reason the
-            files you uploaded are not successful you will be redirected to the submitted
-            page automatically so you can re-attach your documents again
+            Please wait patiently as your files are being uploaded, if for any
+            reason the files you uploaded are not successful you will be
+            redirected to the submitted page automatically so you can re-attach
+            your documents again
           </h2>
         </div>
       </div>
@@ -455,7 +347,9 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const totalSteps = ref(100);
-    let progress = computed(() => store.getters["goodstanding/getUploadProgress"]);
+    let progress = computed(
+      () => store.getters["lostLicenses/getUploadProgress"]
+    );
     let showModal = ref(false);
     let localData = ref({});
     let localFileData = ref({});
@@ -497,92 +391,25 @@ export default {
         });
         isLoading.value = true;
         showModal.value = true;
+        generalInfo.value.applicant_type_id =
+          generalInfo.value.applicantType.id;
+        generalInfo.value.residence_woreda =
+          generalInfo.value.woredaSelected.id;
         let license = {
           action: action,
-          data: {
-            applicantId: generalInfo.value.applicantId,
-            applicantTypeId: generalInfo.value.applicantTypeId
-              ? generalInfo.value.applicantTypeId
-              : generalInfo.value.applicantType
-              ? generalInfo.value.applicantType.id
-              : null,
-            applicationStatusId: generalInfo.value.applicationStatusId,
-            residenceWoredaId: generalInfo.value.woredaSelected
-              ? generalInfo.value.woredaSelected.id
-              : null,
-            applicantTitleId: generalInfo.value.applicantTitleId
-              ? generalInfo.value.applicantTitleId
-              : generalInfo.value.applicantTitle
-              ? generalInfo.value.applicantTitle.id
-              : null,
-            whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
-              ? generalInfo.value.whomGoodStandingFor
-              : "",
-            applicantPositionId: generalInfo.value.applicantPositionId
-              ? generalInfo.value.applicantPositionId
-              : generalInfo.value.applicantPosition
-              ? generalInfo.value.applicantPosition.id
-              : null,
-            licenseIssuedDate: generalInfo.value.licenseIssuedDate
-              ? generalInfo.value.licenseIssuedDate
-              : null,
-            whoIssuedId: generalInfo.value.whoIssuedId
-              ? generalInfo.value.whoIssuedId.id
-              : "",
-            licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
-              ? generalInfo.value.licenseRegistrationNumber
-              : "",
-            professionType: {
-              professionTypeId:
-                generalInfo.value.GSProfessionals &&
-                generalInfo.value.GSProfessionals.professionalTypes
-                  ? generalInfo.value.GSProfessionals.professionalTypes.id
-                  : generalInfo.value.GSProfessionals.professionalTypeId
-                  ? generalInfo.value.GSProfessionals.professionalTypeId
-                  : null,
-              educationLevelId:
-                generalInfo.value.GSProfessionals &&
-                generalInfo.value.GSProfessionals.educationLevel
-                  ? generalInfo.value.GSProfessionals.educationLevel.id
-                  : generalInfo.value.GSProfessionals.educationLevelId
-                  ? generalInfo.value.GSProfessionals.educationLevelId
-                  : null,
-              otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
-                ? generalInfo.value.GSProfessionals.otherProfessionType
-                : "",
-              otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
-                .otherProfessionTypeAmharic
-                ? generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
-                : "",
-            },
-            expertLevelId: generalInfo.value.expertLevelId
-              ? generalInfo.value.expertLevelId
-              : null,
-            islegal: true,
-            other_applicant_position: generalInfo.value.otherApplicantPosition
-              ? generalInfo.value.otherApplicantPosition
-              : "",
-
-            departmentId: generalInfo.value.department
-              ? generalInfo.value.department.id
-              : generalInfo.value.departmentId
-              ? generalInfo.value.departmentId
-              : null,
-            feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
-            id: route.params.id,
-          },
+          data: generalInfo.value,
         };
-        store.dispatch("goodstanding/editGoodstandingLicense", license).then(() => {
+        store.dispatch("lostLicenses/editLostLicense", license).then(() => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("goodstanding/updateDocuments", payload)
+            .dispatch("lostLicenses/updateDocuments", payload)
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
-                     localStorage.removeItem("GSApplicationData"); 
-                  localStorage.removeItem("applicantTypeSelected");
-                  indexedDB.deleteDatabase("GSdocumentUploads");
+                localStorage.removeItem("LLApplicationData");
+                localStorage.removeItem("applicantTypeSelected");
+                indexedDB.deleteDatabase("LLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -590,11 +417,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                if (action == "DraftEvent") {
-                  router.push({ path: "/Applicant/GoodStanding/draft" });
-                } else {
-                  router.push({ path: "/Applicant/GoodStanding/submitted" });
-                }
+                router.push({ path: "/Applicant/LostLicense/submitted" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -628,20 +451,21 @@ export default {
           return e.code == "DRA";
         });
         buttons.value = status[0]["buttons"];
+        buttons.value = buttons.value.filter((el) => el.code === "SUB");
       });
     };
     onMounted(() => {
       fetchApplicationStatuses();
       store
-        .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
+        .dispatch("lostLicenses/getLostLicenseById", route.params.id)
         .then((res) => {
           savedData.value = res.data.data;
 
           buttons.value = buttons.value.filter((ele) => ele.code != "AT");
-          tempDocs.value = store.getters["goodstanding/getTempDocs"];
+          tempDocs.value = store.getters["lostLicenses/getTempDocs"];
 
-          localData.value = window.localStorage.getItem("GSApplicationData")
-            ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
+          localData.value = window.localStorage.getItem("LLApplicationData")
+            ? JSON.parse(window.localStorage.getItem("LLApplicationData"))
             : {};
 
           generalInfo.value = localData.value;
@@ -652,13 +476,16 @@ export default {
             generalInfo.value.regionSelected.code == "FED"
           ) {
             generalInfo.value.expertLevelId = 3;
-          } else if (generalInfo.value.applicantTypeSelected.id == 1) {
+          } else if (
+            generalInfo.value.applicantType &&
+            generalInfo.value.applicantType.id == 1
+          ) {
             generalInfo.value.expertLevelId = 4;
           } else {
             generalInfo.value.expertLevelId = 3;
           }
           //Get images from indexed Db
-          let request = indexedDB.open("GSdocumentUploads", 1);
+          let request = indexedDB.open("LLdocumentUploads", 1);
 
           request.onerror = function () {
             console.error("Unable to open database.");
@@ -666,14 +493,16 @@ export default {
 
           request.onsuccess = function () {
             let db = request.result;
-            const tx = db.transaction("GSdocumentUploads", "readonly");
-            const store = tx.objectStore("GSdocumentUploads");
+            const tx = db.transaction("LLdocumentUploads", "readonly");
+            const store = tx.objectStore("LLdocumentUploads");
             let getAllIDB = store.getAll();
 
             getAllIDB.onsuccess = function (evt) {
               localFileImages.value = evt.target.result
                 ? JSON.parse(
-                    JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {})
+                    JSON.stringify(
+                      evt.target.result[0] ? evt.target.result[0].data : {}
+                    )
                   )
                 : {};
 

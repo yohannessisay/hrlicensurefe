@@ -61,6 +61,18 @@
             </router-link>
           </a>
         </li>
+              <li class="list">
+          <b></b>
+          <b></b>
+          <a href="#LostLicense">
+            <router-link class="link" to="/Applicant/LostLicense">
+              <span class="icon"
+                ><i class="bx bx-recycle text-white"></i
+              ></span>
+              <span class="text text-white font-bold">Lost License</span>
+            </router-link>
+          </a>
+        </li>
       </ul>
     </div>
   </div>
