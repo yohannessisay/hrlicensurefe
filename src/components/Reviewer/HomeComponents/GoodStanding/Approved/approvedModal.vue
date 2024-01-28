@@ -337,9 +337,7 @@
       </div>
     </div>
   </div>
-  <generate-pdf :modalDataGenerate="modalDataGenerate"></generate-pdf>
-  <revoke-license-modal :modalData="modalData"></revoke-license-modal>
-  <suspend-license-modal :modalData="modalData"></suspend-license-modal>
+  <generate-pdf :modalDataGenerate="modalDataGenerate"></generate-pdf> 
   <request-status-change-modal :modalData="modalData"></request-status-change-modal>
 </template>
 <script>
@@ -349,17 +347,13 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
-import generatePdf from "./generateLicensedPdf.vue";
-import revokeLicenseModal from "./revokeLicenseModal.vue";
-import suspendLicenseModal from "./suspendLicenseModal.vue";
+import generatePdf from "./generateLicensedPdf.vue"; 
 import requestStatusChangeModal from "./requestStatusChange.vue";
 export default {
   props: ["modalDataId"],
   components: {
     Loading,
-    generatePdf,
-    revokeLicenseModal,
-    suspendLicenseModal,
+    generatePdf, 
     requestStatusChangeModal,
   },
   computed: {

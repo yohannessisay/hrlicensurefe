@@ -1390,8 +1390,7 @@ export default {
       let CMtemp = "";
       let NSTemp = "";
       var tempVal;
-      errorDocuments.value = [];
-      console.log(documentsUploaded.value);
+      errorDocuments.value = []; 
       // if back button is clicked
       if (isBackButtonClicked.value == true) {
         // check common documents

@@ -344,8 +344,7 @@ export default {
           const qrParam = { url: null };
           qrParam.url =
             staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
-          console.log(qrParam.url);
-          await store.dispatch("reviewer/getQrCode", qrParam).then((res) => {
+           await store.dispatch("reviewer/getQrCode", qrParam).then((res) => {
             qrSrc.value = res.data.data;
           });
         },

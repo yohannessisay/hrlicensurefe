@@ -642,8 +642,7 @@ export default {
           woredas.value = woredasResult;
         });
     };
-    const fetchProfessionalType = (departmentId, educationalLevelId) => {
-      console.log(departmentId, educationalLevelId);
+    const fetchProfessionalType = (departmentId, educationalLevelId) => { 
       store
         .dispatch("renewal/getProfessionalTypes", {
           departmentId,

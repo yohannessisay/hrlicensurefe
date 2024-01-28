@@ -1590,8 +1590,7 @@ export default {
       return fileUploadError.value;
     };
     const groupByKey = (array, key) => {
-      return array.reduce((hash, obj) => {
-        console.log(hash, obj);
+      return array.reduce((hash, obj) => { 
         if (obj[key] === undefined || obj[key] == null || obj[key] == "") return hash;
         return Object.assign(hash, {
           [obj[key]]: (hash[obj[key]] || []).concat(obj),

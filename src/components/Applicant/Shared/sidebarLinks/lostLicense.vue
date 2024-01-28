@@ -36,13 +36,34 @@
                  <span class="icon"
             ><i
               :class="
-                $route.fullPath === '/Applicant/GoodStanding/submitted'
+                $route.fullPath === '/Applicant/LostLicense/submitted'
                   ? 'bx bxs-save'
                   : 'bx bx-save'
               "
             ></i
           ></span>
           <span class="text text-white font-bold break-all">Submitted</span>
+        </router-link>
+      </a>
+    </li>
+      <li
+      :class="$route.fullPath === '/Applicant/LostLicense/declined' ? 'list active' : 'list'"
+      :id="$route.fullPath === '/Applicant/LostLicense' ? 'activeMenu' : ''"
+    >
+      <b></b>
+      <b></b>
+      <a class="ml-4" href="#LostLicenseDeclined">
+        <router-link class="link" to="/Applicant/LostLicense/declined">
+                 <span class="icon"
+            ><i
+              :class="
+                $route.fullPath === '/Applicant/LostLicense/declined'
+                  ? 'bx bx-shield-x'
+                  : 'bx bx-shield-x'
+              "
+            ></i
+          ></span>
+          <span class="text text-white font-bold break-all">Declined</span>
         </router-link>
       </a>
     </li>

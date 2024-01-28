@@ -12,5 +12,4 @@ for (let i = 1; i < 39; i++) {
       j +
       ", true),";
   }
-}
-console.log(res);
+} 

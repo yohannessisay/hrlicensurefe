@@ -1665,7 +1665,7 @@ export default {
     };
 
     const changeNewProfession = (profession) => {
-      console.log(profession);
+       
     };
     const viewImage = (url) => {
       v3ImgPreviewFn(url);

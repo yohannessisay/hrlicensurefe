@@ -773,7 +773,7 @@ export default {
           }
 
           content.value = tempTransformed;
-          console.log(tempTransformed);
+          
           if (errors.length > 0) {
             errorModal.value = true;
             Finalerrors.value = errors;
@@ -805,8 +805,7 @@ export default {
       let today = new Date();
       let createdAt = today.toISOString();
       let updatedAt = today.toISOString();
-      add.forEach((element) => {
-        console.log(element);
+      add.forEach((element) => { 
         let tempObj = {
           registrationNo: element[1],
           firstName: element[2],

@@ -8,7 +8,7 @@ import {
   SET_BUTTONS
 } from "./mutation-types";
 
-const userId = +window.localStorage.getItem("userId");
+const userId = JSON.parse(localStorage.getItem("userId"));
 function authHeaders(needsAuth) {
   const token = localStorage.getItem("token");
   return needsAuth

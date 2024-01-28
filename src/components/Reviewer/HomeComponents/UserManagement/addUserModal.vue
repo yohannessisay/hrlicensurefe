@@ -352,7 +352,7 @@ export default {
 
     const registerAdmin = () => {
       let isValidated = validateForm(admin);
-      console.log(isValidated);
+    
       showLoading.value = true;
       showButtons.value = true;
       isLoading.value = true;

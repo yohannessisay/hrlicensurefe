@@ -47,6 +47,17 @@
         </li>
       </router-link>
       <router-link
+        to="/admin/lostLicense/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
+        <li class="mb-2">
+          <a href="#LostLicenses">
+            <i class="bx bx-recycle"></i>
+            <span class="links_name">Lost Licenses</span>
+          </a>
+        </li>
+      </router-link>
+      <router-link
         to="/admin/requests/"
         v-if="adminData ? adminData.role.code == 'ADM' : ''"
       >

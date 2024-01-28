@@ -134,7 +134,7 @@
               <h2 class="text-lg text-grey-800">Applied Date</h2>
 
               <span class="text-main-400 text-sm">{{
-                license.created_at.slice(0, 10)
+                 license.createdAt?license.createdAt.slice(0, 10):''
               }}</span>
             </footer>
             <div class="flex justify-center">

@@ -178,8 +178,7 @@
         showNotif.value = false;
         store
           .dispatch("notification/readAllAdminReviewerNotification")
-          .then((resp) => {
-            console.log(resp);
+          .then((resp) => { 
             checkForNotification();
           })
           .catch((err) => {

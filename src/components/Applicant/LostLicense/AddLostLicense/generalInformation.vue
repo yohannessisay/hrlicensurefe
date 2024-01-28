@@ -95,7 +95,6 @@
                   {{ application.name }}
                 </option>
               </select>
-            
             </div>
 
             <div>
@@ -131,15 +130,10 @@
                 :opacity="1"
               ></loading>
 
-              <div
-                v-if="
-                  (approvedNewLicenses && approvedNewLicenses.length > 0) ||
-                  (approvedRenewals && approvedRenewals.length > 0)
-                "
-              >
+              <div v-if="approvedLicenses && approvedLicenses.length > 0">
                 <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-4">
                   <div
-                    v-for="license in approvedNewLicenses || approvedRenewals"
+                    v-for="license in approvedLicenses"
                     :key="license.id"
                     :class="
                       license.isSelected
@@ -227,9 +221,7 @@
           "
         >
           <h2 class="text-yellow-300 font-bold text-lg">
-            ***Please select the region where you have lost the license (you can
-            select random woreda if you do not exactly know the woreda name
-            where you lost the license)***
+            ***Please select the region where you have taken the license from***
           </h2>
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
@@ -342,7 +334,7 @@ export default {
     let licensesLoading = ref(false);
     let licenseIsSelected = ref(false);
     let showLicenses = ref(false);
-    let generalInfo = ref({ 
+    let generalInfo = ref({
       applicationType: "",
       renewal_id: null,
       new_license_id: null,
@@ -355,8 +347,7 @@ export default {
       expertLevelId: "",
       applicantType: "",
     });
-    let approvedNewLicenses = ref([]);
-    let approvedRenewals = ref([]);
+    let approvedLicenses = ref([]);
     let localData = ref([]);
     let regions = ref([]);
 
@@ -372,7 +363,7 @@ export default {
           generalInfo.value.renewal_id = null;
           generalInfo.value.has_previous_license_in_system = true;
 
-          approvedNewLicenses.value.forEach((element) => {
+          approvedLicenses.value.forEach((element) => {
             element.id != id
               ? (element.isSelected = false)
               : (license.isSelected = !license.isSelected);
@@ -383,7 +374,7 @@ export default {
           generalInfo.value.renewal_id = id;
           generalInfo.value.new_license_id = null;
           generalInfo.value.has_previous_license_in_system = true;
-          approvedRenewals.value.forEach((element) => {
+          approvedLicenses.value.forEach((element) => {
             element.id != id
               ? element.isSelected == false
               : (license.isSelected = !license.isSelected);
@@ -455,7 +446,7 @@ export default {
 
     const fetchRegions = () => {
       store.dispatch("goodstanding/getRegions").then((res) => {
-        regions.value = res.data.data;
+        regions.value = res.data.data.filter((reg)=>reg.code!=='FED');
       });
     };
     const fetchZone = () => {
@@ -475,15 +466,25 @@ export default {
 
     const submit = () => {
       if (
-        generalInfo.value.regionSelected &&
-        generalInfo.value.regionSelected.code == "FED"
+        generalInfo.value.renewal_id == null &&
+        generalInfo.value.new_license_id == null
       ) {
-        generalInfo.value.expertLevelId = 3;
-      } else if (
+        toast.error("Please select the lost license", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        return;
+      }
+      if (
         generalInfo.value.regionSelected &&
-        generalInfo.value.regionSelected.code != "FED"
+        generalInfo.value.regionSelected.code
       ) {
         generalInfo.value.expertLevelId = 4;
+      } else {
+        generalInfo.value.expertLevelId = 3;
       }
 
       let tempApplicationData = generalInfo.value;
@@ -504,33 +505,30 @@ export default {
       window.location.reload();
     };
     const checkApplicationType = (applicationType) => {
-      approvedNewLicenses.value = [];
-      approvedRenewals.value = [];
+      approvedLicenses.value = [];
       showLicenses.value = true;
       licensesLoading.value = true;
 
       if (applicationType) {
         if (applicationType.code === "NA") {
-          fetchAndProcessLicenses(
-            "newlicense/getNewLicense",
-            approvedNewLicenses
-          );
+          fetchAndProcessLicenses("newlicense/getNewLicense", "newLicense");
         } else if (applicationType.code === "RA") {
-          fetchAndProcessLicenses(
-            "renewal/getRenewalLicense",
-            approvedRenewals
-          );
+          fetchAndProcessLicenses("renewal/getRenewalLicense", "renewal");
         }
       }
     };
-    const fetchAndProcessLicenses = (actionType, targetArray) => {
+    const fetchAndProcessLicenses = (actionType, type) => {
+      let targetArray = [];
       store.dispatch(actionType).then((res) => {
         const results = res.data.data || [];
+
         if (results.length > 0) {
-          targetArray.value = results.filter((approvedLicense) => {
+          targetArray = results.filter((approvedLicense) => {
             return approvedLicense.applicationStatus.code === "APP";
           });
         }
+
+        approvedLicenses.value = targetArray;
         licensesLoading.value = false;
       });
     };
@@ -590,8 +588,7 @@ export default {
       clearLocalData,
       localData,
       isLoading,
-      approvedNewLicenses,
-      approvedRenewals,
+      approvedLicenses,
       licensesLoading,
       showLicenses,
       licenseIsSelected,

@@ -364,6 +364,14 @@ const routes = [
         "../components/Applicant/LostLicense/submitted/submittedDetail.vue"
       )
   },
+  {
+    path: "/Applicant/LostLicense/declined/",
+    name: "ApplicantLostLicenseDeclined",
+    component: () =>
+      import(
+        "../components/Applicant/LostLicense/declined/declined.vue"
+      )
+  },
 
   /******************************************************************************************************************************************/
   /**************1-END OF APPLICANT SIDE ROUTES*****************/
@@ -628,6 +636,63 @@ const routes = [
       ),
   },
 
+    //Admin Lost License part
+    {
+      path: "/admin/lostLicense",
+      name: "AdminLostLicense",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LostLicense/Unassigned/unassigned.vue"
+        ),
+    },
+    {
+      path: "/admin/lostLicense/assigned",
+      name: "AdminLostLicenseAssigned",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LostLicense/Assigned/assigned.vue"
+        ),
+    },
+    {
+      path: "/admin/lostLicense/draft",
+      name: "AdminLostLicenseDraft",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LostLicense/Draft/draft.vue"
+        ),
+    },
+    {
+      path: "/admin/lostLicense/approved",
+      name: "AdminLostLicenseApproved",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LostLicense/Approved/approved.vue"
+        ),
+    },
+    {
+      path: "/admin/lostLicense/declined",
+      name: "AdminLostLicenseDeclined",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LostLicense/Declined/declined.vue"
+        ),
+    },
+    {
+      path: "/admin/lostLicense/printed",
+      name: "AdminLostLicensePrinted",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LostLicense/Printed/printed.vue"
+        ),
+    },
+    {
+      path: "/admin/lostLicense/evaluate/:id",
+      name: "AdminLostLicenseEvaluate",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LostLicense/Assigned/assignedEvaluation.vue"
+        ),
+    },
   //Admin Verification part
   {
     path: "/admin/verification",

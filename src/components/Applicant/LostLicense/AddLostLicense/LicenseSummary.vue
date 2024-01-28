@@ -304,7 +304,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => { 
+    const checkFinalStatus = (action) => {
       documents.value = localFileData.value;
 
       if (agreed.value == true || action == "DraftEvent") {
@@ -324,8 +324,17 @@ export default {
         // };
         generalInfo.value.applicant_type_id =
           generalInfo.value.applicantType.id;
-           generalInfo.value.residence_woreda =
+        generalInfo.value.residence_woreda =
           generalInfo.value.woredaSelected.id;
+
+        if (
+          generalInfo.value.woredaSelected &&
+          generalInfo.value.woredaSelected.code
+        ) {
+          generalInfo.value.expertLevelId = 4;
+        } else {
+          generalInfo.value.expertLevelId = 3;
+        }
         let license = {
           action: action,
           data: generalInfo.value,
