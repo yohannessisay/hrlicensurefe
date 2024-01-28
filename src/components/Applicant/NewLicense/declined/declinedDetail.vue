@@ -301,7 +301,7 @@
                   <h2>Re-apply here by uploading the declined documents</h2>
                   <div
                     id="collapseTwo"
-                    class="accordion-collapse collapse show"
+                    class="accordion-collapse "
                     aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample"
                   >

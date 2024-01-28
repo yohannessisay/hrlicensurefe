@@ -15,7 +15,9 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
 
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300">Requests</a>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Requests</a
+          >
         </li>
       </ol></reviewer-nav-bar
     >
@@ -132,7 +134,7 @@ export default {
     ReviewerNavBar,
     ReviewerSideBar,
     VueTableLite,
-    EditModal,
+    EditModal
   },
 
   setup() {
@@ -148,7 +150,7 @@ export default {
     let requestedStatusFilter = ref("");
     let applicationStatuses = ref([]);
 
-    const fetchRequests = async (apiParameters) => {
+    const fetchRequests = async apiParameters => {
       store
         .dispatch("reviewer/getRequestsByAdminRegion", {
           params: [
@@ -159,35 +161,40 @@ export default {
               value:
                 currentStatusFilter.value && currentStatusFilter.value != "all"
                   ? currentStatusFilter.value
-                  : "",
+                  : ""
             },
             {
               key: "requestedStatus",
               value:
-                requestedStatusFilter.value && requestedStatusFilter.value != "all"
+                requestedStatusFilter.value &&
+                requestedStatusFilter.value != "all"
                   ? requestedStatusFilter.value
-                  : "",
+                  : ""
             },
             {
               key: "requestStatus",
               value:
                 requestStatusFilter.value && requestStatusFilter.value != "all"
                   ? requestStatusFilter.value
-                  : "",
-            },
-          ],
+                  : ""
+            }
+          ]
         })
-        .then(async (res) => {
+        .then(async res => {
           let result = (await res.data) && res.data.data ? res.data.data : [];
           requestsTableData = [];
           result.rows
-            ? result.rows.forEach((element) => {
+            ? result.rows.forEach(element => {
                 requestsTableData.push({
                   id: element.id ? element.id : "",
                   Status: element.status ? element.status : "",
-                  RequestedBy: element.requestedBy ? element.requestedBy.name : "",
+                  RequestedBy: element.requestedBy
+                    ? element.requestedBy.name
+                    : "",
                   ApprovedBy: element.approvedBy ? element.approvedBy.name : "",
-                  CurrentStatus: element.currentStatus ? element.currentStatus.name : "",
+                  ApplicantName: element.currentStatus
+                    ? element.currentStatus.name
+                    : "",
                   RequestedStatus: element.requestedStatus
                     ? element.requestedStatus.name
                     : "",
@@ -207,7 +214,7 @@ export default {
                       : element && element.goodStanding
                       ? "Goodstanding"
                       : "",
-                  data: element,
+                  data: element
                 });
               })
             : "";
@@ -219,67 +226,67 @@ export default {
                 field: "id",
                 width: "5%",
                 sortable: true,
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Code",
                 field: "Code",
-                width: "5%",
+                width: "5%"
               },
               {
                 label: "Status",
                 field: "Status",
                 width: "10%",
-                display: function (row) {
+                display: function(row) {
                   return row.Status && row.Status == "new"
                     ? '<span  class="pending" >  ' + row.Status + " </span>"
                     : '<span  class="finalElement" >' + row.Status + " </span>";
                 },
-                sortable: true,
+                sortable: true
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "15%",
+                sortable: true
               },
               {
                 label: "Requested By",
                 field: "RequestedBy",
                 width: "15%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Approved By",
                 field: "ApprovedBy",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Current Status",
                 field: "CurrentStatus",
                 width: "10%",
-                sortable: true,
-              },
-              {
-                label: "Requested Status",
-                field: "RequestedStatus",
-                width: "10%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "",
                 field: "quick",
                 width: "10%",
-                display: function (row) {
+                display: function(row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded   hover:   transition duration-150 ease-in-out" data-id="' +
                     row.id +
                     '" ><i class="fa fa-eye"></i> View/Edit</button>'
                   );
-                },
-              },
+                }
+              }
             ],
             rows: requestsTableData,
             totalRecordCount: result.count,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
           showAddButton.value = true;
         });
@@ -294,33 +301,33 @@ export default {
           value:
             currentStatusFilter.value && currentStatusFilter.value != "all"
               ? currentStatusFilter.value
-              : "",
+              : ""
         },
         {
           key: "requestedStatus",
           value:
             requestedStatusFilter.value && requestedStatusFilter.value != "all"
               ? requestedStatusFilter.value
-              : "",
+              : ""
         },
         {
           key: "requestStatus",
           value:
             requestStatusFilter.value && requestStatusFilter.value != "all"
               ? requestStatusFilter.value
-              : "",
-        },
+              : ""
+        }
       ]);
     };
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
       });
     };
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       editModalData.value = row;
     };
     const doSearch = (offset, limit, order, sort) => {
@@ -331,12 +338,12 @@ export default {
         if (sort == "asc") {
           fetchRequests([
             { key: "page", value: offset },
-            { key: "size", value: limit },
+            { key: "size", value: limit }
           ]);
         } else {
           fetchRequests([
             { key: "page", value: offset },
-            { key: "size", value: limit },
+            { key: "size", value: limit }
           ]);
         }
       }, 600);
@@ -344,12 +351,12 @@ export default {
     onMounted(() => {
       fetchRequests([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
       let tempAp = JSON.parse(localStorage.getItem("applicationStatuses"))
         ? JSON.parse(localStorage.getItem("applicationStatuses"))
         : [];
-      tempAp.forEach((el) => {
+      tempAp.forEach(el => {
         switch (el.code) {
           case "DEC":
             el.action = "DeclineEvent";
@@ -380,9 +387,9 @@ export default {
       requestTypeFilter,
       rowClicked,
       tableLoadingFinish,
-      doSearch,
+      doSearch
     };
-  },
+  }
 };
 </script>
 <style scoped>

@@ -58,13 +58,21 @@
           ></foreigner-license>
           <!-- Externship -->
           <externship
-            v-if="modalData && modalData.printType && modalData.printType == 'externship'"
+            v-if="
+              modalData &&
+              modalData.printType &&
+              modalData.printType == 'externship'
+            "
             :modalData="modalData"
             :qrSrc="qrSrc"
           ></externship>
           <!-- Temporary -->
           <temporary
-            v-if="modalData && modalData.printType && modalData.printType == 'temporary'"
+            v-if="
+              modalData &&
+              modalData.printType &&
+              modalData.printType == 'temporary'
+            "
             :modalData="modalData"
             :qrSrc="qrSrc"
             :letterType="
@@ -108,7 +116,9 @@
     aria-modal="true"
     role="dialog"
   >
-    <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+    <div
+      class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none"
+    >
       <div
         class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
@@ -217,10 +227,12 @@ export default {
     let today = new Date().toISOString().split("T")[0];
     let retrivalDate = ref("");
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
+    const adminRegionId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
 
-    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel
-      .code;
+    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevel.code;
 
     let isLicenseGenerated = ref(false);
 
@@ -243,7 +255,9 @@ export default {
     let isForeignApplicant = ref(false);
 
     const updateLicenseGenerated = () => {
-      finalData.value.data ? (finalData.value.data.isLicenseGenerated = true) : null;
+      finalData.value.data
+        ? (finalData.value.data.isLicenseGenerated = true)
+        : null;
       finalData.value.data ? (finalData.value.data.isReprint = true) : null;
       let req = {
         action: null,
@@ -272,13 +286,15 @@ export default {
         status: "new",
       };
       isLoading.value = false;
-      store.dispatch("notification/notifyApplicant", notification).then((res) => {
-        if (res && res.status == "Success") {
-          editApplication(req);
-        } else {
-          isLoading.value = false;
-        }
-      });
+      store
+        .dispatch("notification/notifyApplicant", notification)
+        .then((res) => {
+          if (res && res.status == "Success") {
+            editApplication(req);
+          } else {
+            isLoading.value = false;
+          }
+        });
     };
 
     const editApplication = (req) => {
@@ -441,7 +457,9 @@ export default {
             .set(opt)
             .from(element)
             .save(
-              finalData.value && finalData.value.profile && finalData.value.profile.name
+              finalData.value &&
+                finalData.value.profile &&
+                finalData.value.profile.name
                 ? finalData.value.profile.name +
                     " " +
                     new Date().toISOString().slice(0, 10)
@@ -473,11 +491,14 @@ export default {
           : []
       );
       certificateDetail.value.educations = certificateDetail.value.educations
-        ? certificateDetail.value.educations.filter((edu) => edu.isDropped != true)
+        ? certificateDetail.value.educations.filter(
+            (edu) => edu.isDropped != true
+          )
         : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
-      certificateDetail.value.licenseNumber = certificateDetail.value.newLicenseCode;
+      certificateDetail.value.licenseNumber =
+        certificateDetail.value.newLicenseCode;
       if (props.modalData.data.certified != true) {
         isUserCertified.value = false;
       }
@@ -519,14 +540,18 @@ export default {
         175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ""
+          certifiedUser.value.grandFatherName
+            ? certifiedUser.value.grandFatherName
+            : ""
         }`
       );
       doc2.text(
         175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ""
+          certifiedUser.value.grandFatherName
+            ? certifiedUser.value.grandFatherName
+            : ""
         }`
       );
 
@@ -605,13 +630,16 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
+            `${
+              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+            }${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name == "other"
+              certificateDetail.value.educations[i].professionType.name ==
+                "other"
                 ? certificateDetail.value.educations[i].otherProfessionType
                 : certificateDetail.value.educations[i].professionType.name
             }`,
@@ -624,13 +652,16 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
+            `${
+              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+            }${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name == "other"
+              certificateDetail.value.educations[i].professionType.name ==
+                "other"
                 ? certificateDetail.value.educations[i].otherProfessionType
                 : certificateDetail.value.educations[i].professionType.name
             }`,
@@ -643,13 +674,18 @@ export default {
             doc2.text(
               xPosition.value,
               professionPossition + newI * professionListGap,
-              `${certificateDetail.value.educations.length > 1 ? newI + 1 + ". " : ""}${
+              `${
+                certificateDetail.value.educations.length > 1
+                  ? newI + 1 + ". "
+                  : ""
+              }${
                 certificateDetail.value.educations[i].prefix
                   ? certificateDetail.value.educations[i].prefix.name
                   : ""
               } ${
                 certificateDetail.value.educations[i].professionType &&
-                certificateDetail.value.educations[i].professionType.name == "other"
+                certificateDetail.value.educations[i].professionType.name ==
+                  "other"
                   ? certificateDetail.value.educations[i].otherProfessionType
                   : certificateDetail.value.educations[i].professionType.name
               }`,
@@ -667,7 +703,9 @@ export default {
         code == "AA" ? 160.5 : 164,
         `${
           certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
+            ? moment(certificateDetail.value.certifiedDate).format(
+                "MMM DD, YYYY"
+              ) + " - "
             : "Not Specified"
         }`
       );
@@ -676,7 +714,9 @@ export default {
         code == "AA" ? 160.5 : 164,
         `${
           certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
+            ? moment(certificateDetail.value.certifiedDate).format(
+                "MMM DD, YYYY"
+              ) + " - "
             : "Not Specified"
         }`
       );
@@ -685,7 +725,9 @@ export default {
         code == "AA" ? 160.5 : 164,
         `${
           certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
+            ? moment(certificateDetail.value.licenseExpirationDate).format(
+                "MMM DD, YYYY"
+              )
             : "Not Specified"
         }`
       );
@@ -694,7 +736,9 @@ export default {
         code == "AA" ? 160.5 : 164,
         `${
           certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
+            ? moment(certificateDetail.value.licenseExpirationDate).format(
+                "MMM DD, YYYY"
+              )
             : "Not Specified"
         }`
       );
@@ -731,7 +775,9 @@ export default {
         60 + aaNamePosHor,
         namePosition - paddingAmharic + aaNamePosVer,
         `${
-          certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ""
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
         } ${
           certifiedUser.value.alternativeFatherName
             ? certifiedUser.value.alternativeFatherName
@@ -746,7 +792,9 @@ export default {
         60 + aaNamePosHor,
         namePosition - paddingAmharic + aaNamePosVer,
         `${
-          certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ""
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
         } ${
           certifiedUser.value.alternativeFatherName
             ? certifiedUser.value.alternativeFatherName
@@ -776,13 +824,16 @@ export default {
           doc.text(
             xPosition.value + aaNamePosHor,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
+            `${
+              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+            }${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name == "other"
+              certificateDetail.value.educations[i].professionType.name ==
+                "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType
@@ -797,13 +848,16 @@ export default {
           doc.text(
             xPosition.value + aaNamePosHor,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
+            `${
+              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+            }${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name == "other"
+              certificateDetail.value.educations[i].professionType.name ==
+                "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType
@@ -819,13 +873,19 @@ export default {
             doc2.text(
               xPosition.value + aaNamePosHor,
               professionPossition + newI * professionListGap,
-              `${certificateDetail.value.educations.length > 1 ? newI + 1 + ". " : ""}${
+              `${
+                certificateDetail.value.educations.length > 1
+                  ? newI + 1 + ". "
+                  : ""
+              }${
                 certificateDetail.value.educations[i].prefix
-                  ? certificateDetail.value.educations[i].prefix.amharic_name + " "
+                  ? certificateDetail.value.educations[i].prefix.amharic_name +
+                    " "
                   : ""
               } ${
                 certificateDetail.value.educations[i].professionType &&
-                certificateDetail.value.educations[i].professionType.name == "other"
+                certificateDetail.value.educations[i].professionType.name ==
+                  "other"
                   ? certificateDetail.value.educations[i].otherProfessionAmharic
                   : certificateDetail.value.educations[i].professionType
                   ? certificateDetail.value.educations[i].professionType
@@ -882,7 +942,9 @@ export default {
         `${
           certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
-                moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
+                moment(
+                  certificateDetail.value.licenseExpirationDate
+                )._d.toISOString(),
                 false
               )
             : " አልተገለጸም"
@@ -894,7 +956,9 @@ export default {
         `${
           certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
-                moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
+                moment(
+                  certificateDetail.value.licenseExpirationDate
+                )._d.toISOString(),
                 false
               )
             : " አልተገለጸም"
@@ -902,7 +966,7 @@ export default {
       );
     };
 
-    const downloadPdf = () => {
+    const downloadPdf = () => { 
       const userImage = certifiedUser.value.profilePicture
         ? certifiedUser.value.profilePicture.filePath
         : null;
@@ -924,77 +988,82 @@ export default {
         certificateDetail.value.educations.length <= 3
       ) {
         if (
-          certificateDetail.value.educations &&
-          certificateDetail.value.educations.length <= 3
+          certificateDetail.value.licenseReviewer.reviewer.expertLevel.code ===
+          "FED"
         ) {
-          if (
-            certificateDetail.value.licenseReviewer.reviewer.expertLevel.code === "FED"
-          ) {
-            defaultBackground = backgroundImage;
-            defaultCode = "FED";
-            defaultNamePos = 100;
-            defaultProfPos = 125;
-            defaultProfGap = 7;
-          } else if (
-            certificateDetail.value.licenseReviewer.reviewer.region.code === "ORO"
-          ) {
-            defaultBackground = oromiaCertificateBackground;
-            defaultCode = "ORO";
-            defaultNamePos = 110;
-            defaultProfPos = 133;
-            defaultProfGap = 4;
-          } else if (
-            certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
-          ) {
-            defaultBackground = addisAbabaCertificateBackground;
-            defaultCode = "AA";
-            defaultNamePos = 110;
-            defaultProfPos = 133;
-            defaultProfGap = 4;
-          } else if (
-            certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
-          ) {
-            defaultBackground = direDawaCertificateBackground;
-            defaultCode = "DD";
-            defaultNamePos = 110;
-            defaultProfPos = 120;
-            defaultProfGap = 4;
-          } else if (
-            certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
-          ) {
-            defaultBackground = afarCertificateBackground;
-            defaultCode = "AFA";
-            defaultNamePos = 105;
-            defaultProfPos = 130;
-            defaultProfGap = 4;
-          }
+          defaultBackground = backgroundImage;
+          defaultCode = "FED";
+          defaultNamePos = 100;
+          defaultProfPos = 125;
+          defaultProfGap = 7;
+        } else if (
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "ORO"
+        ) {
+          defaultBackground = oromiaCertificateBackground;
+          defaultCode = "ORO";
+          defaultNamePos = 110;
+          defaultProfPos = 133;
+          defaultProfGap = 4;
+        } else if (
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
+        ) {
+          defaultBackground = addisAbabaCertificateBackground;
+          defaultCode = "AA";
+          defaultNamePos = 110;
+          defaultProfPos = 133;
+          defaultProfGap = 4;
+        } else if (
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
+        ) {
+          defaultBackground = direDawaCertificateBackground;
+          defaultCode = "DD";
+          defaultNamePos = 110;
+          defaultProfPos = 120;
+          defaultProfGap = 4;
+        } else if (
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
+        ) {
+          defaultBackground = afarCertificateBackground;
+          defaultCode = "AFA";
+          defaultNamePos = 105;
+          defaultProfPos = 130;
+          defaultProfGap = 4;
+        }
 
-          doc.addImage(defaultBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
+        doc.addImage(
+          defaultBackground,
+          "JPG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
 
-          handleRegionsLayout(
-            doc,
-            doc2,
-            defaultCode,
-            defaultNamePos,
-            defaultProfPos,
-            defaultProfGap
-          );
+        handleRegionsLayout(
+          doc,
+          doc2,
+          defaultCode,
+          defaultNamePos,
+          defaultProfPos,
+          defaultProfGap
+        );
 
-          doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
-          if (userImage != null) {
-            let path = {
-              path: userImage,
-            };
-            store.dispatch("profile/converProfilePicture", path).then((res) => {
-              doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+        doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
+        if (userImage != null) {
+          let path = {
+            path: userImage,
+          };
+          store.dispatch("profile/converProfilePicture", path).then((res) => {
+            doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
 
-              window.open(doc.output("bloburl"));
-              updateLicenseGenerated();
-            });
-          } else {
             window.open(doc.output("bloburl"));
             updateLicenseGenerated();
-          }
+          });
+        } else {
+          window.open(doc.output("bloburl"));
+          updateLicenseGenerated();
         }
       }
 
@@ -1008,7 +1077,10 @@ export default {
         let multipleProfPos = 0;
         let multipleProfGap = 0;
 
-        if (certificateDetail.value.licenseReviewer.reviewer.expertLevel.code === "FED") {
+        if (
+          certificateDetail.value.licenseReviewer.reviewer.expertLevel.code ===
+          "FED"
+        ) {
           multipleBackground = backgroundImage;
           multipleCode = "FED";
           multipleNamePos = 100;
@@ -1048,8 +1120,26 @@ export default {
           defaultProfGap = 4;
         }
 
-        doc.addImage(multipleBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
-        doc2.addImage(multipleBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
+        doc.addImage(
+          multipleBackground,
+          "JPG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
+        doc2.addImage(
+          multipleBackground,
+          "JPG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
 
         handleRegionsLayout(
           doc,

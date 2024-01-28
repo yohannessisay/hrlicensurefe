@@ -1,33 +1,41 @@
 const XLSX = require("xlsx");
 
-//Convert rows and columns
 function transformSheets(sheets) {
-  var content = [];
-  var content1 = [];
-  var tmplist = [];
+  let content = [];
+  let content1 = [];
+  let tmplist = [];
+
   for (let key in sheets) {
     tmplist.push(XLSX.utils.sheet_to_json(sheets[key]).length);
     content1.push(XLSX.utils.sheet_to_json(sheets[key]));
   }
-  var maxLength = Math.max.apply(Math, tmplist);
-  //Perform row and column conversion
-  for (let y in [...Array(maxLength)]) {
-    content.push([]);
-    for (let x in [...Array(tmplist.length)]) {
+
+  // Instead of deleting rows, you might want to filter them if needed
+  content1[0] = content1[0].filter((item) => item !== undefined);
+
+  let maxLength = Math.max(...tmplist);
+
+  // Perform row and column conversion
+  for (let y = 0; y < maxLength; y++) {
+    content.push({});
+    for (let x = 0; x < tmplist.length; x++) {
       try {
-        for (let z in content1[x][y]) {
-          content[y].push(content1[x][y][z]);
+        const rowData = content1[x][y] || {};
+        if (!("__EMPTY_4" in rowData)) {
+          rowData["__EMPTY_4"] = "";
         }
+        Object.assign(content[y], rowData);
       } catch (error) {
-        content[y].push(" ");
+        content[y]["__EMPTY_4"] = "Empty";
       }
     }
   }
-  content.unshift([]);
+
+  content.unshift({});
   for (let key in sheets) {
-    content[0].push(key);
+    content[0][key] = key;
   }
-  
+
   return content;
 }
 

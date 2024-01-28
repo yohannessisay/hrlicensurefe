@@ -149,14 +149,14 @@
       </div>
     </div>
     <div
-      class="bg-yellow-300 p-2 m-4 rounded-md"
+      class="shadow-md p-2 m-4 rounded-md"
       v-if="errorDocuments && errorDocuments.length > 0"
     >
-      <h2 class="text-white font-bold text-3xl">
+      <h2 class="text-yellow-300 font-bold text-3xl">
         Please attach the following files to proceed
       </h2>
       <li
-        class="text-white text-xl font-bold border-2 rounded-md p-2 m-1"
+        class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
         v-for="error in errorDocuments"
         :key="error"
       >
@@ -197,8 +197,7 @@
 <script>
 import { ref, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import { boolean } from "yargs";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
@@ -215,13 +214,7 @@ export default {
     let goToNext = ref(false);
     let departmentDocuments = [];
     let isLoading = ref(false);
-    let documents = ref([]);
-    let filePreviewData = ref({
-      isImage: boolean,
-      isPdf: boolean,
-      file: "",
-      name: "",
-    });
+    let documents = ref([]); 
     let localData = ref();
     let files = ref("");
     let documentError = ref([]);
@@ -662,8 +655,7 @@ export default {
       goToNext,
       departmentDocuments,
       imageUploader,
-      documents,
-      filePreviewData,
+      documents, 
       errorDocuments,
       next,
       isLoading,

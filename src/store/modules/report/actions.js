@@ -133,8 +133,7 @@ export default {
     }
   },
   async statusLog(context, apiParams) {
-    try {
-      console.log(apiParams);
+    try { 
       const resp = await ApiService.get(
         baseUrl +
           "/admin/report/statusLogs?licenseType=" +

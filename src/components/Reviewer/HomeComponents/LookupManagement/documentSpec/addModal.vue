@@ -554,6 +554,7 @@ export default {
       { name: "New License", id: 1 },
       { name: "Renewal", id: 2 },
       { name: "Goodstanding", id: 3 },
+       { name: "Lost License", id: 5 },
     ]);
     let educationLevels = computed(() =>
       props.modalLookups ? props.modalLookups.educationLevels : {}

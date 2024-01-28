@@ -500,12 +500,11 @@ export default {
           j += 5;
           tempVar++;
         });
-
-        console.log(ws_data);
+ 
         var ws = XLSX.utils.aoa_to_sheet(ws_data);
         wb.Sheets["Professions Report"] = ws;
         XLSX.writeFile(wb, new Date().toISOString().slice(0, 10) + "_professions.xlsx");
-        console.log(allData.value);
+        
       }
     };
     const applyFilter = () => {

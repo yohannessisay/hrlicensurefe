@@ -56,18 +56,28 @@
                       </div>
                     </div>
 
-                    <div class="container my-2 mt-8 overflow-hidden bg-white rounded-lg">
+                    <div
+                      class="container my-2 mt-8 overflow-hidden bg-white rounded-lg"
+                    >
                       <div
                         class="relative z-10 h-auto"
                         style="
-                          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
+                          clip-path: polygon(
+                            0 0,
+                            100% 0,
+                            100% 100%,
+                            0 calc(100% - 5vw)
+                          );
                         "
                       >
                         <img
                           class="w-full"
                           :src="
-                            renewal && renewal.profile && renewal.profile.profilePicture
-                              ? googleApi + renewal.profile.profilePicture.filePath
+                            renewal &&
+                            renewal.profile &&
+                            renewal.profile.profilePicture
+                              ? googleApi +
+                                renewal.profile.profilePicture.filePath
                               : ''
                           "
                           alt="Profile image"
@@ -76,13 +86,17 @@
                       <div
                         class="relative z-50 flex flex-row items-center justify-between px-6 -mt-10"
                       >
-                        <h2 class="text-xl font-bold underline text-primary-600">
+                        <h2
+                          class="text-xl font-bold underline text-primary-600"
+                        >
                           Applicant's Profile
                         </h2>
                       </div>
                       <div class="p-2 pt-6 pb-8 text-gray-600">
                         <div class="grid grid-cols-3">
-                          <div class="col-span-1 mt-4 text-primary-600">Name</div>
+                          <div class="col-span-1 mt-4 text-primary-600">
+                            Name
+                          </div>
                           <div class="col-span-2 mt-4 break-all">
                             {{
                               renewal && renewal.profile && renewal.profile.name
@@ -94,7 +108,9 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 mt-2 text-primary-600">Email</div>
+                          <div class="col-span-1 mt-2 text-primary-600">
+                            Email
+                          </div>
                           <div class="col-span-2 mt-2 break-all">
                             {{
                               renewal &&
@@ -104,7 +120,9 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 mt-2 text-primary-600">Phone</div>
+                          <div class="col-span-1 mt-2 text-primary-600">
+                            Phone
+                          </div>
                           <div class="col-span-2 mt-2 break-all">
                             {{
                               renewal &&
@@ -114,10 +132,14 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 mt-2 text-primary-600">Gender</div>
+                          <div class="col-span-1 mt-2 text-primary-600">
+                            Gender
+                          </div>
                           <div class="col-span-2 mt-2 break-all">
                             {{
-                              renewal && renewal.profile && renewal.profile.gender
+                              renewal &&
+                              renewal.profile &&
+                              renewal.profile.gender
                                 ? renewal.profile.gender
                                 : ""
                             }}
@@ -183,14 +205,19 @@
                                   >
                                     <h2 class="font-bold">
                                       Personal Information
-                                      <span @click="editPersonalData = !editPersonalData"
+                                      <span
+                                        @click="
+                                          editPersonalData = !editPersonalData
+                                        "
                                         ><i
                                           class="ml-4 text-yellow-300 cursor-pointer fa fa-pencil"
                                         ></i
                                         >Edit Amharic Name</span
                                       >
                                     </h2>
-                                    <i class="fa fa-user fa-2x text-primary-600"></i>
+                                    <i
+                                      class="fa fa-user fa-2x text-primary-600"
+                                    ></i>
                                   </header>
                                   <hr class="text-grey-100" />
                                   <div
@@ -200,7 +227,9 @@
 
                                     <div>
                                       {{
-                                        (profileInfo.name ? profileInfo.name : "-") +
+                                        (profileInfo.name
+                                          ? profileInfo.name
+                                          : "-") +
                                         " " +
                                         (profileInfo.fatherName
                                           ? profileInfo.fatherName
@@ -215,10 +244,14 @@
                                   <div
                                     class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <div class="font-bold">Full Name In Amharic</div>
+                                    <div class="font-bold">
+                                      Full Name In Amharic
+                                    </div>
                                     <div v-if="editPersonalData">
                                       <input
-                                        v-model="renewal.profile.alternativeName"
+                                        v-model="
+                                          renewal.profile.alternativeName
+                                        "
                                         class="w-48 mr-1"
                                         type="text"
                                         placeholder="First Name"
@@ -226,7 +259,9 @@
                                     </div>
                                     <div v-if="editPersonalData">
                                       <input
-                                        v-model="renewal.profile.alternativeFatherName"
+                                        v-model="
+                                          renewal.profile.alternativeFatherName
+                                        "
                                         class="w-48 mr-1"
                                         type="text"
                                         placeholder="Father Name"
@@ -235,7 +270,8 @@
                                     <div v-if="editPersonalData">
                                       <input
                                         v-model="
-                                          renewal.profile.alternativeGrandFatherName
+                                          renewal.profile
+                                            .alternativeGrandFatherName
                                         "
                                         class="w-48"
                                         type="text"
@@ -293,7 +329,9 @@
                                     <div class="font-bold">gender</div>
                                     <div>
                                       {{
-                                        profileInfo.gender ? profileInfo["gender"] : "-"
+                                        profileInfo.gender
+                                          ? profileInfo["gender"]
+                                          : "-"
                                       }}
                                     </div>
                                   </div>
@@ -329,8 +367,12 @@
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <h2 class="font-bold">Contact Information</h2>
-                                    <i class="fa fa-phone text-primary-600 fa-2xl"></i>
+                                    <h2 class="font-bold">
+                                      Contact Information
+                                    </h2>
+                                    <i
+                                      class="fa fa-phone text-primary-600 fa-2xl"
+                                    ></i>
                                   </header>
                                   <hr class="text-grey-100" />
                                   <div
@@ -369,7 +411,9 @@
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight border-b-2 text-grey-300 md:p-4"
                                   >
-                                    <h2 class="font-bold">Department Information</h2>
+                                    <h2 class="font-bold">
+                                      Department Information
+                                    </h2>
                                     <small class="font-bold text-red-300"
                                       >Uncheck departments if you want to remove
                                       them</small
@@ -390,34 +434,48 @@
                                   >
                                     <div class="flex justify-center">
                                       <div>
-                                        <label for="" class="font-bold text-red-300">{{
-                                          education && education.isDropped == false
-                                            ? ""
-                                            : "Removed"
-                                        }}</label>
+                                        <label
+                                          for=""
+                                          class="font-bold text-red-300"
+                                          >{{
+                                            education &&
+                                            education.isDropped == false
+                                              ? ""
+                                              : "Removed"
+                                          }}</label
+                                        >
                                         <div class="form-check">
                                           <input
                                             class="float-left w-8 h-8 my-1 align-top transition duration-200 bg-red-300 bg-center bg-no-repeat bg-contain border border-gray-300 rounded-md appearance-none cursor-pointer form-check-input btn-check:bg-white focus:outline-none"
                                             checked
                                             type="checkbox"
                                             @change="
-                                              education && education.isDropped == false
+                                              education &&
+                                              education.isDropped == false
                                                 ? (education.isDropped = true)
                                                 : (education.isDropped = false),
                                                 droppedDepartment()
                                             "
-                                            v-model="education.department.isDropped"
+                                            v-model="
+                                              education.department.isDropped
+                                            "
                                             :id="education.id"
                                           />
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="flex flex-col ml-8 mr-12 mb-medium">
+                                    <div
+                                      class="flex flex-col ml-8 mr-12 mb-medium"
+                                    >
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p class="text-base font-bold text-primary-600">
+                                        <p
+                                          class="text-base font-bold text-primary-600"
+                                        >
                                           Department Name
                                         </p>
-                                        <p class="text-base font-bold text-black">
+                                        <p
+                                          class="text-base font-bold text-black"
+                                        >
                                           {{
                                             education.department
                                               ? education.department.name
@@ -426,10 +484,14 @@
                                         </p>
                                       </div>
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p class="text-base font-bold text-primary-600">
+                                        <p
+                                          class="text-base font-bold text-primary-600"
+                                        >
                                           Education Level
                                         </p>
-                                        <p class="text-base font-bold text-black">
+                                        <p
+                                          class="text-base font-bold text-black"
+                                        >
                                           {{
                                             education.educationLevel
                                               ? education.educationLevel.name
@@ -438,10 +500,14 @@
                                         </p>
                                       </div>
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p class="text-base font-bold text-primary-600">
+                                        <p
+                                          class="text-base font-bold text-primary-600"
+                                        >
                                           Institution
                                         </p>
-                                        <p class="text-base font-bold text-black">
+                                        <p
+                                          class="text-base font-bold text-black"
+                                        >
                                           {{
                                             education.institution
                                               ? education.institution.name
@@ -450,13 +516,18 @@
                                         </p>
                                       </div>
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p class="text-base font-bold text-primary-600">
+                                        <p
+                                          class="text-base font-bold text-primary-600"
+                                        >
                                           Profession
                                         </p>
-                                        <div class="text-base font-bold text-black">
+                                        <div
+                                          class="text-base font-bold text-black"
+                                        >
                                           {{
                                             education.professionType
-                                              ? education.professionType.name != "other"
+                                              ? education.professionType.name !=
+                                                "other"
                                                 ? education.professionType.name
                                                 : "Other -> " +
                                                   education.otherProfessionType +
@@ -466,10 +537,14 @@
                                               : ""
                                           }}
                                           <span
-                                            @click="allowProfessionChange(education)"
+                                            @click="
+                                              allowProfessionChange(education)
+                                            "
                                             class="cursor-pointer text-primary-500"
                                           >
-                                            <i class="text-green-200 fa fa-pencil"></i
+                                            <i
+                                              class="text-green-200 fa fa-pencil"
+                                            ></i
                                             >Edit
                                           </span>
                                           <div
@@ -477,15 +552,21 @@
                                             class="flex justify-center"
                                             v-if="
                                               education.professionType &&
-                                              allowProfChange[education.department.id]
+                                              allowProfChange[
+                                                education.department.id
+                                              ]
                                             "
                                           >
                                             <div class="w-full mb-3">
                                               <select
                                                 class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
-                                                @click="checkForOther(education)"
+                                                @click="
+                                                  checkForOther(education)
+                                                "
                                                 v-model="
-                                                  tempProf[education.department.id]
+                                                  tempProf[
+                                                    education.department.id
+                                                  ]
                                                 "
                                                 aria-label="Default select example"
                                               >
@@ -509,7 +590,8 @@
                                             class="grid grid-cols-1"
                                             v-if="
                                               education.professionType &&
-                                              education.professionType.name == 'other'
+                                              education.professionType.name ==
+                                                'other'
                                             "
                                           >
                                             <div class="mb-3 xl:w-96">
@@ -530,7 +612,8 @@
                                                 "
                                                 :value="
                                                   education.professionType &&
-                                                  education.professionType.name == 'other'
+                                                  education.professionType
+                                                    .name == 'other'
                                                     ? education.otherProfessionType
                                                     : ''
                                                 "
@@ -543,7 +626,8 @@
                                               <label
                                                 for="exampleFormControlInput1"
                                                 class="inline-block mb-2 text-gray-700 form-label"
-                                                >Other Profession Amharic Name</label
+                                                >Other Profession Amharic
+                                                Name</label
                                               >
                                               <input
                                                 type="text"
@@ -557,7 +641,8 @@
                                                 "
                                                 :value="
                                                   education.professionType &&
-                                                  education.professionType.name == 'other'
+                                                  education.professionType
+                                                    .name == 'other'
                                                     ? education.otherProfessionAmharic
                                                     : ''
                                                 "
@@ -572,19 +657,29 @@
                                       </div>
 
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p class="text-base font-bold text-primary-600">
+                                        <p
+                                          class="text-base font-bold text-primary-600"
+                                        >
                                           Prefix
                                         </p>
-                                        <div class="text-base font-bold text-black">
+                                        <div
+                                          class="text-base font-bold text-black"
+                                        >
                                           <button
                                             class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:text-primary-600 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active:"
-                                            @click="showPrefix(education.departmentId)"
+                                            @click="
+                                              showPrefix(education.departmentId)
+                                            "
                                           >
                                             Add Prefix
                                           </button>
                                           <div
                                             class="w-full mb-3"
-                                            v-if="showPrefixFor[education.departmentId]"
+                                            v-if="
+                                              showPrefixFor[
+                                                education.departmentId
+                                              ]
+                                            "
                                           >
                                             <select
                                               class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
@@ -620,8 +715,12 @@
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <h2 class="font-bold">License Expiration Date</h2>
-                                    <i class="fa fa-calendar fa-2x text-primary-600"></i>
+                                    <h2 class="font-bold">
+                                      License Expiration Date
+                                    </h2>
+                                    <i
+                                      class="fa fa-calendar fa-2x text-primary-600"
+                                    ></i>
                                   </header>
                                   <hr class="text-grey-100" />
 
@@ -633,10 +732,12 @@
                                     >
                                       <i class="fa fa-calendar"></i>
                                       {{
-                                        licenseExpirationDate +
-                                        " (After " +
-                                        expirationDateYear +
-                                        " years)"
+                                        licenseExpirationDate
+                                          ? licenseExpirationDate.slice(0, 10) +
+                                            " (After " +
+                                            expirationDateYear +
+                                            " years)"
+                                          : "----"
                                       }}</span
                                     >
                                   </div>
@@ -648,7 +749,10 @@
                             </div>
                           </div>
 
-                          <div v-else class="flex content-center justify-center">
+                          <div
+                            v-else
+                            class="flex content-center justify-center"
+                          >
                             <div v-if="docs.length > 0">
                               <div
                                 v-if="
@@ -661,7 +765,9 @@
                                   <iframe
                                     class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
                                     :src="
-                                      docs[index] ? googleApi + docs[index].filePath : ''
+                                      docs[index]
+                                        ? googleApi + docs[index].filePath
+                                        : ''
                                     "
                                   ></iframe>
                                 </div>
@@ -690,12 +796,18 @@
                                     "
                                     class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
                                     :src="
-                                      docs[index] ? googleApi + docs[index].filePath : ''
+                                      docs[index]
+                                        ? googleApi + docs[index].filePath
+                                        : ''
                                     "
                                     style="height: 400px; width: 400px"
                                   />
-                                  <small class="ml-12 font-bold text-base text-green-200">
-                                    <i class="fa-regular fa-circle-question"></i>
+                                  <small
+                                    class="ml-12 font-bold text-base text-green-200"
+                                  >
+                                    <i
+                                      class="fa-regular fa-circle-question"
+                                    ></i>
                                     Click the image to zoom</small
                                   >
                                 </div>
@@ -788,12 +900,17 @@
                             {{
                               education &&
                               education.professionType &&
-                              education.professionType.name.toLowerCase() != "other"
+                              education.professionType.name.toLowerCase() !=
+                                "other"
                                 ? education.professionType.name
-                                : education && education.professionType && education
+                                : education &&
+                                  education.professionType &&
+                                  education
                                 ? education &&
                                   education.professionType &&
-                                  education.otherProfessionType + " (" + education &&
+                                  education.otherProfessionType +
+                                    " (" +
+                                    education &&
                                   education.professionType &&
                                   education.otherProfessionAmharic + ")"
                                 : ""
@@ -809,7 +926,9 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 mt-2 text-primary-600">Department</div>
+                          <div class="col-span-1 mt-2 text-primary-600">
+                            Department
+                          </div>
                           <div class="col-span-2 mt-2 break-all ml-8">
                             {{
                               education && education.department
@@ -835,7 +954,11 @@
                     class="flex items-center justify-center mb-medium"
                     v-if="showButtons && !showLoadingButtons"
                   >
-                    <div v-for="button in buttons" :key="button.name" :value="button.id">
+                    <div
+                      v-for="button in buttons"
+                      :key="button.name"
+                      :value="button.id"
+                    >
                       <button
                         v-if="button.code == 'DEC'"
                         :class="
@@ -851,7 +974,9 @@
                         v-else
                         class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-primary-400 hover:text-white"
                         :data-bs-toggle="button.code == 'US' ? 'modal' : ''"
-                        :data-bs-target="button.code == 'US' ? '#superviseModal' : ''"
+                        :data-bs-target="
+                          button.code == 'US' ? '#superviseModal' : ''
+                        "
                         @click="
                           button.code == 'US'
                             ? changeAction(button.action)
@@ -864,12 +989,19 @@
                   </div>
                 </div>
                 <modal v-if="showRemark">
-                  <template v-slot:modalHeader> Decline Documents Reason </template>
+                  <template v-slot:modalHeader>
+                    Decline Documents Reason
+                  </template>
                   <template v-slot:modalBody>
                     <div class="w-full p-2 m-4">
-                      <div class="modalBody pb-xl" v-if="nothingDropped == true">
+                      <div
+                        class="modalBody pb-xl"
+                        v-if="nothingDropped == true"
+                      >
                         <div class="flex justify-center">
-                          <div class="mt-2 cursor-pointer bg-grey-200 rounded mr-4">
+                          <div
+                            class="mt-2 cursor-pointer bg-grey-200 rounded mr-4"
+                          >
                             <svg
                               width="40"
                               height="60"
@@ -892,7 +1024,9 @@
                             </svg>
                           </div>
 
-                          <div class="flex flex-col items-center justify-center">
+                          <div
+                            class="flex flex-col items-center justify-center"
+                          >
                             <div class="mt-2">
                               <div class="flex justify-center rounded">
                                 <div v-if="rejectedObj.length > 0">
@@ -900,12 +1034,14 @@
                                     v-if="
                                       rejectedObj[ind] &&
                                       rejectedObj[ind].fileType &&
-                                      rejectedObj[ind].fileType.split('/')[1] == 'pdf'
+                                      rejectedObj[ind].fileType.split('/')[1] ==
+                                        'pdf'
                                     "
                                   >
                                     <h5 class="text-2xl text-grey-800">
                                       {{
-                                        rejectedObj[ind] && rejectedObj[ind].documentType
+                                        rejectedObj[ind] &&
+                                        rejectedObj[ind].documentType
                                           ? rejectedObj[ind].documentType.name
                                           : ""
                                       }}
@@ -929,7 +1065,8 @@
                                     <img
                                       :src="
                                         rejectedObj[ind]
-                                          ? googleApi + rejectedObj[ind].filePath
+                                          ? googleApi +
+                                            rejectedObj[ind].filePath
                                           : ''
                                       "
                                     />
@@ -939,7 +1076,9 @@
                             </div>
                           </div>
 
-                          <div class="mt-2 cursor-pointer bg-grey-200 rounded ml-4">
+                          <div
+                            class="mt-2 cursor-pointer bg-grey-200 rounded ml-4"
+                          >
                             <svg
                               width="40"
                               height="60"
@@ -979,7 +1118,9 @@
                               rows="6"
                             ></textarea>
                           </div>
-                          <small class="mt-4 mb-2 text-red-300" v-if="showRemarkError"
+                          <small
+                            class="mt-4 mb-2 text-red-300"
+                            v-if="showRemarkError"
                             >Remark note must be more than 10 letters</small
                           >
                         </div>
@@ -1030,7 +1171,9 @@
     aria-modal="true"
     role="dialog"
   >
-    <div class="relative w-auto pointer-events-none modal-dialog modal-dialog-centered">
+    <div
+      class="relative w-auto pointer-events-none modal-dialog modal-dialog-centered"
+    >
       <div
         class="relative flex flex-col w-full text-current bg-white border-none rounded-md outline-none pointer-events-auto modal-content bg-clip-padding"
       >
@@ -1266,49 +1409,52 @@ export default {
       allowProfChange.value[profType.department.id]
         ? allowProfChange.value[profType.department.id]
         : false;
-      allowProfChange.value[profType.department.id] = !allowProfChange.value[
-        profType.department.id
-      ];
+      allowProfChange.value[profType.department.id] =
+        !allowProfChange.value[profType.department.id];
       allowOtherProfChange.value[profType.department.id] = false;
     };
 
     const created = async (applicationId) => {
       applicationType.value = "Renewal";
 
-      store.dispatch("reviewer/getRenewalApplication", applicationId).then((res) => {
-        renewal.value = res.data.data ? res.data.data : {};
-        profileInfo.value =
-          renewal.value && renewal.value.profile ? renewal.value.profile : {};
-        buttons.value =
+      store
+        .dispatch("reviewer/getRenewalApplication", applicationId)
+        .then((res) => {
+          renewal.value = res.data.data ? res.data.data : {};
+          profileInfo.value =
+            renewal.value && renewal.value.profile ? renewal.value.profile : {};
+          buttons.value =
+            renewal.value &&
+            renewal.value.applicationStatus &&
+            renewal.value.applicationStatus.buttons
+              ? renewal.value.applicationStatus.buttons
+              : {};
+          docs.value =
+            renewal.value && renewal.value.documents
+              ? renewal.value.documents
+              : {};
+          totalSteps.value = docs.value ? docs.value.length : 0;
+
           renewal.value &&
-          renewal.value.applicationStatus &&
-          renewal.value.applicationStatus.buttons
-            ? renewal.value.applicationStatus.buttons
-            : {};
-        docs.value =
-          renewal.value && renewal.value.documents ? renewal.value.documents : {};
-        totalSteps.value = docs.value ? docs.value.length : 0;
+          renewal.value.licenseReviewer &&
+          renewal.value.licenseReviewer.reviewer.regionId != null
+            ? (showTransferToFederal.value = true)
+            : (showTransferToFederal.value = false);
 
-        renewal.value &&
-        renewal.value.licenseReviewer &&
-        renewal.value.licenseReviewer.reviewer.regionId != null
-          ? (showTransferToFederal.value = true)
-          : (showTransferToFederal.value = false);
+          accepted.value =
+            renewal.value &&
+            renewal.value.acceptedFields &&
+            renewal.value.acceptedFields.length > 0
+              ? renewal.value.acceptedFields
+              : (accepted.value = []);
 
-        accepted.value =
-          renewal.value &&
-          renewal.value.acceptedFields &&
-          renewal.value.acceptedFields.length > 0
-            ? renewal.value.acceptedFields
-            : (accepted.value = []);
-
-        completedSteps.value = accepted.value.length;
-        index.value = completedSteps.value;
-        if (completedSteps.value == docs.value.length) {
-          showButtons.value = true;
-        }
-        fetchDocumentTypes();
-      });
+          completedSteps.value = accepted.value.length;
+          index.value = completedSteps.value;
+          if (completedSteps.value == docs.value.length) {
+            showButtons.value = true;
+          }
+          fetchDocumentTypes();
+        });
     };
 
     const fetchDocumentTypes = async () => {
@@ -1339,8 +1485,12 @@ export default {
         showButtons.value = false;
       }
 
-      accepted.value = accepted.value.filter((el) => el != docs.value[ind - 1].fileName);
-      rejected.value = rejected.value.filter((el) => el != docs.value[ind - 1].fileName);
+      accepted.value = accepted.value.filter(
+        (el) => el != docs.value[ind - 1].fileName
+      );
+      rejected.value = rejected.value.filter(
+        (el) => el != docs.value[ind - 1].fileName
+      );
 
       nextClickable.value = true;
       index.value = accepted.value.length + rejected.value.length;
@@ -1351,7 +1501,10 @@ export default {
     const nextRemark = () => {
       if (ind.value != rejectedObj.value.length - 1) {
         ind.value = ind.value + 1;
-        modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
+        modalFindDocumentType(
+          documentTypes.value,
+          rejectedObj.value[ind.value]
+        );
         nextClickable.value = false;
       }
     };
@@ -1362,7 +1515,9 @@ export default {
     };
     const findDocumentType = (obj, ab) => {
       for (var prop in obj) {
-        if (obj[prop].code == ab && ab.documentTypeCode ? ab.documentTypeCode : "") {
+        if (
+          obj[prop].code == ab && ab.documentTypeCode ? ab.documentTypeCode : ""
+        ) {
           documentTypeName.value = obj[prop].name;
         }
       }
@@ -1383,26 +1538,28 @@ export default {
           expertLevelId: federalData[0].id,
           createdByAdminId: adminId,
         };
-        store.dispatch("reviewer/transferToFederal", transferData).then((res) => {
-          if (res.data?.status == "Success") {
-            toast.success("Application transfered Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            router.push({ path: "/admin/renewal" });
-          } else {
-            toast.error("Failed to transfer application", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-          }
-        });
+        store
+          .dispatch("reviewer/transferToFederal", transferData)
+          .then((res) => {
+            if (res.data?.status == "Success") {
+              toast.success("Application transfered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              router.push({ path: "/admin/renewal" });
+            } else {
+              toast.error("Failed to transfer application", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            }
+          });
       });
     };
 
@@ -1414,33 +1571,43 @@ export default {
           accepted.value.push(doc.fileName);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
           }
           if (rejected.value.includes(doc.fileName)) {
             rejected.value = rejected.value.filter((el) => el != doc.fileName);
-            rejectedObj.value = rejectedObj.value.filter((el) => el != doc.fileName);
+            rejectedObj.value = rejectedObj.value.filter(
+              (el) => el != doc.fileName
+            );
           }
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
           }
         }
       } else {
         accepted.value.push(doc.fileName);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
+        } else {
+          index.value = index.value + 1;
         }
 
         if (rejected.value.includes(doc.fileName)) {
           rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
-          rejectedObj.value = rejectedObj.value.filter((el) => el != doc.fileName);
+          rejectedObj.value = rejectedObj.value.filter(
+            (el) => el != doc.fileName
+          );
         }
       }
-      index.value = accepted.value.length + rejected.value.length;
     };
 
     const reject = (doc) => {
       completedSteps.value += 1;
       nextClickable.value = true;
+
       for (let i = 0; i < buttons.value.length; i++) {
         if (buttons.value[i].code === "APP") {
           buttons.value.splice(i, 1);
@@ -1454,6 +1621,8 @@ export default {
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
           }
           if (accepted.value.includes(doc.fileName)) {
             accepted.value = accepted.value.filter((el) => el != doc.fileName);
@@ -1461,17 +1630,23 @@ export default {
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
           }
         }
       } else {
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
+        } else {
+          index.value = index.value + 1;
+          rejected.value.push(doc.fileName);
+          rejectedObj.value.push(doc);
         }
+
         if (accepted.value.includes(doc.fileName)) {
           accepted.value = accepted.value.filter((el) => el != doc.fileName);
         }
       }
-      index.value = accepted.value.length + rejected.value.length;
     };
     const setOtherProfession = (education, id, event, type) => {
       if (type == "english") {
@@ -1485,7 +1660,8 @@ export default {
         education.otherProfessionType = others.value[id]["otherProfessionType"];
         modifiedProfession.forEach((element) => {
           if (element.department.id == education.department.id) {
-            element.otherProfessionType = others.value[id]["otherProfessionType"];
+            element.otherProfessionType =
+              others.value[id]["otherProfessionType"];
           }
         });
       }
@@ -1497,10 +1673,12 @@ export default {
           others.value[id]["otherProfessionAmharic"] = "";
           others.value[id]["otherProfessionAmharic"] = event.target.value;
         }
-        education.otherProfessionAmharic = others.value[id]["otherProfessionAmharic"];
+        education.otherProfessionAmharic =
+          others.value[id]["otherProfessionAmharic"];
         modifiedProfession.forEach((element) => {
           if (element.department.id == education.department.id) {
-            element.otherProfessionAmharic = others.value[id]["otherProfessionAmharic"];
+            element.otherProfessionAmharic =
+              others.value[id]["otherProfessionAmharic"];
           }
         });
       }
@@ -1553,7 +1731,10 @@ export default {
         renewal.value.remark = "";
         if (renewal.value.newLicenseId && renewal.value.newLicenseId != null) {
           store
-            .dispatch("reviewer/getNewLicenseApplication", renewal.value.newLicenseId)
+            .dispatch(
+              "reviewer/getNewLicenseApplication",
+              renewal.value.newLicenseId
+            )
             .then((res) => {
               res.data.data.isReturned = true;
               res.data.data.isreturned = true;
@@ -1712,20 +1893,22 @@ export default {
       action(nothingDropped.value == false ? "ApproveEvent" : "DeclineEvent");
     };
     const droppedDepartment = () => {
-      JSON.parse(JSON.stringify(renewal.value.educations)).forEach((element) => {
-        if (element && element.isDropped == true) {
-          declineAction.value = "ApproveEvent";
-          if (rejected.value && rejected.value.length == 0) {
-            nothingDropped.value = false;
+      JSON.parse(JSON.stringify(renewal.value.educations)).forEach(
+        (element) => {
+          if (element && element.isDropped == true) {
+            declineAction.value = "ApproveEvent";
+            if (rejected.value && rejected.value.length == 0) {
+              nothingDropped.value = false;
+            }
+          }
+          if (element && element.isDropped == false) {
+            declineAction.value = "DeclineEvent";
+            if (rejected.value && rejected.value.length == 0) {
+              nothingDropped.value = true;
+            }
           }
         }
-        if (element && element.isDropped == false) {
-          declineAction.value = "DeclineEvent";
-          if (rejected.value && rejected.value.length == 0) {
-            nothingDropped.value = true;
-          }
-        }
-      });
+      );
     };
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
@@ -1754,7 +1937,8 @@ export default {
       let newProfile = {
         alternativeName: renewal.value.profile.alternativeName,
         alternativeFatherName: renewal.value.profile.alternativeFatherName,
-        alternativeGrandFatherName: renewal.value.profile.alternativeGrandFatherName,
+        alternativeGrandFatherName:
+          renewal.value.profile.alternativeGrandFatherName,
       };
       const profileData = [id, newProfile];
       store
@@ -1797,7 +1981,9 @@ export default {
       }
 
       for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
-        if (professionId !== professionalTypePrefixes.value[i].professionalTypeId) {
+        if (
+          professionId !== professionalTypePrefixes.value[i].professionalTypeId
+        ) {
           countProLength.value++;
           if (countProLength.value === professionalTypePrefixes.value.length) {
             professionalTypePrefixes.value.push({
@@ -1890,7 +2076,10 @@ export default {
         data: renewal.value,
       };
       let minDate = moment(endDate.value).diff(moment(startDate.value), "days");
-      let lessThanToday = moment(startDate.value).diff(moment(new Date()), "days");
+      let lessThanToday = moment(startDate.value).diff(
+        moment(new Date()),
+        "days"
+      );
 
       if (minDate < 30) {
         showDateError.value.message =
@@ -1993,8 +2182,10 @@ export default {
 
       if (
         tempProf.value[education.department.id] &&
-        tempProf.value[education.department.id].id == education.professionTypeId &&
-        tempProf.value[education.department.id].departmentId == education.departmentId
+        tempProf.value[education.department.id].id ==
+          education.professionTypeId &&
+        tempProf.value[education.department.id].departmentId ==
+          education.departmentId
       ) {
         modifiedProfession = renewal.value.educations.filter(
           (element) => element.oldProfessionTypeId != education.professionTypeId
@@ -2007,7 +2198,8 @@ export default {
         renewal.value.educations.forEach((element) => {
           if (element.department.id == education.department.id) {
             element.professionType = tempProf.value[education.department.id];
-            element.professionTypeId = tempProf.value[education.department.id].id;
+            element.professionTypeId =
+              tempProf.value[education.department.id].id;
           }
         });
         education.oldProfessionTypeId = education.professionTypeId;
@@ -2036,7 +2228,8 @@ export default {
       if (regionId) {
         store.dispatch("lookups/getLicenseExpirationDates").then((res) => {
           licenseExpirationDate.value = new Date(
-            year + res.data.data.filter((el) => el.regionId == regionId)[0].years,
+            year +
+              res.data.data.filter((el) => el.regionId == regionId)[0].years,
             month,
             day
           ).toISOString();
@@ -2044,7 +2237,11 @@ export default {
         });
       } else {
         let year = new Date().getFullYear();
-        licenseExpirationDate.value = new Date(year + 3, month, day).toISOString();
+        licenseExpirationDate.value = new Date(
+          year + 3,
+          month,
+          day
+        ).toISOString();
         expirationDateYear.value = 3;
       }
       store.dispatch("goodstanding/getInstitution").then((res) => {

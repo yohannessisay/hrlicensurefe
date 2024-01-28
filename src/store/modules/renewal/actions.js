@@ -7,8 +7,7 @@ import {
   SET_TEMP_DOCS,
   SET_GENERAL_INFO
 } from "./mutation-types";
-
-const userId = +localStorage.getItem("userId");
+const userId = JSON.parse(localStorage.getItem("userId"));
 function authHeaders(needsAuth) {
   const token = localStorage.getItem("token");
   return needsAuth

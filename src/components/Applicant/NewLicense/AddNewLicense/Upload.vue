@@ -808,7 +808,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
+      <div class="shadow-md p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
         <h2 class="text-yellow-300 font-bold text-3xl">
           Please attach the following files to proceed
         </h2>
@@ -1688,6 +1688,8 @@ export default {
                       ed.documentType.code == "SUPINST" ||
                       ed.documentType.code == "SENSUP"
                   );
+                } else {
+                  resp = result;
                 }
                 resp.forEach((ed, index) => {
                   if (
@@ -1699,6 +1701,7 @@ export default {
                     resp.splice(index, 1);
                   }
                 });
+
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
                   professionType: element.professionalType,

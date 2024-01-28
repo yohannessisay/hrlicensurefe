@@ -128,6 +128,31 @@
               </div>
             </div>
             <!-- License designation box -->
+
+            <!-- Lost License box -->
+            <div class="mb-8 overview-boxes">
+              <div
+                :class="
+                  isDarkMode
+                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                "
+                data-bs-target="#LostLicenseModal"
+                @mouseover="changeModalData('LostLicense')"
+                data-bs-toggle="modal"
+              >
+                <p
+                  class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
+                >
+                  <i class="fa fa-recycle text-main-400" style="font-size: 111px"></i>
+                </p>
+
+                <div class="flex justify-center px-5 mb-2 text-sm mt-1">
+                  <h1 class="text-2xl text-main-400">Lost License</h1>
+                </div>
+              </div>
+            </div>
+            <!-- Lost License box -->
           </div>
         </div>
       </div>
@@ -207,6 +232,7 @@ import {
   renewalList,
   goodStandingList,
   licenseDesignationList,
+  lostLicenseList,
 } from "./Shared/documentSpecs";
 export default {
   components: { SideNav, TopNav, Modal },
@@ -231,6 +257,9 @@ export default {
           break;
         case "LicenseDesignation":
           currentList.value = licenseDesignationList;
+          break;
+        case "LostLicense":
+          currentList.value = lostLicenseList;
           break;
 
         default:

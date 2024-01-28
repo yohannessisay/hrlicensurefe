@@ -797,7 +797,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
+      <div class="shadow-md p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
         <h2 class="text-yellow-300 font-bold text-3xl">
           Please attach the following files to proceed
         </h2>
@@ -847,8 +847,7 @@ import { ref, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import Compressor from "compressorjs";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import { boolean } from "yargs";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
@@ -865,13 +864,7 @@ export default {
     let goToNext = ref(false);
     let alreadyUploaded = ref(false);
     let educationalDocs = ref([]);
-    let localData = ref({});
-    let filePreviewData = ref({
-      isImage: boolean,
-      isPdf: boolean,
-      file: "",
-      name: "",
-    });
+    let localData = ref({}); 
     let existingDocs = [];
     let files = ref("");
     let maxFileSize = ref();
@@ -895,12 +888,7 @@ export default {
     let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
 
-    const previewFile = (code, name) => {
-      filePreviewData.value.isImage = isImage.value[code];
-      filePreviewData.value.isPdf = isPdf.value[code];
-      filePreviewData.value.file = previewDocuments.value[code];
-      filePreviewData.value.name = name;
-    };
+ 
 
     const handleCommonFileUpload = (data, event) => {
       if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
@@ -1402,8 +1390,7 @@ export default {
       let CMtemp = "";
       let NSTemp = "";
       var tempVal;
-      errorDocuments.value = [];
-      console.log(documentsUploaded.value);
+      errorDocuments.value = []; 
       // if back button is clicked
       if (isBackButtonClicked.value == true) {
         // check common documents
@@ -2033,15 +2020,13 @@ export default {
       showImage,
       previewDocuments,
       showPreview,
-      existingDocs,
-      previewFile,
+      existingDocs, 
       handleCommonFileUpload,
       generalInfo,
       goToNext,
       saveDraft,
       educationalDocs,
-      imageUploader,
-      filePreviewData,
+      imageUploader, 
       next,
       back,
       addMore,

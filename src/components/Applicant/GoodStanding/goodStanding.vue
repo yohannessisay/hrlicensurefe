@@ -3,7 +3,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1" class="">
         <GeneralInfo
-        @dark-mode="modeToggle()"
+          @dark-mode="modeToggle()"
           :activeState="1"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -13,7 +13,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 2" class="">
         <upload
-        @dark-mode="modeToggle()"
+          @dark-mode="modeToggle()"
           :activeState="2"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -23,7 +23,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 3" class="">
         <GoodStandingSummary
-        @dark-mode="modeToggle()"
+          @dark-mode="modeToggle()"
           :activeState="4"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -59,7 +59,6 @@ export default {
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref([]);
-    let applicationId = ref("");
     let draftId = ref("");
     let displayLanguageOption = ref(false);
     let displayPayrollOption = ref(false);
@@ -116,10 +115,6 @@ export default {
       store.dispatch("goodstanding/getApplicationCategories").then((res) => {
         const results = res.data.data;
         applicationCategories.value = results;
-        const renewalData = applicationCategories.value.filter((item) => {
-          return item.name == "Renewal Application";
-        });
-        applicationId.value = renewalData[0]["id"]; 
       });
     };
 
@@ -131,7 +126,7 @@ export default {
         let status = applicationStatuses.value.filter(function (e) {
           return e.code == "INIT";
         });
-        buttons.value = status[0]["buttons"]; 
+        buttons.value = status[0]["buttons"];
         store.dispatch("goodstanding/setButtons", buttons.value);
       });
     };
@@ -154,7 +149,6 @@ export default {
       declinedFields,
       acceptedFields,
       remark,
-      applicationId,
       darkMode,
       draftId,
       displayLanguageOption,

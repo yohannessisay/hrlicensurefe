@@ -220,32 +220,22 @@
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer.name
+                                licenseData && licenseData.goodstandingReviewer
+                                  ? licenseData.goodstandingReviewer.reviewer.name
                                   : "Not Assigned Yet"
                               }}
                             </div>
                           </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Phone Number</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .phoneNumber
-                                  : "Not Assigned Yet"
-                              }}
-                            </div>
-                          </div>
+                     
                           <div class="flex justify-between px-4 py-1">
                             <div>Expert Level</div>
                             <div class="text-main-400 font-bold">
                               {{
                                 licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
+                                licenseData.goodstandingReviewer &&
+                                licenseData.goodstandingReviewer.reviewer &&
+                                licenseData.goodstandingReviewer.reviewer.expertLevel
+                                  ? licenseData.goodstandingReviewer.reviewer
                                       .expertLevel.name
                                   : "Not Assigned Yet"
                               }}
@@ -256,10 +246,10 @@
                             <div class="text-main-400 font-bold">
                               {{
                                 licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.region
-                                  ? licenseData.licenseReviewer.reviewer.region
+                                licenseData.goodstandingReviewer &&
+                                licenseData.goodstandingReviewer.reviewer &&
+                                licenseData.goodstandingReviewer.reviewer.region
+                                  ? licenseData.goodstandingReviewer.reviewer.region
                                       .name
                                   : "Not Assigned Yet"
                               }}

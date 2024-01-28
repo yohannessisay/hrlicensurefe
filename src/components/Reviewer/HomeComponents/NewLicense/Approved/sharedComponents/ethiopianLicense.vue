@@ -884,8 +884,7 @@ export default {
   },
   setup() {
     const dateFormatter = (date) => {
-      const inputDate = new Date(date);
-      console.log(date, inputDate);
+      const inputDate = new Date(date); 
       const options = { year: "numeric", month: "short", day: "numeric" };
       return inputDate.toLocaleDateString("en-US", options);
     };

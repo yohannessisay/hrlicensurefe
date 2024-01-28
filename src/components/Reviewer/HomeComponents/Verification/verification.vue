@@ -610,8 +610,7 @@ export default {
         .then((res) => {
           res.data && res.data.data && res.data.data.rows
             ? (allInfo = res.data.data.rows)
-            : (allInfo = []);
-          console.log(allInfo);
+            : (allInfo = []); 
           allInfo
             ? allInfo.forEach((element) => {
                 tableData.push({
