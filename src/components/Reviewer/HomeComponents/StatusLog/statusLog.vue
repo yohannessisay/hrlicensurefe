@@ -17,7 +17,9 @@
         </li>
 
         <li>
-          <a href="#" class="text-lg pointer-events-none text-grey-300">Status Log</a>
+          <a href="#" class="text-lg pointer-events-none text-grey-300"
+            >Status Log</a
+          >
         </li>
       </ol>
     </reviewer-nav-bar>
@@ -67,7 +69,72 @@
           :opacity="0.7"
         ></loading>
         <div class="p-2 m-4 bg-white rounded-md">
-          <div class="p-4 mt-4">
+          <div class="grid grid-cols-2 gap-2">
+            <div class="shadow-md p-2">
+              <h2 class="text-xl border-b">Applicant Info</h2>
+              <div class="grid grid-cols-2 mt-2 gap-2">
+                <h2 class="text-lg">First Name</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{ userInfo.applicant ? userInfo.applicant.name : "" }}
+                </h2>
+                <h2 class="text-lg">Father Name</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{ userInfo.applicant ? userInfo.applicant.fatherName : "" }}
+                </h2>
+                <h2 class="text-lg">Grandfather Name</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{
+                    userInfo.applicant ? userInfo.applicant.grandFatherName : ""
+                  }}
+                </h2>
+                <h2 class="text-lg">Gender</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{ userInfo.applicant ? userInfo.applicant.gender : "" }}
+                </h2>
+                <h2 class="text-lg">Date Of Birth</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{
+                    userInfo.applicant && userInfo.applicant.dateOfBirth
+                      ? userInfo.applicant.dateOfBirth.slice(0, 10)
+                      : ""
+                  }}
+                </h2>
+              </div>
+            </div>
+            <div class="shadow-md p-2">
+              <h2 class="text-xl border-b">Reviewer Info</h2>
+
+              <div class="grid grid-cols-2 mt-2 gap-2">
+                <h2 class="text-lg">Name</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{ userInfo.reviewer ? userInfo.reviewer.name : "" }}
+                </h2>
+                <h2 class="text-lg">Expert Level</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{
+                    userInfo.reviewer ? userInfo.reviewer.expertLevel.name : ""
+                  }}
+                </h2>
+                <h2 class="text-lg">Gender</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{ userInfo.reviewer ? userInfo.reviewer.gender : "" }}
+                </h2>
+                <h2 class="text-lg">Region</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{
+                    userInfo.reviewer && userInfo.reviewer.region
+                      ? userInfo.reviewer.region.name
+                      : "Federal"
+                  }}
+                </h2>
+                   <h2 class="text-lg">Email</h2>
+                <h2 class="text-lg text-primary-600">
+                  {{ userInfo.reviewer ? userInfo.reviewer.email : "" }}
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 mt-4 ">
             <h1 class="mb-6 text-2xl font-semibold text-center">
               {{
                 licenseType && licenseType == "goodstanding"
@@ -75,7 +142,7 @@
                   : "License History"
               }}
             </h1>
-            <div class="container">
+            <div class="container ">
               <div class="flex flex-col grid-cols-12 md:grid text-gray-50">
                 <div
                   class="flex md:contents"
@@ -84,23 +151,27 @@
                 >
                   <div class="relative col-start-2 col-end-4 mr-10 md:mx-auto">
                     <div class="flex items-center justify-center w-6 h-full">
-                      <div class="w-1 h-full pointer-events-none bg-main-500"></div>
+                      <div
+                        class="w-1 h-full pointer-events-none bg-primary-300"
+                      ></div>
                     </div>
                     <div
-                      class="absolute w-6 h-6 -mt-20 text-center rounded-full shadow top-1/2 bg-main-500"
+                      class="absolute w-6 h-6 -mt-20 text-center rounded-full shadow top-1/2 "
                     >
-                      <i class="text-3xl fas fa-check-circle text-primary-600"></i>
+                      <i
+                        class="text-3xl fas fa-check-circle text-primary-600"
+                      ></i>
                     </div>
                   </div>
                   <div
-                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto bg-main-500 rounded-xl"
+                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto bg-grey-300 rounded-xl shadow-md"
                   >
                     <div class="grid grid-cols-2">
                       <div>
-                        <h2 class="text-2xl text-white">
-                          {{ history.createdAt.slice(0, 10) }}
+                        <h2 class="text-2xl mb-4 text-white">
+                         Applied Date - {{ history.createdAt.slice(0, 10) }}
                         </h2>
-                        <h3 class="mb-2 text-lg font-semibold text-white">
+                        <h3 class="mb-4 text-lg font-semibold text-white ">
                           License Status
                         </h3>
                         <p class="w-full leading-tight text-justify text-white">
@@ -185,6 +256,7 @@ export default {
     let isLoading = ref(false);
     let licenseCode = ref("");
     let licenseType = ref("");
+    let userInfo = ref("");
     let apiParameters = ref({});
     let licenseHistory = ref([]);
 
@@ -205,7 +277,9 @@ export default {
         type: licenseType.value,
       };
       store.dispatch("report/statusLog", apiParameters.value).then((res) => {
-        licenseHistory.value = res.data && res.data.data ? res.data.data : [];
+        let result = res.data && res.data.data ? res.data.data : [];
+        licenseHistory.value = result.data;
+        userInfo.value = result.userInfo;
         if (licenseHistory.value && licenseHistory.value.length == 0) {
           toast.warning("No log found with " + licenseCode.value, {
             timeout: 5000,
@@ -225,6 +299,7 @@ export default {
       searchApplication,
       licenseHistory,
       isLoading,
+      userInfo,
     };
   },
 };

@@ -116,20 +116,7 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/lostLicense/declined">
-        <li
-          :class="
-            $route.fullPath === '/admin/lostLicense/declined'
-              ? 'mb-2 active'
-              : ''
-          "
-        >
-          <a href="#">
-            <i class="bx bx-error-alt"></i>
-            <span class="links_name">Declined</span>
-          </a>
-        </li>
-      </router-link>
+ 
 
       
     </ul>
