@@ -221,8 +221,7 @@
 <script>
 import { ref, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import { boolean } from "yargs";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
 import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";

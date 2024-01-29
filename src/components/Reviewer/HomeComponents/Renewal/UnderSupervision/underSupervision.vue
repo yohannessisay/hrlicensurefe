@@ -9,7 +9,7 @@
       <ol class="list-reset flex">
         <li>
           <router-link to="/admin/review"
-            ><span class="text-primary-600 text-base">Home</span></router-link
+            ><span class="text-grey-300 ">Home</span></router-link
           >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -20,7 +20,7 @@
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300"
+          <a href="#" class="pointer-events-none  text-primary-600"
             >Undersupervision</a
           >
         </li>
