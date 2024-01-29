@@ -27,9 +27,9 @@
               (renewal.applicationStatus.code == 'IRV' ||
                 renewal.applicationStatus.code == 'REVDRA')
             "
-            class="w-full rounded-lg bg-primary-800"
+            class="w-full rounded-lg bg-primary-800 p-2"
           >
-            <h2 class="ml-4 text-xl text-white">
+           <h2 class="text-2xl text-white border-b-2">
               Evaluating
               {{
                 renewal && renewal.profile && renewal.profile.name
@@ -39,7 +39,7 @@
               's License
             </h2>
 
-            <div class="w-full">
+            <div class="w-full mt-2">
               <div class="box-shadow-pop bg-lightGrey-100">
                 <div class="grid grid-cols-1 sm:grid-cols-8">
                   <div
@@ -147,42 +147,19 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="sm:col-span-4 col-span-8 w-full p-4 mt-4">
+                  </div> 
+                   <div class="sm:col-span-4 col-span-8 w-full p-4 mt-4">
                     <div class="p-4 mb-8 box-shadow-pop bg-lightGrey-100">
                       <div class="flex justify-center">
-                        <h1 class="text-primary-600">Evaluation</h1>
-                      </div>
-
-                      <div class="">
-                        <svg
-                          width="40"
-                          height="60"
-                          xmlns="http://www.w3.org/2000/svg"
-                          version="1.1"
-                          @click="previous(index)"
-                          v-if="index != 0"
-                        >
-                          <polyline
-                            points="30 10 10 30 30 50"
-                            stroke="rgba(103,128,159,1)"
-                            stroke-width="3"
-                            stroke-linecap="butt"
-                            fill="none"
-                            stroke-linejoin="round"
-                          >
-                            &gt;
-                          </polyline>
-                        </svg>
-                      </div>
-
-                      <div class="flex flex-col items-center justify-center">
-                        <div class="mt-8">
-                          <label
+                        <div class="grid grid-cols-1" v-if="!showButtons">
+                          <h1 class="text-primary-600 text-2xl p-2">
+                            Uploaded Document Name
+                          </h1>
+                         <label
                             v-if="!showButtons"
                             class="flex items-center justify-center text-2xl text-grey-800"
                           >
-                            <h5 class="text-2xl text-grey-800">
+                            <h5 class="text-2xl text-grey-800 border rounded-md p-2">
                               {{
                                 docs[index] && docs[index].documentType
                                   ? docs[index].documentType.name
@@ -190,638 +167,660 @@
                               }}
                             </h5>
                           </label>
+                        </div>
+                        <div v-else>
+                          <h1 class="text-primary-600 text-2xl">
+                            License Summary
+                          </h1>
+                        </div>
+                      </div>
+                      <!-- Back icon -->
+                      <span
+                        @click="previous(index)"
+                        class="p-4 border rounded-md text-grey-300 shadow-md bg-grey-300 cursor-pointer hover:bg-white"
+                        v-if="index != 0"
+                      >
+                        <i
+                          class="fa-solid fa-arrow-left text-3xl text-grey-700 mt-3"
+                        >
+                        </i>
+                      </span>
+                      <!-- Back icon -->
 
-                          <div
-                            class="container px-4 mx-auto my-2 md:px-4"
-                            v-if="showButtons"
-                          >
-                            <div class="flex flex-wrap md:-mx-4 lg:-mx-8">
-                              <!-- Personal Info card -->
-                              <div class="w-full mx-4 my-1 mb-4">
-                                <!-- Article -->
-                                <article class="overflow-hidden rounded-lg">
-                                  <header
-                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <h2 class="font-bold">
-                                      Personal Information
-                                      <span
-                                        @click="
-                                          editPersonalData = !editPersonalData
-                                        "
-                                        ><i
-                                          class="ml-4 text-yellow-300 cursor-pointer fa fa-pencil"
-                                        ></i
-                                        >Edit Amharic Name</span
-                                      >
-                                    </h2>
-                                    <i
-                                      class="fa fa-user fa-2x text-primary-600"
-                                    ></i>
-                                  </header>
-                                  <hr class="text-grey-100" />
-                                  <div
-                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <div class="font-bold">Full Name</div>
-
-                                    <div>
-                                      {{
-                                        (profileInfo.name
-                                          ? profileInfo.name
-                                          : "-") +
-                                        " " +
-                                        (profileInfo.fatherName
-                                          ? profileInfo.fatherName
-                                          : "-") +
-                                        " " +
-                                        (profileInfo.grandFatherName
-                                          ? profileInfo.grandFatherName
-                                          : "-")
-                                      }}
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <div class="font-bold">
-                                      Full Name In Amharic
-                                    </div>
-                                    <div v-if="editPersonalData">
-                                      <input
-                                        v-model="
-                                          renewal.profile.alternativeName
-                                        "
-                                        class="w-48 mr-1"
-                                        type="text"
-                                        placeholder="First Name"
-                                      />
-                                    </div>
-                                    <div v-if="editPersonalData">
-                                      <input
-                                        v-model="
-                                          renewal.profile.alternativeFatherName
-                                        "
-                                        class="w-48 mr-1"
-                                        type="text"
-                                        placeholder="Father Name"
-                                      />
-                                    </div>
-                                    <div v-if="editPersonalData">
-                                      <input
-                                        v-model="
-                                          renewal.profile
-                                            .alternativeGrandFatherName
-                                        "
-                                        class="w-48"
-                                        type="text"
-                                        placeholder="Grandfather Name"
-                                      />
-                                    </div>
-                                    <div class="vld-parent">
-                                      <loading
-                                        :active="isLoadingName"
-                                        :is-full-page="false"
-                                        :color="'#2F639D'"
-                                        :opacity="1"
-                                      ></loading>
-                                      <button
-                                        v-if="editPersonalData"
-                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:text-primary-600 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active:"
-                                        @click="changeAmharicName"
-                                      >
-                                        Save
-                                      </button>
-                                    </div>
-
-                                    <div v-if="!editPersonalData">
-                                      {{
-                                        (profileInfo.alternativeName
-                                          ? profileInfo.alternativeName
-                                          : "-") +
-                                        " " +
-                                        (profileInfo.alternativeFatherName
-                                          ? profileInfo.alternativeFatherName
-                                          : "-") +
-                                        " " +
-                                        (profileInfo.alternativeGrandFatherName
-                                          ? profileInfo.alternativeGrandFatherName
-                                          : "-")
-                                      }}
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <div class="font-bold">Nationality</div>
-                                    <div>
-                                      {{
-                                        profileInfo.nationality
-                                          ? profileInfo.nationality.name
-                                          : "-"
-                                      }}
-                                    </div>
-                                  </div>
-
-                                  <div
-                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <div class="font-bold">gender</div>
-                                    <div>
-                                      {{
-                                        profileInfo.gender
-                                          ? profileInfo["gender"]
-                                          : "-"
-                                      }}
-                                    </div>
-                                  </div>
-
-                                  <div
-                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <div class="font-bold">marital Status</div>
-                                    <div>
-                                      {{
-                                        profileInfo.maritalStatus
-                                          ? profileInfo.maritalStatus.name
-                                          : "-"
-                                      }}
-                                    </div>
-                                  </div>
-                                  <hr class="text-grey-100" />
-                                  <footer
-                                    class="flex items-center justify-center p-2 leading-none md:p-4"
-                                  >
-                                    {{ new Date().toISOString().slice(0, 10) }}
-                                  </footer>
-                                </article>
-                                <!-- END Article -->
-                              </div>
-                              <!-- Personal Info card -->
-                              <!-- Contact card -->
-                              <div
-                                class="w-full px-1 my-1 mb-4 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2"
+                      <div
+                        class="flex flex-col items-center justify-center w-full"
+                      >
+                        <!-- Review images/pdf section -->
+                        <div
+                          class="container px-4 mx-auto my-2 md:px-4 flex content-center justify-center w-full"
+                          v-if="showButtons"
+                        >
+                          <div class="flex flex-wrap md:-mx-4 lg:-mx-8 w-full">
+                            <!-- Personal Info card -->
+                            <div class="w-full mx-4 my-1 mb-4">
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg w-full"
                               >
-                                <!-- Article -->
-                                <article class="overflow-hidden rounded-lg">
-                                  <header
-                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <h2 class="font-bold">
-                                      Contact Information
-                                    </h2>
-                                    <i
-                                      class="fa fa-phone text-primary-600 fa-2xl"
-                                    ></i>
-                                  </header>
-                                  <hr class="text-grey-100" />
-                                  <div
-                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <div class="font-bold">Mobile Number</div>
-                                    <div>
-                                      {{
-                                        renewal && renewal.applicant
-                                          ? renewal.applicant.phoneNumber
-                                          : "---"
-                                      }}
-                                    </div>
-                                  </div>
-
-                                  <div
-                                    class="container flex items-center justify-between p-2 mb-12 leading-tight md:p-4"
-                                  >
-                                    <div class="mb-1 font-bold">Email</div>
-                                    <div>
-                                      {{
-                                        renewal && renewal.applicant
-                                          ? renewal.applicant.emailAddress
-                                          : "---"
-                                      }}
-                                    </div>
-                                  </div>
-                                </article>
-                                <!-- END Article -->
-                              </div>
-                              <!-- Contact card -->
-                              <!-- Profession Card -->
-                              <div class="w-full mx-4 my-1 mb-4">
-                                <!-- Article -->
-                                <article class="overflow-hidden rounded-lg">
-                                  <header
-                                    class="flex items-center justify-between p-2 leading-tight border-b-2 text-grey-300 md:p-4"
-                                  >
-                                    <h2 class="font-bold">
-                                      Department Information
-                                    </h2>
-                                    <small class="font-bold text-red-300"
-                                      >Uncheck departments if you want to remove
-                                      them</small
+                                <header
+                                  class="flex items-center justify-between p-2 leading-tight md:p-4 w-full"
+                                >
+                                  <h2 class="font-bold">
+                                    Personal Information
+                                    <span
+                                      @click="
+                                        editPersonalData = !editPersonalData
+                                      "
+                                      ><i
+                                        class="ml-4 text-yellow-300 cursor-pointer fa fa-pencil"
+                                      ></i
+                                      >Edit Amharic Name</span
                                     >
-                                    <i
-                                      class="fa fa-briefcase text-primary-600 fa-2xl"
-                                    ></i>
-                                  </header>
+                                  </h2>
+                                  <i
+                                    class="fa fa-user fa-2x text-primary-600"
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+                                <div
+                                  class="container flex items-center justify-between p-2 leading-tight md:p-4"
+                                >
+                                  <div class="font-bold">Full Name</div>
 
-                                  <div
-                                    :class="
-                                      education && education.isDropped == false
-                                        ? 'flex flex-row border-b-2 text-grey-400 m-2'
-                                        : 'flex flex-row border text-red-300 m-2 p-2 rounded-md'
-                                    "
-                                    v-for="education in renewal.educations"
-                                    :key="education.id"
+                                  <div>
+                                    {{
+                                      (profileInfo.name
+                                        ? profileInfo.name
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.fatherName
+                                        ? profileInfo.fatherName
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.grandFatherName
+                                        ? profileInfo.grandFatherName
+                                        : "-")
+                                    }}
+                                  </div>
+                                </div>
+                                <div
+                                  class="container flex items-center justify-between p-2 leading-tight md:p-4"
+                                >
+                                  <div class="font-bold">
+                                    Full Name In Amharic
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile.alternativeName
+                                      "
+                                      class="w-48 mr-1"
+                                      type="text"
+                                      placeholder="First Name"
+                                    />
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile.alternativeFatherName
+                                      "
+                                      class="w-48 mr-1"
+                                      type="text"
+                                      placeholder="Father Name"
+                                    />
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile
+                                          .alternativeGrandFatherName
+                                      "
+                                      class="w-48"
+                                      type="text"
+                                      placeholder="Grandfather Name"
+                                    />
+                                  </div>
+                                  <div class="vld-parent">
+                                    <loading
+                                      :active="isLoadingName"
+                                      :is-full-page="false"
+                                      :color="'#2F639D'"
+                                      :opacity="1"
+                                    ></loading>
+                                    <button
+                                      v-if="editPersonalData"
+                                      class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:text-primary-600 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active:"
+                                      @click="changeAmharicName"
+                                    >
+                                      Save
+                                    </button>
+                                  </div>
+
+                                  <div v-if="!editPersonalData">
+                                    {{
+                                      (profileInfo.alternativeName
+                                        ? profileInfo.alternativeName
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.alternativeFatherName
+                                        ? profileInfo.alternativeFatherName
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.alternativeGrandFatherName
+                                        ? profileInfo.alternativeGrandFatherName
+                                        : "-")
+                                    }}
+                                  </div>
+                                </div>
+                                <div
+                                  class="container flex items-center justify-between p-2 leading-tight md:p-4"
+                                >
+                                  <div class="font-bold">Nationality</div>
+                                  <div>
+                                    {{
+                                      profileInfo.nationality
+                                        ? profileInfo.nationality.name
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="container flex items-center justify-between p-2 leading-tight md:p-4"
+                                >
+                                  <div class="font-bold">gender</div>
+                                  <div>
+                                    {{
+                                      profileInfo.gender
+                                        ? profileInfo["gender"]
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="container flex items-center justify-between p-2 leading-tight md:p-4"
+                                >
+                                  <div class="font-bold">marital Status</div>
+                                  <div>
+                                    {{
+                                      profileInfo.maritalStatus
+                                        ? profileInfo.maritalStatus.name
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+                                <hr class="text-grey-100" />
+                                <footer
+                                  class="flex items-center justify-center p-2 leading-none md:p-4"
+                                >
+                                  {{ new Date().toISOString().slice(0, 10) }}
+                                </footer>
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- Personal Info card -->
+                            <!-- Contact card -->
+                            <div
+                              class="w-full px-1 my-1 mb-4 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2"
+                            >
+                              <!-- Article -->
+                              <article class="overflow-hidden rounded-lg">
+                                <header
+                                  class="flex items-center justify-between p-2 leading-tight md:p-4"
+                                >
+                                  <h2 class="font-bold">Contact Information</h2>
+                                  <i
+                                    class="fa fa-phone text-primary-600 fa-2xl"
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+                                <div
+                                  class="container flex items-center justify-between p-2 leading-tight md:p-4"
+                                >
+                                  <div class="font-bold">Mobile Number</div>
+                                  <div>
+                                    {{
+                                      newLicense && newLicense.applicant
+                                        ? newLicense.applicant.phoneNumber
+                                        : "---"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="container flex items-center justify-between p-2 mb-12 leading-tight md:p-4"
+                                >
+                                  <div class="mb-1 font-bold">Email</div>
+                                  <div>
+                                    {{
+                                      newLicense && newLicense.applicant
+                                        ? newLicense.applicant.emailAddress
+                                        : "---"
+                                    }}
+                                  </div>
+                                </div>
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- Contact card -->
+                            <!-- Profession Card -->
+                            <div class="w-full mx-4 my-1 mb-4">
+                              <!-- Article -->
+                              <article class="overflow-hidden rounded-lg">
+                                <header
+                                  class="flex items-center justify-between p-2 leading-tight border-b-2 text-grey-300 md:p-4"
+                                >
+                                  <h2 class="font-bold">
+                                    Department Information
+                                  </h2>
+                                  <small class="font-bold text-red-300"
+                                    >Uncheck departments if you want to remove
+                                    them</small
                                   >
-                                    <div class="flex justify-center">
-                                      <div>
-                                        <label
-                                          for=""
-                                          class="font-bold text-red-300"
-                                          >{{
+                                  <i
+                                    class="fa fa-briefcase text-primary-600 fa-2xl"
+                                  ></i>
+                                </header>
+
+                                <div
+                                  :class="
+                                    education && education.isDropped == true
+                                      ? 'flex flex-row border-b-2 text-red-300 text-grey-400 m-2'
+                                      : 'flex flex-row border  text-grey-400 m-2 p-2 rounded-md'
+                                  "
+                                  v-for="education in newLicense.educations"
+                                  :key="education.id"
+                                >
+                                  <div class="flex justify-center">
+                                    <div>
+                                      <label
+                                        for=""
+                                        class="font-bold text-red-300"
+                                        >{{
+                                          education &&
+                                          education.isDropped &&
+                                          education.isDropped == true
+                                            ? "Removed"
+                                            : ""
+                                        }}</label
+                                      >
+                                      <div class="form-check">
+                                        <input
+                                          class="float-left w-8 h-8 my-1 align-top transition duration-200 bg-red-300 bg-center bg-no-repeat bg-contain border border-gray-300 rounded-md appearance-none cursor-pointer form-check-input btn-check:bg-white focus:outline-none"
+                                          checked
+                                          type="checkbox"
+                                          @change="
                                             education &&
                                             education.isDropped == false
-                                              ? ""
-                                              : "Removed"
-                                          }}</label
-                                        >
-                                        <div class="form-check">
-                                          <input
-                                            class="float-left w-8 h-8 my-1 align-top transition duration-200 bg-red-300 bg-center bg-no-repeat bg-contain border border-gray-300 rounded-md appearance-none cursor-pointer form-check-input btn-check:bg-white focus:outline-none"
-                                            checked
-                                            type="checkbox"
-                                            @change="
-                                              education &&
-                                              education.isDropped == false
-                                                ? (education.isDropped = true)
-                                                : (education.isDropped = false),
-                                                droppedDepartment()
-                                            "
-                                            v-model="
-                                              education.department.isDropped
-                                            "
-                                            :id="education.id"
-                                          />
-                                        </div>
+                                              ? (education.isDropped = true)
+                                              : (education.isDropped = false),
+                                              droppedDepartment()
+                                          "
+                                          v-model="
+                                            education.department.isDropped
+                                          "
+                                          :id="education.id"
+                                        />
                                       </div>
                                     </div>
-                                    <div
-                                      class="flex flex-col ml-8 mr-12 mb-medium"
-                                    >
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="text-base font-bold text-primary-600"
+                                  </div>
+                                  <div
+                                    class="flex flex-col ml-8 mr-12 mb-medium"
+                                  >
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="text-base font-bold text-primary-600"
+                                      >
+                                        Department Name
+                                      </p>
+                                      <p class="text-base font-bold text-black">
+                                        {{
+                                          education.department
+                                            ? education.department.name
+                                            : ""
+                                        }}
+                                      </p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="text-base font-bold text-primary-600"
+                                      >
+                                        Education Level
+                                      </p>
+                                      <p class="text-base font-bold text-black">
+                                        {{
+                                          education.educationLevel
+                                            ? education.educationLevel.name
+                                            : ""
+                                        }}
+                                      </p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="text-base font-bold text-primary-600"
+                                      >
+                                        Institution
+                                      </p>
+                                      <p class="text-base font-bold text-black">
+                                        {{
+                                          education.institution
+                                            ? education.institution.name
+                                            : ""
+                                        }}
+                                      </p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="text-base font-bold text-primary-600"
+                                      >
+                                        Profession
+                                      </p>
+                                      <div
+                                        class="text-base font-bold text-black"
+                                      >
+                                        {{
+                                          education.professionType
+                                            ? education.professionType.name !=
+                                              "other"
+                                              ? education.professionType.name
+                                              : "Other -> " +
+                                                education.otherProfessionType +
+                                                " ( " +
+                                                education.otherProfessionAmharic +
+                                                " )"
+                                            : ""
+                                        }}
+                                        <span
+                                          @click="
+                                            allowProfessionChange(education)
+                                          "
+                                          class="cursor-pointer text-primary-500"
                                         >
-                                          Department Name
-                                        </p>
-                                        <p
-                                          class="text-base font-bold text-black"
-                                        >
-                                          {{
-                                            education.department
-                                              ? education.department.name
-                                              : ""
-                                          }}
-                                        </p>
-                                      </div>
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="text-base font-bold text-primary-600"
-                                        >
-                                          Education Level
-                                        </p>
-                                        <p
-                                          class="text-base font-bold text-black"
-                                        >
-                                          {{
-                                            education.educationLevel
-                                              ? education.educationLevel.name
-                                              : ""
-                                          }}
-                                        </p>
-                                      </div>
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="text-base font-bold text-primary-600"
-                                        >
-                                          Institution
-                                        </p>
-                                        <p
-                                          class="text-base font-bold text-black"
-                                        >
-                                          {{
-                                            education.institution
-                                              ? education.institution.name
-                                              : ""
-                                          }}
-                                        </p>
-                                      </div>
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="text-base font-bold text-primary-600"
-                                        >
-                                          Profession
-                                        </p>
+                                          <i
+                                            class="text-green-200 fa fa-pencil"
+                                          ></i
+                                          >Edit
+                                        </span>
                                         <div
-                                          class="text-base font-bold text-black"
+                                          :id="education.department.id"
+                                          class="flex justify-center"
+                                          v-if="
+                                            education.professionType &&
+                                            allowProfChange[
+                                              education.department.id
+                                            ]
+                                          "
                                         >
-                                          {{
-                                            education.professionType
-                                              ? education.professionType.name !=
-                                                "other"
-                                                ? education.professionType.name
-                                                : "Other -> " +
-                                                  education.otherProfessionType +
-                                                  " ( " +
-                                                  education.otherProfessionAmharic +
-                                                  " )"
-                                              : ""
-                                          }}
-                                          <span
-                                            @click="
-                                              allowProfessionChange(education)
-                                            "
-                                            class="cursor-pointer text-primary-500"
-                                          >
-                                            <i
-                                              class="text-green-200 fa fa-pencil"
-                                            ></i
-                                            >Edit
-                                          </span>
-                                          <div
-                                            :id="education.department.id"
-                                            class="flex justify-center"
-                                            v-if="
-                                              education.professionType &&
-                                              allowProfChange[
-                                                education.department.id
-                                              ]
-                                            "
-                                          >
-                                            <div class="w-full mb-3">
-                                              <select
-                                                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
-                                                @click="
-                                                  checkForOther(education)
-                                                "
-                                                v-model="
-                                                  tempProf[
-                                                    education.department.id
-                                                  ]
-                                                "
-                                                aria-label="Default select example"
-                                              >
-                                                <option selected disabled>
-                                                  Choose new profession
-                                                </option>
-                                                <option
-                                                  v-for="prof in newProf[
-                                                    education.department.id
-                                                  ]"
-                                                  :key="prof.id"
-                                                  :value="prof"
-                                                >
-                                                  {{ prof.name }}
-                                                </option>
-                                              </select>
-                                            </div>
-                                          </div>
-                                          <!-- Other Profession  -->
-                                          <div
-                                            class="grid grid-cols-1"
-                                            v-if="
-                                              education.professionType &&
-                                              education.professionType.name ==
-                                                'other'
-                                            "
-                                          >
-                                            <div class="mb-3 xl:w-96">
-                                              <label
-                                                for="exampleFormControlInput1"
-                                                class="inline-block mb-2 text-gray-700 form-label"
-                                                >Other Profession</label
-                                              >
-                                              <input
-                                                type="text"
-                                                @input="
-                                                  setOtherProfession(
-                                                    education,
-                                                    education.department.id,
-                                                    $event,
-                                                    'english'
-                                                  )
-                                                "
-                                                :value="
-                                                  education.professionType &&
-                                                  education.professionType
-                                                    .name == 'other'
-                                                    ? education.otherProfessionType
-                                                    : ''
-                                                "
-                                                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                id="exampleFormControlInput1"
-                                                placeholder="Type name"
-                                              />
-                                            </div>
-                                            <div class="mb-3 xl:w-96">
-                                              <label
-                                                for="exampleFormControlInput1"
-                                                class="inline-block mb-2 text-gray-700 form-label"
-                                                >Other Profession Amharic
-                                                Name</label
-                                              >
-                                              <input
-                                                type="text"
-                                                @input="
-                                                  setOtherProfession(
-                                                    education,
-                                                    education.department.id,
-                                                    $event,
-                                                    'amharic'
-                                                  )
-                                                "
-                                                :value="
-                                                  education.professionType &&
-                                                  education.professionType
-                                                    .name == 'other'
-                                                    ? education.otherProfessionAmharic
-                                                    : ''
-                                                "
-                                                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                id="exampleFormControlInput1"
-                                                placeholder="Type amharic name"
-                                              />
-                                            </div>
-                                          </div>
-                                          <!-- Other Profession  -->
-                                        </div>
-                                      </div>
-
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="text-base font-bold text-primary-600"
-                                        >
-                                          Prefix
-                                        </p>
-                                        <div
-                                          class="text-base font-bold text-black"
-                                        >
-                                          <button
-                                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:text-primary-600 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active:"
-                                            @click="
-                                              showPrefix(education.departmentId)
-                                            "
-                                          >
-                                            Add Prefix
-                                          </button>
-                                          <div
-                                            class="w-full mb-3"
-                                            v-if="
-                                              showPrefixFor[
-                                                education.departmentId
-                                              ]
-                                            "
-                                          >
+                                          <div class="w-full mb-3">
                                             <select
                                               class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
-                                              @click="changePrefix(education)"
-                                              v-model="education.prefixId"
+                                              @click="checkForOther(education)"
+                                              v-model="
+                                                tempProf[
+                                                  education.department.id
+                                                ]
+                                              "
                                               aria-label="Default select example"
                                             >
                                               <option selected disabled>
-                                                Choose prefix
+                                                Choose new profession
                                               </option>
                                               <option
-                                                v-for="prefix in prefixes"
-                                                :key="prefix.id"
-                                                :value="prefix.id"
+                                                v-for="prof in newProf[
+                                                  education.department.id
+                                                ]"
+                                                :key="prof.id"
+                                                :value="prof"
                                               >
-                                                {{ prefix.name }}
+                                                {{ prof.name }}
                                               </option>
                                             </select>
                                           </div>
                                         </div>
+                                        <!-- Other Profession  -->
+                                        <div
+                                          class="grid grid-cols-1"
+                                          v-if="
+                                            education.professionType &&
+                                            education.professionType.name ==
+                                              'other'
+                                          "
+                                        >
+                                          <div class="mb-3 xl:w-96">
+                                            <label
+                                              for="exampleFormControlInput1"
+                                              class="inline-block mb-2 text-gray-700 form-label"
+                                              >Other Profession</label
+                                            >
+                                            <input
+                                              type="text"
+                                              @input="
+                                                setOtherProfession(
+                                                  education,
+                                                  education.department.id,
+                                                  $event,
+                                                  'english'
+                                                )
+                                              "
+                                              :value="
+                                                education.professionType &&
+                                                education.professionType.name ==
+                                                  'other'
+                                                  ? education.otherProfessionType
+                                                  : ''
+                                              "
+                                              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                              id="exampleFormControlInput1"
+                                              placeholder="Type name"
+                                            />
+                                          </div>
+                                          <div class="mb-3 xl:w-96">
+                                            <label
+                                              for="exampleFormControlInput1"
+                                              class="inline-block mb-2 text-gray-700 form-label"
+                                              >Other Profession Amharic
+                                              Name</label
+                                            >
+                                            <input
+                                              type="text"
+                                              @input="
+                                                setOtherProfession(
+                                                  education,
+                                                  education.department.id,
+                                                  $event,
+                                                  'amharic'
+                                                )
+                                              "
+                                              :value="
+                                                education.professionType &&
+                                                education.professionType.name ==
+                                                  'other'
+                                                  ? education.otherProfessionAmharic
+                                                  : ''
+                                              "
+                                              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                              id="exampleFormControlInput1"
+                                              placeholder="Type amharic name"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!-- Other Profession  -->
+                                      </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="text-base font-bold text-primary-600"
+                                      >
+                                        Prefix
+                                      </p>
+                                      <div
+                                        class="text-base font-bold text-black"
+                                      >
+                                        <button
+                                          class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:text-primary-600 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active:"
+                                          @click="
+                                            showPrefix(education.departmentId)
+                                          "
+                                        >
+                                          Add Prefix
+                                        </button>
+                                        <div
+                                          class="w-full mb-3"
+                                          v-if="
+                                            showPrefixFor[
+                                              education.departmentId
+                                            ]
+                                          "
+                                        >
+                                          <select
+                                            class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
+                                            @click="changePrefix(education)"
+                                            v-model="education.prefixId"
+                                            aria-label="Default select example"
+                                          >
+                                            <option selected disabled>
+                                              Choose prefix
+                                            </option>
+                                            <option
+                                              v-for="prefix in prefixes"
+                                              :key="prefix.id"
+                                              :value="prefix.id"
+                                            >
+                                              {{ prefix.name }}
+                                            </option>
+                                          </select>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </article>
-                                <!-- END Article -->
-                              </div>
-                              <!-- Profession Card -->
-
-                              <!-- licesne Exp Card -->
-                              <div class="w-full mx-4 my-1">
-                                <!-- Article -->
-                                <article class="overflow-hidden rounded-lg">
-                                  <header
-                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <h2 class="font-bold">
-                                      License Expiration Date
-                                    </h2>
-                                    <i
-                                      class="fa fa-calendar fa-2x text-primary-600"
-                                    ></i>
-                                  </header>
-                                  <hr class="text-grey-100" />
-
-                                  <div
-                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
-                                  >
-                                    <span
-                                      class="p-2 ml-8 text-xl font-bold text-white rounded-lg bg-grey-300"
-                                    >
-                                      <i class="fa fa-calendar"></i>
-                                      {{
-                                        licenseExpirationDate
-                                          ? licenseExpirationDate.slice(0, 10) +
-                                            " (After " +
-                                            expirationDateYear +
-                                            " years)"
-                                          : "----"
-                                      }}</span
-                                    >
-                                  </div>
-                                  <hr class="text-grey-100" />
-                                </article>
-                                <!-- END Article -->
-                              </div>
-                              <!-- licesne Exp Card -->
-                            </div>
-                          </div>
-
-                          <div
-                            v-else
-                            class="flex content-center justify-center"
-                          >
-                            <div v-if="docs.length > 0">
-                              <div
-                                v-if="
-                                  docs[index] &&
-                                  docs[index].fileType &&
-                                  docs[index].fileType.split('/')[1] == 'pdf'
-                                "
-                              >
-                                <div>
-                                  <iframe
-                                    class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
-                                    :src="
-                                      docs[index]
-                                        ? googleApi + docs[index].filePath
-                                        : ''
-                                    "
-                                  ></iframe>
                                 </div>
-                                <br />
-                                <button
-                                  @click="
-                                    openPdfInNewTab(
-                                      docs[index] ? docs[index].filePath : ''
-                                    )
-                                  "
-                                  class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-400 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-white hover:text-primary-600"
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- Profession Card -->
+
+                            <!-- licesne Exp Card -->
+                            <div class="w-full mx-4 my-1">
+                              <!-- Article -->
+                              <article class="overflow-hidden rounded-lg">
+                                <header
+                                  class="flex items-center justify-between p-2 leading-tight md:p-4"
                                 >
-                                  See pdf in detail
-                                </button>
-                              </div>
+                                  <h2 class="font-bold">
+                                    License Expiration Date
+                                  </h2>
+                                  <i
+                                    class="fa fa-calendar fa-2x text-primary-600"
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
 
-                              <div v-else>
-                                <div>
-                                  <img
-                                    @click="
-                                      viewImage(
-                                        docs[index]
-                                          ? googleApi + docs[index].filePath
-                                          : ''
-                                      )
-                                    "
-                                    class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
-                                    :src="
-                                      docs[index]
-                                        ? googleApi + docs[index].filePath
-                                        : ''
-                                    "
-                                    style="height: 400px; width: 400px"
-                                  />
-                                  <small
-                                    class="ml-12 font-bold text-base text-green-200"
+                                <div
+                                  class="container flex items-center justify-between p-2 leading-tight md:p-4"
+                                >
+                                  <span
+                                    class="p-2 ml-8 text-xl font-bold text-white rounded-lg bg-grey-300"
                                   >
-                                    <i
-                                      class="fa-regular fa-circle-question"
-                                    ></i>
-                                    Click the image to zoom</small
+                                    <i class="fa fa-calendar"></i>
+                                    {{
+                                      licenseExpirationDate
+                                        ? licenseExpirationDate.slice(0, 10) +
+                                          " (After " +
+                                          expirationDateYear +
+                                          " years)"
+                                        : "----"
+                                    }}</span
                                   >
                                 </div>
-                              </div>
+                                <hr class="text-grey-100" />
+                              </article>
+                              <!-- END Article -->
                             </div>
-
-                            <div
-                              class="flex content-center justify-center pb-large"
-                              v-else
-                            >
-                              <h2>No Documents To Show!!</h2>
-                            </div>
+                            <!-- licesne Exp Card -->
                           </div>
                         </div>
+                        <!-- Review images/pdf section -->
+                        <!-- Final summary -->
+
+                        <div
+                          v-else
+                          class="flex content-center justify-center border mt-4 p-2 rounded-md m-2 w-full"
+                        >
+                          <div v-if="docs.length > 0">
+                            <div class="flex justify-center">
+                              <h2 class="text-xl text-primary-600">
+                                Uploaded Image
+                              </h2>
+                            </div>
+                            <div
+                              v-if="
+                                docs[index] &&
+                                docs[index].fileType &&
+                                docs[index].fileType.split('/')[1] == 'pdf'
+                              "
+                            >
+                              <div>
+                                <iframe
+                                  width="300"
+                                  height="200"
+                                  class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-125"
+                                  :src="
+                                    docs[index]
+                                      ? googleApi + docs[index].filePath
+                                      : ''
+                                  "
+                                ></iframe>
+                              </div>
+                              <br />
+                              <button
+                                class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-400 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-white hover:text-primary-600"
+                                @click="
+                                  openPdfInNewTab(
+                                    docs[index] ? docs[index].filePath : ''
+                                  )
+                                "
+                              >
+                                See pdf in detail
+                              </button>
+                            </div>
+
+                            <div v-else class="w-full">
+                              <img
+                                @click="
+                                  viewImage(
+                                    docs[index]
+                                      ? googleApi + docs[index].filePath
+                                      : ''
+                                  )
+                                "
+                                class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
+                                :src="
+                                  docs[index]
+                                    ? googleApi + docs[index].filePath
+                                    : ''
+                                "
+                                style="height: 400px; width: 400px"
+                              />
+                              <small
+                                class="ml-12 font-bold text-base text-green-200"
+                              >
+                                <i class="fa-regular fa-circle-question"></i>
+                                Click the image to zoom</small
+                              >
+                            </div>
+                          </div>
+                          <div
+                            class="flex content-center justify-center pb-large"
+                            v-else
+                          >
+                            <h2>No Documents To Show!!</h2>
+                          </div>
+                        </div>
+                        <!-- Final summary -->
+
+                        <!-- Action buttons -->
                         <div class="mt-medium" v-if="!showButtons">
                           <button
                             class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:text-primary-600 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active:"
@@ -850,6 +849,7 @@
                             Transfer to Federal
                           </button>
                         </div>
+                        <!-- Action buttons -->
                         <div class="relative pt-1 mt-medium">
                           <div class="flex items-center justify-between">
                             <radial-progress-bar
