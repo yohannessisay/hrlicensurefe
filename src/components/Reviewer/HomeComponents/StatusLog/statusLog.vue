@@ -102,7 +102,7 @@
               </div>
             </div>
             <div class="shadow-md p-2">
-              <h2 class="text-xl">Reviewer Info</h2>
+              <h2 class="text-xl border-b">Reviewer Info</h2>
 
               <div class="grid grid-cols-2 mt-2 gap-2">
                 <h2 class="text-lg">Name</h2>
@@ -134,7 +134,7 @@
               </div>
             </div>
           </div>
-          <div class="p-4 mt-4">
+          <div class="p-4 mt-4 ">
             <h1 class="mb-6 text-2xl font-semibold text-center">
               {{
                 licenseType && licenseType == "goodstanding"
@@ -142,7 +142,7 @@
                   : "License History"
               }}
             </h1>
-            <div class="container">
+            <div class="container ">
               <div class="flex flex-col grid-cols-12 md:grid text-gray-50">
                 <div
                   class="flex md:contents"
@@ -164,7 +164,7 @@
                     </div>
                   </div>
                   <div
-                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto bg-grey-200 rounded-xl shadow-md"
+                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto bg-grey-300 rounded-xl shadow-md"
                   >
                     <div class="grid grid-cols-2">
                       <div>
