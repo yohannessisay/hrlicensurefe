@@ -1619,7 +1619,13 @@ export default {
                           ed.documentType.code == "SUPINST" ||
                           ed.documentType.code == "SENSUP"
                       );
-                    }
+                    } else {
+                        resp = resp.filter(
+                          (ed) =>
+                            ed.documentType.code !== "SUPINST" &&
+                            ed.documentType.code !== "SENSUP"
+                        );
+                      }
                     newLicenseDocuments.value = res.data.data;
                     educationalDocs.value.push({
                       professionType:
