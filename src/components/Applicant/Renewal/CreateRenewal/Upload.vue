@@ -100,7 +100,7 @@
                             type="file"
                             required
                             :id="'common_image_' + item.documentType.id + item.id"
-                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
+                           accept="*/*"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleCommonFileUpload(item, $event)"
@@ -285,7 +285,7 @@
                             type="file"
                             :required="item.isRequired"
                             :id="`files_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
+                           accept="*/*"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event, table)"
@@ -424,7 +424,7 @@
                                     ${
                                       parentItem[0].documentType.code
                                     }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
+                           accept="*/*"
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(parentItem[0], $event, table)"
@@ -655,7 +655,7 @@
                                       type="file"
                                       :required="parentChildItem.isRequired"
                                       :id="`files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                                      accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
+                                     accept="*/*"
                                       :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
@@ -1398,6 +1398,7 @@ export default {
         commonDocuments.value
           .filter((cd) => cd.isRequired)
           .forEach((element) => {
+       
             CMtemp = element.fileName;
 
             if (!CMtemp || CMtemp == "") {
@@ -1527,6 +1528,7 @@ export default {
         commonDocuments.value
           .filter((cd) => cd.isRequired)
           .forEach((element) => {
+             
             // eslint-disable-next-line no-prototype-builtins
             CMtemp = documentsUploaded.value.hasOwnProperty(element.documentType.code);
 

@@ -104,12 +104,19 @@
               <div class="flex justify-center">
                 <div class="mt-4 bg-white rounded-md">
                   <a
+                    v-if="!isPDF(localFileData.fileName)"
                     :href="localFileData.image"
                     :data-title="localFileData.documenttype"
                     data-lightbox="example-2"
                   >
-                    <img :src="localFileData.image" class="w-full h-48 object-cover" />
+                    <img
+                      :src="localFileData.image"
+                      class="w-full h-48 object-cover"
+                    />
                   </a>
+                  <div v-else class="m-4 p-2 bg-primary-300 rounded-md">
+                    The file is uploaded but since it is not an image type this is a placeholder
+                  </div>
 
                   <h4 class="text-main-400 font-bold border-b m-2">Document Type</h4>
                   <h6 class="m-2">{{ localFileData.documenttype }}</h6>
@@ -524,8 +531,14 @@ export default {
         });
       }
     });
-
+    const isPDF = (filename) => {
+      const parts = filename.split(".");
+      const isPdf =
+        parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
+      return isPdf === "pdf";
+    };
     return {
+      isPDF,
       localData,
       localFileData,
       generalInfo,

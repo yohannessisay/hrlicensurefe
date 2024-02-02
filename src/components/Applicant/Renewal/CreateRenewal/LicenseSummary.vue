@@ -39,7 +39,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.department.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.department.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -50,7 +52,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.educationalLevel.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.educationalLevel.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -61,7 +65,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.institution.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.institution.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -73,7 +79,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.professionalType.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.professionalType.name }}</span
+            >
           </div>
         </div>
       </div>
@@ -98,20 +106,31 @@
           <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 w-full">
             <div
               class="mt-4 mb-2 sm:mb-8 bg-white border p-2 rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
-              v-for="localFileData in localFileData[0] ? localFileData[0].data : {}"
+              v-for="localFileData in localFileData[0]
+                ? localFileData[0].data
+                : {}"
               :key="localFileData.documenttype"
             >
               <div class="flex justify-center">
                 <div class="mt-4 bg-white rounded-md">
                   <a
+                    v-if="!isPDF(localFileData.fileName)"
                     :href="localFileData.image"
                     :data-title="localFileData.documenttype"
                     data-lightbox="example-2"
                   >
-                    <img :src="localFileData.image" class="w-full h-48 object-cover" />
+                    <img
+                      :src="localFileData.image"
+                      class="w-full h-48 object-cover"
+                    />
                   </a>
+                  <div v-else class="m-4 p-2 bg-primary-300 rounded-md">
+                    The file is uploaded but since it is not an image type this is a placeholder
+                  </div>
 
-                  <h4 class="text-main-400 font-bold border-b m-2">Document Type</h4>
+                  <h4 class="text-main-400 font-bold border-b m-2">
+                    Document Type
+                  </h4>
                   <h6 class="m-2">{{ localFileData.documenttype }}</h6>
                 </div>
               </div>
@@ -140,12 +159,14 @@
                 />
               </div>
               <h3 class="text-grey-800 mb-2 text-lg sm:text-2xl">
-                By checking here I hereby verify the documents and details filled in are
-                legal.
+                By checking here I hereby verify the documents and details
+                filled in are legal.
               </h3>
             </div>
             <div class="flex justify-center">
-              <label for="feedback" class="form-label inline-block mb-2 text-main-400"
+              <label
+                for="feedback"
+                class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
                 <span class="text-yellow-300">(optional*)</span>
               </label>
@@ -229,16 +250,20 @@
                 :completed-steps="progress"
                 :total-steps="totalSteps"
               >
-                <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
+                <h1 class="text-3xl text-main-400 font-bold">
+                  {{ progress }} %
+                </h1>
               </RadialProgress>
             </div>
             <div>
-              <div class="flex border justify-center text-yellow-300 p-2 rounded-md">
+              <div
+                class="flex border justify-center text-yellow-300 p-2 rounded-md"
+              >
                 <h2 class="text-xl">
-                  Please wait patiently as your files are being uploaded, if for any
-                  reason the files you uploaded are not successful you will be redirected
-                  to the submitted page automatically so you can re-attach your documents
-                  again
+                  Please wait patiently as your files are being uploaded, if for
+                  any reason the files you uploaded are not successful you will
+                  be redirected to the submitted page automatically so you can
+                  re-attach your documents again
                 </h2>
               </div>
             </div>
@@ -301,6 +326,12 @@ export default {
         buttons.value = status[0]["buttons"];
       });
     };
+    const isPDF = (filename) => {
+      const parts = filename.split(".");
+      const isPdf =
+        parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
+      return isPdf === "pdf";
+    };
     const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
@@ -345,7 +376,9 @@ export default {
             isLegal: true,
             newLicenseId: generalInfo.value.newLicenseId,
             newLicenseCode: generalInfo.value.newLicenseCode,
-            feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : "",
             regionId: generalInfo.value.regionSelected
               ? generalInfo.value.regionSelected.id
               : "",
@@ -485,7 +518,9 @@ export default {
         getAllIDB.onsuccess = function (evt) {
           localFileData.value = evt.target.result ? evt.target.result : {};
           localFileData.value[0].data.forEach((element) => {
-            totalSize.value += Number(Math.ceil((element.image.length * 6) / 8 / 1000));
+            totalSize.value += Number(
+              Math.ceil((element.image.length * 6) / 8 / 1000)
+            );
           });
           totalSize.value = totalSize.value / 1000;
         };
@@ -525,6 +560,7 @@ export default {
       progress,
       checkFinalStatus,
       changeAgrement,
+      isPDF,
     };
   },
 };

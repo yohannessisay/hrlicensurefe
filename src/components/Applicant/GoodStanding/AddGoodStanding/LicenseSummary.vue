@@ -57,7 +57,9 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.departmentId ? localData.departmentId.name : ""
+                localData && localData.departmentId
+                  ? localData.departmentId.name
+                  : ""
               }}</span
             >
           </div>
@@ -151,7 +153,9 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.whoIssuedId ? localData.whoIssuedId.name : ""
+                localData && localData.whoIssuedId
+                  ? localData.whoIssuedId.name
+                  : ""
               }}</span
             >
           </div>
@@ -219,14 +223,18 @@
           <div class="text-gray-900 mb-4 flex justify-center">
             <i class="fa fa-folder fa-3x text-main-400"></i>
           </div>
-          <div class="flex justify-center text-gray-900 mb-4 border-b-2 text-main-400">
+          <div
+            class="flex justify-center text-gray-900 mb-4 border-b-2 text-main-400"
+          >
             <h3
               class="text-lg text-main-400 leading-normal mb-2 border-b-2 font-semibold text-grey-800"
             >
               Files Uploaded
             </h3>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 ml-4 sm:w-full">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 ml-4 sm:w-full"
+          >
             <div
               class="mt-4 mb-2 bg-white rounded-md border p-4"
               v-for="localFile in localFileData"
@@ -235,14 +243,24 @@
               <div class="flex justify-center">
                 <div class="mt-large bg-white rounded-md">
                   <a
+                    v-if="!isPDF(localFile.fileName)"
                     :href="localFile.image"
                     :data-title="localFile.documenttype"
                     data-lightbox="example-2"
                   >
-                    <img :src="localFile.image" class="w-full h-48 object-cover" />
+                    <img
+                      :src="localFile.image"
+                      class="w-full h-48 object-cover"
+                    />
                   </a>
+                  <div v-else class="m-4 p-2 bg-primary-300 rounded-md">
+                    The file is uploaded but since it is not an image type this
+                    is a placeholder
+                  </div>
 
-                  <h4 class="text-main-400 font-bold border-b m-2">Document Type</h4>
+                  <h4 class="text-main-400 font-bold border-b m-2">
+                    Document Type
+                  </h4>
                   <h6 class="m-2">{{ localFile.documenttype }}</h6>
                 </div>
               </div>
@@ -289,9 +307,11 @@
                 id="agreed"
               />
             </div>
-            <h3 class="text-grey-800 mb-2localFileData text-xs sm:text-xl mt-2 sm:mt-0">
-              By checking here I hereby verify the documents and details filled in here
-              are legal.
+            <h3
+              class="text-grey-800 mb-2localFileData text-xs sm:text-xl mt-2 sm:mt-0"
+            >
+              By checking here I hereby verify the documents and details filled
+              in here are legal.
             </h3>
             <span class="text-red-300">*</span>
           </div>
@@ -362,16 +382,20 @@
                 :completed-steps="progress"
                 :total-steps="totalSteps"
               >
-                <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
+                <h1 class="text-3xl text-main-400 font-bold">
+                  {{ progress }} %
+                </h1>
               </RadialProgress>
             </div>
             <div>
-              <div class="flex border justify-center text-yellow-300 p-2 rounded-md">
+              <div
+                class="flex border justify-center text-yellow-300 p-2 rounded-md"
+              >
                 <h2 class="text-xl">
-                  Please wait patiently as your files are being uploaded, if for any
-                  reason the files you uploaded are not successful you will be redirected
-                  to the submitted page automatically so you can re-attach your documents
-                  again
+                  Please wait patiently as your files are being uploaded, if for
+                  any reason the files you uploaded are not successful you will
+                  be redirected to the submitted page automatically so you can
+                  re-attach your documents again
                 </h2>
               </div>
             </div>
@@ -398,7 +422,9 @@ export default {
     const toast = useToast();
     const router = useRouter();
     const totalSteps = ref(100);
-    let progress = computed(() => store.getters["goodstanding/getUploadProgress"]);
+    let progress = computed(
+      () => store.getters["goodstanding/getUploadProgress"]
+    );
     let totalSize = ref(0);
     let localData = ref({});
     let localFileData = ref({});
@@ -468,7 +494,8 @@ export default {
             whoIssuedId: generalInfo.value.whoIssuedId
               ? generalInfo.value.whoIssuedId.id
               : "",
-            licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
+            licenseRegistrationNumber: generalInfo.value
+              .licenseRegistrationNumber
               ? generalInfo.value.licenseRegistrationNumber
               : "",
             professionType: {
@@ -481,7 +508,8 @@ export default {
               otherProfessionType: generalInfo.value.otherProfessionType
                 ? generalInfo.value.otherProfessionType
                 : "",
-              otherProfessionTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
+              otherProfessionTypeAmharic: generalInfo.value
+                .otherProfessionTypeAmharic
                 ? generalInfo.value.otherProfessionTypeAmharic
                 : "",
             },
@@ -501,34 +529,48 @@ export default {
             departmentId: generalInfo.value.departmentId.id
               ? generalInfo.value.departmentId.id
               : null,
-            feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : "",
           },
         };
         showModal.value = true;
-        store.dispatch("goodstanding/addGoodstandingLicense", license).then((res) => {
-          let licenseId = res.data.data.id;
-          let payload = { document: formData, id: licenseId };
-          store
-            .dispatch("goodstanding/uploadDocuments", payload)
-            .then((res) => {
-              isLoading.value = false;
-              if (res.data.status == "Success") {
-                localStorage.removeItem("GSApplicationData"); 
+        store
+          .dispatch("goodstanding/addGoodstandingLicense", license)
+          .then((res) => {
+            let licenseId = res.data.data.id;
+            let payload = { document: formData, id: licenseId };
+            store
+              .dispatch("goodstanding/uploadDocuments", payload)
+              .then((res) => {
+                isLoading.value = false;
+                if (res.data.status == "Success") {
+                  localStorage.removeItem("GSApplicationData");
                   localStorage.removeItem("applicantTypeSelected");
                   indexedDB.deleteDatabase("GSdocumentUploads");
-                toast.success("Applied successfuly", {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                });
-                if (action == "DraftEvent") {
-                  router.push({ path: "/Applicant/GoodStanding/draft" });
+                  toast.success("Applied successfuly", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                  if (action == "DraftEvent") {
+                    router.push({ path: "/Applicant/GoodStanding/draft" });
+                  } else {
+                    router.push({ path: "/Applicant/GoodStanding/submitted" });
+                  }
                 } else {
-                  router.push({ path: "/Applicant/GoodStanding/submitted" });
+                  toast.error("Error occured, please try again", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
                 }
-              } else {
+              })
+              .catch(() => {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -536,18 +578,8 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-              }
-            })
-            .catch(() => {
-              toast.error("Error occured, please try again", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
               });
-            });
-        });
+          });
       }
     };
     const back = () => {
@@ -573,9 +605,13 @@ export default {
 
         getAllIDB.onsuccess = function (evt) {
           localFileData.value =
-            evt.target.result && evt.target.result[0] ? evt.target.result[0].data : {};
+            evt.target.result && evt.target.result[0]
+              ? evt.target.result[0].data
+              : {};
           localFileData.value[0].data.forEach((element) => {
-            totalSize.value += Number(Math.ceil((element.image.length * 6) / 8 / 1000));
+            totalSize.value += Number(
+              Math.ceil((element.image.length * 6) / 8 / 1000)
+            );
           });
           totalSize.value = totalSize.value / 1000;
         };
@@ -594,7 +630,14 @@ export default {
         generalInfo.value.expertLevelId = 3;
       }
     });
+       const isPDF = (filename) => {
+      const parts = filename.split(".");
+      const isPdf =
+        parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
+      return isPdf === "pdf";
+    };
     return {
+      isPDF,
       localData,
       localFileData,
       generalInfo,
