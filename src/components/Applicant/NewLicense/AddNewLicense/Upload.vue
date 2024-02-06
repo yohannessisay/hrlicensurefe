@@ -41,7 +41,7 @@
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
-          <div class="accordion-body p-4">
+          <div class="accordion-body sm:p-4 p-1">
             <div class="overflow-x-auto w-full">
               <CommonFileUploadTable
                 :headers="commonFileUploadHeaders"
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 p-1 mt-8 rounded-lg"
+        class="accordion-item bg-white border border-grey-200 sm:p-1 mt-8 rounded-lg"
       >
         <h2 class="accordion-header mb-0 mr-1">
           <button
@@ -76,7 +76,7 @@
           aria-labelledby="departmentFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
-          <div class="accordion-body py-4 px-5">
+          <div class="accordion-body sm:p-4 p-0">
             <FileUploadTable
               :headers="commonFileUploadHeaders"
               :fileUploadError="fileUploadError"

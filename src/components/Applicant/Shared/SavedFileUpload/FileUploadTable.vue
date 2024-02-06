@@ -9,9 +9,6 @@
         {{ table.professionType ? table.professionType.name : "" }}
         Related Files
       </h4>
-      <h5 v-if="existingDocs && existingDocs.length > 0">
-        Images are saved, only upload files you want to change
-      </h5>
       <div class="overflow-x-auto w-full sm:p-4">
         <table
           v-if="table"
@@ -88,55 +85,33 @@
                 />
               </td>
               <td
-                v-if="item && item.fileName"
+                v-if="
+                  documentsSaved[
+                    `${
+                      item.documentType.code
+                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                  ]?.name
+                "
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
                   Uploaded File Name
                 </h2>
                 <h2 class="text-lg break-words">
-                  :class="isDarkMode ? 'text-white' : ''">
-                  {{ item.fileName ? item.fileName : "---------------" }}
-                </h2>
-              </td>
-              <td
-                v-if="item && item.existingFile"
-                class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
-              >
-                <a
-                  :id="
-                    'image_href_' +
-                    `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                  "
-                  :href="item.existingFile"
-                  :data-title="item.name ? item.name : '-----'"
-                  data-lightbox="example-2"
-                >
-                  <i
-                    :id="
-                      'educational_icon_' +
+                  {{
+                    documentsSaved[
                       `${
                         item.documentType.code
                       }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                    "
-                    class="fa fa-eye cursor-pointer text-main-400"
-                    aria-hidden="true"
-                  >
-                    <img
-                      :id="
-                        'image_lightbox_' +
-                        `${
-                          item.documentType.code
-                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                      "
-                      :src="item.existingFile"
-                      class="w-full h-2 object-cover"
-                    />
-                  </i>
-                </a>
+                    ]?.name
+                  }}
+                   <i
+                                  class="fa fa-check-circle text-green-300"
+                                ></i>
+                </h2>
               </td>
+
               <td
-                v-else
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <div class="flex justify-center">
@@ -147,7 +122,13 @@
                         item.documentType.code
                       }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                     "
-                    href=""
+                    :href="
+                      documentsSaved[
+                        `${
+                          item.documentType.code
+                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                      ]?.path
+                    "
                     :data-title="item.name ? item.name : '-----'"
                     data-lightbox="example-2"
                   >
@@ -158,7 +139,7 @@
                           item.documentType.code
                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                       "
-                      class="fa fa-eye cursor-pointer text-main-400 disabled"
+                      class="fa fa-eye cursor-pointer text-main-400"
                       aria-hidden="true"
                     >
                       <img
@@ -168,11 +149,16 @@
                             item.documentType.code
                           }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                         "
-                        src=""
+                        :src="
+                          documentsSaved[
+                            `${
+                              item.documentType.code
+                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                          ]?.path
+                        "
                         class="w-full h-2 object-cover"
                       />
                     </i>
-                    <small class="text-base ml-2">View</small>
                   </a>
                 </div>
               </td>
@@ -248,60 +234,29 @@
                 />
               </td>
               <td
-                v-if="parentItem[0].fileName"
+                v-if="
+                  documentsSaved[
+                    `${
+                      parentItem[0].documentType.code
+                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                  ]?.name
+                "
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
                   Uploaded File Name
                 </h2>
-                <h2 class="text-lg break-words">
-                  {{
-                    parentItem[0].fileName
-                      ? parentItem[0].fileName
-                      : "---------------"
-                  }}
-                </h2>
+                {{
+                  documentsSaved[
+                    `${
+                      parentItem[0].documentType.code
+                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                  ]?.name
+                }}
+                <i class="fa fa-check-circle text-green-300"></i>
               </td>
+
               <td
-                v-if="parentItem[0].existingFile"
-                class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
-              >
-                <a
-                  :id="
-                    'image_href_' +
-                    `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                  "
-                  :href="parentItem[0].existingFile"
-                  :data-title="
-                    parentItem[0].name ? parentItem[0].name : '-----'
-                  "
-                  data-lightbox="example-2"
-                >
-                  <i
-                    :id="
-                      'educational_icon_' +
-                      `${
-                        parentItem[0].documentType.code
-                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                    "
-                    class="fa fa-eye cursor-pointer text-main-400"
-                    aria-hidden="true"
-                  >
-                    <img
-                      :id="
-                        'image_lightbox_' +
-                        `${
-                          parentItem[0].documentType.code
-                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                      "
-                      :src="parentItem[0].existingFile"
-                      class="w-full h-2 object-cover"
-                    />
-                  </i>
-                </a>
-              </td>
-              <td
-                v-else
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <div class="flex justify-center">
@@ -312,8 +267,16 @@
                         parentItem[0].documentType.code
                       }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                     "
-                    href=""
-                    :data-title="parentItem[0].name ? item.name : '-----'"
+                    :href="
+                      documentsSaved[
+                        `${
+                          parentItem[0].documentType.code
+                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                      ]?.path
+                    "
+                    :data-title="
+                      parentItem[0].name ? parentItem[0].name : '-----'
+                    "
                     data-lightbox="example-2"
                   >
                     <i
@@ -323,7 +286,7 @@
                           parentItem[0].documentType.code
                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                       "
-                      class="fa fa-eye cursor-pointer text-main-400 disabled"
+                      class="fa fa-eye cursor-pointer text-main-400"
                       aria-hidden="true"
                     >
                       <img
@@ -333,7 +296,13 @@
                             parentItem[0].documentType.code
                           }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                         "
-                        src=""
+                        :src="
+                          documentsSaved[
+                            `${
+                              parentItem[0].documentType.code
+                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                          ]?.path
+                        "
                         class="w-full h-2 object-cover"
                       />
                     </i>
@@ -519,19 +488,31 @@
                             </td>
                             <td
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
-                              v-if="parentChildItem && parentChildItem.fileName"
+                              v-if="
+                                documentsSaved[
+                                  `${
+                                    parentChildItem.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                ]?.name
+                              "
                             >
-                              <div class="flex items-center p-4">
-                                <div>
-                                  <p :class="isDarkMode ? 'text-white' : ''">
-                                    {{
-                                      parentChildItem.fileName
-                                        ? parentChildItem.fileName
-                                        : "---------------"
-                                    }}
-                                  </p>
-                                </div>
-                              </div>
+                              <h2
+                                class="text-xl text-main-400 underline sm:invisible mb-4"
+                              >
+                                Uploaded File Name
+                              </h2>
+                              <h2 class="document-name text-xl text-grey-800">
+                                {{
+                                  documentsSaved[
+                                    `${
+                                      parentChildItem.documentType.code
+                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  ]?.name
+                                }}
+                                <i
+                                  class="fa fa-check-circle text-green-300"
+                                ></i>
+                              </h2>
                             </td>
                             <td
                               v-if="
@@ -549,11 +530,15 @@
                                     parentChildItem.documentType.code
                                   }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 "
-                                :href="parentChildItem.existingFile"
+                                :href="
+                                  documentsSaved[
+                                    `${
+                                      parentChildItem.documentType.code
+                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  ]?.path
+                                "
                                 :data-title="
-                                  parentChildItem.name
-                                    ? parentChildItem.name
-                                    : '-----'
+                                  parentChildItem.name ? item.name : '-----'
                                 "
                                 data-lightbox="example-2"
                               >
@@ -574,55 +559,19 @@
                                         parentChildItem.documentType.code
                                       }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
-                                    :src="parentChildItem.existingFile"
+                                    :src="
+                                      documentsSaved[
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      ]?.path
+                                    "
                                     class="w-full h-2 object-cover"
                                   />
                                 </i>
                               </a>
                             </td>
-                            <td
-                              v-if="
-                                showNestedDocuments[
-                                  parentItem[0].documentType.code
-                                ] >= index && !parentChildItem.existingFile
-                              "
-                              class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
-                            >
-                              <div class="flex justify-center">
-                                <a
-                                  :id="
-                                    'image_href_' +
-                                    `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                  "
-                                  href=""
-                                  :data-title="
-                                    parentChildItem.name ? item.name : '-----'
-                                  "
-                                  data-lightbox="example-2"
-                                >
-                                  <i
-                                    :id="
-                                      'educational_icon_' +
-                                      `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                    "
-                                    class="fa fa-eye cursor-pointer text-main-400 disabled mr-2"
-                                    aria-hidden="true"
-                                  >
-                                    <img
-                                      :id="
-                                        'image_lightbox_' +
-                                        `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                      "
-                                      src=""
-                                      class="w-full h-2 object-cover"
-                                    />
-                                  </i>
-                                  <small class="text-grey-800 text-base"
-                                    >View</small
-                                  >
-                                </a>
-                              </div>
-                            </td>
+
                             <td
                               v-if="
                                 showNestedDocuments[
@@ -672,8 +621,8 @@ export default {
     "fileUploadError",
     "isDarkMode",
     "educationalDocs",
-    "existingDocs",
     "showNestedDocuments",
+    "documentsSaved",
   ],
 };
 </script>

@@ -109,7 +109,7 @@
 
             <!-- region -->
             <div v-if="showLocation" class="border-b-2">
-            <h2 class="text-yellow-300 text-lg">
+            <h2 class="text-yellow-300 text-lg border-b sm:border-none mb-2">
           ***Please select the region you are applying for, not where you are currently
           living***
         </h2>
