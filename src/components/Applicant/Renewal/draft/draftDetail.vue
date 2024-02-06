@@ -94,11 +94,14 @@
           </div>
 
           <!-- region -->
-          <div v-if="showLocation" class="border-b-2">
-            <h2 class="text-yellow-300 text-xl">
-              ***Please select the region you are applying for, not where you are
-              currently living***
-            </h2>
+          <div v-if="showLocation" class="border-b-2 mb-4">
+             <h2 class="text-yellow-300 text-lg">
+          ***Please select the region you are applying for, not where you are currently
+          living***
+        </h2>
+          <h2 class="text-yellow-300 font-bold text-base mb-4">
+             *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
+          </h2>
             <div
               class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3"
             >
@@ -166,6 +169,17 @@
                   </option>
                 </select>
               </div>
+                        <small
+            v-if="
+              generalInfo.multipleDepartment
+                ? generalInfo.multipleDepartment.length > 0
+                : 0
+            "
+            class="text-yellow-300 text-base col-span-12"
+            >You can change region,zone or woreda when there is no added
+            education/department data below,so in order to change location data
+            please remove current department below</small
+          >
             </div>
           </div>
 

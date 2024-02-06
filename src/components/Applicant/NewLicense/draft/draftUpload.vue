@@ -680,7 +680,7 @@
                   </tbody>
                   <!-- end for multiple file uploads -->
                 </table>
-                <small
+                <small class="text-base text-yellow-300"
                   >Note:-document names marked with <b class="text-red-300">(*)</b>must be
                   uploaded in order to go forward with application process</small
                 >
@@ -690,18 +690,21 @@
         </div>
       </div>
     </div>
-    <div class="shadow-md p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
-      <h2 class="text-yellow-300 font-bold text-3xl">
-        Please attach the following files to proceed
-      </h2>
-      <li
-        class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
-        v-for="error in errorDocuments"
-        :key="error"
+      <div
+        class="shadow-md p-2 m-4 rounded-md text-yellow-300  border"
+        v-if="errorDocuments && errorDocuments.length > 0"
       >
-        {{ error.name }}
-      </li>
-    </div>
+        <h2 class="text-yellow-300 font-bold text-3xl border-b">
+          Please attach the following files to proceed
+        </h2>
+        <li
+          class="text-yellow-300 text-xl font-bold   p-2 m-1"
+          v-for="(error,index) in errorDocuments"
+          :key="error"
+        >
+         <small class="text-grey-800 text-xl">{{index+1}}- </small> {{ error.name }}
+        </li>
+      </div>
     <div class="flex justify-end mr-8 mb-12">
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"

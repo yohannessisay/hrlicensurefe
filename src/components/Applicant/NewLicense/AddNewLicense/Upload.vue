@@ -9,6 +9,12 @@
         the next step, if you wish to change any file, you can do so, else click
         next at the bottom of the screen
       </h2>
+      <h2 
+        class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
+      >
+        *Please upload all documents marked with a red asterix
+        <small class="text-red-300"> (*)</small>
+      </h2>
       <div
         :class="
           isDarkMode
@@ -35,192 +41,15 @@
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
-          <div class="accordion-body py-4 px-5">
-            <div class="bg-red-800 py-1">
-              <div class="overflow-x-auto w-full p-2">
-                <table
-                  :class="
-                    isDarkMode
-                      ? 'max-w-full w-full whitespace-nowrap rounded-lg   mb-8 bg-primaryDark divide-y overflow-hidden'
-                      : 'max-w-full w-full whitespace-nowrap rounded-lg border p-2  mb-8 bg-white divide-y overflow-hidden'
-                  "
-                >
-                  <thead class="bg-lightMain-500">
-                    <tr class="text-left">
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      >
-                        Document Name
-                      </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      >
-                        Document Description
-                      </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
-                      >
-                        Upload
-                      </th>
-
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
-                      >
-                        View
-                      </th>
-
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      >
-                        Remark
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y">
-                    <tr
-                      v-for="item in commonDocuments"
-                      :key="item.id"
-                      :class="
-                        fileUploadError[
-                          `file_upload_row_${item.documentType.code}`
-                        ]
-                          ? 'accordion-body p-2 border-4 border-red-300 rounded-md'
-                          : 'accordion-body py-4 px-5 border-b rounded-lg'
-                      "
-                    >
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{ item.documentType.name }}
-                              <b v-if="item.isRequired" class="text-red-300"
-                                >(*)</b
-                              >
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                item.documentType.description
-                                  ? item.documentType.description
-                                  : "---------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="text-sm font-semibold tracking-wide">
-                          <input
-                            type="file"
-                            required
-                            :id="
-                              'common_image_' + item.documentType.id + item.id
-                            "
-                            accept="*/*"
-                            :ref="`imageUploader${item.id}`"
-                            class="custom-file-input"
-                            v-on:change="handleCommonFileUpload(item, $event)"
-                          />
-                        </p>
-                      </td>
-                      <td class="px-6 py-4" v-if="item && item.fileName">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                item.fileName
-                                  ? item.fileName
-                                  : "---------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-6 py-4 text-center"
-                        v-if="item && item.existingFile"
-                      >
-                        <a
-                          :id="
-                            'common_image_href_' +
-                            item.documentType.id +
-                            item.id
-                          "
-                          :href="item.existingFile"
-                          :data-title="item.name ? item.name : '-----'"
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'common_icon_' + item.documentType.id + item.id
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'common_image_lightbox_' +
-                                item.documentType.id +
-                                item.id
-                              "
-                              :src="item.existingFile"
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-                      <td class="px-6 py-4 text-center" v-else>
-                        <a
-                          :id="
-                            'common_image_href_' +
-                            item.documentType.id +
-                            item.id
-                          "
-                          href=""
-                          :data-title="item.name ? item.name : '-----'"
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'common_icon_' + item.documentType.id + item.id
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'common_image_lightbox_' +
-                                item.documentType.id +
-                                item.id
-                              "
-                              src=""
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p
-                              v-if="fileSizeExceed[item.documentType.code]"
-                              class="text-red-300"
-                            >
-                              Uploaded file Size has exceeded the limit (3 MB)
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <div class="accordion-body p-4">
+            <div class="overflow-x-auto w-full">
+              <CommonFileUploadTable
+                :headers="commonFileUploadHeaders"
+                :tableRows="commonDocuments"
+                :fileUploadError="fileUploadError"
+                :isDarkMode="isDarkMode"
+                @handleCommonFileUpload="handleCommonFileUpload"
+              ></CommonFileUploadTable>
             </div>
           </div>
         </div>
@@ -248,662 +77,34 @@
           data-bs-parent="#FilesAccordion"
         >
           <div class="accordion-body py-4 px-5">
-            <div
-              v-for="table in educationalDocs"
-              :key="table"
-              class="border-b-4 text-main-400 mb-8 border p-1 rounded-md"
+            <FileUploadTable
+              :headers="commonFileUploadHeaders"
+              :fileUploadError="fileUploadError"
+              :isDarkMode="isDarkMode"
+              :educationalDocs="educationalDocs"
+              :existingDocs="existingDocs"
+              :showNestedDocuments="showNestedDocuments"
+              @handleFileUpload="handleFileUpload"
+              @addMore="addMore"
+              @removeChildUpload="removeChildUpload"
             >
-              <h4 class="text-grey-800 font-bold border-b">
-                {{ table.professionType ? table.professionType.name : "" }}
-                Related Files
-              </h4>
-              <h5 v-if="existingDocs && existingDocs.length > 0">
-                Images are saved, only upload files you want to change
-              </h5>
-              <div class="overflow-x-auto w-full p-4">
-                <table
-                  class="w-full p-4 whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden table-auto"
-                >
-                  <thead class="bg-lightMain-500 p-4">
-                    <tr class="text-left">
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      >
-                        Document Name
-                      </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      >
-                        Document Description
-                      </th>
-
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
-                      >
-                        Upload
-                      </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
-                      >
-                        View
-                      </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
-                      >
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y p-4">
-                    <tr
-                      v-for="item in table.docs"
-                      :key="item.id"
-                      :class="
-                        fileUploadError[
-                          'file_upload_row_' +
-                            `${item.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                        ]
-                          ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-md'
-                          : 'accordion-body py-4 px-5 border-b  rounded-lg'
-                      "
-                    >
-                      <td class="px-6 py-4">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{ item.documentType.name }}
-                              <b v-if="item.isRequired" class="text-red-300"
-                                >(*)</b
-                              >
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                item.documentType.description
-                                  ? item.documentType.description
-                                  : "-----------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td class="px-6 py-4">
-                        <p :class="isDarkMode ? 'text-white' : ''">
-                          <input
-                            type="file"
-                            :required="item.isRequired"
-                            :id="`files_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
-                            :ref="`imageUploader${item.id}`"
-                            class="custom-file-input"
-                            v-on:change="handleFileUpload(item, $event, table)"
-                          />
-                        </p>
-                      </td>
-
-                      <td class="px-6 py-4" v-if="item && item.fileName">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                item.fileName
-                                  ? item.fileName
-                                  : "---------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.existingFile"
-                        class="px-6 py-4 text-center"
-                      >
-                        <a
-                          :id="
-                            'image_href_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                          "
-                          :href="item.existingFile"
-                          :data-title="item.name ? item.name : '-----'"
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'educational_icon_' +
-                              `${
-                                item.documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'image_lightbox_' +
-                                `${
-                                  item.documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                              "
-                              :src="item.existingFile"
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-                      <td v-else class="px-6 py-4 text-center">
-                        <a
-                          :id="
-                            'image_href_' +
-                            `${
-                              item.documentType.code
-                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                          "
-                          href=""
-                          :data-title="item.name ? item.name : '-----'"
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'educational_icon_' +
-                              `${
-                                item.documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'image_lightbox_' +
-                                `${
-                                  item.documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                              "
-                              src=""
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-
-                  <tbody
-                    class="divide-y p-4"
-                    v-for="parentItem in table.parentDoc"
-                    :key="parentItem.id"
-                  >
-                    <tr
-                      v-if="parentItem.length < 2"
-                      :class="
-                        fileUploadError[
-                          'file_upload_row_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                        ]
-                          ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-md'
-                          : 'accordion-body py-4 px-5 border-b  rounded-lg'
-                      "
-                    >
-                      <td class="px-6 py-4">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{ parentItem[0].documentType.name }}
-                              <b
-                                v-if="parentItem[0].isRequired"
-                                class="text-red-300"
-                                >(*)</b
-                              >
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                parentItem[0].documentType.description
-                                  ? parentItem[0].documentType.description
-                                  : "-----------------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td class="px-6 py-4">
-                        <p :class="isDarkMode ? 'text-white' : ''">
-                          <input
-                            type="file"
-                            :required="parentItem[0].isRequired"
-                            :id="`files_
-                                    ${
-                                      parentItem[0].documentType.code
-                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
-                            :ref="`imageUploader${parentItem[0].id}`"
-                            class="custom-file-input"
-                            v-on:change="
-                              handleFileUpload(parentItem[0], $event, table)
-                            "
-                          />
-                        </p>
-                      </td>
-                      <td
-                        class="px-6 py-4"
-                        v-if="parentItem[0] && parentItem[0].fileName"
-                      >
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                parentItem[0].fileName
-                                  ? parentItem[0].fileName
-                                  : "---------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="parentItem[0].existingFile"
-                        class="px-6 py-4 text-center"
-                      >
-                        <a
-                          :id="
-                            'image_href_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                          "
-                          :href="parentItem[0].existingFile"
-                          :data-title="
-                            parentItem[0].name ? parentItem[0].name : '-----'
-                          "
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'educational_icon_' +
-                              `${
-                                parentItem[0].documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'image_lightbox_' +
-                                `${
-                                  parentItem[0].documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                              "
-                              :src="parentItem[0].existingFile"
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-                      <td v-else class="px-6 py-4 text-center">
-                        <a
-                          :id="
-                            'image_href_' +
-                            `${
-                              parentItem[0].documentType.code
-                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                          "
-                          href=""
-                          :data-title="parentItem[0].name ? item.name : '-----'"
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'educational_icon_' +
-                              `${
-                                parentItem[0].documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'image_lightbox_' +
-                                `${
-                                  parentItem[0].documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                              "
-                              src=""
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-                    </tr>
-                    <!-- if parent doc has more than 1 elements -->
-                    <tr v-else class="border-b text-main-400 bg-lightGrey-100">
-                      <td
-                        :class="
-                          fileUploadError[
-                            'file_upload_row_' +
-                              `${
-                                parentItem[0].documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                          ]
-                            ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-lg'
-                            : 'accordion-body py-4 px-5 border-b  rounded-lg'
-                        "
-                      >
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                parentItem[0].documentType.name.slice(
-                                  0,
-                                  parentItem[0].documentType.name.length - 2
-                                )
-                              }}
-                              <b
-                                v-if="parentItem[0].isRequired"
-                                class="text-red-300"
-                                >(*)</b
-                              >
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6"></td>
-
-                      <td class="px-6 py-4"></td>
-
-                      <td class="px-6 py-4 text-center"></td>
-
-                      <td class="px-6 text-center">
-                        <button
-                          class="inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
-                          type="button"
-                          @click="addMore(parentItem[0])"
-                        >
-                          Add
-                        </button>
-                      </td>
-                    </tr>
-                    <!-- end table row -->
-
-                    <tr>
-                      <div
-                        v-if="
-                          showNestedDocuments[
-                            parentItem[0].documentType.code
-                          ] != null
-                        "
-                        class="accordion p-4"
-                        :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
-                        style="width: max-content"
-                      >
-                        <div
-                          class="w-full bg-white border border-grey-400 ml-8"
-                        >
-                          <div
-                            :id="
-                              'docAccordion_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            "
-                            :class="isDarkMode ? 'text-white' : ''"
-                            :aria-labelledby="`headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
-                            :data-bs-parent="`#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
-                          >
-                            <div class="accordion-body py-4 px-5 w-full">
-                              <div class="bg-lightMain-500 rounded-sm p-2">
-                                <small class="text-white"
-                                  >Only the first file upload is required, the
-                                  remaining ones are optional</small
-                                >
-                              </div>
-
-                              <tr
-                                v-for="(parentChildItem, index) in parentItem"
-                                :key="index"
-                                :class="
-                                  fileUploadError[
-                                    'file_upload_row_' +
-                                      `${
-                                        parentChildItem.documentType.code
-                                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                  ]
-                                    ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-md'
-                                    : 'accordion-body py-4 px-5 border-b  rounded-lg'
-                                "
-                              >
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                  class="px-6 py-4"
-                                >
-                                  <div class="flex items-center ml-4">
-                                    <div>
-                                      <p
-                                        :class="isDarkMode ? 'text-white' : ''"
-                                      >
-                                        {{ parentChildItem.documentType.name }}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                  class="px-6 py-4"
-                                >
-                                  <div class="flex items-center ml-4">
-                                    <div>
-                                      <p
-                                        :class="isDarkMode ? 'text-white' : ''"
-                                      >
-                                        {{
-                                          parentChildItem.documentType
-                                            .description
-                                            ? parentChildItem.documentType
-                                                .description
-                                            : "- "
-                                        }}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </td>
-
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                  class="p-4"
-                                >
-                                  <p :class="isDarkMode ? 'text-white' : ''">
-                                    <input
-                                      type="file"
-                                      :required="parentChildItem.isRequired"
-                                      :id="`files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                                      accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
-                                      :ref="`imageUploader${parentChildItem.id}`"
-                                      class="custom-file-input"
-                                      v-on:change="
-                                        handleFileUpload(
-                                          parentChildItem,
-                                          $event,
-                                          table
-                                        )
-                                      "
-                                    />
-                                  </p>
-                                </td>
-                                <td
-                                  class="px-6 py-4"
-                                  v-if="
-                                    parentChildItem && parentChildItem.fileName
-                                  "
-                                >
-                                  <div class="flex items-center p-4">
-                                    <div>
-                                      <p
-                                        :class="isDarkMode ? 'text-white' : ''"
-                                      >
-                                        {{
-                                          parentChildItem.fileName
-                                            ? parentChildItem.fileName
-                                            : "---------------"
-                                        }}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td
-                                  v-if="
-                                    parentChildItem.existingFile &&
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                  class="px-6 py-4 text-center"
-                                >
-                                  <a
-                                    :id="
-                                      'image_href_' +
-                                      `${
-                                        parentChildItem.documentType.code
-                                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                    "
-                                    :href="parentChildItem.existingFile"
-                                    :data-title="
-                                      parentChildItem.name
-                                        ? parentChildItem.name
-                                        : '-----'
-                                    "
-                                    data-lightbox="example-2"
-                                  >
-                                    <i
-                                      :id="
-                                        'educational_icon_' +
-                                        `${
-                                          parentChildItem.documentType.code
-                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                      "
-                                      class="fa fa-eye cursor-pointer text-main-400"
-                                      aria-hidden="true"
-                                    >
-                                      <img
-                                        :id="
-                                          'image_lightbox_' +
-                                          `${
-                                            parentChildItem.documentType.code
-                                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                        "
-                                        :src="parentChildItem.existingFile"
-                                        class="w-full h-2 object-cover"
-                                      />
-                                    </i>
-                                  </a>
-                                </td>
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index && !parentChildItem.existingFile
-                                  "
-                                  class="px-6 py-4 text-center"
-                                >
-                                  <a
-                                    :id="
-                                      'image_href_' +
-                                      `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                    "
-                                    href=""
-                                    :data-title="
-                                      parentChildItem.name ? item.name : '-----'
-                                    "
-                                    data-lightbox="example-2"
-                                  >
-                                    <i
-                                      :id="
-                                        'educational_icon_' +
-                                        `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                      "
-                                      class="fa fa-eye cursor-pointer text-main-400 disabled"
-                                      aria-hidden="true"
-                                    >
-                                      <img
-                                        :id="
-                                          'image_lightbox_' +
-                                          `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                        "
-                                        src=""
-                                        class="w-full h-2 object-cover"
-                                      />
-                                    </i>
-                                  </a>
-                                </td>
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                >
-                                  <span
-                                    class="ml-4 cursor-pointer"
-                                    @click="
-                                      removeChildUpload(
-                                        parentItem[0].documentType.code
-                                      )
-                                    "
-                                    ><i
-                                      class="fa-solid fa-trash text-red-300"
-                                    ></i
-                                  ></span>
-                                </td>
-                              </tr>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </tr>
-                  </tbody>
-                </table>
-                <small
-                  >Note:-document names with
-                  <b class="text-red-300">(*)</b> must be uploaded in order to
-                  go forward with application process</small
-                >
-              </div>
-            </div>
+            </FileUploadTable>
           </div>
         </div>
       </div>
       <div
-        class="shadow-md p-2 m-4 rounded-md"
+        class="shadow-md p-2 m-4 rounded-md text-yellow-300 border"
         v-if="errorDocuments && errorDocuments.length > 0"
       >
-        <h2 class="text-yellow-300 font-bold text-3xl">
+        <h2 class="text-yellow-300 font-bold text-xl sm:text-3xl border-b">
           Please attach the following files to proceed
         </h2>
         <li
-          class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
-          v-for="error in errorDocuments"
+          class="text-yellow-300 text-xl font-bold p-2 m-1 break-all"
+          v-for="(error, index) in errorDocuments"
           :key="error"
         >
+          <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
           {{ error.name }}
         </li>
       </div>
@@ -948,8 +149,10 @@ import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { checkDocuments } from "./services/checkDocumentUpload";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import CommonFileUploadTable from "../../Shared/FileUpload/CommonFileUploadTable.vue";
+import FileUploadTable from "../../Shared/FileUpload/FileUploadTable.vue";
 export default {
-  components: { Loading },
+  components: { Loading, CommonFileUploadTable, FileUploadTable },
 
   // eslint-disable-next-line vue/no-setup-props-destructure
   setup(props, { emit }) {
@@ -965,6 +168,12 @@ export default {
     let alreadyUploaded = ref(false);
     let existingDocs = [];
     let files = ref("");
+    let commonFileUploadHeaders = ref([
+      "Document Name",
+      "Document Description",
+      "Upload Document",
+      "View Uploaded",
+    ]);
     let maxFileSize = ref();
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let isBackButtonClicked = ref(false);
@@ -1095,7 +304,9 @@ export default {
             } else {
               fileSize.value = fileS / 1000000 + "MB";
             }
-
+            let commonImageLighBox = document.getElementById(
+              "common_image_light_box_" + data.documentType.id + data.id
+            );
             reader.addEventListener(
               "load",
               function () {
@@ -1117,6 +328,10 @@ export default {
                 });
 
                 documentToSave.value[data.documentType.code] = reader.result;
+
+                if (commonImageLighBox) {
+                  commonImageLighBox.src = reader.result;
+                }
               },
               false
             );
@@ -1141,19 +356,15 @@ export default {
             );
 
             let outputHref = document.getElementById(
-              "common_image_" + data.documentType.id + data.id
+              "common_image_href_" + data.documentType.id + data.id
             );
-
             outputHref.href = URL.createObjectURL(event.target.files[0]);
             if (output && output.src) {
               output.src = URL.createObjectURL(event.target.files[0]);
+              output.onload = function () {
+                URL.revokeObjectURL(output.src);
+              };
             }
-
-            output
-              ? (output.onload = function () {
-                  URL.revokeObjectURL(output.src); // free memory
-                })
-              : "";
           },
           error(err) {
             console.log(err.message);
@@ -1945,6 +1156,7 @@ export default {
       back,
       addMore,
       showNestedDocuments,
+      commonFileUploadHeaders,
     };
   },
 };
@@ -1980,7 +1192,7 @@ export default {
   padding: 5px 5px;
   border: 1px solid;
   outline: none;
-  color: #1f677e;
+  color: #000000;
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;

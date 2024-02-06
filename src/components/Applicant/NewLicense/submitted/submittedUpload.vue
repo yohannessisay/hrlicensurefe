@@ -6,13 +6,17 @@
       :color="'#2F639D'"
       :opacity="0.7"
     ></loading>
-    <h2
-      class="text-yellow-300 border p-2 rounded-md mb-4 font-bold text-xl mt-12"
-    >
-      Note:- Please upload only the documents marked with a red asterisk
-      <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
-      step.
-    </h2>
+    <div class="text-yellow-300 p-2 rounded-md border mb-4 mt-2">
+      <h2 class="text-yellow-300 font-bold text-xl">
+        Note:- Please upload only the documents marked with a red asterisk
+        <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
+        step.
+      </h2>
+      <h2 class="text-yellow-300 font-bold text-xl">
+        ማሳሰቢያ፡- ወደሚቀጥለው ደረጃ ለመቀጠል እባክዎ በቀይ ምልክት
+        <small class="text-red-300 text-xl"> (*)</small> የተደረገባቸውን ሰነዶች ብቻ ይስቀሉ
+      </h2>
+    </div>
     <div class="accordion mr-8" id="FilesAccordion">
       <span
         v-if="errorDocuments && errorDocuments.length > 0"
@@ -740,7 +744,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <small
+                <small class="text-base text-yellow-300"
                   >Note:-document names marked with
                   <b class="text-red-300">(*)</b>must be uploaded in order to go
                   forward with application process</small
@@ -751,21 +755,21 @@
         </div>
       </div>
     </div>
-    <div
-      class="shadow-md p-2 m-4 rounded-md"
-      v-if="errorDocuments && errorDocuments.length > 0"
-    >
-      <h2 class="text-yellow-300 font-bold text-3xl">
-        Please attach the following files to proceed
-      </h2>
-      <li
-        class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
-        v-for="error in errorDocuments"
-        :key="error"
+      <div
+        class="shadow-md p-2 m-4 rounded-md text-yellow-300  border"
+        v-if="errorDocuments && errorDocuments.length > 0"
       >
-        {{ error.name }}
-      </li>
-    </div>
+        <h2 class="text-yellow-300 font-bold text-3xl border-b">
+          Please attach the following files to proceed
+        </h2>
+        <li
+          class="text-yellow-300 text-xl font-bold   p-2 m-1"
+          v-for="(error,index) in errorDocuments"
+          :key="error"
+        >
+         <small class="text-grey-800 text-xl">{{index+1}}- </small> {{ error.name }}
+        </li>
+      </div>
     <div class="flex justify-end mr-8 mb-12">
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"

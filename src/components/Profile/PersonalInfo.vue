@@ -4,7 +4,9 @@
     <div
       class="flex flex-col mt-medium w-full bg-white blue-box-shadow-light rounded mb-large"
     >
-      <h2 class="font-bold ml-56 mt-4">Search here if you are registered in HRA</h2>
+      <h2 class="font-bold ml-56 mt-4">
+        Search here if you are registered in HRA
+      </h2>
       <div class="flex justify-center mt-4">
         <div class="mb-3 xl:w-96">
           <div
@@ -59,15 +61,29 @@
   <!-- If user clicks HRA -->
   <!-- If user clicks New profile -->
   <div class="w-screen max-w-4xl mb-20 p-4" v-if="approveStatus == 2">
-    <div class="flex flex-col w-full form_wrapper bg-white border rounded-md mb-large">
+    <div
+      class="flex flex-col w-full form_wrapper bg-white border rounded-md mb-large"
+    >
       <div class="flex justify-center">
         <h1 class="text-main-400 text-3xl">Complete profile data</h1>
       </div>
 
-      <form class="mx-auto max-w-3xl w-full mt-4 p-2" @submit.prevent="nextStep">
-        <h2 class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2">
-          Please upload your own personal picture where the prefered size is in a passport
-          size format which is 3 X 4 as this photo will be used in your generated license
+      <form
+        class="mx-auto max-w-3xl w-full mt-4 p-2"
+        @submit.prevent="nextStep"
+      >
+        <h2
+          class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2"
+        >
+          Please upload your own personal picture where the preferred size is in
+          a passport size format which is 3 X 4 as this photo will be used in
+          your generated license
+        </h2>
+        <h2
+          class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2"
+        >
+          እባክዎን ፎቶዎን በፓስፖርት መጠን 3 x 4 በሚለካ መልኩ ያቅርቡ። ይህ ፎቶ በመጨረሻ ፍቃድዎ ላይ የሚታተም
+          ይሆናል።
         </h2>
         <div class="flex mb-4 justify-center">
           <div class="flex mb-2 justify-center" v-if="showUpload">
@@ -78,11 +94,10 @@
                   id="photoFile"
                   class="photoFile"
                   ref="photoFileP"
-                  accept=".jpeg,.jpg,.png"
+                  accept=".jpeg,.jpg,.png,.heic,.heif"
                   v-on:change="handleFileUpload()"
                   style="margin-bottom: 15px !important"
-                />
-                <!-- file format can be restricted by using accept=".jpeg,.jpg,.png,.pdf,...." -->
+                /> 
                 <p>
                   Drag your Profile Picture here to begin<br />
                   or click to browse
@@ -100,22 +115,21 @@
           </div>
 
           <picture v-if="!showUpload && isImage">
-            <div class="flex justify-center">
+            <div class="flex justify-center ">
               <span
                 @click="reset()"
                 class="ml-4 mb-4 cursor-pointer border text-white hover:text-main-400 rounded-lg p-2 hover:bg-white bg-main-400"
               >
-                <i class="fa fa-upload cursor-pointer hover:text-main-400 text-white"></i
+                <i
+                  class="fa fa-upload cursor-pointer hover:text-main-400 text-white"
+                ></i
                 >Upload again
               </span>
             </div>
-            <img :src="filePreview" v-show="showPreview" />
+            <img class="rounded-md" :src="filePreview" v-show="showPreview" />
           </picture>
 
-          <span v-if="photoSizeCheck" style="color: red"
-            >Image size to big, Upload again. Image must be less than 3 MB</span
-          >
-          <span v-if="!showUpload && !isImage && !photoSizeCheck">
+          <span v-if="!showUpload && !isImage">
             <img :src="filePreview" alt="" class="preview" />
           </span>
         </div>
@@ -140,7 +154,9 @@
                 class="capitalize form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.name"
-                :disabled="isRegisterdHRAuser == true && searchResultData.firstname"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.firstname
+                "
                 autocapitalize="word"
                 id="floatingInput"
                 placeholder="First name"
@@ -163,7 +179,9 @@
                 class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.fatherName"
-                :disabled="isRegisterdHRAuser == true && searchResultData.middlename"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.middlename
+                "
                 id="floatingInput"
                 placeholder="First name"
               />
@@ -184,7 +202,9 @@
                 class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.grandFatherName"
-                :disabled="isRegisterdHRAuser == true && searchResultData.lastname"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.lastname
+                "
                 id="floatingInput"
                 placeholder="First name"
               />
@@ -228,7 +248,9 @@
                 id="amhFName"
                 placeholder="Amharic Fathers name"
               />
-              <label for="amhFName" class="text-grey-800 text-lg">የአባት ስም</label>
+              <label for="amhFName" class="text-grey-800 text-lg"
+                >የአባት ስም</label
+              >
             </div>
           </div>
           <div class="flex">
@@ -241,7 +263,9 @@
                 id="amhGName"
                 placeholder="Amharic Grand Father name"
               />
-              <label for="amhGName" class="text-grey-800 text-lg">የ ኣያት ስም</label>
+              <label for="amhGName" class="text-grey-800 text-lg"
+                >የ ኣያት ስም</label
+              >
             </div>
           </div>
         </div>
@@ -250,7 +274,9 @@
 
         <!-- General personal info Part -->
         <h2 class="text-main-400 text-xl">General Information</h2>
-        <div class="text-main-400 grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2">
+        <div
+          class="text-main-400 grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2"
+        >
           <div class="flex">
             <div class="form-floating mb-3 w-full mt-2">
               <input
@@ -260,7 +286,9 @@
                 min="1899-01-01"
                 v-model="personalInfo.dateOfBirth"
                 @change="validateDate(personalInfo.dateOfBirth)"
-                :disabled="isRegisterdHRAuser == true && searchResultData.birthdate"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.birthdate
+                "
                 id="birthDate"
               />
               <label for="birthDate" class="text-grey-800 text-lg"
@@ -268,7 +296,8 @@
               >
               <div
                 v-if="
-                  personalInfoErrors.dateOfBirth || personalInfoErrors.invalidBirthDate
+                  personalInfoErrors.dateOfBirth ||
+                  personalInfoErrors.invalidBirthDate
                 "
                 class="border p-2 text-sm text-red-300 mr-4 rounded-md w-3/4 ml-4"
               >
@@ -294,9 +323,14 @@
                         id="male"
                         value="male"
                         v-model="personalInfo.gender"
-                        :disabled="isRegisterdHRAuser == true && searchResultData.gender"
+                        :disabled="
+                          isRegisterdHRAuser == true && searchResultData.gender
+                        "
                       />
-                      <label class="ml-tiny flex flex-col text-grey-800" for="male">
+                      <label
+                        class="ml-tiny flex flex-col text-grey-800"
+                        for="male"
+                      >
                         Male
                       </label>
                     </div>
@@ -308,9 +342,13 @@
                       id="female"
                       value="female"
                       v-model="personalInfo.gender"
-                      :disabled="isRegisterdHRAuser == true && searchResultData.gender"
+                      :disabled="
+                        isRegisterdHRAuser == true && searchResultData.gender
+                      "
                     />
-                    <label class="ml-tiny text-grey-800" for="female"> Female </label>
+                    <label class="ml-tiny text-grey-800" for="female">
+                      Female
+                    </label>
                   </div>
                 </div>
                 <span
@@ -335,7 +373,9 @@
                   aria-label="Default select example"
                   v-model="personalInfo.nationalityId"
                   @change="fetchNationalities()"
-                  :disabled="isRegisterdHRAuser == true && searchResultData.nationality"
+                  :disabled="
+                    isRegisterdHRAuser == true && searchResultData.nationality
+                  "
                 >
                   <option
                     v-for="types in state.nationalities"
@@ -362,7 +402,9 @@
                 class="form-select text-main-400 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
                 aria-label="Default select example"
                 v-model="personalInfo.maritalStatusId"
-                :disabled="isRegisterdHRAuser == true && searchResultData.maritalStatus"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.maritalStatus
+                "
               >
                 >
                 <option value="1">Single</option>
@@ -411,7 +453,7 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-
+import Compressor from "compressorjs";
 export default {
   components: {},
   props: ["activeState", "approvalModal"],
@@ -493,39 +535,48 @@ export default {
     };
     const handleFileUpload = async () => {
       showUpload.value = false;
-      photoFile.value = photoFileP.value.files[0];
+      photoFile.value = photoFileP?.value?.files[0];
       let reader = new FileReader();
-      if (photoFile.value.size > 3145728) {
-        photoSizeCheck.value = true;
-      } else {
-        let fileS = photoFile.value.size;
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener(
-          "load",
-          async function () {
-            showPreview.value = true;
-            filePreview.value = reader.result;
-            var base64 = reader.result;
-            personalInfo.value.photo = base64;
-          },
-          false
-        );
-        if (photoFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
-            isImage.value = true;
-            reader.readAsDataURL(photoFile.value);
-          } else if (/\.(pdf)$/i.test(photoFile.value.name)) {
-            isImage.value = false;
-            reader.readAsText(photoFile.value);
+      new Compressor(photoFile.value, {
+        quality: 0.5,
+
+        // The compression process is asynchronous,
+        // which means you have to access the `result` in the `success` hook function.
+        success(result) {
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(new File([result], result.name));
+          photoFile.value = dataTransfer?.files[0];
+          let reader = new FileReader();
+
+          let fileS = photoFile.value.size;
+          if (fileS > 0 && fileS < 1000) {
+            fileSize.value += "B";
+          } else if (fileS > 1000 && fileS < 1000000) {
+            fileSize.value = fileS / 1000 + "kB";
+          } else {
+            fileSize.value = fileS / 1000000 + "MB";
           }
-        }
-      }
+          reader.addEventListener(
+            "load",
+            async function () {
+              showPreview.value = true;
+              filePreview.value = reader.result;
+              var base64 = reader.result;
+              personalInfo.value.photo = base64;
+            },
+            false
+          );
+          if (photoFile.value) {
+            if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
+              isImage.value = true;
+              reader.readAsDataURL(photoFile.value);
+            }
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
     };
 
     const searchUser = () => {
@@ -533,77 +584,87 @@ export default {
         employeeId: searchEmployee.value,
         fileNumber: searchByFileNumber.value,
       };
-      store.dispatch("profile/checkHrlRegistration", searchparamters).then((res) => {
-        if (res.data.data) {
-          let searchResult = res.data.data;
-          let nationalityId = 0;
-          searchResultData.value = searchResult;
-          let nationality =
-            state.value?.nationalities == null ? null : state.value.nationalities;
-          let maritalStatusId = 0;
-          if (searchResult.maritalStatus) {
-            maritalStatusId =
-              searchResult.maritalStatus == "Married"
-                ? 2
-                : searchResult.maritalStatus == "Single"
-                ? 1
-                : searchResult.maritalStatus == "Divorced"
-                ? 3
-                : 0;
-          }
-          if (searchResult.nationality) {
-            nationalityId = nationality.find(
-              (nat) => nat.name == searchResult?.nationality
-            ).id;
-          }
-          // let maritalStatusId = maritalStatus.find(
-          //   nat => nat.name == searchResult?.maritalStatus
-          // ).id;
+      store
+        .dispatch("profile/checkHrlRegistration", searchparamters)
+        .then((res) => {
+          if (res.data.data) {
+            let searchResult = res.data.data;
+            let nationalityId = 0;
+            searchResultData.value = searchResult;
+            let nationality =
+              state.value?.nationalities == null
+                ? null
+                : state.value.nationalities;
+            let maritalStatusId = 0;
+            if (searchResult.maritalStatus) {
+              maritalStatusId =
+                searchResult.maritalStatus == "Married"
+                  ? 2
+                  : searchResult.maritalStatus == "Single"
+                  ? 1
+                  : searchResult.maritalStatus == "Divorced"
+                  ? 3
+                  : 0;
+            }
+            if (searchResult.nationality) {
+              nationalityId = nationality.find(
+                (nat) => nat.name == searchResult?.nationality
+              ).id;
+            }
+            // let maritalStatusId = maritalStatus.find(
+            //   nat => nat.name == searchResult?.maritalStatus
+            // ).id;
 
-          let data = {
-            name: searchResult.firstname,
-            fatherName: searchResult?.middlename,
-            grandFatherName: searchResult?.lastname,
-            alternativeName: searchResult?.alternativeName,
-            alternativeFatherName: searchResult?.alternativeFatherName,
-            alternativeGrandFatherName: searchResult?.alternativeGrandFatherName,
-            gender: searchResult?.gender,
-            dateOfBirth: searchResult?.birthdate,
-            nationalityId: nationalityId,
-            maritalStatusId: maritalStatusId,
-            poBox: searchResult?.pobox,
-            employeeId: searchResult.employeeId ? searchResult.employeeId : null,
-            fileNumber: searchResult.fileNumber,
-          };
+            let data = {
+              name: searchResult.firstname,
+              fatherName: searchResult?.middlename,
+              grandFatherName: searchResult?.lastname,
+              alternativeName: searchResult?.alternativeName,
+              alternativeFatherName: searchResult?.alternativeFatherName,
+              alternativeGrandFatherName:
+                searchResult?.alternativeGrandFatherName,
+              gender: searchResult?.gender,
+              dateOfBirth: searchResult?.birthdate,
+              nationalityId: nationalityId,
+              maritalStatusId: maritalStatusId,
+              poBox: searchResult?.pobox,
+              employeeId: searchResult.employeeId
+                ? searchResult.employeeId
+                : null,
+              fileNumber: searchResult.fileNumber,
+            };
 
-          store.dispatch("profile/setProfileInfo", data);
-          personalInfo.value = data;
-          approveStatus.value = 2;
-          isRegisterdHRAuser.value = true;
-          toast.success(res.data.message, {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-        } else {
-          toast.error(res.data.message, {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-        }
-      });
+            store.dispatch("profile/setProfileInfo", data);
+            personalInfo.value = data;
+            approveStatus.value = 2;
+            isRegisterdHRAuser.value = true;
+            toast.success(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          } else {
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
     };
 
     const fetchUserTypes = () => {
       store.dispatch("profile/getUserTypes").then((res) => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
-        state.value.userTypes.splice(state.value.userTypes.indexOf("Reviewer"), 1);
+        state.value.userTypes.splice(
+          state.value.userTypes.indexOf("Reviewer"),
+          1
+        );
       });
     };
     const fetchRegions = () => {
@@ -634,13 +695,18 @@ export default {
       personalInfo.value.employeeId = searchResultData.value.employeeId;
       personalInfoErrors.value = validateForm(personalInfo.value);
       for (let i = 0; i < state.value.nationalities.length; i++) {
-        if (state.value.nationalities[i].id == personalInfo.value.nationalityId) {
+        if (
+          state.value.nationalities[i].id == personalInfo.value.nationalityId
+        ) {
           nationality.value = state.value.nationalities[i].name;
         }
       }
-      if (personalInfo.value.maritalStatusId == 1) maritalStatus.value = "Single";
-      if (personalInfo.value.maritalStatusId == 2) maritalStatus.value = "Married";
-      if (personalInfo.value.maritalStatusId == 3) maritalStatus.value = "Divorced";
+      if (personalInfo.value.maritalStatusId == 1)
+        maritalStatus.value = "Single";
+      if (personalInfo.value.maritalStatusId == 2)
+        maritalStatus.value = "Married";
+      if (personalInfo.value.maritalStatusId == 3)
+        maritalStatus.value = "Divorced";
       store.dispatch("profile/setNationality", nationality.value);
       store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
@@ -684,12 +750,15 @@ export default {
       if (!formData.photo) errors.photo = "Profile picture is required";
       if (!formData.name) errors.name = "First name is required";
       if (!formData.fatherName) errors.fatherName = "Father's name is required";
-      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of birth is required";
-      if (!formData.maritalStatusId) errors.maritalStatus = "Marital status is required";
+      if (!formData.dateOfBirth)
+        errors.dateOfBirth = "Date of birth is required";
+      if (!formData.maritalStatusId)
+        errors.maritalStatus = "Marital status is required";
       if (!formData.gender) errors.gender = "Gender is required";
       if (!formData.grandFatherName)
         errors.grandFatherName = "Grandfather's name required";
-      if (!formData.nationalityId) errors.nationalityId = "Nationality is required";
+      if (!formData.nationalityId)
+        errors.nationalityId = "Nationality is required";
 
       let today = new Date().getFullYear();
       let age = today - new Date(formData.dateOfBirth).getFullYear();

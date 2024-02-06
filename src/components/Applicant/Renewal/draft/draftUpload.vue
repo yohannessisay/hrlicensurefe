@@ -1,14 +1,25 @@
 <template>
   <div>
-    <h2 class="text-yellow-300 border p-2 rounded-md mb-4 font-bold text-xl mt-12">
-      Note:- Please upload only the documents marked with a red asterisk
-      <small class="text-red-300 text-xl"> (*) </small> to proceed to the next step.
-    </h2>
+    <div class="text-yellow-300 p-2 rounded-md border mb-4 mt-2">
+      <h2 class="text-yellow-300 font-bold text-xl">
+        Note:- Please upload only the documents marked with a red asterisk
+        <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
+        step.
+      </h2>
+      <h2 class="text-yellow-300 font-bold text-xl">
+        ማሳሰቢያ፡- ወደሚቀጥለው ደረጃ ለመቀጠል እባክዎ በቀይ ምልክት
+        <small class="text-red-300 text-xl"> (*)</small> የተደረገባቸውን ሰነዶች ብቻ ይስቀሉ
+      </h2>
+    </div>
     <div class="accordion mr-8" id="FilesAccordion">
-      <span v-if="errorDocuments && errorDocuments.length > 0" class="text-red-300"
+      <span
+        v-if="errorDocuments && errorDocuments.length > 0"
+        class="text-red-300"
         >Please upload files highlighted in red borders to proceed</span
       >
-      <div class="accordion-item bg-white border border-grey-200 p-4 rounded-lg">
+      <div
+        class="accordion-item bg-white border border-grey-200 p-4 rounded-lg"
+      >
         <h2 class="accordion-header mb-0" id="headingOne">
           <button
             class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
@@ -36,10 +47,14 @@
                 >
                   <thead class="bg-lightMain-500">
                     <tr class="text-left">
-                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                      <th
+                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
+                      >
                         Document Name
                       </th>
-                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                      <th
+                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
+                      >
                         Document Description
                       </th>
                       <th
@@ -61,7 +76,9 @@
                       v-for="item in commonDocuments"
                       :key="item.id"
                       :class="
-                        fileUploadError['file_upload_row_' + `${item.documentType.code}`]
+                        fileUploadError[
+                          'file_upload_row_' + `${item.documentType.code}`
+                        ]
                           ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
                           : 'accordion-body py-4 px-5 border-b rounded-lg'
                       "
@@ -71,7 +88,9 @@
                           <div>
                             <p class="">
                               {{ item.documentType.name }}
-                              <b v-if="item.isRequired" class="text-red-300">(*)</b>
+                              <b v-if="item.isRequired" class="text-red-300"
+                                >(*)</b
+                              >
                             </p>
                           </div>
                         </div>
@@ -94,7 +113,9 @@
                           <input
                             type="file"
                             required
-                            :id="'common_image_' + item.documentType.id + item.id"
+                            :id="
+                              'common_image_' + item.documentType.id + item.id
+                            "
                             accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
@@ -112,7 +133,11 @@
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
-                          :id="'common_image_href_' + item.documentType.id + item.id"
+                          :id="
+                            'common_image_href_' +
+                            item.documentType.id +
+                            item.id
+                          "
                           :href="
                             documentsSaved[item.documentType.code]?.path
                               ? documentsSaved[item.documentType.code]?.path
@@ -122,13 +147,17 @@
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="'common_icon_' + item.documentType.id + item.id"
+                            :id="
+                              'common_icon_' + item.documentType.id + item.id
+                            "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'common_image_lightbox_' + item.documentType.id + item.id
+                                'common_image_lightbox_' +
+                                item.documentType.id +
+                                item.id
                               "
                               :src="documentsSaved[item.documentType.code]"
                               class="w-full h-2 object-cover"
@@ -144,7 +173,9 @@
           </div>
         </div>
       </div>
-      <div class="accordion-item bg-white border border-grey-200 p-4 mt-8 rounded-lg">
+      <div
+        class="accordion-item bg-white border border-grey-200 p-4 mt-8 rounded-lg"
+      >
         <h2 class="accordion-header mb-0" id="headingTwo">
           <button
             class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
@@ -181,10 +212,14 @@
                 >
                   <thead class="bg-lightMain-500 p-4">
                     <tr class="text-left">
-                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                      <th
+                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
+                      >
                         Document Name
                       </th>
-                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                      <th
+                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
+                      >
                         Document Description
                       </th>
 
@@ -210,9 +245,17 @@
                       :class="
                         fileUploadError[
                           'file_upload_row_' +
-                            `${item.documentType ? item.documentType.code : ''}_${
-                              table.educationalLevel ? table.educationalLevel.code : ''
-                            }_${table.professionType ? table.professionType.code : ''}`
+                            `${
+                              item.documentType ? item.documentType.code : ''
+                            }_${
+                              table.educationalLevel
+                                ? table.educationalLevel.code
+                                : ''
+                            }_${
+                              table.professionType
+                                ? table.professionType.code
+                                : ''
+                            }`
                         ]
                           ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
                           : 'accordion-body py-4 px-5 border-b  rounded-lg'
@@ -222,8 +265,12 @@
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{ item.documentType ? item.documentType.name : "" }}
-                              <b v-if="item.isRequired" class="text-red-300">(*)</b>
+                              {{
+                                item.documentType ? item.documentType.name : ""
+                              }}
+                              <b v-if="item.isRequired" class="text-red-300"
+                                >(*)</b
+                              >
                             </p>
                           </div>
                         </div>
@@ -233,7 +280,8 @@
                           <div>
                             <p class="">
                               {{
-                                item.documentType && item.documentType.description
+                                item.documentType &&
+                                item.documentType.description
                                   ? item.documentType.description
                                   : "-----------------"
                               }}
@@ -268,7 +316,9 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${item.documentType ? item.documentType.code : ''}_${
+                            `${
+                              item.documentType ? item.documentType.code : ''
+                            }_${
                               table.educationalLevel
                                 ? table.educationalLevel.code.toUpperCase()
                                 : ''
@@ -280,7 +330,9 @@
                           "
                           :href="
                             documentsSaved[
-                              `${item.documentType ? item.documentType.code : ''}_${
+                              `${
+                                item.documentType ? item.documentType.code : ''
+                              }_${
                                 table.educationalLevel
                                   ? table.educationalLevel.code.toUpperCase()
                                   : ''
@@ -297,7 +349,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${item.documentType ? item.documentType.code : ''}_${
+                              `${
+                                item.documentType ? item.documentType.code : ''
+                              }_${
                                 table.educationalLevel
                                   ? table.educationalLevel.code.toUpperCase()
                                   : ''
@@ -313,7 +367,11 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${item.documentType ? item.documentType.code : ''}_${
+                                `${
+                                  item.documentType
+                                    ? item.documentType.code
+                                    : ''
+                                }_${
                                   table.educationalLevel.code
                                     ? table.educationalLevel.code.toUpperCase()
                                     : ''
@@ -325,7 +383,11 @@
                               "
                               :src="
                                 documentsSaved[
-                                  `${item.documentType ? item.documentType.code : ''}_${
+                                  `${
+                                    item.documentType
+                                      ? item.documentType.code
+                                      : ''
+                                  }_${
                                     table.educationalLevel
                                       ? table.educationalLevel.code.toUpperCase()
                                       : ''
@@ -358,7 +420,9 @@
                           <div>
                             <p class="">
                               {{ parentItem[0].documentType.name }}
-                              <b v-if="parentItem[0].isRequired" class="text-red-300"
+                              <b
+                                v-if="parentItem[0].isRequired"
+                                class="text-red-300"
                                 >(*)</b
                               >
                             </p>
@@ -388,7 +452,9 @@
                             accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
-                            v-on:change="handleFileUpload(parentItem[0], $event, table)"
+                            v-on:change="
+                              handleFileUpload(parentItem[0], $event, table)
+                            "
                           />
                         </p>
                       </td>
@@ -427,7 +493,9 @@
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
-                          :data-title="parentItem[0].name ? parentItem[0].name : '-----'"
+                          :data-title="
+                            parentItem[0].name ? parentItem[0].name : '-----'
+                          "
                           data-lightbox="example-2"
                         >
                           <i
@@ -472,7 +540,9 @@
                                   parentItem[0].documentType.name.length - 2
                                 )
                               }}
-                              <b v-if="parentItem[0].isRequired" class="text-red-300"
+                              <b
+                                v-if="parentItem[0].isRequired"
+                                class="text-red-300"
                                 >(* )</b
                               >
                             </p>
@@ -500,13 +570,17 @@
                     <tr>
                       <div
                         v-if="
-                          showNestedDocuments[parentItem[0].documentType.code] != null
+                          showNestedDocuments[
+                            parentItem[0].documentType.code
+                          ] != null
                         "
                         class="accordion mt-4 mb-4"
                         id="accordionExample"
                         style="width: max-content"
                       >
-                        <div class="w-full bg-white border border-grey-400 ml-8">
+                        <div
+                          class="w-full bg-white border border-grey-400 ml-8"
+                        >
                           <div
                             :id="'docAccordion' + parentItem[0].documentType.id"
                             class=""
@@ -516,8 +590,8 @@
                             <div class="accordion-body py-4 px-5">
                               <div class="bg-lightMain-500 rounded-sm p-2">
                                 <small class="text-white"
-                                  >Only the first file upload is required, the remaining
-                                  ones are optional</small
+                                  >Only the first file upload is required, the
+                                  remaining ones are optional</small
                                 >
                               </div>
 
@@ -554,8 +628,10 @@
                                     <div>
                                       <p class="">
                                         {{
-                                          parentChildItem.documentType.description
-                                            ? parentChildItem.documentType.description
+                                          parentChildItem.documentType
+                                            .description
+                                            ? parentChildItem.documentType
+                                                .description
                                             : "- "
                                         }}
                                       </p>
@@ -580,7 +656,11 @@
                                       :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
-                                        handleFileUpload(parentChildItem, $event, table)
+                                        handleFileUpload(
+                                          parentChildItem,
+                                          $event,
+                                          table
+                                        )
                                       "
                                     />
                                   </p>
@@ -609,7 +689,9 @@
                                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     }}
-                                    <i class="fa fa-check-circle text-green-300"></i
+                                    <i
+                                      class="fa fa-check-circle text-green-300"
+                                    ></i
                                   ></span>
                                 </td>
                                 <td
@@ -678,9 +760,13 @@
                                   <span
                                     class="ml-4 cursor-pointer"
                                     @click="
-                                      removeChildUpload(parentItem[0].documentType.code)
+                                      removeChildUpload(
+                                        parentItem[0].documentType.code
+                                      )
                                     "
-                                    ><i class="fa-solid fa-trash text-red-300"></i
+                                    ><i
+                                      class="fa-solid fa-trash text-red-300"
+                                    ></i
                                   ></span>
                                 </td>
                               </tr>
@@ -691,9 +777,10 @@
                     </tr>
                   </tbody>
                 </table>
-                <small
-                  >Note:-document names marked with <b class="text-red-300">(*)</b>must be
-                  uploaded in order to go forward with application process</small
+                <small class="text-base text-yellow-300"
+                  >Note:-document names marked with
+                  <b class="text-red-300">(*)</b>must be uploaded in order to go
+                  forward with application process</small
                 >
               </div>
             </div>
@@ -701,18 +788,21 @@
         </div>
       </div>
     </div>
-    <div class="shadow-md p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
-      <h2 class="text-yellow-300 font-bold text-3xl">
-        Please attach the following files to proceed
-      </h2>
-      <li
-        class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
-        v-for="error in errorDocuments"
-        :key="error"
+      <div
+        class="shadow-md p-2 m-4 rounded-md text-yellow-300  border"
+        v-if="errorDocuments && errorDocuments.length > 0"
       >
-        {{ error.name }}
-      </li>
-    </div>
+        <h2 class="text-yellow-300 font-bold text-3xl border-b">
+          Please attach the following files to proceed
+        </h2>
+        <li
+          class="text-yellow-300 text-xl font-bold   p-2 m-1"
+          v-for="(error,index) in errorDocuments"
+          :key="error"
+        >
+         <small class="text-grey-800 text-xl">{{index+1}}- </small> {{ error.name }}
+        </li>
+      </div>
     <div class="flex justify-end mr-8 mb-12">
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
@@ -734,7 +824,7 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import Compressor from "compressorjs";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
+import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 import { useToast } from "vue-toastification";
@@ -749,7 +839,7 @@ export default {
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let educationalDocs = ref([]);
-    let fileUploadError = ref([]); 
+    let fileUploadError = ref([]);
     const toast = useToast();
     let files = ref("");
     let maxFileSize = ref(5000000);
@@ -770,8 +860,6 @@ export default {
     let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
 
- 
-
     const handleCommonFileUpload = (data, event) => {
       new Compressor(event?.target?.files[0], {
         quality: 0.5,
@@ -783,16 +871,20 @@ export default {
           dataTransfer.items.add(new File([result], result.name));
           event.target.files = dataTransfer.files;
           documentsUploaded.value[data.documentType.code] = "";
-          documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
+          documentsUploaded.value[data.documentType.code] =
+            event?.target?.files[0];
           let reader = new FileReader();
 
           let fileS = documentsUploaded.value[data.documentType.code].size;
 
           isImage.value[data.documentType.code] = true;
-          documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
+          documentsUploaded.value[data.documentType.code] =
+            event?.target?.files[0];
           formData.append(data.documentType.code, event?.target?.files[0]);
 
-          delete fileUploadError.value["file_upload_row_" + data.documentType.code];
+          delete fileUploadError.value[
+            "file_upload_row_" + data.documentType.code
+          ];
           showImage.value = true;
 
           if (fileS > 0 && fileS < 1000) {
@@ -816,7 +908,9 @@ export default {
                 imageId: "common_image_lightbox_" + data.documentType.code,
                 documenttype: data.documentType ? data.documentType.name : "",
                 documentCode: data.documentType ? data.documentType.code : "",
-                educationalLevel: data.educationalLevel ? data.educationalLevel.name : "",
+                educationalLevel: data.educationalLevel
+                  ? data.educationalLevel.name
+                  : "",
                 fileName: event?.target?.files[0].name,
                 image: reader.result,
               });
@@ -836,13 +930,19 @@ export default {
               isImage.value[data.documentType.code] = true;
               isPdf.value[data.documentType.code] = false;
 
-              reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
+              reader.readAsDataURL(
+                documentsUploaded.value[data.documentType.code]
+              );
             } else if (
-              /\.(pdf)$/i.test(documentsUploaded.value[data.documentType.code].name)
+              /\.(pdf)$/i.test(
+                documentsUploaded.value[data.documentType.code].name
+              )
             ) {
               isImage.value[data.documentType.code] = false;
               isPdf.value[data.documentType.code] = true;
-              reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
+              reader.readAsDataURL(
+                documentsUploaded.value[data.documentType.code]
+              );
             }
           }
           let icon = document.getElementById(
@@ -993,7 +1093,9 @@ export default {
                   data.educationalLevel.code.toUpperCase() +
                   "_" +
                   pro.professionType.code.toUpperCase(),
-                educationalLevel: data.educationalLevel ? data.educationalLevel.name : "",
+                educationalLevel: data.educationalLevel
+                  ? data.educationalLevel.name
+                  : "",
                 fileName: event?.target?.files[0].name,
                 image: reader.result,
               });
@@ -1142,7 +1244,10 @@ export default {
           let request = indexedDB.open("RNdocumentUploads", 1);
           request.onsuccess = function () {
             db = request.result;
-            let transaction = db.transaction(["RNdocumentUploads"], "readwrite");
+            let transaction = db.transaction(
+              ["RNdocumentUploads"],
+              "readwrite"
+            );
 
             finalLocalData.data = imageData;
 
@@ -1194,10 +1299,14 @@ export default {
         .filter((cd) => cd.isRequired)
         .forEach((element) => {
           // eslint-disable-next-line no-prototype-builtins
-          CMtemp = documentsUploaded.value.hasOwnProperty(element.documentType.code);
+          CMtemp = documentsUploaded.value.hasOwnProperty(
+            element.documentType.code
+          );
 
           if (!CMtemp) {
-            fileUploadError.value["file_upload_row_" + element.documentType.code] = true;
+            fileUploadError.value[
+              "file_upload_row_" + element.documentType.code
+            ] = true;
 
             errorDocuments.value.push({
               isCommon: true,
@@ -1205,7 +1314,9 @@ export default {
               code: element.documentType.code,
             });
           } else {
-            delete fileUploadError.value["file_upload_row_" + element.documentType.code];
+            delete fileUploadError.value[
+              "file_upload_row_" + element.documentType.code
+            ];
           }
         });
 
@@ -1313,7 +1424,9 @@ export default {
       }, {});
     };
     const addMore = (parentItem) => {
-      if (showNestedDocuments.value[parentItem.documentType.code] == undefined) {
+      if (
+        showNestedDocuments.value[parentItem.documentType.code] == undefined
+      ) {
         showNestedDocuments.value[parentItem.documentType.code] = 0;
       } else {
         showNestedDocuments.value[parentItem.documentType.code] =
@@ -1344,72 +1457,82 @@ export default {
       } else {
         initDb();
       }
-      store.dispatch("renewal/getRenewalApplication", route.params.id).then((res) => {
-        if (res.data.data) {
-          let localData = JSON.parse(localStorage.getItem("RNApplicationData"));
-          let professionChanged = localData.professionChanged;
-          if (professionChanged && professionChanged == true) {
-            documentsUploaded.value = [];
-            documentsSaved.value = [];
-            generalInfo.value = localData;
-          } else {
-            generalInfo.value = res.data.data;
-            generalInfo.value?.documents.forEach((element) => {
-              documentsSaved.value[element.fileName] = {};
-              documentsSaved.value[element.fileName].path = googleApi + element.filePath;
-              documentsSaved.value[element.fileName].name = element.originalFileName;
-            });
-            documentsUploaded.value = documentsSaved.value;
-            store.dispatch("renewal/getApplicationCategories").then((res) => {
-              let categoryResults = res.data.data
-                ? res.data.data.filter((ele) => ele.code == "RA")
-                : "";
-              let educationLevels =
-                generalInfo.value.multipleDepartment &&
-                generalInfo.value.multipleDepartment.length > 0
-                  ? generalInfo.value.multipleDepartment
-                  : generalInfo.value.educations
-                  ? generalInfo.value.educations
-                  : [];
+      store
+        .dispatch("renewal/getRenewalApplication", route.params.id)
+        .then((res) => {
+          if (res.data.data) {
+            let localData = JSON.parse(
+              localStorage.getItem("RNApplicationData")
+            );
+            let professionChanged = localData.professionChanged;
+            if (professionChanged && professionChanged == true) {
+              documentsUploaded.value = [];
+              documentsSaved.value = [];
+              generalInfo.value = localData;
+            } else {
+              generalInfo.value = res.data.data;
+              generalInfo.value?.documents.forEach((element) => {
+                documentsSaved.value[element.fileName] = {};
+                documentsSaved.value[element.fileName].path =
+                  googleApi + element.filePath;
+                documentsSaved.value[element.fileName].name =
+                  element.originalFileName;
+              });
+              documentsUploaded.value = documentsSaved.value;
+              store.dispatch("renewal/getApplicationCategories").then((res) => {
+                let categoryResults = res.data.data
+                  ? res.data.data.filter((ele) => ele.code == "RA")
+                  : "";
+                let educationLevels =
+                  generalInfo.value.multipleDepartment &&
+                  generalInfo.value.multipleDepartment.length > 0
+                    ? generalInfo.value.multipleDepartment
+                    : generalInfo.value.educations
+                    ? generalInfo.value.educations
+                    : [];
 
-              //Get department docs
-              educationLevels.forEach((element) => {
+                //Get department docs
+                educationLevels.forEach((element) => {
+                  store
+                    .dispatch("renewal/getRNdocuments", [
+                      categoryResults[0].id,
+                      generalInfo.value.applicantType.id,
+                      element.educationLevel.id,
+                      element.department.id,
+                    ])
+                    .then((res) => {
+                      let resp = res.data.data;
+                      renewalDocuments.value = res.data.data;
+                      educationalDocs.value.push({
+                        professionType:
+                          element && element.professionType
+                            ? element.professionType
+                            : "",
+                        educationalLevel: element.educationLevel
+                          ? element.educationLevel
+                          : "",
+                        docs: resp.filter(
+                          (element) => element.parentDocument == null
+                        ),
+                        parentDoc: groupByKey(resp, "parentDocument"),
+                      });
+                    });
+                });
+                //Get Common Docs
+
                 store
-                  .dispatch("renewal/getRNdocuments", [
+                  .dispatch("renewal/getCommonRNdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
-                    element.educationLevel.id,
-                    element.department.id,
                   ])
                   .then((res) => {
-                    let resp = res.data.data;
-                    renewalDocuments.value = res.data.data;
-                    educationalDocs.value.push({
-                      professionType:
-                        element && element.professionType ? element.professionType : "",
-                      educationalLevel: element.educationLevel
-                        ? element.educationLevel
-                        : "",
-                      docs: resp.filter((element) => element.parentDocument == null),
-                      parentDoc: groupByKey(resp, "parentDocument"),
-                    });
+                    let result = res.data.data;
+                    commonDocuments.value = result;
                   });
               });
-              //Get Common Docs
-
-              store
-                .dispatch("renewal/getCommonRNdocuments", [
-                  categoryResults[0].id,
-                  generalInfo.value.applicantType.id,
-                ])
-                .then((res) => {
-                  let result = res.data.data;
-                  commonDocuments.value = result;
-                });
-            });
+            }
           }
-        }
-      });
+        });
     });
     const back = () => {
       emit("changeActiveStateMinus");
@@ -1427,13 +1550,13 @@ export default {
       handleFileUpload,
       showImage,
       previewDocuments,
-      showPreview, 
+      showPreview,
       handleCommonFileUpload,
       generalInfo,
       back,
       goToNext,
       educationalDocs,
-      imageUploader, 
+      imageUploader,
       next,
       documentsSaved,
       googleApi,

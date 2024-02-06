@@ -38,7 +38,9 @@
       <li>
         <span
           :class="
-            isDarkMode && isDarkMode == true ? 'text-white mx-2 ' : 'text-main-400 mx-2'
+            isDarkMode && isDarkMode == true
+              ? 'text-white mx-2 '
+              : 'text-main-400 mx-2'
           "
           >/</span
         >
@@ -83,12 +85,14 @@
         "
       >
         <!-- applicant type -->
-        <div
-          class="grid grid-cols-1 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2"
-        >
-          <div>
+        <div class="grid grid-cols-1 sm:grid-cols-3">
+          <div class="col-span-12 sm:col-span-1">
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Applicant Type</label
             ><span class="text-red-300">*</span>
             <select
@@ -111,22 +115,15 @@
                 {{ applicant.name }}
               </option>
             </select>
-            <small
-              v-if="
-                generalInfo.multipleDepartment
-                  ? generalInfo.multipleDepartment.length > 0
-                  : 0
-              "
-              :class="
-                isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400 lg:ml-4'
-              "
-              >You can change applicant type when there is no added education/department
-              data below</small
-            >
           </div>
-          <div v-if="showLanguage">
+
+          <div class="col-span-12 sm:col-span-1" v-if="showLanguage">
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Language Type</label
             ><span class="text-red-300">*</span>
             <select
@@ -142,10 +139,12 @@
               </option>
             </select>
           </div>
-          <div v-if="showOccupation">
+          <div class="col-span-12 sm:col-span-1" v-if="showOccupation">
             <label
               :class="
-                isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400 lg:ml-4'
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400 lg:ml-4'
               "
               >Employer Type</label
             ><span class="text-red-300">*</span>
@@ -162,16 +161,31 @@
               </option>
             </select>
           </div>
+          <small
+            v-if="
+              generalInfo.multipleDepartment
+                ? generalInfo.multipleDepartment.length > 0
+                : 0
+            "
+            :class="
+              isDarkMode && isDarkMode == true
+                ? 'text-white '
+                : 'text-main-400 col-span-12 text-base'
+            "
+            >You can change applicant type when there is no added department
+            data below</small
+          >
         </div>
+        <button
+          v-show="Object.keys(localData).length != 0"
+          class="inline-block px-4 mt-4 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded hover:text-main-500 hover:border-main-500 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+          @click="clearLocalData()"
+        >
+          <i class="fa fa-close"></i>
+          Clear Form
+        </button>
       </div>
-      <button
-        v-show="Object.keys(localData).length != 0"
-        class="inline-block px-4 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded hover:text-main-500 hover:border-main-500 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
-        @click="clearLocalData()"
-      >
-        <i class="fa fa-close"></i>
-        Clear Form
-      </button>
+
       <!-- region -->
       <div
         v-if="showLocation"
@@ -181,16 +195,21 @@
             : ' bg-white border-b-2 mt-2 p-4'
         "
       >
-        <h2 class="text-yellow-300 text-xl">
-          ***Please select the region you are applying for, not where you are currently
-          living***
+        <h2 class="text-yellow-300 text-lg break-all">
+          ***Please select the region you are applying for, not where you are
+          currently living***
         </h2>
-        <div
-          class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3"
-        >
-          <div>
+        <h2 class="text-yellow-300 font-bold text-base mb-4 break-all">
+          *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3">
+          <div class="col-span-12 sm:col-span-1">
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Region</label
             ><span class="text-red-300">*</span>
             <select
@@ -204,25 +223,26 @@
               @change="regionChangeHandler()"
               required
             >
-              <option v-for="region in regions" :key="region.name" :value="region">
+              <option
+                v-for="region in regions"
+                :key="region.id"
+                :value="region"
+              >
                 {{ region.name }}
               </option>
             </select>
-            <small
-              v-if="
-                generalInfo.multipleDepartment
-                  ? generalInfo.multipleDepartment.length > 0
-                  : 0
-              "
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
-              >You can change region when there is no added education/department data
-              below</small
-            >
           </div>
 
-          <div v-if="generalInfo.regionSelected.code != 'HAR'">
+          <div
+            class="col-span-12 sm:col-span-1"
+            v-if="generalInfo.regionSelected.code != 'HAR'"
+          >
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Zone</label
             ><span class="text-red-300">*</span>
             <select
@@ -235,25 +255,19 @@
               @change="zoneChangeHandler()"
               v-model="generalInfo.zoneSelected"
             >
-              <option v-for="zone in zones" :key="zone.name" :value="zone">
+              <option v-for="zone in zones" :key="zone.id" :value="zone">
                 {{ zone.name }}
               </option>
             </select>
-            <small
-              v-if="
-                generalInfo.multipleDepartment
-                  ? generalInfo.multipleDepartment.length > 0
-                  : 0
-              "
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
-              >You can change zone when there is no added education/department data
-              below</small
-            >
           </div>
 
-          <div>
+          <div class="col-span-12 sm:col-span-4">
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Woreda</label
             ><span class="text-red-300">*</span>
             <select
@@ -266,21 +280,25 @@
               v-model="generalInfo.woredaSelected"
               required
             >
-              <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
+              <option
+                v-for="woreda in woredas"
+                :key="woreda.id"
+                :value="woreda"
+              >
                 {{ woreda.name }}
               </option>
             </select>
-            <small
-              v-if="
-                generalInfo.multipleDepartment
-                  ? generalInfo.multipleDepartment.length > 0
-                  : 0
-              "
-              class="text-green-200"
-              >You can change woreda when there is no added education/department data
-              below</small
-            >
           </div>
+          <small
+            v-if="
+              generalInfo.multipleDepartment
+                ? generalInfo.multipleDepartment.length > 0
+                : 0
+            "
+            class="text-main-400 col-span-12 text-base"
+            >You can change woreda when there is no added education/department
+            data below</small
+          >
         </div>
       </div>
 
@@ -302,7 +320,11 @@
         >
           <div class="mt-0 sm:mt-8">
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Department</label
             ><span class="text-red-300">*</span>
             <select
@@ -322,7 +344,11 @@
           <!-- ... -->
           <div class="mt-0 sm:mt-8">
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Education Level </label
             ><span class="text-red-300">*</span>
             <select
@@ -342,7 +368,11 @@
           </div>
           <div class="mt-0 sm:mt-8">
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Professional Types</label
             ><span class="text-red-300">*</span>
             <select
@@ -376,7 +406,11 @@
 
           <div class="mt-0 sm:mt-8">
             <label
-              :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-white '
+                  : 'text-main-400'
+              "
               >Educational Institution</label
             ><span class="text-red-300">*</span>
 
@@ -407,7 +441,7 @@
         <div class="text-right">
           <button
             type="button"
-            class="px-4 mr-2 mb-2 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+            class="px-4 mr-2 mb-4 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             @click="addMultiple()"
           >
             <i class="fa fa-plus"></i>
@@ -425,14 +459,18 @@
         </div>
 
         <div
-          class="flex justify-center m-4"
+          class="border text-yellow-300 rounded-md m-4"
           v-if="
-            generalInfo.multipleDepartment && generalInfo.multipleDepartment.length == 0
+            generalInfo.multipleDepartment &&
+            generalInfo.multipleDepartment.length == 0
           "
         >
-          <h2 class="text-xl text-yellow-300 font-bold border p-2 rounded-md">
-            * In order to proceed to the next step please choose one or more department
-            and add to the list
+          <h2 class="text-xl text-yellow-300 font-bold p-2">
+            * In order to proceed to the next step please choose one or more
+            departments and add them to the list*
+          </h2>
+          <h2 class="text-xl text-yellow-300 font-bold p-2">
+            * ወደ ቀጣዩ ደረጃ ለመቀጠል እባክዎ አንድ ወይም ከዛ በላይ ክፍል(Department) ይምረጡ *
           </h2>
         </div>
         <span v-if="multipleDepartmentError" class="text-red-300 m-4"
@@ -541,22 +579,35 @@
                       v-for="(item, index) in generalInfo.multipleDepartment"
                       :key="item.id"
                     >
-                      <td class="p-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td
+                        class="p-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
                         {{ item.department ? item.department.name : "" }}
                       </td>
-                      <td class="text-sm text-gray-900 font-light p-4 whitespace-nowrap">
-                        {{ item.educationalLevel ? item.educationalLevel.name : "" }}
+                      <td
+                        class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                      >
+                        {{
+                          item.educationalLevel
+                            ? item.educationalLevel.name
+                            : ""
+                        }}
                       </td>
-                      <td class="text-sm text-gray-900 font-light p-4 whitespace-nowrap">
+                      <td
+                        class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                      >
                         {{
                           item.institution && item.institution.code != "OTH"
                             ? item.institution.name
                             : item.otherEducationalInstitution
                         }}
                       </td>
-                      <td class="text-sm text-gray-900 font-light p-4 whitespace-nowrap">
+                      <td
+                        class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                      >
                         {{
-                          item.professionalType && item.professionalType.name != "other"
+                          item.professionalType &&
+                          item.professionalType.name != "other"
                             ? item.professionalType.name
                             : item.otherProfessionalType +
                               " ( " +
@@ -564,9 +615,13 @@
                               " )"
                         }}
                       </td>
-                      <td class="text-sm text-gray-900 font-light p-5 whitespace-nowrap">
+                      <td
+                        class="text-sm text-gray-900 font-light p-5 whitespace-nowrap"
+                      >
                         <span @click="removeDepartment(index)" title="Remove"
-                          ><i class="fa fa-trash text-red-300 cursor-pointer"></i
+                          ><i
+                            class="fa fa-trash text-red-300 cursor-pointer"
+                          ></i
                         ></span>
                       </td>
                     </tr>
@@ -666,7 +721,9 @@ export default {
     let existingData = { id: null, step: 1 };
     let generalInfo = ref({
       educationalLevelSelected: "",
-      applicantTypeSelected: JSON.parse(localStorage.getItem("applicantTypeSelected")),
+      applicantTypeSelected: JSON.parse(
+        localStorage.getItem("applicantTypeSelected")
+      ),
       applicantPositionId: "",
       regionSelected: "",
       zoneSelected: "",
@@ -732,9 +789,11 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const applicantTypeChangeHandler = async () => {
       isAppTypeSelected.value = true;
@@ -838,13 +897,16 @@ export default {
           (generalInfo.value.otherProfessionalType == undefined ||
             generalInfo.value.otherProfessionalTypeAmharic == undefined)
         ) {
-          toast.error("Please fill other profession name in amharic and english", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
+          toast.error(
+            "Please fill other profession name in amharic and english",
+            {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
           return;
         }
         if (generalInfo.value.multipleDepartment.length > 3) {
@@ -871,11 +933,17 @@ export default {
                 institution: generalInfo.value.institutionSelected,
                 professionalType: generalInfo.value.professionalTypeSelected,
 
-                otherEducationalInstitution: generalInfo.value.otherEducationalInstitution
-                  ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                otherEducationalInstitution: generalInfo.value
+                  .otherEducationalInstitution
+                  ? convertOtherProf(
+                      generalInfo.value.otherEducationalInstitution
+                    )
                   : "",
-                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic
-                  ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                otherProfessionAmharic: generalInfo.value
+                  .otherProfessionalTypeAmharic
+                  ? convertOtherProfAmh(
+                      generalInfo.value.otherProfessionalTypeAmharic
+                    )
                   : "",
                 otherProfessionalType: generalInfo.value.otherProfessionalType
                   ? convertOtherProf(generalInfo.value.otherProfessionalType)
@@ -884,14 +952,20 @@ export default {
 
               generalInfo.value.education.push({
                 departmentId: generalInfo.value.departmentSelected.id,
-                educationalLevelId: generalInfo.value.educationalLevelSelected.id,
+                educationalLevelId:
+                  generalInfo.value.educationalLevelSelected.id,
                 institutionId: generalInfo.value.institutionSelected.id,
                 professionTypeId: generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution
-                  ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                  ? convertOtherProf(
+                      generalInfo.value.otherEducationalInstitution
+                    )
                   : "",
-                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic
-                  ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                otherProfessionAmharic: generalInfo.value
+                  .otherProfessionalTypeAmharic
+                  ? convertOtherProfAmh(
+                      generalInfo.value.otherProfessionalTypeAmharic
+                    )
                   : "",
                 otherProfessionType: generalInfo.value.otherProfessionalType
                   ? convertOtherProf(generalInfo.value.otherProfessionalType)
@@ -906,11 +980,17 @@ export default {
               institution: generalInfo.value.institutionSelected,
               professionalType: generalInfo.value.professionalTypeSelected,
 
-              otherEducationalInstitution: generalInfo.value.otherEducationalInstitution
-                ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+              otherEducationalInstitution: generalInfo.value
+                .otherEducationalInstitution
+                ? convertOtherProf(
+                    generalInfo.value.otherEducationalInstitution
+                  )
                 : "",
-              otherProfessionalTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic
-                ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+              otherProfessionalTypeAmharic: generalInfo.value
+                .otherProfessionalTypeAmharic
+                ? convertOtherProfAmh(
+                    generalInfo.value.otherProfessionalTypeAmharic
+                  )
                 : "",
               otherProfessionalType: generalInfo.value.otherProfessionalType
                 ? convertOtherProf(generalInfo.value.otherProfessionalType)
@@ -922,10 +1002,15 @@ export default {
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
               otherInstitution: generalInfo.value.otherEducationalInstitution
-                ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                ? convertOtherProf(
+                    generalInfo.value.otherEducationalInstitution
+                  )
                 : "",
-              otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic
-                ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+              otherProfessionAmharic: generalInfo.value
+                .otherProfessionalTypeAmharic
+                ? convertOtherProfAmh(
+                    generalInfo.value.otherProfessionalTypeAmharic
+                  )
                 : "",
               otherProfessionType: generalInfo.value.otherProfessionalType
                 ? convertOtherProf(generalInfo.value.otherProfessionalType)
@@ -1000,11 +1085,13 @@ export default {
             "NLApplicationData",
             JSON.stringify(tempApplicationData)
           );
-          store.dispatch("newlicense/setGeneralInfo", generalInfo.value).then(() => {
-            let tempNL = { step: 2 };
-            localStorage.setItem("tempNL", JSON.stringify(tempNL));
-            emit("changeActiveState");
-          });
+          store
+            .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+            .then(() => {
+              let tempNL = { step: 2 };
+              localStorage.setItem("tempNL", JSON.stringify(tempNL));
+              emit("changeActiveState");
+            });
         }
       } else if (tempError == 1) {
         toast.warning(
@@ -1046,7 +1133,10 @@ export default {
               licenseStatus: element.applicationStatus.code,
               educations: element.educations,
             });
-          } else if (element.educations && element.applicationStatus.code == "SUB") {
+          } else if (
+            element.educations &&
+            element.applicationStatus.code == "SUB"
+          ) {
             alreadySubmitted = 1;
           }
         });
@@ -1176,7 +1266,11 @@ export default {
         ? JSON.parse(localStorage.getItem("tempNL"))
         : {};
 
-      if (tryAgain && tryAgain.id != null && tryAgain.backButtonClicked == false) {
+      if (
+        tryAgain &&
+        tryAgain.id != null &&
+        tryAgain.backButtonClicked == false
+      ) {
         tryAgain.step = 3;
         localStorage.setItem("tempNL", JSON.stringify(tryAgain));
 
@@ -1199,6 +1293,10 @@ export default {
           generalInfo.value = localData.value;
           isAppTypeSelected.value = true;
           applicantTypeChangeHandler();
+          if (generalInfo.value.regionSelected) {
+            regionChangeHandler();
+            zoneChangeHandler();
+          }
         }
         let userId = JSON.parse(window.localStorage.getItem("userId"));
         store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
