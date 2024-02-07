@@ -91,7 +91,7 @@ export default {
   },
   async getNewLicenseApplicationByCode(context, code) {
     try { 
-      const url = baseUrl + "/newLicenses/code/" + code;
+      const url = baseUrl + `/newLicenses/code/${encodeURIComponent(code)}`;
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {

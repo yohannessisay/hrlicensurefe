@@ -88,14 +88,12 @@ export default {
     return resp.data ? resp.data.data : [];
   },
   async getRenewalApplicationByCode(context, code) {
-    try { 
-      const url = baseUrl + "/renewals/code/" + code;
+    try {
+      const url = baseUrl +  `/renewals/code/${encodeURIComponent(code)}}`;
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       return error;
     }
   },
-
-  
 };
