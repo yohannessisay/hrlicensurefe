@@ -172,7 +172,8 @@ export default {
       "Document Name",
       "Document Description",
       "Upload Document",
-      "View Uploaded",
+      "Uploaded File Name",
+      "View",
     ]);
     let maxFileSize = ref();
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));

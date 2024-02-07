@@ -12,10 +12,7 @@
         <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
         step.
       </h2>
-      <h2 class="text-yellow-300 font-bold text-xl">
-        ማሳሰቢያ፡- ወደሚቀጥለው ደረጃ ለመቀጠል እባክዎ በቀይ ምልክት
-        <small class="text-red-300 text-xl"> (*)</small> የተደረገባቸውን ሰነዶች ብቻ ይስቀሉ
-      </h2>
+ 
     </div>
     <div class="accordion sm:mr-8" id="FilesAccordion">
       <span
@@ -62,7 +59,7 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-4 mt-8 rounded-lg"
+        class="accordion-item bg-white border border-grey-200 sm:p-2 mt-8 rounded-lg"
       >
         <h2 class="accordion-header mb-0" id="headingTwo">
           <button
@@ -83,13 +80,13 @@
           aria-labelledby="departmentFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
-          <div class="accordion-body sm:p-4">
+          <div class="accordion-body sm:p-2">
             <div
               v-for="table in educationalDocs"
               :key="table"
               class="accordion-body sm:p-4ounded-lg"
             >
-              <div class="accordion-body sm:p-4 p-0">
+              <div class="accordion-body sm:p-1 p-0">
                 <FileUploadTable
                   :headers="commonFileUploadHeaders"
                   :fileUploadError="fileUploadError"

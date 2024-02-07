@@ -10,7 +10,9 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/NewLicense">
-            <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+            <a href="#" class="text-main-400 hover:text-blue-700"
+              >New License</a
+            >
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -33,7 +35,9 @@
           class="block p-6 rounded-lg bg-white max-w-full mb-8"
         >
           <div class="mt-small flex justify-center">
-            <h2 class="text-main-400 text-xl lg:text-3xl font-bold sm:text-xl border-b-4">
+            <h2
+              class="text-main-400 text-xl lg:text-3xl font-bold sm:text-xl border-b-4"
+            >
               General Information
             </h2>
           </div>
@@ -70,8 +74,8 @@
                   <small
                     class="text-main-400"
                     v-if="generalInfo.multipleDepartment.length > 0"
-                    >*To change this field please clear any department related information
-                    below by clicking the delete icon</small
+                    >*To change this field please clear any department related
+                    information below by clicking the delete icon</small
                   >
                 </div>
                 <div v-if="showLanguage" class="">
@@ -108,21 +112,19 @@
             </div>
 
             <!-- region -->
-            <div v-if="showLocation" class="border-b-2">
-            <h2 class="text-yellow-300 text-lg border-b sm:border-none mb-2">
-          ***Please select the region you are applying for, not where you are currently
-          living***
-        </h2>
-          <h2 class="text-yellow-300 font-bold text-base mb-4">
-             *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
-          </h2>
-              <div
-                class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3"
-              >
-                <div class="mr-4">
+            <div v-if="showLocation" class="border-b-2 mb-4">
+              <h2 class="text-yellow-300 text-lg mb-2 sm:border-none border-b">
+                ***Please select the region you are applying for, not where you
+                are currently living***
+              </h2>
+              <h2 class="text-yellow-300 font-bold text-base mb-4">
+                *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
+              </h2>
+              <div class="grid grid-cols-1 sm:grid-cols-3 ml-2">
+                <div class="col-span-12 sm:col-span-1 mb-4">
                   <label class="text-main-400">Region</label>
                   <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     :disabled="
                       generalInfo.multipleDepartment
                         ? generalInfo.multipleDepartment.length > 0
@@ -132,15 +134,22 @@
                     @change="regionChangeHandler()"
                     required
                   >
-                    <option v-for="region in regions" :key="region.name" :value="region">
+                    <option
+                      v-for="region in regions"
+                      :key="region.name"
+                      :value="region"
+                    >
                       {{ region.name }}
                     </option>
                   </select>
                 </div>
-                <div class="mr-4" v-if="generalInfo.regionSelected.code != 'HAR'">
+                <div
+                  class="col-span-12 sm:col-span-1 mb-4"
+                  v-if="generalInfo.regionSelected.code != 'HAR'"
+                >
                   <label class="text-main-400">Zone</label>
                   <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     :disabled="
                       generalInfo.multipleDepartment
                         ? generalInfo.multipleDepartment.length > 0
@@ -157,13 +166,17 @@
                     >
                       {{ generalInfo.zoneSelected.name }}
                     </option>
-                    <option v-for="zone in zones" :key="zone.name" :value="zone">
+                    <option
+                      v-for="zone in zones"
+                      :key="zone.name"
+                      :value="zone"
+                    >
                       {{ zone.name }}
                     </option>
                   </select>
                 </div>
 
-                <div class="mr-4">
+                <div class="col-span-12 sm:col-span-1">
                   <label class="text-main-400">Woreda</label>
                   <select
                     class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -175,7 +188,11 @@
                     v-model="generalInfo.woredaSelected"
                     required
                   >
-                    <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
+                    <option
+                      v-for="woreda in woredas"
+                      :key="woreda.name"
+                      :value="woreda"
+                    >
                       {{ woreda.name }}
                     </option>
                     <option selected>
@@ -183,13 +200,27 @@
                     </option>
                   </select>
                 </div>
+                <small
+                  v-if="
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
+                  class="text-main-400 text-base col-span-12"
+                  >You can change region,zone or woreda when there is no added
+                  education/department data below,so in order to change location
+                  data please remove current department below</small
+                >
               </div>
             </div>
 
             <!-- end -->
 
             <!-- educational institution and department -->
-            <div class="border-b-2 mb-4" v-if="generalInfo.educations.length < 3">
+            <div
+              class="border-b-2 mb-4"
+              v-if="generalInfo.educations.length < 3"
+            >
               <div
                 class="grid grid-cols-1 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-2"
               >
@@ -235,7 +266,11 @@
                     @change="ProfessionTypeChange(institution)"
                   >
                     <option disabled>First Select Department from above</option>
-                    <option v-for="pf in professionalTypes" :key="pf.id" :value="pf">
+                    <option
+                      v-for="pf in professionalTypes"
+                      :key="pf.id"
+                      :value="pf"
+                    >
                       {{ pf.name }}
                     </option>
                   </select>
@@ -307,7 +342,9 @@
             </div>
             <!-- Table for selected departments data -->
             <div class="table-multiple border mb-8 bg-white">
-              <h2 class="text-main-400 font-bold m-2 text-2xl">Selected Departments</h2>
+              <h2 class="text-main-400 font-bold m-2 text-2xl">
+                Selected Departments
+              </h2>
 
               <div class="flex flex-col">
                 <div class="overflow-x-scroll">
@@ -319,35 +356,37 @@
                   </div>
                   <div v-else>
                     <table class="min-w-full p-4">
-                      <thead class="border-b border-t text-main-400 p-4">
+                      <thead
+                        class="border-b border-t bg-primary-300 text-main-400 p-4"
+                      >
                         <tr>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 p-5 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 p-5 text-left font-bold text-white"
                           >
                             Department
                           </th>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
                           >
                             Education Level
                           </th>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
                           >
                             Institution
                           </th>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
                           >
                             Professional Type
                           </th>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
                           >
                             Action
                           </th>
@@ -357,34 +396,48 @@
                       <tbody>
                         <tr
                           class="border-b border-main-400 p-4"
-                          v-for="(item, index) in generalInfo.multipleDepartment"
+                          v-for="(
+                            item, index
+                          ) in generalInfo.multipleDepartment"
                           :key="item.id"
                         >
                           <td
-                            class="p-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                            class="p-4 whitespace-nowrap text-lg font-medium text-gray-900"
                           >
                             {{ item.department ? item.department.name : "" }}
                           </td>
                           <td
-                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
                           >
-                            {{ item.educationLevel ? item.educationLevel.name : "" }}
+                            {{
+                              item.educationLevel
+                                ? item.educationLevel.name
+                                : ""
+                            }}
                           </td>
                           <td
-                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
                           >
                             {{ item.institution ? item.institution.name : "" }}
                           </td>
                           <td
-                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
                           >
-                            {{ item.professionType ? item.professionType.name : "" }}
+                            {{
+                              item.professionType
+                                ? item.professionType.name
+                                : ""
+                            }}
                           </td>
                           <td
-                            class="text-sm text-gray-900 font-light p-5 whitespace-nowrap"
+                            class="text-lg text-gray-900 font-light p-5 whitespace-nowrap"
                           >
-                            <span @click="removeDepartment(index)" title="Remove"
-                              ><i class="fa fa-trash text-red-300 cursor-pointer"></i
+                            <span
+                              @click="removeDepartment(index)"
+                              title="Remove"
+                              ><i
+                                class="fa fa-trash text-red-300 cursor-pointer"
+                              ></i
                             ></span>
                           </td>
                         </tr>
@@ -446,11 +499,15 @@
           aria-labelledby="staticBackdropLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-sm relative w-auto pointer-events-none">
+          <div
+            class="modal-dialog modal-sm relative w-auto pointer-events-none"
+          >
             <div
               class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
             >
-              <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
+              <div
+                class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
+              >
                 <button
                   type="button"
                   class="px-6 text-white bg-red-200 hover:text-white hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
@@ -655,9 +712,11 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const applicantTypeChangeHandler = async () => {
       generalInfo.value.applicantTypeSelected = generalInfo.value.applicantType;
@@ -770,13 +829,16 @@ export default {
           (generalInfo.value.otherProfessionalType == undefined ||
             generalInfo.value.otherProfessionalTypeAmharic == undefined)
         ) {
-          toast.error("Please fill other profession name in amharic and english", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
+          toast.error(
+            "Please fill other profession name in amharic and english",
+            {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
           return;
         }
         if (generalInfo.value.multipleDepartment.length > 3) {
@@ -804,11 +866,17 @@ export default {
                 institution: generalInfo.value.institutionSelected,
                 professionType: generalInfo.value.professionalTypeSelected,
 
-                otherEducationalInstitution: generalInfo.value.otherEducationalInstitution
-                  ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                otherEducationalInstitution: generalInfo.value
+                  .otherEducationalInstitution
+                  ? convertOtherProf(
+                      generalInfo.value.otherEducationalInstitution
+                    )
                   : "",
-                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic
-                  ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                otherProfessionTypeAmharic: generalInfo.value
+                  .otherProfessionalTypeAmharic
+                  ? convertOtherProfAmh(
+                      generalInfo.value.otherProfessionalTypeAmharic
+                    )
                   : "",
                 otherProfessionType: generalInfo.value.otherProfessionalType
                   ? convertOtherProf(generalInfo.value.otherProfessionalType)
@@ -816,14 +884,20 @@ export default {
               });
               generalInfo.value.educations.push({
                 departmentId: generalInfo.value.departmentSelected.id,
-                educationalLevelId: generalInfo.value.educationalLevelSelected.id,
+                educationalLevelId:
+                  generalInfo.value.educationalLevelSelected.id,
                 institutionId: generalInfo.value.institutionSelected.id,
                 professionTypeId: generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution
-                  ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                  ? convertOtherProf(
+                      generalInfo.value.otherEducationalInstitution
+                    )
                   : "",
-                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic
-                  ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                otherProfessionTypeAmharic: generalInfo.value
+                  .otherProfessionalTypeAmharic
+                  ? convertOtherProfAmh(
+                      generalInfo.value.otherProfessionalTypeAmharic
+                    )
                   : "",
                 otherProfessionType: generalInfo.value.otherProfessionalType
                   ? convertOtherProf(generalInfo.value.otherProfessionalType)
@@ -839,11 +913,17 @@ export default {
               institution: generalInfo.value.institutionSelected,
               professionType: generalInfo.value.professionalTypeSelected,
 
-              otherEducationalInstitution: generalInfo.value.otherEducationalInstitution
-                ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+              otherEducationalInstitution: generalInfo.value
+                .otherEducationalInstitution
+                ? convertOtherProf(
+                    generalInfo.value.otherEducationalInstitution
+                  )
                 : "",
-              otherProfessionalTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic
-                ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+              otherProfessionalTypeAmharic: generalInfo.value
+                .otherProfessionalTypeAmharic
+                ? convertOtherProfAmh(
+                    generalInfo.value.otherProfessionalTypeAmharic
+                  )
                 : "",
               otherProfessionalType: generalInfo.value.otherProfessionalType
                 ? convertOtherProf(generalInfo.value.otherProfessionalType)
@@ -855,10 +935,15 @@ export default {
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
               otherInstitution: generalInfo.value.otherEducationalInstitution
-                ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                ? convertOtherProf(
+                    generalInfo.value.otherEducationalInstitution
+                  )
                 : "",
-              otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic
-                ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+              otherProfessionTypeAmharic: generalInfo.value
+                .otherProfessionalTypeAmharic
+                ? convertOtherProfAmh(
+                    generalInfo.value.otherProfessionalTypeAmharic
+                  )
                 : "",
               otherProfessionType: generalInfo.value.otherProfessionalType
                 ? convertOtherProf(generalInfo.value.otherProfessionalType)
@@ -890,10 +975,12 @@ export default {
         "NLApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store.dispatch("newlicense/setGeneralInfo", generalInfo.value).then(() => {
-        emit("changeActiveState");
-        activeState.value += 1;
-      });
+      store
+        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          emit("changeActiveState");
+          activeState.value += 1;
+        });
     };
     const fetchApplicationStatuses = () => {
       store.dispatch("newlicense/getApplicationStatuses").then((res) => {
@@ -930,7 +1017,9 @@ export default {
           generalInfo.value = res.data.data;
 
           generalInfo.value.regionSelected =
-            res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
+            res.data.data && res.data.data.woreda
+              ? res.data.data.woreda.zone.region
+              : "";
 
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda

@@ -22,7 +22,7 @@
               <th
                 v-for="(header, index) in headers"
                 :key="index"
-                class="px-4 py-4 uppercase font-medium text-white text-left text-xl"
+                class="px-4 py-4 uppercase font-medium text-white text-left text-lg"
               >
                 {{ header }}
               </th>
@@ -94,8 +94,7 @@
                 <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
                   Uploaded File Name
                 </h2>
-                <h2 class="text-lg break-words">
-                  :class="isDarkMode ? 'text-white' : ''">
+                <h2 class="text-lg break-words"> 
                   {{ item.fileName ? item.fileName : "---------------" }}
                 </h2>
               </td>

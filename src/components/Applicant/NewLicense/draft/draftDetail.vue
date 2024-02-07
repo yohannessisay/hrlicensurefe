@@ -104,100 +104,103 @@
             </div>
 
             <!-- region -->
-            <div v-if="showLocation" class="border-b-2">
-              <h2
-                class="text-yellow-300 text-lg break-all mb-1 border-b sm:border-none"
-              >
-                ***Please select the region you are applying for, not where you
-                are currently living***
-              </h2>
-              <h2 class="text-yellow-300 font-bold text-base mb-4 break-all">
-                *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
-              </h2>
-              <div
-                class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 mb-4"
-              >
-                <div class="mr-4 mb-2">
-                  <label class="text-main-400">Region</label>
-                  <select
-                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    :disabled="
-                      generalInfo.multipleDepartment
-                        ? generalInfo.multipleDepartment.length > 0
-                        : 0
-                    "
-                    v-model="generalInfo.regionSelected"
-                    @change="regionChangeHandler()"
-                    required
-                  >
-                    <option
-                      v-for="region in regions"
-                      :key="region.name"
-                      :value="region"
-                    >
-                      {{ region.name }}
-                    </option>
-                  </select>
-                </div>
-                <div
-                  class="mr-4 mb-2"
-                  v-if="generalInfo.regionSelected.code != 'HAR'"
+           <div v-if="showLocation" class="border-b-2 mb-4">
+            <h2 class="text-yellow-300 text-lg mb-2 sm:border-none border-b">
+              ***Please select the region you are applying for, not where you
+              are currently living***
+            </h2>
+            <h2 class="text-yellow-300 font-bold text-base mb-4">
+              *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 ml-2">
+              <div class="col-span-12 sm:col-span-1 mb-4">
+                <label class="text-main-400">Region</label>
+                <select
+                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  :disabled="
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
+                  v-model="generalInfo.regionSelected"
+                  @change="regionChangeHandler()"
+                  required
                 >
-                  <label class="text-main-400">Zone</label>
-                  <select
-                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    :disabled="
-                      generalInfo.multipleDepartment
-                        ? generalInfo.multipleDepartment.length > 0
-                        : 0
-                    "
-                    v-model="generalInfo.zoneSelected"
-                    @change="zoneChangeHandler()"
-                    required
+                  <option
+                    v-for="region in regions"
+                    :key="region.name"
+                    :value="region"
                   >
-                    <option
-                      :value="generalInfo.zoneSelected.id"
-                      :key="generalInfo.zoneSelected.id"
-                      selected
-                    >
-                      {{ generalInfo.zoneSelected.name }}
-                    </option>
-                    <option
-                      v-for="zone in zones"
-                      :key="zone.name"
-                      :value="zone"
-                    >
-                      {{ zone.name }}
-                    </option>
-                  </select>
-                </div>
-
-                <div class="mr-4">
-                  <label class="text-main-400">Woreda</label>
-                  <select
-                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    :disabled="
-                      generalInfo.multipleDepartment
-                        ? generalInfo.multipleDepartment.length > 0
-                        : 0
-                    "
-                    v-model="generalInfo.woredaSelected"
-                    required
-                  >
-                    <option
-                      v-for="woreda in woredas"
-                      :key="woreda.name"
-                      :value="woreda"
-                    >
-                      {{ woreda.name }}
-                    </option>
-                    <option selected>
-                      {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
-                    </option>
-                  </select>
-                </div>
+                    {{ region.name }}
+                  </option>
+                </select>
               </div>
+              <div
+                class="col-span-12 sm:col-span-1 mb-4"
+                v-if="generalInfo.regionSelected.code != 'HAR'"
+              >
+                <label class="text-main-400">Zone</label>
+                <select
+                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  :disabled="
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
+                  v-model="generalInfo.zoneSelected"
+                  @change="zoneChangeHandler()"
+                  required
+                >
+                  <option
+                    :value="generalInfo.zoneSelected.id"
+                    :key="generalInfo.zoneSelected.id"
+                    selected
+                  >
+                    {{ generalInfo.zoneSelected.name }}
+                  </option>
+                  <option v-for="zone in zones" :key="zone.name" :value="zone">
+                    {{ zone.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-span-12 sm:col-span-1">
+                <label class="text-main-400">Woreda</label>
+                <select
+                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  :disabled="
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
+                  v-model="generalInfo.woredaSelected"
+                  required
+                >
+                  <option
+                    v-for="woreda in woredas"
+                    :key="woreda.name"
+                    :value="woreda"
+                  >
+                    {{ woreda.name }}
+                  </option>
+                  <option selected>
+                    {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
+                  </option>
+                </select>
+              </div>
+              <small
+                v-if="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
+                class="text-main-400 text-base col-span-12"
+                >You can change region,zone or woreda when there is no added
+                education/department data below,so in order to change location
+                data please remove current department below</small
+              >
             </div>
+          </div>
 
             <!-- end -->
 
@@ -341,35 +344,37 @@
                   </div>
                   <div v-else>
                     <table class="min-w-full p-4">
-                      <thead class="border-b border-t text-main-400 p-4">
+                      <thead
+                        class="border-b border-t bg-primary-300 text-main-400 p-4"
+                      >
                         <tr>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 p-5 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 p-5 text-left font-bold text-white"
                           >
                             Department
                           </th>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
                           >
                             Education Level
                           </th>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
                           >
                             Institution
                           </th>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
                           >
                             Professional Type
                           </th>
                           <th
                             scope="col"
-                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
                           >
                             Action
                           </th>
@@ -385,12 +390,12 @@
                           :key="item.id"
                         >
                           <td
-                            class="p-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                            class="p-4 whitespace-nowrap text-lg font-medium text-gray-900"
                           >
                             {{ item.department ? item.department.name : "" }}
                           </td>
                           <td
-                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
                           >
                             {{
                               item.educationLevel
@@ -399,12 +404,12 @@
                             }}
                           </td>
                           <td
-                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
                           >
                             {{ item.institution ? item.institution.name : "" }}
                           </td>
                           <td
-                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
                           >
                             {{
                               item.professionType
@@ -413,7 +418,7 @@
                             }}
                           </td>
                           <td
-                            class="text-sm text-gray-900 font-light p-5 whitespace-nowrap"
+                            class="text-lg text-gray-900 font-light p-5 whitespace-nowrap"
                           >
                             <span
                               @click="removeDepartment(index)"

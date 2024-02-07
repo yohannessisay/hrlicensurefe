@@ -19,7 +19,7 @@
               <th
                 v-for="(header, index) in headers"
                 :key="index"
-                class="px-4 py-4 uppercase font-medium text-white text-left text-xl"
+                class="px-4 py-4 uppercase font-medium text-white text-left text-lg"
               >
                 {{ header }}
               </th>

@@ -187,25 +187,23 @@
         Clear Form
       </button>
       <!-- region -->
-      <div
+    <div
         v-if="showLocation"
         :class="
           isDarkMode && isDarkMode == true
-            ? '  rounded-md generalInfoCard  border-white mt-2'
-            : ' bg-white border-b-2 mt-2'
+            ? '  rounded-md generalInfoCard  border-white mt-2 p-4'
+            : ' bg-white border-b-2 mt-2 p-4'
         "
       >
-        <h2 class="text-yellow-300 text-lg">
+        <h2 class="text-yellow-300 text-lg break-all">
           ***Please select the region you are applying for, not where you are
           currently living***
         </h2>
-        <h2 class="text-yellow-300 font-bold text-base mb-4">
+        <h2 class="text-yellow-300 font-bold text-base mb-4 break-all">
           *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
         </h2>
-        <div
-          class="grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-4"
-        >
-          <div>
+        <div class="grid grid-cols-1 sm:grid-cols-3">
+          <div class="mb-4">
             <label
               :class="
                 isDarkMode && isDarkMode == true
@@ -215,7 +213,7 @@
               >Region</label
             ><span class="text-red-300">*</span>
             <select
-              class="form-select appearance-none block w-full mb-2 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
               :disabled="
                 generalInfo.multipleDepartment
                   ? generalInfo.multipleDepartment.length > 0
@@ -227,7 +225,7 @@
             >
               <option
                 v-for="region in regions"
-                :key="region.name"
+                :key="region.id"
                 :value="region"
               >
                 {{ region.name }}
@@ -235,7 +233,7 @@
             </select>
           </div>
 
-          <div v-if="generalInfo.regionSelected.code != 'HAR'">
+          <div class="mb-4" v-if="generalInfo.regionSelected.code != 'HAR'">
             <label
               :class="
                 isDarkMode && isDarkMode == true
@@ -254,13 +252,13 @@
               @change="zoneChangeHandler()"
               v-model="generalInfo.zoneSelected"
             >
-              <option v-for="zone in zones" :key="zone.name" :value="zone">
+              <option v-for="zone in zones" :key="zone.id" :value="zone">
                 {{ zone.name }}
               </option>
             </select>
           </div>
 
-          <div>
+          <div class="mb-2">
             <label
               :class="
                 isDarkMode && isDarkMode == true
@@ -281,23 +279,24 @@
             >
               <option
                 v-for="woreda in woredas"
-                :key="woreda.name"
+                :key="woreda.id"
                 :value="woreda"
               >
                 {{ woreda.name }}
               </option>
             </select>
           </div>
+        </div>
+        <div class="">
           <small
             v-if="
               generalInfo.multipleDepartment
                 ? generalInfo.multipleDepartment.length > 0
                 : 0
             "
-            class="text-yellow-300 text-base col-span-12"
-            >You can change region,zone or woreda when there is no added
-            education/department data below,so in order to change location data
-            please remove current department below</small
+            class="text-main-400 text-base"
+            >You can change woreda when there is no added education/department
+            data below</small
           >
         </div>
       </div>
@@ -466,7 +465,8 @@
           "
         >
           <h2 class="text-xl text-yellow-300 font-bold p-2">
-            * In order to proceed to the next step please choose one or more departments and add them to the list*
+            * In order to proceed to the next step please choose one or more
+            departments and add them to the list*
           </h2>
           <h2 class="text-xl text-yellow-300 font-bold p-2">
             * ወደ ቀጣዩ ደረጃ ለመቀጠል እባክዎ አንድ ወይም ከዛ በላይ ክፍል(Department) ይምረጡ *
@@ -1246,10 +1246,20 @@ export default {
       let tryAgain = localStorage.getItem("tempRN")
         ? JSON.parse(localStorage.getItem("tempRN"))
         : false;
-      if (tryAgain && tryAgain.id != null && tryAgain.step != 1) {
+      if (
+        tryAgain &&
+        tryAgain.id != null &&
+        tryAgain.backButtonClicked == false
+      ) {
+        tryAgain.step = 3;
+        localStorage.setItem("tempRN", JSON.stringify(tryAgain));
+
         emit("changeActiveState");
       } else {
-        applicantTypeChangeHandler();
+        if (tryAgain && tryAgain.backButtonClicked) {
+          tryAgain.step = 1;
+          localStorage.setItem("tempRN", JSON.stringify(tryAgain));
+        }
         fetchApplicantType();
         fetchDepartments();
         fetchEducationLevel();
@@ -1260,6 +1270,13 @@ export default {
           : {};
         if (Object.keys(localData.value).length != 0) {
           generalInfo.value = localData.value;
+          isAppTypeSelected.value = true;
+          applicantTypeChangeHandler();
+
+          if (generalInfo.value.regionSelected) {
+            regionChangeHandler();
+            zoneChangeHandler();
+          }
         }
         let userId = JSON.parse(window.localStorage.getItem("userId"));
         store.dispatch("renewal/getRenewalsByUser", userId).then((res) => {

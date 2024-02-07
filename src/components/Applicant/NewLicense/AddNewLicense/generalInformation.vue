@@ -203,7 +203,7 @@
           *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-3">
-          <div class="col-span-12 sm:col-span-1">
+          <div class="mb-4">
             <label
               :class="
                 isDarkMode && isDarkMode == true
@@ -213,7 +213,7 @@
               >Region</label
             ><span class="text-red-300">*</span>
             <select
-              class="form-select appearance-none block w-full mb-2 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+              class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
               :disabled="
                 generalInfo.multipleDepartment
                   ? generalInfo.multipleDepartment.length > 0
@@ -233,10 +233,7 @@
             </select>
           </div>
 
-          <div
-            class="col-span-12 sm:col-span-1"
-            v-if="generalInfo.regionSelected.code != 'HAR'"
-          >
+          <div class="mb-4" v-if="generalInfo.regionSelected.code != 'HAR'">
             <label
               :class="
                 isDarkMode && isDarkMode == true
@@ -261,7 +258,7 @@
             </select>
           </div>
 
-          <div class="col-span-12 sm:col-span-4">
+          <div class="mb-2">
             <label
               :class="
                 isDarkMode && isDarkMode == true
@@ -289,13 +286,15 @@
               </option>
             </select>
           </div>
+        </div>
+        <div class="">
           <small
             v-if="
               generalInfo.multipleDepartment
                 ? generalInfo.multipleDepartment.length > 0
                 : 0
             "
-            class="text-main-400 col-span-12 text-base"
+            class="text-main-400 text-base"
             >You can change woreda when there is no added education/department
             data below</small
           >
@@ -486,148 +485,94 @@
         <!-- ./Container -->
       </div>
       <!-- Table for selected departments data -->
-      <div
-        :class="
-          isDarkMode && isDarkMode == true
-            ? 'generalInfoCard  table-multiple border    mt-2 mb-8 rounded-sm  '
-            : ' table-multiple border mt-2 mb-8 rounded-sm bg-white'
-        "
-      >
-        <h2
-          :class="
-            isDarkMode && isDarkMode == true
-              ? 'text-white font-bold m-4 border-b-2'
-              : 'text-main-400 font-bold m-4 border-b-4 text-xl'
-          "
-        >
+      <div class="table-multiple border mb-8 bg-white">
+        <h2 class="text-main-400 font-bold m-2 text-2xl">
           Selected Departments
         </h2>
 
         <div class="flex flex-col">
-          <div class="py-2 inline-block min-w-full sm:px-4 lg:px-8">
-            <div class="overflow-x-scroll">
-              <div
-                class="flex justify-center"
-                v-if="generalInfo.multipleDepartment.length < 1"
-              >
-                No Data
-              </div>
-              <div v-else>
-                <table class="min-w-full p-4">
-                  <thead class="border-b border-t text-main-400 p-4">
-                    <tr>
-                      <th
-                        scope="col"
-                        :class="
-                          isDarkMode && isDarkMode == true
-                            ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
-                            : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
-                        "
-                      >
-                        Department
-                      </th>
-                      <th
-                        scope="col"
-                        :class="
-                          isDarkMode && isDarkMode == true
-                            ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
-                            : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
-                        "
-                      >
-                        Education Level
-                      </th>
-                      <th
-                        scope="col"
-                        :class="
-                          isDarkMode && isDarkMode == true
-                            ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
-                            : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
-                        "
-                      >
-                        Institution
-                      </th>
-                      <th
-                        scope="col"
-                        :class="
-                          isDarkMode && isDarkMode == true
-                            ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
-                            : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
-                        "
-                      >
-                        Professional Type
-                      </th>
-                      <th
-                        scope="col"
-                        :class="
-                          isDarkMode && isDarkMode == true
-                            ? ' text-xl text-gray-900 p-5 text-left font-bold text-white'
-                            : ' text-xl text-gray-900 p-5 text-left font-bold text-main-400'
-                        "
-                      >
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                  <tbody>
-                    <tr
-                      :class="
-                        isDarkMode && isDarkMode == true
-                          ? ' border-b border-white   p-4 text-white'
-                          : ' border-b border-main-400   p-4 text-grey-800'
-                      "
-                      v-for="(item, index) in generalInfo.multipleDepartment"
-                      :key="item.id"
+          <div class="overflow-x-scroll">
+            <div
+              class="flex justify-center"
+              v-if="generalInfo.multipleDepartment.length < 1"
+            >
+              No Data
+            </div>
+            <div v-else>
+              <table class="min-w-full p-4">
+                <thead
+                  class="border-b border-t bg-primary-300 text-main-400 p-4"
+                >
+                  <tr>
+                    <th
+                      scope="col"
+                      class="text-xl text-gray-900 p-5 text-left font-bold text-white"
                     >
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-medium text-gray-900"
-                      >
-                        {{ item.department ? item.department.name : "" }}
-                      </td>
-                      <td
-                        class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
-                      >
-                        {{
-                          item.educationalLevel
-                            ? item.educationalLevel.name
-                            : ""
-                        }}
-                      </td>
-                      <td
-                        class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
-                      >
-                        {{
-                          item.institution && item.institution.code != "OTH"
-                            ? item.institution.name
-                            : item.otherEducationalInstitution
-                        }}
-                      </td>
-                      <td
-                        class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
-                      >
-                        {{
-                          item.professionalType &&
-                          item.professionalType.name != "other"
-                            ? item.professionalType.name
-                            : item.otherProfessionalType +
-                              " ( " +
-                              item.otherProfessionalTypeAmharic +
-                              " )"
-                        }}
-                      </td>
-                      <td
-                        class="text-sm text-gray-900 font-light p-5 whitespace-nowrap"
-                      >
-                        <span @click="removeDepartment(index)" title="Remove"
-                          ><i
-                            class="fa fa-trash text-red-300 cursor-pointer"
-                          ></i
-                        ></span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                      Department
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
+                    >
+                      Education Level
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
+                    >
+                      Institution
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
+                    >
+                      Professional Type
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tbody>
+                  <tr
+                    class="border-b border-main-400 p-4"
+                    v-for="(item, index) in generalInfo.multipleDepartment"
+                    :key="item.id"
+                  >
+                    <td
+                      class="p-4 whitespace-nowrap text-lg font-medium text-gray-900"
+                    >
+                      {{ item.department ? item.department.name : "" }}
+                    </td>
+                    <td
+                      class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
+                    >
+                      {{ item.educationLevel ? item.educationLevel.name : "" }}
+                    </td>
+                    <td
+                      class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
+                    >
+                      {{ item.institution ? item.institution.name : "" }}
+                    </td>
+                    <td
+                      class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
+                    >
+                      {{ item.professionType ? item.professionType.name : "" }}
+                    </td>
+                    <td
+                      class="text-lg text-gray-900 font-light p-5 whitespace-nowrap"
+                    >
+                      <span @click="removeDepartment(index)" title="Remove"
+                        ><i class="fa fa-trash text-red-300 cursor-pointer"></i
+                      ></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
