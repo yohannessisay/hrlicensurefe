@@ -11,16 +11,19 @@
        "
   >
     <div class="border p-4 rounded-md">
-      <h2 class="text-main-400 font-bold text-xl  tracking-wide">
+      <h2 class="text-main-400 font-bold text-xl tracking-wide">
         Kindly note that if you are currently employed as a public servant and
         your information is already registered in the Ministry of Health Human
         Resource Administration (HRA) database through your health facility,
         please click on the "YES" button to fetch your data from the HRA
-        database by providing your Employee ID and File Number.
+        database by providing your Employee ID and File Number. OR You can click
+        on "NO" button and fill out your profile as new
       </h2>
-      OR
-      <h2 class="text-main-400 font-bold text-xl  tracking-wide">
-        You can click on "NO" and fill out your profile as new
+      <h2 class="text-grey-800 mt-4 font-bold text-xl tracking-wide">
+        በአሁን ሰአት በህዝብ አገልጋይነት ተቀጥረው የሚሰሩ ከሆነ እና መረጃዎ በጤና ተቋምዎ በኩል በጤና ጥበቃ ሚኒስቴር
+        የሰው ሃብት አስተዳደር (HRA) ዳታቤዝ ውስጥ የተመዘገበ ከሆነ እባክዎን መረጃዎን ከሲስትሙ(HRA) ላይ ለማምጣት
+        አዎ የሚለውን ቁልፍ ይጫኑ ።በመቀጠልም የሰራተኛ መታወቂያዎን እና የፋይል ቁጥርዎን በማቅረብ ይቀጥሉ። ካልሆነም
+        አይ የሚለውን ቁልፍ በመጫን እና መረጃዎን እንደ አዲስ መሙላት ይችላሉ
       </h2>
     </div>
 

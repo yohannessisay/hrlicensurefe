@@ -132,7 +132,7 @@
                     ? license.licenseExpirationDate.slice(0, 10)
                     : new Date().toISOString().slice(0, 10)
                 ) < 90
-                  ? 'bg-white border-4 mb-2 text-red-300 mt-2 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  ? 'bg-white border-4 mb-2 text-red-300 mt-2 px-1 w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
                   : expirationDatesHelper(
                       license.licenseExpirationDate
                         ? license.licenseExpirationDate.slice(0, 10)
@@ -143,8 +143,8 @@
                         ? license.licenseExpirationDate.slice(0, 10)
                         : new Date().toISOString().slice(0, 10)
                     ) < 90
-                  ? 'bg-white border-4 mb-2 text-yellow-300 mt-2 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-                  : 'bg-white mt-2 mb-2 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  ? 'bg-white border-4 mb-2 text-yellow-300 mt-2 px-1 w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  : 'bg-white mt-2 mb-2 px-1 w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
               "
             >
               <!-- Article -->

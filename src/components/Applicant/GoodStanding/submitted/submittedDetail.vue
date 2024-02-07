@@ -119,10 +119,13 @@
             </div>
             <!-- region -->
             <div v-if="showLocation" class="rounded bg-white border-b-2">
-              <h2 class="text-yellow-300 text-xl">
-                ***Please select the region you are applying for, not where you are
-                currently living***
-              </h2>
+             <h2 class="text-yellow-300 text-lg">
+          ***Please select the region you are applying for, not where you are currently
+          living***
+        </h2>
+          <h2 class="text-yellow-300 font-bold text-base mb-4">
+             *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
+          </h2>
               <div
                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
               >

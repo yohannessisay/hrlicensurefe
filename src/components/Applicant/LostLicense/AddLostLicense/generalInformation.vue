@@ -223,6 +223,7 @@
           <h2 class="text-yellow-300 font-bold text-lg">
             ***Please select the region where you have taken the license from***
           </h2>
+          
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
           >

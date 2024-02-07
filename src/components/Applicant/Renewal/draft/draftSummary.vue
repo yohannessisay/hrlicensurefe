@@ -611,7 +611,14 @@ export default {
         fileIsLoading.value = false;
       });
     });
+     const isPDF = (filename) => {
+      const parts = filename.split(".");
+      const isPdf =
+        parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
+      return isPdf === "pdf";
+    };
     return {
+      isPDF,
       localData,
       localFileImages,
       professionChanged,

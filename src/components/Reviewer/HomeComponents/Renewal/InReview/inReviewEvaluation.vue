@@ -252,7 +252,7 @@
                                   <div v-if="editPersonalData">
                                     <input
                                       v-model="
-                                        newLicense.profile.alternativeName
+                                        renwal.profile.alternativeName
                                       "
                                       class="w-48 mr-1"
                                       type="text"
@@ -262,7 +262,7 @@
                                   <div v-if="editPersonalData">
                                     <input
                                       v-model="
-                                        newLicense.profile.alternativeFatherName
+                                        renewal.profile.alternativeFatherName
                                       "
                                       class="w-48 mr-1"
                                       type="text"
@@ -272,7 +272,7 @@
                                   <div v-if="editPersonalData">
                                     <input
                                       v-model="
-                                        newLicense.profile
+                                        renewal.profile
                                           .alternativeGrandFatherName
                                       "
                                       class="w-48"
@@ -381,8 +381,8 @@
                                   <div class="font-bold">Mobile Number</div>
                                   <div>
                                     {{
-                                      newLicense && newLicense.applicant
-                                        ? newLicense.applicant.phoneNumber
+                                      renewal && renewal.applicant
+                                        ? renewal.applicant.phoneNumber
                                         : "---"
                                     }}
                                   </div>
@@ -394,8 +394,8 @@
                                   <div class="mb-1 font-bold">Email</div>
                                   <div>
                                     {{
-                                      newLicense && newLicense.applicant
-                                        ? newLicense.applicant.emailAddress
+                                      renewal && renewal.applicant
+                                        ? renewal.applicant.emailAddress
                                         : "---"
                                     }}
                                   </div>
@@ -429,7 +429,7 @@
                                       ? 'flex flex-row border-b-2 text-red-300 text-grey-400 m-2'
                                       : 'flex flex-row border  text-grey-400 m-2 p-2 rounded-md'
                                   "
-                                  v-for="education in newLicense.educations"
+                                  v-for="education in renewal.educations"
                                   :key="education.id"
                                 >
                                   <div class="flex justify-center">

@@ -3,7 +3,9 @@
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
-          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'">Home</a>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Home</a
+          >
         </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
@@ -32,7 +34,10 @@
       :color="'#2F639D'"
       :opacity="1"
     ></loading>
-    <form @submit.prevent="submit" class="mx-auto max-w-4xl rounded-md w-full mt-10">
+    <form
+      @submit.prevent="submit"
+      class="mx-auto max-w-4xl rounded-md w-full mt-10"
+    >
       <div
         :class="
           isDarkMode
@@ -76,7 +81,9 @@
 
             <div>
               <div class="overflow-hidden">
-                <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                <label
+                  for=""
+                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Applicant Title</label
                 ><span class="text-red-300">*</span>
 
@@ -101,11 +108,16 @@
         <!-- region -->
         <div
           v-if="showLocation"
-          :class="isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '"
+          :class="
+            isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '
+          "
         >
-          <h2 class="text-yellow-300 font-bold text-base">
-            ***Please select the region you are applying for, not where you are currently
-            living***
+          <h2 class="text-yellow-300 text-lg">
+          ***Please select the region you are applying for, not where you are currently
+          living***
+        </h2>
+          <h2 class="text-yellow-300 font-bold text-base mb-4">
+             *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
           </h2>
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
@@ -120,7 +132,11 @@
                 @change="regionChangeHandler()"
                 required
               >
-                <option v-for="region in regions" :key="region.name" :value="region">
+                <option
+                  v-for="region in regions"
+                  :key="region.name"
+                  :value="region"
+                >
                   {{ region.name }}
                 </option>
               </select>
@@ -149,7 +165,8 @@
             <div
               class="flex flex-col"
               v-if="
-                generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
+                generalInfo.regionSelected &&
+                generalInfo.regionSelected.code != 'FED'
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
@@ -160,7 +177,11 @@
                 v-model="generalInfo.woredaSelected"
                 required
               >
-                <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
+                <option
+                  v-for="woreda in woredas"
+                  :key="woreda.name"
+                  :value="woreda"
+                >
                   {{ woreda.name }}
                 </option>
               </select>
@@ -316,7 +337,9 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label
+                    for=""
+                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >Organization Letter written for</label
                   ><span class="text-red-300">*</span>
                   <input
@@ -333,7 +356,9 @@
 
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label
+                    for=""
+                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >License Issued Date</label
                   >
                   <span class="text-red-300">*</span>
@@ -350,7 +375,9 @@
               </div>
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label
+                    for=""
+                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >License Registration Number</label
                   ><span class="text-red-300">*</span>
 
@@ -368,7 +395,9 @@
 
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label
+                    for=""
+                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >Who Issued Previous License</label
                   ><span class="text-red-300">*</span>
 
@@ -377,7 +406,11 @@
                     v-model="generalInfo.whoIssuedId"
                     required
                   >
-                    <option v-for="region in regions" :key="region.id" :value="region">
+                    <option
+                      v-for="region in regions"
+                      :key="region.id"
+                      :value="region"
+                    >
                       {{ region.name }}
                     </option>
                   </select>
@@ -432,7 +465,9 @@ export default {
     let isLoading = ref(false);
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
-      applicantTypeId: JSON.parse(localStorage.getItem("applicantTypeSelected")),
+      applicantTypeId: JSON.parse(
+        localStorage.getItem("applicantTypeSelected")
+      ),
       residenceWoredaId: "",
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
@@ -503,7 +538,10 @@ export default {
       return trimmedString;
     };
     const regionChangeHandler = () => {
-      if (generalInfo.value.regionSelected && generalInfo.value.regionSelected.code) {
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code
+      ) {
         switch (generalInfo.value.regionSelected.code) {
           case "FED":
             generalInfo.value.zoneSelected = null;
@@ -592,9 +630,11 @@ export default {
       });
     };
     const fetchZone = () => {
-      store.dispatch("goodstanding/getZones", generalInfo.value.regionId).then((res) => {
-        zones.value = res.data.data;
-      });
+      store
+        .dispatch("goodstanding/getZones", generalInfo.value.regionId)
+        .then((res) => {
+          zones.value = res.data.data;
+        });
     };
     const fetchWoredas = () => {
       store
@@ -608,9 +648,11 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
@@ -629,27 +671,29 @@ export default {
       ) {
         generalInfo.value.expertLevelId = 4;
       }
-      (generalInfo.value.professionType.otherProfessionalType = generalInfo.value
-        .otherProfessionType
+      (generalInfo.value.professionType.otherProfessionalType = generalInfo
+        .value.otherProfessionType
         ? convertOtherProf(generalInfo.value.otherProfessionType)
         : ""),
-        (generalInfo.value.professionType.otherProfessionTypeAmharic = generalInfo.value
-          .otherProfessionTypeAmharic
-          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
-          : "");
-      generalInfo.value.professionType.other_applicant_position = generalInfo.value
-        .otherApplicantPosition
+        (generalInfo.value.professionType.otherProfessionTypeAmharic =
+          generalInfo.value.otherProfessionTypeAmharic
+            ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+            : "");
+      generalInfo.value.professionType.other_applicant_position = generalInfo
+        .value.otherApplicantPosition
         ? convertOtherProf(generalInfo.value.otherApplicantPosition)
         : "";
 
-      (generalInfo.value.otherProfessionType = generalInfo.value.otherProfessionType
+      (generalInfo.value.otherProfessionType = generalInfo.value
+        .otherProfessionType
         ? convertOtherProf(generalInfo.value.otherProfessionType)
         : ""),
         (generalInfo.value.otherProfessionTypeAmharic = generalInfo.value
           .otherProfessionTypeAmharic
           ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
           : "");
-      generalInfo.value.otherApplicantPosition = generalInfo.value.otherApplicantPosition
+      generalInfo.value.otherApplicantPosition = generalInfo.value
+        .otherApplicantPosition
         ? convertOtherProf(generalInfo.value.otherApplicantPosition)
         : "";
       let tempApplicationData = generalInfo.value;
@@ -657,9 +701,11 @@ export default {
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
-        emit("changeActiveState");
-      });
+      store
+        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          emit("changeActiveState");
+        });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("GSApplicationData");
@@ -734,8 +780,11 @@ export default {
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? convertOtherProf(generalInfo.value.otherProfessionType)
               : "",
-            otherProfessionTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
-              ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+            otherProfessionTypeAmharic: generalInfo.value
+              .otherProfessionTypeAmharic
+              ? convertOtherProfAmh(
+                  generalInfo.value.otherProfessionTypeAmharic
+                )
               : "",
           },
           other_applicant_position: generalInfo.value.otherApplicantPosition
@@ -754,21 +803,25 @@ export default {
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
-          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
         },
       };
-      store.dispatch("goodstanding/addGoodstandingLicense", license).then(() => {
-        toast.success("Applied successfuly", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
+      store
+        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .then(() => {
+          toast.success("Applied successfuly", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
+          localStorage.removeItem("GSApplicationData");
+          router.push({ path: "/Applicant/GoodStanding/draft" });
         });
-        isLoading.value = false;
-        localStorage.removeItem("GSApplicationData");
-        router.push({ path: "/Applicant/GoodStanding/draft" });
-      });
     };
 
     onMounted(async () => {
@@ -794,9 +847,12 @@ export default {
       }
       if (
         localStorage.getItem("applicantTypeSelected") &&
-        Object.keys(JSON.parse(localStorage.getItem("applicantTypeSelected"))).length != 0
+        Object.keys(JSON.parse(localStorage.getItem("applicantTypeSelected")))
+          .length != 0
       ) {
-        checkApplicantType(JSON.parse(localStorage.getItem("applicantTypeSelected")));
+        checkApplicantType(
+          JSON.parse(localStorage.getItem("applicantTypeSelected"))
+        );
       }
     });
     return {
