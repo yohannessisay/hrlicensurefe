@@ -102,7 +102,7 @@ export default {
   },
   async getDocSpecWithFilter(context, apiParameter) {
     try {
-      let url = `${baseUrl}/documentSpecs/filter?`;
+      let url = `${baseUrl}/lookups/documentSpecs/filter?`;
 
       if (apiParameter) {
         apiParameter.forEach((param) => {

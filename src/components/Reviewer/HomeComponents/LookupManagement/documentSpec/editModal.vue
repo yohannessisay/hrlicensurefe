@@ -1,18 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="editModal"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -21,37 +10,13 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-lg
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-lg relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-2
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-2 rounded-t-md"
         ></div>
         <div class="vld-parent">
           <loading
@@ -75,60 +40,20 @@
                   <form>
                     <div class="flex flex-wrap">
                       <div
-                        class="
-                          mb-12
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-full
-                          px-3
-                          lg:px-6
-                        "
+                        class="mb-12 grow-0 shrink-0 basis-auto w-full lg:w-full px-3 lg:px-6"
                       >
                         <div class="grid grid-cols-2">
                           <!-- Document Spec Application Category -->
                           <div class="group w-full md:full lg:w-full ml-4">
                             <label
                               for="depName"
-                              class="
-                                  inline-block
-                                  w-full
-                                  text-md
-                                  mb-2
-                                  text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                "
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
                               >Application Category</label
                             >
                             <div class="group w-full md:full lg:w-full">
                               <div class="relative flex items-center">
                                 <select
-                                  class="
-                                      form-select
-                                      appearance-none
-                                      block
-                                      w-full
-                                      px-6
-                                      mb-8
-                                      py-2
-                                      text-base
-                                      font-normal
-                                      text-gray-700
-                                      bg-white bg-clip-padding bg-no-repeat
-                                      border border-solid border-gray-300
-                                      rounded
-                                      transition
-                                      ease-in-out
-                                      focus:text-gray-700
-                                      focus:bg-white
-                                      focus:border-blue-600
-                                      focus:outline-none
-                                    "
+                                  class="form-select appearance-none block w-full px-6 mb-8 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                   aria-label="Default select example"
                                   v-model="editData.appCategoryId"
                                   @change="enableSaveButton"
@@ -149,44 +74,13 @@
                           <div class="group w-full md:full lg:w-full ml-4">
                             <label
                               for="depName"
-                              class="
-                                  inline-block
-                                  w-full
-                                  text-md
-                                  mb-2
-                                  text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                "
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
                               >Applicant Type</label
                             >
                             <div class="group w-full md:full lg:w-full">
                               <div class="relative flex items-center">
                                 <select
-                                  class="
-                                      form-select
-                                      appearance-none
-                                      block
-                                      w-full
-                                      px-6
-                                      mb-8
-                                      py-2
-                                      text-base
-                                      font-normal
-                                      text-gray-700
-                                      bg-white bg-clip-padding bg-no-repeat
-                                      border border-solid border-gray-300
-                                      rounded
-                                      transition
-                                      ease-in-out
-                                      focus:text-gray-700
-                                      focus:bg-white
-                                      focus:border-blue-600
-                                      focus:outline-none
-                                    "
+                                  class="form-select appearance-none block w-full px-6 mb-8 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                   aria-label="Default select example"
                                   v-model="editData.applicantTypeId"
                                   @change="enableSaveButton"
@@ -207,44 +101,13 @@
                           <div class="group w-full md:full lg:w-full ml-4">
                             <label
                               for="depName"
-                              class="
-                                  inline-block
-                                  w-full
-                                  text-md
-                                  mb-2
-                                  text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                "
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
                               >Document Type</label
                             >
                             <div class="group w-full md:full lg:w-full">
                               <div class="relative flex items-center">
                                 <select
-                                  class="
-                                      form-select
-                                      appearance-none
-                                      block
-                                      w-full
-                                      px-6
-                                      mb-8
-                                      py-2
-                                      text-base
-                                      font-normal
-                                      text-gray-700
-                                      bg-white bg-clip-padding bg-no-repeat
-                                      border border-solid border-gray-300
-                                      rounded
-                                      transition
-                                      ease-in-out
-                                      focus:text-gray-700
-                                      focus:bg-white
-                                      focus:border-blue-600
-                                      focus:outline-none
-                                    "
+                                  class="form-select appearance-none block w-full px-6 mb-8 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                   aria-label="Default select example"
                                   v-model="editData.documentTypeId"
                                   @change="enableSaveButton"
@@ -265,44 +128,13 @@
                           <div class="group w-full md:full lg:w-full ml-4">
                             <label
                               for="depName"
-                              class="
-                                  inline-block
-                                  w-full
-                                  text-md
-                                  mb-2
-                                  text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                "
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
                               >Department</label
                             >
                             <div class="group w-full md:full lg:w-full">
                               <div class="relative flex items-center">
                                 <select
-                                  class="
-                                      form-select
-                                      appearance-none
-                                      block
-                                      w-full
-                                      px-6
-                                      mb-8
-                                      py-2
-                                      text-base
-                                      font-normal
-                                      text-gray-700
-                                      bg-white bg-clip-padding bg-no-repeat
-                                      border border-solid border-gray-300
-                                      rounded
-                                      transition
-                                      ease-in-out
-                                      focus:text-gray-700
-                                      focus:bg-white
-                                      focus:border-blue-600
-                                      focus:outline-none
-                                    "
+                                  class="form-select appearance-none block w-full px-6 mb-8 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                   aria-label="Default select example"
                                   v-model="editData.departmentId"
                                   @change="enableSaveButton"
@@ -323,43 +155,12 @@
                           <div class="group w-full md:full lg:w-full ml-4">
                             <label
                               for="depName"
-                              class="
-                                  inline-block
-                                  w-full
-                                  text-md
-                                  mb-2
-                                  text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                "
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
                               >Document Spec Education Level</label
                             >
                             <div class="relative flex items-center">
                               <select
-                                class="
-                                    form-select
-                                    appearance-none
-                                    block
-                                    w-full
-                                    px-6
-                                    mb-8
-                                    py-2
-                                    text-base
-                                    font-normal
-                                    text-gray-700
-                                    bg-white bg-clip-padding bg-no-repeat
-                                    border border-solid border-gray-300
-                                    rounded
-                                    transition
-                                    ease-in-out
-                                    focus:text-gray-700
-                                    focus:bg-white
-                                    focus:border-blue-600
-                                    focus:outline-none
-                                  "
+                                class="form-select appearance-none block w-full px-6 mb-8 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 aria-label="Default select example"
                                 v-model="editData.educationalLevelId"
                                 @change="enableSaveButton"
@@ -375,23 +176,34 @@
                             </div>
                           </div>
                           <!-- Document Spec Education Level -->
+                          <div
+                            class="group w-full md:full lg:w-full ml-4"
+                            v-if="editData && editData.parentDocument"
+                          >
+                            <label
+                              for="depName"
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
+                              >Parent Document</label
+                            >
+                            <div class="relative flex items-center">
+                              <input
+                                type="text"
+                                class="peer relative h-18 w-full rounded-sm pl-10 pr-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:text-primary-600 focus:font-bold focus:drop-"
+                                required
+                                placeholder="Enter name"
+                                v-model="editData.parentDocument"
+                              />
 
+                              <i
+                                class="fa fa-text-width ml-4 absolute left-auto text-primary-600"
+                              ></i>
+                            </div>
+                          </div>
                           <!-- Document Spec Required -->
                           <div class="group w-full md:full lg:w-full ml-4 mb-4">
                             <label
                               for="depName"
-                              class="
-                                  inline-block
-                                  w-full
-                                  text-md
-                                  mb-2
-                                  text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                "
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
                               >Is it a required field?</label
                             >
 
@@ -408,18 +220,7 @@
                           <div class="group w-full md:full lg:w-full ml-4 mb-4">
                             <label
                               for="depName"
-                              class="
-                                  inline-block
-                                  w-full
-                                  text-md
-                                  mb-2
-                                  text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                "
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
                               >Does it require CPD ( For renewal ) ?</label
                             >
 
@@ -436,18 +237,7 @@
                           <div class="group w-full md:full lg:w-full ml-4">
                             <label
                               for="depName"
-                              class="
-                                  inline-block
-                                  w-full
-                                  text-md
-                                  mb-2
-                                  text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                "
+                              class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
                               >Is it a common document?</label
                             >
 
@@ -470,18 +260,11 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer p-2
-            flex
-            justify-center
-            p-2
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer p-2 flex justify-center p-2 border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded   hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out"
+            class="inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out"
             @click="updateDocumentSpec()"
           >
             <i class="fa fa-save"></i>
@@ -489,22 +272,7 @@
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              bg-primary-700
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-600 hover:border-primary-600
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             @click="clearData()"
           >
@@ -543,18 +311,18 @@ export default {
             isCpdCertificate: null,
             isRequired: null,
             onlyFirstTimeUsers: null,
-            parentDocument: ""
+            parentDocument: "",
           }
     );
     let applicantType = ref([
       { name: "Ethiopian", id: 1 },
       { name: "Ethiopian From Abroad", id: 3 },
-      { name: "Foreigner", id: 2 }
+      { name: "Foreigner", id: 2 },
     ]);
     let applicationCategory = ref([
       { name: "New License", id: 1 },
       { name: "Renewal", id: 2 },
-      { name: "Goodstanding", id: 3 }
+      { name: "Goodstanding", id: 3 },
     ]);
     let educationLevels = computed(() =>
       props.modalLookups ? props.modalLookups.educationLevels : {}
@@ -568,33 +336,32 @@ export default {
     );
 
     const updateDocumentSpec = () => {
-      isLoading.value = true;
-
-      //Validation of input
-
-      store.dispatch("lookups/updateDocumentSpec", editData.value).then(res => {
-        isLoading.value = false;
-        if (res.data.status == "Success") {
-          toast.success("Updated Successfully", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
-        } else {
-          toast.error(res.data.message, {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true
-          });
-        }
-      });
+      isLoading.value = true; 
+      store
+        .dispatch("lookups/updateDocumentSpec", editData.value)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.data.status == "Success") {
+            toast.success("Updated Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          } else {
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
     };
     return {
       isLoading,
@@ -604,9 +371,9 @@ export default {
       educationLevels,
       applicantType,
       applicationCategory,
-      documentType
+      documentType,
     };
-  }
+  },
 };
 </script>
  
