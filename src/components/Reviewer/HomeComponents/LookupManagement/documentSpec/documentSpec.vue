@@ -236,7 +236,7 @@
                   class="inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out"
                   data-bs-toggle="modal"
                   data-bs-target="#addModal"
-                  @click="modalType='parent'"
+                  @click="modalType = 'parent'"
                 >
                   <i class="fa fa-plus text-xl"></i>
                   Add Document Specification
@@ -461,7 +461,7 @@ export default {
     let showAddButton = ref(false);
     let editModalData = ref();
     let modalLookups = ref({});
-    let modalType= ref("");
+    let modalType = ref("");
     let departments = ref([]);
     let applicantTypes = ref([
       { name: "Ethiopian", id: 1, code: "ETH" },
@@ -522,6 +522,7 @@ export default {
                   : "",
               Department:
                 element && element.department ? element.department.name : "",
+              Status: element && element.status ? element.status : "",
               EducationLevel: element.educationalLevel
                 ? element.educationalLevel.name
                 : "---",
@@ -576,12 +577,6 @@ export default {
                 sortable: true,
               },
               {
-                label: "Department",
-                field: "Department",
-                width: "15%",
-                sortable: true,
-              },
-              {
                 label: "Is Common Document ?",
                 field: "IsCommonDocument",
                 width: "10%",
@@ -594,6 +589,16 @@ export default {
                 sortable: true,
               },
 
+              {
+                label: "Status",
+                field: "Status",
+                width: "15%",
+                display: function (row) {
+                  return row.Status && row.Status == true
+                    ? '<span  class="activeElement" > Active</span>'
+                    : '<span  class="bg-red-300 rounded-md p-1 text-white font-bold" >Inactive</span>';
+                },
+              },
               {
                 label: "",
                 field: "quick",
@@ -645,6 +650,7 @@ export default {
                 element && element.educationalLevel
                   ? element.educationalLevel.name
                   : "",
+              Status: element && element.status ? element.status : "",
               Department:
                 element && element.department ? element.department.name : "",
               EducationLevel: element.educationalLevel
@@ -702,12 +708,6 @@ export default {
                 sortable: true,
               },
               {
-                label: "Department",
-                field: "Department",
-                width: "15%",
-                sortable: true,
-              },
-              {
                 label: "Is Common Document ?",
                 field: "IsCommonDocument",
                 width: "10%",
@@ -718,6 +718,17 @@ export default {
                 field: "IsRequired",
                 width: "10%",
                 sortable: true,
+              },
+
+              {
+                label: "Status",
+                field: "Status",
+                width: "15%",
+           display: function (row) {
+                  return row.Status && row.Status === true
+                    ? '<span  class="activeElement" > Active</span>'
+                    : '<span  class="bg-red-300 rounded-md p-1 text-white font-bold" >Inactive</span>';
+                },
               },
 
               {
@@ -1002,42 +1013,17 @@ export default {
       isRequired,
       clearFilters,
       doSearch,
-      modalType
+      modalType,
     };
   },
 };
 </script>
-<style scoped>
-/* Apply these for table */
-::v-deep(.vtl-table .vtl-thead .vtl-thead-th) {
-  color: #fff;
-  background-color: #0d3552;
-  border-color: #0d3552;
-}
-::v-deep(.vtl-table td),
-::v-deep(.vtl-table tr) {
-  border: none;
-}
-::v-deep(.vtl-paging-info) {
-  color: rgb(25, 155, 230);
-}
-::v-deep(.vtl-paging-count-label),
-::v-deep(.vtl-paging-page-label) {
-  margin-right: 10px;
-  margin-left: 10px;
-  color: rgb(25, 155, 230);
-}
-::v-deep(.vtl-paging-pagination-page-link) {
-  border: none;
-}
-::v-deep(.vtl-paging-count-dropdown) {
-  margin-right: 10px;
-  margin-left: 10px;
-  color: rgb(0, 0, 0);
-}
-
-::v-deep(.vtl-tbody-tr) {
-  border-bottom: 1px solid rgb(128, 128, 128) !important;
-  padding: 5px !important;
+<style>
+.activeElement {
+  background: green;
+  border-radius: 5px;
+  padding: 4px;
+  color: white;
+  font-weight: 800;
 }
 </style>

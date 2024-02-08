@@ -28,7 +28,7 @@
           <div class="modal-body relative">
             <div class="container">
               <section class="text-gray-800">
-                <div class="flex justify-center border-b-2 mb-4">
+                <div class="flex justify-center shadow-md mb-4">
                   <div class="text-center max-w-full">
                     <h2 class="text-2xl font-bold">Add New Document Spec</h2>
                   </div>
@@ -217,8 +217,11 @@
                               </div>
                             </div>
                           </div>
-                          <!-- Document Spec Required -->
-                          <div class="group w-full md:full lg:w-full ml-4 mb-4">
+                    
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                                <!-- Document Spec Required -->
+                          <div class="group w-full md:full lg:w-full ml-4 mb-4 rounded-md shadow-md p-2">
                             <label
                               for="depName"
                               class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
@@ -235,11 +238,11 @@
                           </div>
                           <!-- Document Spec Required -->
                           <!-- Document Spec CPD -->
-                          <div class="group w-full md:full lg:w-full ml-4 mb-4">
+                          <div class="group w-full md:full lg:w-full rounded-md shadow-md p-2 ml-2 mb-4">
                             <label
                               for="depName"
                               class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"
-                              >Does it require CPD ( For renewal ) ?</label
+                              >Does it require CPD? (For renewal)</label
                             >
 
                             <input
@@ -252,7 +255,7 @@
                           </div>
                           <!-- Document Spec CPD -->
                           <!-- Document Spec CPD -->
-                          <div class="group w-full md:full lg:w-full ml-4">
+                          <div class="group w-full md:full lg:w-full rounded-md shadow-md p-2  mb-4">
                             <label
                               for="depName"
                               class="inline-block w-full text-md mb-2 text-primary-600 font-bold text-gray-500 transition-all duration-200 ease-in-out"

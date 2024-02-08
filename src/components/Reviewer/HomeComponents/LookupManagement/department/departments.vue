@@ -149,8 +149,7 @@ export default {
                   : '<span  class="bg-red-300 rounded-md p-1 text-white font-bold" >' +
                       row.Status +
                       " </span>";
-              },
-              sortable: true,
+              }, 
             },
             {
               label: "",
