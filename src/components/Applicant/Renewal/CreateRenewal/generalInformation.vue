@@ -187,7 +187,7 @@
         Clear Form
       </button>
       <!-- region -->
-    <div
+      <div
         v-if="showLocation"
         :class="
           isDarkMode && isDarkMode == true
@@ -1276,6 +1276,10 @@ export default {
           if (generalInfo.value.regionSelected) {
             regionChangeHandler();
             zoneChangeHandler();
+          }
+        } else {
+          if (generalInfo.value.applicantTypeSelected) {
+            isAppTypeSelected.value = true;
           }
         }
         let userId = JSON.parse(window.localStorage.getItem("userId"));

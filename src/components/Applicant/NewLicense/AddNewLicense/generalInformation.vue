@@ -1242,6 +1242,10 @@ export default {
             regionChangeHandler();
             zoneChangeHandler();
           }
+        } else {
+          if (generalInfo.value.applicantTypeSelected) {
+            isAppTypeSelected.value = true;
+          }
         }
         let userId = JSON.parse(window.localStorage.getItem("userId"));
         store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
