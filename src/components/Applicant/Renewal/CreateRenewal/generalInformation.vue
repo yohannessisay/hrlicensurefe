@@ -1279,6 +1279,7 @@ export default {
           }
         } else {
           if (generalInfo.value.applicantTypeSelected) {
+            applicantTypeChangeHandler();
             isAppTypeSelected.value = true;
           }
         }
