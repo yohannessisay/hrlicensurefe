@@ -5,7 +5,7 @@ export async function checkDocuments(
   fileUploadError,
   educationalDocs,
   documentsUploaded,
-  newLicenseDocuments
+  documents
 ) {
   let temp = "";
   let CMtemp = "";
@@ -13,7 +13,7 @@ export async function checkDocuments(
   var tempVal;
   errorDocuments = [];
   // if back button is clicked
-  if (isBackButtonClicked == true) {
+  if (isBackButtonClicked && isBackButtonClicked == true) {
     // check common documents
 
     commonDocuments
@@ -84,7 +84,7 @@ export async function checkDocuments(
 
       //// check documetns with parents
       for (var pd in ed.parentDoc) {
-        tempVal = newLicenseDocuments.filter(
+        tempVal = documents.filter(
           (nld) => nld.parentDocument == pd && nld.isRequired
         );
 
@@ -108,7 +108,7 @@ export async function checkDocuments(
           if (NSTemp && NSTemp != "" && NSTemp[0]) {
             delete fileUploadError[
               "file_upload_row_" +
-                newLicenseDocuments.filter(
+                documents.filter(
                   (nld) => nld.parentDocument == pd && nld.isRequired
                 )[0].documentType.code +
                 "_" +
@@ -119,7 +119,7 @@ export async function checkDocuments(
           } else {
             fileUploadError[
               "file_upload_row_" +
-                newLicenseDocuments.filter(
+                documents.filter(
                   (nld) => nld.parentDocument == pd && nld.isRequired
                 )[0].documentType.code +
                 "_" +
@@ -128,11 +128,11 @@ export async function checkDocuments(
                 ed.professionType.code.toUpperCase()
             ] = true;
             errorDocuments.push({
-              name: newLicenseDocuments.filter(
+              name: documents.filter(
                 (nld) => nld.parentDocument == pd && nld.isRequired
               )[0].documentType.name,
               code:
-                newLicenseDocuments.filter(
+                documents.filter(
                   (nld) => nld.parentDocument == pd && nld.isRequired
                 )[0].documentType.code +
                 "_" +
@@ -166,8 +166,7 @@ export async function checkDocuments(
             "file_upload_row_" + element.documentType.code
           ];
         }
-      });
-
+      }); 
     educationalDocs.forEach((ed) => {
       // check normal docs with no parents
 
@@ -214,7 +213,7 @@ export async function checkDocuments(
 
       //// check documetns with parents
       for (var pd in ed.parentDoc) {
-        tempVal = newLicenseDocuments.filter(
+        tempVal = documents.filter(
           (nld) => nld.parentDocument == pd && nld.isRequired
         );
 
@@ -235,7 +234,7 @@ export async function checkDocuments(
           if (NSTemp == "") {
             fileUploadError[
               "file_upload_row_" +
-                newLicenseDocuments.filter(
+                documents.filter(
                   (nld) => nld.parentDocument == pd && nld.isRequired
                 )[0].documentType.code +
                 "_" +
@@ -244,11 +243,11 @@ export async function checkDocuments(
                 ed.professionType.code.toUpperCase()
             ] = true;
             errorDocuments.push({
-              name: newLicenseDocuments.filter(
+              name: documents.filter(
                 (nld) => nld.parentDocument == pd && nld.isRequired
               )[0].documentType.name,
               code:
-                newLicenseDocuments.filter(
+                documents.filter(
                   (nld) => nld.parentDocument == pd && nld.isRequired
                 )[0].documentType.code +
                 "_" +

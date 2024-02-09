@@ -1162,9 +1162,11 @@ export default {
               icon: true,
             });
             isLoading.value = false;
+            localStorage.removeItem("applicantTypeSelected");
             localStorage.removeItem("NLApplicationData");
-            localStorage.removeItem("isLicenseDesignation");
             localStorage.removeItem("tempNL");
+            localStorage.removeItem("isLicenseDesignation");
+            indexedDB.deleteDatabase("NLdocumentUploads");
             location.reload();
           } else {
             toast.error("Error occured, please try again", {

@@ -1192,10 +1192,10 @@ export default {
           isLoading.value = false;
           if (res.data.status == "Success") {
             isLoading.value = true;
-            localStorage.setItem(
-              "tempRN",
-              JSON.stringify({ id: res.data.data.id, step: 2 })
-            );
+            localStorage.removeItem("applicantTypeSelected");
+            localStorage.removeItem("RNApplicationData");
+            indexedDB.deleteDatabase("RNdocumentUploads");
+            localStorage.removeItem("tempRN");
             toast.success("Applied successfuly", {
               timeout: 5000,
               position: "bottom-center",
