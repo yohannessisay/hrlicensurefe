@@ -27,4 +27,35 @@ const initiateDarkMode = () => {
     light();
   }
 };
-export default { initiateDarkMode, dark, light };
+const modeToggle = (isDarkMode) => {
+  if (
+    isDarkMode == true ||
+    document.getElementById("main")?.classList.contains("dark-mode")
+  ) {
+    isDarkMode = false;
+  light();
+    window.dispatchEvent(
+      new CustomEvent("darkModeChanged", {
+        detail: {
+          action: "set",
+          key: "darkMode",
+          content: false,
+        },
+      })
+    );
+  } else {
+    isDarkMode = true;
+   dark();
+    window.dispatchEvent(
+      new CustomEvent("darkModeChanged", {
+        detail: {
+          action: "set",
+          key: "darkMode",
+          content: true,
+        },
+      })
+    );
+  }
+  return isDarkMode;
+};
+export default { initiateDarkMode, dark, light,modeToggle };

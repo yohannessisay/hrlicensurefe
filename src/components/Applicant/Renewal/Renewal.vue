@@ -3,7 +3,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
         <Index
-          @dark-mode="modeToggle()"
+          @dark-mode="toggleDarkMode()"
           :activeState="1"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -13,7 +13,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 2">
         <Institution
-          @dark-mode="modeToggle()"
+          @dark-mode="toggleDarkMode()"
           :activeState="1"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -23,7 +23,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 3">
         <Upload
-          @dark-mode="modeToggle()"
+          @dark-mode="toggleDarkMode()"
           :activeState="2"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -33,7 +33,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 4">
         <LicenseSummary
-          @dark-mode="modeToggle()"
+          @dark-mode="toggleDarkMode()"
           :activeState="3"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -49,7 +49,7 @@ import Upload from "./CreateRenewal/Upload.vue";
 import Index from "./CreateRenewal/index.vue";
 import LicenseSummary from "./CreateRenewal/LicenseSummary.vue";
 import MainContent from "../Shared/Menu.vue";
-
+import darkModeService from "../Shared/services/darkModeService";
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 
@@ -205,48 +205,16 @@ export default {
         store.dispatch("renewal/storeRemark", remark.value);
       });
     };
-    const dark = () => {
-      document.getElementById("mainContent").classList.add("dark-mode");
-      document.getElementById("activeMenu")?.classList.add("dark-mode");
-      document.getElementById("mainSideBar")?.classList.add("dark-mode");
-      document.getElementById("options-menu")?.classList.add("dark-mode");
-      document.getElementById("topNav")?.classList.add("dark-mode");
-      document.getElementById("menu-icon")?.classList.add("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
-
-      darkMode.value = true;
-      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
-    };
-
-    const light = () => {
-      document.getElementById("mainContent").classList.remove("dark-mode");
-      document.getElementById("activeMenu")?.classList.remove("dark-mode");
-      document.getElementById("topNav")?.classList.remove("dark-mode");
-      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
-      document.getElementById("options-menu")?.classList.remove("dark-mode");
-      document.getElementById("menu-icon")?.classList.remove("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
-
-      darkMode.value = false;
-      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
-    };
+    
     const initiateDarkMode = () => {
       if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        dark();
+        darkModeService.dark();
       } else {
-        light();
+        darkModeService.light();
       }
     };
-    const modeToggle = () => {
-      if (
-        localStorage.getItem("darkMode") == true ||
-        darkMode.value ||
-        document.getElementById("main")?.classList.contains("dark-mode")
-      ) {
-        light();
-      } else {
-        dark();
-      }
+    const toggleDarkMode = () => {
+      darkModeService.modeToggle(darkMode.value);
     };
     onMounted(async () => {
       fetchApplicationStatuses();
@@ -273,7 +241,7 @@ export default {
       nativeLanguage,
       payrollDocumentSet,
       diplomaSet,
-      modeToggle,
+      toggleDarkMode,
       submit,
       fetchApplicationStatuses,
       fetchApplicationCategory,

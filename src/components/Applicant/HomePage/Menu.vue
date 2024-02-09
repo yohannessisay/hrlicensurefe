@@ -8,7 +8,8 @@
           <ol class="list-reset flex">
             <li>
               <a href="#" class="text-main-400 text-xl hover:text-main-100"
-                >Welcome Back, {{ userInfo.fullName ? userInfo.fullName : "" }}</a
+                >Welcome Back,
+                {{ userInfo.fullName ? userInfo.fullName : "" }}</a
               >
             </li>
             <li><span class="text-gray-500 mx-2"></span></li>
@@ -16,7 +17,7 @@
         </nav>
 
         <div id="home" class="sm:mt-12">
-          <!-- <div class="float-container" @click="modeToggle()">
+          <!-- <div class="float-container" @click="toggleDarkMode()">
             <a href="#" class="icon one"> </a>
           </div> -->
           <div class="grid grid-cols-1 sm:grid-cols-4 mr-8 ml-8 sm:m-0 gap-8">
@@ -119,7 +120,10 @@
                 <p
                   class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
                 >
-                  <i class="fa fa-tasks text-main-400" style="font-size: 111px"></i>
+                  <i
+                    class="fa fa-tasks text-main-400"
+                    style="font-size: 111px"
+                  ></i>
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-1">
@@ -144,7 +148,10 @@
                 <p
                   class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
                 >
-                  <i class="fa fa-recycle text-main-400" style="font-size: 111px"></i>
+                  <i
+                    class="fa fa-recycle text-main-400"
+                    style="font-size: 111px"
+                  ></i>
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-1">
@@ -165,7 +172,9 @@
         <div class="mt-6 py-4">
           <a
             :href="`/Applicant/${
-              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
+              modalType && modalType !== 'LicenseDesignation'
+                ? modalType
+                : 'NewLicense'
             }`"
           >
             <button
@@ -183,7 +192,9 @@
         <div class="mt-6 py-4">
           <a
             :href="`/Applicant/${
-              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
+              modalType && modalType !== 'LicenseDesignation'
+                ? modalType
+                : 'NewLicense'
             }`"
           >
             <button
@@ -201,7 +212,9 @@
         <div class="mt-6 py-4">
           <a
             :href="`/Applicant/${
-              modalType && modalType !== 'LicenseDesignation' ? modalType : 'NewLicense'
+              modalType && modalType !== 'LicenseDesignation'
+                ? modalType
+                : 'NewLicense'
             }`"
           >
             <button
@@ -227,6 +240,7 @@ import { googleApi } from "@/composables/baseURL";
 import "../../../styles/applicant.css";
 import { useStore } from "vuex";
 import Modal from "./Shared/Modal.vue";
+import darkModeService from "../Shared/services/darkModeService";
 import {
   newLicenseList,
   renewalList,
@@ -343,62 +357,23 @@ export default {
     onMounted(() => {
       getProfile();
       initiateDarkMode();
-      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        document.getElementById("mainContent").classList.add("dark-mode");
-        document.getElementById("activeMenu").classList.add("dark-mode");
-        document.getElementById("mainSideBar").classList.add("dark-mode");
-        document.getElementById("menu-icon").classList.add("dark-mode");
-        document.getElementById("home").classList.add("dark-mode");
-        document.querySelector("body").classList.add("dark-mode");
-        document.getElementById("options-menu").classList.add("dark-mode");
-      }
     });
-    const dark = () => {
-      document.getElementById("mainContent").classList.add("dark-mode");
-      document.getElementById("activeMenu").classList.add("dark-mode");
-      document.getElementById("mainSideBar").classList.add("dark-mode");
-      document.getElementById("menu-icon").classList.add("dark-mode");
-      document.getElementById("home").classList.add("dark-mode");
-      document.querySelector("body").classList.add("dark-mode");
-      document.getElementById("options-menu").classList.add("dark-mode");
-      isDarkMode.value = true;
-      localStorage.setItem("darkMode", JSON.stringify(isDarkMode.value));
-    };
 
-    const light = () => {
-      document.getElementById("mainContent").classList.remove("dark-mode");
-      document.getElementById("activeMenu").classList.remove("dark-mode");
-      document.getElementById("mainSideBar").classList.remove("dark-mode");
-      document.getElementById("menu-icon").classList.remove("dark-mode");
-      document.getElementById("home").classList.remove("dark-mode");
-      document.querySelector("body").classList.remove("dark-mode");
-      document.getElementById("options-menu").classList.remove("dark-mode");
-      isDarkMode.value = false;
-      localStorage.setItem("darkMode", JSON.stringify(isDarkMode.value));
-    };
     const initiateDarkMode = () => {
       if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        dark();
+        darkModeService.dark();
       } else {
-        light();
+        darkModeService.light();
       }
     };
-    const modeToggle = () => {
-      if (
-        localStorage.getItem("darkMode") == true ||
-        isDarkMode.value ||
-        document.getElementById("main")?.classList.contains("dark-mode")
-      ) {
-        light();
-      } else {
-        dark();
-      }
+    const toggleDarkMode = () => {
+      darkModeService.modeToggle(isDarkMode.value);
     };
 
     return {
       userInfo,
       currentList,
-      modeToggle,
+      toggleDarkMode,
       isDarkMode,
       setApplicantType,
       modalType,

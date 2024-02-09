@@ -1,10 +1,10 @@
 <template>
-  <div class="main " id="main">
+  <div class="main" id="main">
     <side-nav :finalUrl="finalUrl"></side-nav>
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
-      <div class="mt-8 sm:p-4 p-1 ">
-        <!-- <div class="float-container" @click="modeToggle()">
+      <div class="mt-8 sm:p-4 p-1">
+        <!-- <div class="float-container" @click="toggleDarkMode()">
           <a href="#" :class="isDarkMode ? 'icon two' : 'icon one'">
             <span style="margin-left: -16px !important;">{{
               isDarkMode ? "Light Mode" : " Dark Mode"
@@ -23,7 +23,7 @@ import SideNav from "./Sidebar.vue";
 import TopNav from "./Header.vue";
 import "../../../styles/applicant.css";
 import { googleApi } from "@/composables/baseURL";
-import darkModeService from "./darkModeService";
+import darkModeService from "./services/darkModeService";
 export default {
   props: ["url"],
   components: { SideNav, TopNav },
@@ -50,37 +50,10 @@ export default {
       darkModeService.initiateDarkMode();
     });
 
-    const modeToggle = () => {
-      if (
-        isDarkMode.value == true ||
-        document.getElementById("main")?.classList.contains("dark-mode")
-      ) {
-        isDarkMode.value = false;
-        darkModeService.light();
-        window.dispatchEvent(
-          new CustomEvent("darkModeChanged", {
-            detail: {
-              action: "set",
-              key: "darkMode",
-              content: false,
-            },
-          })
-        );
-      } else {
-        isDarkMode.value = true;
-        darkModeService.dark();
-        window.dispatchEvent(
-          new CustomEvent("darkModeChanged", {
-            detail: {
-              action: "set",
-              key: "darkMode",
-              content: true,
-            },
-          })
-        );
-      }
+    const toggleDarkMode = () => {
+      darkModeService.modeToggle(isDarkMode.value);
     };
-    return { userInfo, modeToggle, finalUrl, isDarkMode };
+    return { userInfo, toggleDarkMode, finalUrl, isDarkMode };
   },
 };
 </script>
