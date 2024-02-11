@@ -76,7 +76,7 @@ export default {
       }
     };
     const toggleDarkMode = () => {
-      darkModeService.modeToggle(darkMode.value);
+      darkMode.value= darkModeService.modeToggle(darkMode.value);
     };
     const submit = (n) => {
       activeState.value = n;

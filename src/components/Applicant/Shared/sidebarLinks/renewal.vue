@@ -34,7 +34,7 @@
       <b></b>
       <a class="ml-4" href="#Renewal">
         <router-link class="link" to="/Applicant/Renewal/submitted">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/submitted'
@@ -55,7 +55,7 @@
       <b></b>
       <a class="ml-4" href="#Verification">
         <router-link class="link" to="/Applicant/Renewal/draft">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/draft'
@@ -76,7 +76,7 @@
       <b></b>
       <a class="ml-4" href="#GoodStanding">
         <router-link class="link" to="/Applicant/Renewal/withdraw">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/withdraw'
@@ -98,7 +98,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/Renewal/inReview">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/inReview'
@@ -120,7 +120,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/Renewal/approved">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/approved'
@@ -142,7 +142,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/Renewal/declined">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/declined'
@@ -166,7 +166,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/Renewal/underSupervision">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/underSupervision'
@@ -213,7 +213,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/Renewal/returned">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/returned'
@@ -235,7 +235,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/Renewal/suspended">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/suspended'
@@ -262,7 +262,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/Renewal/revoked">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/Renewal/revoked'

@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-parent" >
+  <div class="sidebar-parent">
     <div class="side-navbar" id="mainSideBar">
       <div
         class="flex justify-center p-4"
@@ -20,8 +20,19 @@
           <b></b>
           <a href="#Home">
             <router-link class="link" to="/Applicant/NewLicense">
-              <span class="icon"><i class="bx bxs-home text-black"></i></span>
-              <span class="title">Home</span>
+              <span class="icon"
+                ><i
+                  :class="
+                    isDarkMode
+                      ? 'bx bxs-home text-white'
+                      : 'bx bxs-home text-main-400'
+                  "
+                ></i
+              ></span>
+              <span
+                :class="isDarkMode ? 'text-white title' : 'text-main-400 title'"
+                >Home</span
+              >
             </router-link>
           </a>
         </li>
@@ -61,14 +72,12 @@
             </router-link>
           </a>
         </li>
-              <li class="list">
+        <li class="list">
           <b></b>
           <b></b>
           <a href="#LostLicense">
             <router-link class="link" to="/Applicant/LostLicense">
-              <span class="icon"
-                ><i class="bx bx-recycle text-white"></i
-              ></span>
+              <span class="icon"><i class="bx bx-recycle text-white"></i></span>
               <span class="text text-white font-bold">Lost License</span>
             </router-link>
           </a>
@@ -79,4 +88,7 @@
 </template>
 
 <script>
+export default {
+  props: ["isDarkMode"],
+};
 </script>

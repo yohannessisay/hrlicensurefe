@@ -13,24 +13,26 @@
         <!-- Column -->
 
         <div
-          v-for="license in declinedLicenses"
+          v-for="license in applications"
           :key="license.id"
-          :class="
-            isDarkMode
-              ? 'bg-secondaryDark text-primary-200 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-              : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 text-main-400 ease-in-out hover:-translate-y-2'
-          "
+          :class="isDarkMode?'bg-secondaryDark text-primary-200 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2':'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 text-main-400 ease-in-out hover:-translate-y-2'"
         >
           <!-- Article -->
           <div>
-            <h2 class="border-b-2 text-xl p-2">
+            <h2 class="  border-b-2 text-xl p-2">
               License Number
-              <span class="text-base">{{ license.newLicenseCode }}</span>
+              <span class="text-base  ">{{
+                license.newLicenseCode
+              }}</span>
             </h2>
 
-            <div class="border-b-2">
+            <div class="border-b-2  ">
               <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
-                <h1 class="text-xl underline">Department</h1>
+                <h1 class="text-xl underline">
+                  
+                    Department
+                 
+                </h1>
 
                 <ul class="text-black text-sm">
                   <li
@@ -56,7 +58,10 @@
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline" href="#">
+                  <a
+                    class="no-underline hover:underline  "
+                    href="#"
+                  >
                     Certified Date
                   </a>
                 </h1>
@@ -72,7 +77,10 @@
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline" href="#">
+                  <a
+                    class="no-underline hover:underline "
+                    href="#"
+                  >
                     Expiry Date
                   </a>
                 </h1>
@@ -89,7 +97,10 @@
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline" href="#">
+                  <a
+                    class="no-underline hover:underline  "
+                    href="#"
+                  >
                     Retrival Date
                   </a>
                 </h1>
@@ -105,9 +116,9 @@
             <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
             >
-              <h2 class="text-lg">Applied Date</h2>
+              <h2 class="text-lg  ">Applied Date</h2>
 
-              <span class="text-sm">{{
+              <span class="  text-sm">{{
                 license.createdAt ? license.createdAt.slice(0, 10) : ""
               }}</span>
             </footer>
@@ -144,55 +155,53 @@
         There are no approved applications currently.
       </h2>
     </div>
-    <declined-detail :modalDataId="modalDataId"></declined-detail>
+    <ApplicationDetail
+      :modalDataId="modalDataId"
+      :isDarkMode="isDarkMode"
+      :applicationDetailLink="applicationDetailLink"
+    ></ApplicationDetail>
   </main-content>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
-import MainContent from "../../Shared/Menu.vue";
+import MainContent from "../Menu.vue";
 import { googleApi } from "@/composables/baseURL";
-import declinedDetail from "./declinedDetail.vue";
-import PageHeader from "../../Shared/PagesHeader.vue";
+import ApplicationDetail from "./ApplicationDetailModal.vue";
+import PageHeader from "../PagesHeader.vue";
 export default {
-  components: { MainContent, declinedDetail, PageHeader },
-  setup() {
+  components: { MainContent, ApplicationDetail, PageHeader },
+  props: ["path", "link", "status", "detailModalLink"],
+  setup(props) {
     let store = useStore();
-    let declinedLicenses = ref([]);
+    let applications = ref([]);
     let userInfo = ref({});
-    let isLoading = ref(false);
+    let isLoading = ref(true);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
-    const path = ref([
-      { name: "Home", link: "/menu" },
-      { name: "New License", link: "/Applicant/NewLicense" },
-      { name: "Declined", link: "/Applicant/NewLicense" },
-    ]);
-    const changeLicenseId = (id) => {
-      modalDataId.value.id = id;
-      modalDataId.value.change++;
-    };
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
+    let applicationDetailLink = computed(() => props.detailModalLink);
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
-      window.addEventListener("darkModeChanged", (data) => {
-        isDarkMode.value = data.detail ? data.detail.content : "";
-      });
-      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
+      store.dispatch(props.link.toString(), userId).then((res) => {
         const results = res.data.data ? res.data.data : [];
 
         if (results.length > 0) {
-          declinedLicenses.value = results.filter((declinedLicense) => {
-            return declinedLicense.applicationStatus.code === "DEC";
+          applications.value = results.filter((app) => {
+            return props.status.includes(app.applicationStatus.code);
           });
 
-          if (declinedLicenses.value.length === 0) {
+          if (applications.value.length === 0) {
             noData.value = true;
           }
+
           isLoading.value = false;
         } else {
           noData.value = true;
@@ -201,16 +210,21 @@ export default {
       });
     });
 
+    const openApplicationDetail = (id) => {
+      modalDataId.value.id = id;
+      modalDataId.value.change++;
+    };
+
     return {
-      declinedLicenses,
+      applications,
       googleApi,
       userInfo,
-      noData,
       isDarkMode,
-      changeLicenseId,
+      noData,
       isLoading,
+      openApplicationDetail,
       modalDataId,
-      path
+      applicationDetailLink,
     };
   },
 };

@@ -5,7 +5,13 @@
       :key="table"
       class="border-b-4 text-main-400 mb-8 p-1 rounded-md"
     >
-      <h4 class="text-grey-800 font-bold border-b">
+      <h4
+        :class="
+          isDarkMode
+            ? 'text-primary-200 font-bold border-b'
+            : 'text-grey-800 font-bold border-b'
+        "
+      >
         {{ table.professionType ? table.professionType.name : "" }}
         Related Files
       </h4>
@@ -29,7 +35,13 @@
             </tr>
           </thead>
           <!-- For single file uploads -->
-          <tbody class="divide-y bg-white">
+          <tbody
+            :class="
+              isDarkMode
+                ? 'divide-y bg-secondaryDark text-primary-200'
+                : 'divide-y bg-white text-main-400'
+            "
+          >
             <tr
               v-for="item in table.docs"
               :key="item.id"
@@ -40,16 +52,16 @@
                   }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                 ]
                   ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                  : 'text-sm border rounded-md  text-grey-800 flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                  : 'text-sm border rounded-md   flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
               "
             >
               <td
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[0] }}
                 </h2>
-                <h2 class="text-lg text-grey-800 break-words">
+                <h2 class="text-lg break-words">
                   {{ item.documentType.name }}
                   <b v-if="item.isRequired" class="text-red-300">(*)</b>
                 </h2>
@@ -57,10 +69,10 @@
               <td
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[1] }}
                 </h2>
-                <h2 class="text-lg text-grey-800 break-words">
+                <h2 class="text-lg break-words">
                   {{
                     item.documentType && item.documentType.description
                       ? item.documentType.description
@@ -71,7 +83,7 @@
               <td
                 class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[2] }}
                 </h2>
 
@@ -91,10 +103,10 @@
                 v-if="item && item.fileName"
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   Uploaded File Name
                 </h2>
-                <h2 class="text-lg break-words"> 
+                <h2 class="text-lg break-words">
                   {{ item.fileName ? item.fileName : "---------------" }}
                 </h2>
               </td>
@@ -102,37 +114,40 @@
                 v-if="item && item.existingFile"
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <a
-                  :id="
-                    'image_href_' +
-                    `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                  "
-                  :href="item.existingFile"
-                  :data-title="item.name ? item.name : '-----'"
-                  data-lightbox="example-2"
-                >
-                  <i
+                <div class="flex justify-center">
+                  <a
                     :id="
-                      'educational_icon_' +
-                      `${
-                        item.documentType.code
-                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                      'image_href_' +
+                      `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                     "
-                    class="fa fa-eye cursor-pointer text-main-400"
-                    aria-hidden="true"
+                    :href="item.existingFile"
+                    :data-title="item.name ? item.name : '-----'"
+                    data-lightbox="example-2"
                   >
-                    <img
+                    <i
                       :id="
-                        'image_lightbox_' +
+                        'educational_icon_' +
                         `${
                           item.documentType.code
                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                       "
-                      :src="item.existingFile"
-                      class="w-full h-2 object-cover"
-                    />
-                  </i>
-                </a>
+                      class="fa fa-eye cursor-pointer text-main-400"
+                      aria-hidden="true"
+                    >
+                      <img
+                        :id="
+                          'image_lightbox_' +
+                          `${
+                            item.documentType.code
+                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                        "
+                        :src="item.existingFile"
+                        class="w-full h-2 object-cover"
+                      />
+                    </i>
+                    <small class="text-base ml-2">View</small>
+                  </a>
+                </div>
               </td>
               <td
                 v-else
@@ -180,7 +195,11 @@
 
           <!-- For multiple file uploads -->
           <tbody
-            class="divide-y bg-white"
+            :class="
+              isDarkMode
+                ? 'divide-y bg-secondaryDark text-primary-200'
+                : 'divide-y bg-white text-main-400'
+            "
             v-for="parentItem in table.parentDoc"
             :key="parentItem.id"
           >
@@ -201,10 +220,10 @@
               <td
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[0] }}
                 </h2>
-                <h2 class="text-lg text-grey-800 break-words">
+                <h2 class="text-lg break-words">
                   {{ parentItem[0].documentType.name }}
                   <b v-if="parentItem[0].isRequired" class="text-red-300"
                     >(*)</b
@@ -214,10 +233,10 @@
               <td
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[1] }}
                 </h2>
-                <h2 class="text-lg text-grey-800 break-words">
+                <h2 class="text-lg break-words">
                   {{
                     parentItem[0].documentType.description
                       ? parentItem[0].documentType.description
@@ -228,7 +247,7 @@
               <td
                 class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[2] }}
                 </h2>
 
@@ -250,7 +269,7 @@
                 v-if="parentItem[0].fileName"
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   Uploaded File Name
                 </h2>
                 <h2 class="text-lg break-words">
@@ -265,39 +284,41 @@
                 v-if="parentItem[0].existingFile"
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <a
-                  :id="
-                    'image_href_' +
-                    `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                  "
-                  :href="parentItem[0].existingFile"
-                  :data-title="
-                    parentItem[0].name ? parentItem[0].name : '-----'
-                  "
-                  data-lightbox="example-2"
-                >
-                  <i
+                <div class="flex justify-center">
+                  <a
                     :id="
-                      'educational_icon_' +
-                      `${
-                        parentItem[0].documentType.code
-                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                      'image_href_' +
+                      `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                     "
-                    class="fa fa-eye cursor-pointer text-main-400"
-                    aria-hidden="true"
+                    :href="parentItem[0].existingFile"
+                    :data-title="
+                      parentItem[0].name ? parentItem[0].name : '-----'
+                    "
+                    data-lightbox="example-2"
                   >
-                    <img
+                    <i
                       :id="
-                        'image_lightbox_' +
+                        'educational_icon_' +
                         `${
                           parentItem[0].documentType.code
                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                       "
-                      :src="parentItem[0].existingFile"
-                      class="w-full h-2 object-cover"
-                    />
-                  </i>
-                </a>
+                      class="fa fa-eye cursor-pointer text-main-400"
+                      aria-hidden="true"
+                    >
+                      <img
+                        :id="
+                          'image_lightbox_' +
+                          `${
+                            parentItem[0].documentType.code
+                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                        "
+                        :src="parentItem[0].existingFile"
+                        class="w-full h-2 object-cover"
+                      /> </i
+                    ><span class="ml-2">View</span>
+                  </a>
+                </div>
               </td>
               <td
                 v-else
@@ -334,8 +355,8 @@
                         "
                         src=""
                         class="w-full h-2 object-cover"
-                      />
-                    </i>
+                      /> </i
+                    ><span class="ml-2">View</span>
                   </a>
                 </div>
               </td>
@@ -399,7 +420,13 @@
                 :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
                 style="width: max-content"
               >
-                <div class="w-full border-grey-400 bg-white rounded-md">
+                <div
+                  :class="
+                    isDarkMode
+                      ? 'w-full border-grey-400 bg-secondaryDark rounded-md'
+                      : 'w-full border-grey-400 bg-white rounded-md'
+                  "
+                >
                   <div
                     :id="
                       'docAccordion_' +
@@ -429,7 +456,13 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody
+                          :class="
+                            isDarkMode
+                              ? 'divide-y bg-secondaryDark text-primary-200'
+                              : 'divide-y bg-white text-main-400'
+                          "
+                        >
                           <tr
                             v-for="(parentChildItem, index) in parentItem"
                             :key="index"
@@ -441,7 +474,7 @@
                                   }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               ]
                                 ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                                : 'text-sm  bg-white rounded-md border flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                                : 'text-sm  rounded-md border flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
                             "
                           >
                             <td
@@ -452,15 +485,13 @@
                               "
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
-                              <h2
-                                class="text-xl text-main-400 underline sm:invisible"
-                              >
+                              <h2 class="text-xl underline sm:invisible">
                                 Document Name
                               </h2>
                               <h2
                                 :class="
                                   isDarkMode
-                                    ? 'text-white'
+                                    ? 'text-primary-200'
                                     : 'text-lg text-grey-800 break-all sm:-mt-5'
                                 "
                               >
@@ -477,7 +508,11 @@
                             >
                               <div class="flex items-center ml-4">
                                 <div>
-                                  <p :class="isDarkMode ? 'text-white' : ''">
+                                  <p
+                                    :class="
+                                      isDarkMode ? 'text-primary-200' : ''
+                                    "
+                                  >
                                     {{
                                       parentChildItem.documentType.description
                                         ? parentChildItem.documentType
@@ -520,8 +555,11 @@
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                               v-if="parentChildItem && parentChildItem.fileName"
                             >
-                              <div class="flex items-center p-4">
-                                <div>
+                              <h2 class="sm:invisible text-xl underline">
+                                Uploaded File Name
+                              </h2>
+                              <div class="flex justify-start p-2">
+                               
                                   <p :class="isDarkMode ? 'text-white' : ''">
                                     {{
                                       parentChildItem.fileName
@@ -529,7 +567,7 @@
                                         : "---------------"
                                     }}
                                   </p>
-                                </div>
+                                
                               </div>
                             </td>
                             <td
@@ -541,43 +579,46 @@
                               "
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
-                              <a
-                                :id="
-                                  'image_href_' +
-                                  `${
-                                    parentChildItem.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                "
-                                :href="parentChildItem.existingFile"
-                                :data-title="
-                                  parentChildItem.name
-                                    ? parentChildItem.name
-                                    : '-----'
-                                "
-                                data-lightbox="example-2"
-                              >
-                                <i
+                              <div class="flex justify-center">
+                                <a
                                   :id="
-                                    'educational_icon_' +
+                                    'image_href_' +
                                     `${
                                       parentChildItem.documentType.code
                                     }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                   "
-                                  class="fa fa-eye cursor-pointer text-main-400"
-                                  aria-hidden="true"
+                                  :href="parentChildItem.existingFile"
+                                  :data-title="
+                                    parentChildItem.name
+                                      ? parentChildItem.name
+                                      : '-----'
+                                  "
+                                  data-lightbox="example-2"
                                 >
-                                  <img
+                                  <i
                                     :id="
-                                      'image_lightbox_' +
+                                      'educational_icon_' +
                                       `${
                                         parentChildItem.documentType.code
                                       }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
-                                    :src="parentChildItem.existingFile"
-                                    class="w-full h-2 object-cover"
-                                  />
-                                </i>
-                              </a>
+                                    class="fa fa-eye cursor-pointer text-main-400"
+                                    aria-hidden="true"
+                                  >
+                                    <img
+                                      :id="
+                                        'image_lightbox_' +
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      "
+                                      :src="parentChildItem.existingFile"
+                                      class="w-full h-2 object-cover"
+                                    />
+                                  </i>
+                                  <small class="ml-2 text-base">View</small>
+                                </a>
+                              </div>
                             </td>
                             <td
                               v-if="
@@ -616,9 +657,7 @@
                                       class="w-full h-2 object-cover"
                                     />
                                   </i>
-                                  <small class="text-grey-800 text-base"
-                                    >View</small
-                                  >
+                                  <small class="ml-2 text-base">View</small>
                                 </a>
                               </div>
                             </td>
@@ -631,7 +670,7 @@
                             >
                               <div class="flex justify-center">
                                 <span
-                                  class="cursor-pointer text-grey-800"
+                                  class="cursor-pointer"
                                   @click="
                                     $emit(
                                       'removeChildUpload',

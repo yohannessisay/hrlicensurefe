@@ -1,16 +1,16 @@
 <template>
   <div class="main" id="main">
-    <side-nav :finalUrl="finalUrl"></side-nav>
+    <side-nav :finalUrl="finalUrl" :isDarkMode="isDarkMode"></side-nav>
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="mt-8 sm:p-4 p-1">
-        <!-- <div class="float-container" @click="toggleDarkMode()">
+        <div class="float-container" @click="toggleDarkMode()">
           <a href="#" :class="isDarkMode ? 'icon two' : 'icon one'">
-            <span style="margin-left: -16px !important;">{{
+            <span  >{{
               isDarkMode ? "Light Mode" : " Dark Mode"
             }}</span></a
           >
-        </div> -->
+        </div>
         <slot></slot>
       </div>
     </div>
@@ -51,7 +51,7 @@ export default {
     });
 
     const toggleDarkMode = () => {
-      darkModeService.modeToggle(isDarkMode.value);
+     isDarkMode.value= darkModeService.modeToggle(isDarkMode.value);
     };
     return { userInfo, toggleDarkMode, finalUrl, isDarkMode };
   },

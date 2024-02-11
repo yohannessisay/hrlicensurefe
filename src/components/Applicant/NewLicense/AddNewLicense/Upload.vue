@@ -55,7 +55,11 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-1 mt-8 rounded-lg"
+             :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0 mr-1">
           <button
@@ -104,7 +108,7 @@
           v-for="(error, index) in errorDocuments"
           :key="error"
         >
-          <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+          <small :class="isDarkMode?'text-primary-200 text-xl':'text-grey-800 text-xl'">{{ index + 1 }}- </small>
           {{ error.name }}
         </li>
       </div>
@@ -115,6 +119,7 @@
         :is-full-page="false"
         :color="'#2F639D'"
         :opacity="1"
+           class="rounded-md"
       ></loading>
       <div class="flex justify-end mr-8 mb-8">
         <button

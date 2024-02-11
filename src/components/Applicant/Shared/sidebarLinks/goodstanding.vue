@@ -36,7 +36,7 @@
       <b></b>
       <a class="ml-4" href="#GoodStanding">
         <router-link class="link" to="/Applicant/GoodStanding/submitted">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/GoodStanding/submitted'
@@ -59,7 +59,7 @@
       <b></b>
       <a class="ml-4" href="#Verification">
         <router-link class="link" to="/Applicant/GoodStanding/draft">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/GoodStanding/draft'
@@ -82,7 +82,7 @@
       <b></b>
       <a class="ml-4" href="#GoodStanding">
         <router-link class="link" to="/Applicant/GoodStanding/withdraw">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/GoodStanding/withdraw'
@@ -106,7 +106,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/GoodStanding/assigned">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/GoodStanding/assigned'
@@ -130,7 +130,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/GoodStanding/approved">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/GoodStanding/approved'
@@ -156,7 +156,7 @@
       <b></b>
       <a class="ml-4" href="#">
         <router-link class="link" to="/Applicant/GoodStanding/declined">
-          <span class="icon"
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/GoodStanding/declined'

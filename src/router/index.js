@@ -91,12 +91,7 @@ const routes = [
     component: () =>
       import("../components/Applicant/NewLicense/approved/approved.vue"),
   },
-  {
-    path: "/Applicant/NewLicense/approved/detail/:id",
-    name: "ApplicantNewLicenseApprovedDetail",
-    component: () =>
-      import("../components/Applicant/NewLicense/approved/approvedDetail.vue"),
-  },
+ 
   {
     path: "/Applicant/NewLicense/submitted",
     name: "ApplicantNewLicenseSubmitted",

@@ -214,7 +214,7 @@ export default {
       }
     };
     const toggleDarkMode = () => {
-      darkModeService.modeToggle(darkMode.value);
+      darkMode.value= darkModeService.modeToggle(darkMode.value);
     };
     onMounted(async () => {
       fetchApplicationStatuses();

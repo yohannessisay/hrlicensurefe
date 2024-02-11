@@ -3,300 +3,137 @@
     <div class="parentList flex justify-start">
       <a
         href="#"
-        class="bg-white rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none"
+        :class="
+          isDarkMode
+            ? 'bg-primaryDark text-white rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none'
+            : 'bg-white text-main-400 rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none'
+        "
       >
         <span class="icon"
-          ><i class="bx bx-certification text-grey-800 text-2xl mt-1"></i
+          ><i class="bx bx-certification text-2xl mt-1"></i
         ></span>
-        <h2 class="title text-grey-800 text-xl font-bold ml-4">New License</h2>
+        <h2 class="text-xl font-bold ml-4">New License</h2>
       </a>
     </div>
 
     <li
-      :class="$route.fullPath === '/Applicant/NewLicense' ? 'list active' : 'list mt-8'"
-      :id="$route.fullPath === '/Applicant/NewLicense' ? 'activeMenu' : ''"
+      v-for="link in links"
+      :key="link.id"
+      :class="$route.fullPath === link.path ? 'list active' : 'list'"
+      :id="$route.fullPath === link.path ? 'activeMenu' : ''"
+      :style="link.id === 11 ? 'margin-bottom: 75px !important' : ''"
     >
       <b></b>
       <b></b>
       <a class="ml-4" href="#NewLicense">
-        <router-link class="link" to="/Applicant/NewLicense">
-          <span class="icon"><i class="bx bx-plus"></i></span>
-          <span class="text text-white font-bold">Apply For New License</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/submitted' ? 'list active' : 'list'
-      "
-      :id="$route.fullPath === '/Applicant/NewLicense/submitted' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#NewLicense">
-        <router-link class="link" to="/Applicant/NewLicense/submitted">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/submitted'
-                  ? 'bx bxs-save'
-                  : 'bx bx-save'
-              "
-            ></i
+        <router-link class="link" :to="link.path">
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
+            ><i :class="link.icon"></i
           ></span>
-          <span class="text text-white font-bold">Submitted</span>
-        </router-link>
-      </a>
-    </li>
-    <li
-      :class="$route.fullPath === '/Applicant/NewLicense/draft' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/NewLicense/draft' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#Verification">
-        <router-link class="link" to="/Applicant/NewLicense/draft">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/draft'
-                  ? 'bx bxs-paste'
-                  : 'bx bx-paste'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Draft</span>
-        </router-link>
-      </a>
-    </li>
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/withdraw' ? 'list active' : 'list'
-      "
-      :id="$route.fullPath === '/Applicant/NewLicense/withdraw' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#GoodStanding">
-        <router-link class="link" to="/Applicant/NewLicense/withdraw">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/withdraw'
-                  ? 'bx bxs-x-circle'
-                  : 'bx bx-x-circle'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold hover:text-black">Withdraw</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/inReview' ? 'list active' : 'list'
-      "
-      :id="$route.fullPath === '/Applicant/NewLicense/inReview' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/NewLicense/inReview">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/inReview'
-                  ? 'bx bx-refresh'
-                  : 'bx bx-refresh'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">In Review</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/approved' ? 'list active' : 'list'
-      "
-      :id="$route.fullPath === '/Applicant/NewLicense/approved' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/NewLicense/approved">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/approved'
-                  ? 'bx bxs-badge-check'
-                  : 'bx bx-badge-check'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Approved</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/declined' ? 'list active' : 'list'
-      "
-      :id="$route.fullPath === '/Applicant/NewLicense/declined' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/NewLicense/declined">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/declined'
-                  ? 'bx bxs-shield-x'
-                  : 'bx bx-shield-x'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Declined</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/underSupervision'
-          ? 'list active'
-          : 'list'
-      "
-      :id="
-        $route.fullPath === '/Applicant/NewLicense/underSupervision' ? 'activeMenu' : ''
-      "
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/NewLicense/underSupervision">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/underSupervision'
-                  ? 'bx bx-glasses'
-                  : 'bx bx-glasses'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Under Supervision</span>
-        </router-link>
-      </a>
-    </li>
-
-    <!-- <li
-        :class="
-          $route.fullPath === '/Applicant/NewLicense/pendingPayment'
-            ? 'list active'
-            : 'list'
-        "
-      >
-        <b></b>
-        <b></b>
-        <a class="ml-4" href="#">
-          <router-link class="link" to="/Applicant/NewLicense/pendingPayment">
-            <span class="icon"
-              ><i
-                :class="
-                  $route.fullPath === '/Applicant/NewLicense/pendingPayment'
-                    ? 'bx bx-loader'
-                    : 'bx bx-loader'
-                "
-              ></i
-            ></span>
-            <span class="text text-white font-bold">Pending Payment</span>
-          </router-link>
-        </a>
-      </li> -->
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/returned' ? 'list active' : 'list'
-      "
-      :id="$route.fullPath === '/Applicant/NewLicense/returned' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/NewLicense/returned">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/returned'
-                  ? 'bx bx-rotate-left'
-                  : 'bx bx-rotate-left'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Returned</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/suspended' ? 'list active' : 'list'
-      "
-      :id="$route.fullPath === '/Applicant/NewLicense/suspended' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/NewLicense/suspended">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/suspended'
-                  ? 'bx bx-stop-circle'
-                  : 'bx bx-stop-circle'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Suspended</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/NewLicense/revoked' ? 'list active' : 'list'
-      "
-      style="margin-bottom: 75px !important"
-      :id="$route.fullPath === '/Applicant/NewLicense/revoked' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/NewLicense/revoked">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/NewLicense/revoked'
-                  ? 'bx bx-trash-alt'
-                  : 'bx bx-trash-alt'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Revoked</span>
+          <span
+            :class="
+              isDarkMode
+                ? 'text text-primary-200 font-bold dark'
+                : 'text text-white font-bold light'
+            "
+            >{{ link.name }}</span
+          >
         </router-link>
       </a>
     </li>
 
     <router-link class="" to="/menu">
-      <a class="last_menu flex justify-center hover:bg-main-400 mt-4">
-        <span class="icon"><i class="bx bx-home text-white text-2xl -ml-8"></i></span>
+      <a
+        :class="
+          isDarkMode
+            ? 'last_menu flex justify-center  mt-4'
+            : 'last_menu flex justify-center hover:bg-main-400 mt-4'
+        "
+      >
+        <span class="icon"
+          ><i class="bx bx-home text-white text-2xl -ml-8"></i
+        ></span>
         <span class="title text-white font-bold ml-2">Home</span>
       </a>
     </router-link>
   </ul>
 </template>
+<script>
+import { ref } from "vue";
+export default {
+  props: ["isDarkMode"],
+  setup() {
+    let links = ref([
+      {
+        id: 1,
+        name: "Apply For New License",
+        path: "/Applicant/NewLicense",
+        icon: "bx bx-plus",
+      },
+      {
+        id: 2,
+        name: "Submitted",
+        path: "/Applicant/NewLicense/submitted",
+        icon: "bx bxs-save",
+      },
+      {
+        id: 3,
+        name: "Draft",
+        path: "/Applicant/NewLicense/draft",
+        icon: "bx bxs-paste",
+      },
+      {
+        id: 4,
+        name: "Withdraw",
+        path: "/Applicant/NewLicense/withdraw",
+        icon: "bx bxs-x-circle",
+      },
+      {
+        id: 5,
+        name: "In Review",
+        path: "/Applicant/NewLicense/inReview",
+        icon: "bx bx-refresh",
+      },
+      {
+        id: 6,
+        name: "Approved",
+        path: "/Applicant/NewLicense/approved",
+        icon: "bx bxs-badge-check",
+      },
+      {
+        id: 7,
+        name: "Declined",
+        path: "/Applicant/NewLicense/declined",
+        icon: "bx bxs-shield-x",
+      },
+      {
+        id: 8,
+        name: "Under Supervision",
+        path: "/Applicant/NewLicense/underSupervision",
+        icon: "bx bx-glasses",
+      },
+      {
+        id: 9,
+        name: "Returned",
+        path: "/Applicant/NewLicense/returned",
+        icon: "bx bx-rotate-left",
+      },
+      {
+        id: 10,
+        name: "Suspend",
+        path: "/Applicant/NewLicense/suspended",
+        icon: "bx bx-stop-circle",
+      },
+      {
+        id: 11,
+        name: "Revoked",
+        path: "/Applicant/NewLicense/revoked",
+        icon: "bx bx-trash-alt",
+      },
+    ]);
+    return {
+      links,
+    };
+  },
+};
+</script>

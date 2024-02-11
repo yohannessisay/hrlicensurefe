@@ -1,13 +1,13 @@
 <template>
   <div class="main" id="main">
-    <side-nav></side-nav>
+    <side-nav :isDarkMode="isDarkMode"></side-nav>
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="ml-4 mr-4 sm:mt-8 sm:ml-8 sm:mr-8">
-        <nav class="bg-grey-100 p-4 rounded-md w-full mt-24">
+        <nav :class="isDarkMode?'bg-secondaryDark p-4 rounded-md w-full mt-24':'bg-grey-100 p-4 rounded-md w-full mt-24'">
           <ol class="list-reset flex">
             <li>
-              <a href="#" class="text-main-400 text-xl hover:text-main-100"
+              <a href="#" :class="isDarkMode?'text-white text-xl ':'text-main-400 text-xl'"
                 >Welcome Back,
                 {{ userInfo.fullName ? userInfo.fullName : "" }}</a
               >
@@ -17,9 +17,9 @@
         </nav>
 
         <div id="home" class="sm:mt-12">
-          <!-- <div class="float-container" @click="toggleDarkMode()">
+          <div class="float-container" @click="toggleDarkMode()">
             <a href="#" class="icon one"> </a>
-          </div> -->
+          </div>
           <div class="grid grid-cols-1 sm:grid-cols-4 mr-8 ml-8 sm:m-0 gap-8">
             <!-- New license box -->
             <div class="w-full overview-boxes rounded-md">
@@ -367,7 +367,7 @@ export default {
       }
     };
     const toggleDarkMode = () => {
-      darkModeService.modeToggle(isDarkMode.value);
+       isDarkMode.value=darkModeService.modeToggle(isDarkMode.value);
     };
 
     return {
