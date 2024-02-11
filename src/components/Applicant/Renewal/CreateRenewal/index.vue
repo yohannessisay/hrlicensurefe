@@ -1,77 +1,34 @@
 <template>
-  <nav class="bg-grey-100 mb-4 px-5 py-3 rounded-md w-full" id="topNav">
-    <ol class="list-reset flex">
-      <li>
-        <router-link to="/menu">
-          <a
-            href="#"
-            :class="
-              isDarkMode && isDarkMode == true
-                ? 'text-white '
-                : 'text-main-400 hover:text-blue-700'
-            "
-            >Home</a
-          >
-        </router-link>
-      </li>
-      <li>
-        <span class="text-gray-500 mx-2">/</span>
-      </li>
-      <li>
-        <router-link to="/Applicant/Renewal">
-          <a
-            href="#"
-            :class="
-              isDarkMode && isDarkMode == true
-                ? 'text-white '
-                : 'text-main-400 hover:text-blue-700'
-            "
-            >Renewal</a
-          >
-        </router-link>
-      </li>
-      <li>
-        <span
-          :class="
-            isDarkMode && isDarkMode == true ? 'text-white mx-2 ' : 'text-main-400 mx-2'
-          "
-          >/</span
-        >
-      </li>
-      <li
-        :class="
-          isDarkMode && isDarkMode == true
-            ? 'text-grey-100 '
-            : 'text-main-400 hover:text-blue-700'
-        "
-      >
-        Apply
-      </li>
-    </ol>
-  </nav>
+  <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
+
   <div class="vld-parent mt-4">
     <loading
       :active="isLoading"
       :is-full-page="false"
       :color="'#2F639D'"
-      :opacity="1"
+      :opacity="0.6"
+      class="rounded-md"
     ></loading>
     <!-- {{ previousLicense }} -->
     <div class="flex justify-center m-4">
       <h1
         :class="
           isDarkMode && isDarkMode == true
-            ? 'text-xl sm:text-3x text-white'
-            : 'text-xl sm:text-3xl text-yellow-300'
+            ? 'text-2xl sm:text-3x text-white'
+            : 'text-2xl sm:text-3xl text-yellow-300'
         "
       >
-        You can choose an existing license that you have on this system for renewal or
-        apply for a renewal form
+        You have the option to select a license you already have in the system
+        for renewal or fill out a new application form for renewal.
       </h1>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 m-4">
       <div
-        class="flex justify-center bg-white p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform"
+        :class="
+          isDarkMode
+            ? 'flex justify-center bg-secondaryDark p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform'
+            : 'flex justify-center bg-white p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform'
+        "
       >
         <button
           :class="
@@ -97,7 +54,11 @@
         <br />
       </div>
       <div
-        class="flex justify-center bg-white p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform"
+        :class="
+          isDarkMode
+            ? 'flex justify-center bg-secondaryDark p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform'
+            : 'flex justify-center bg-white p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform'
+        "
       >
         <button
           class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
@@ -118,10 +79,13 @@
         :class="
           isDarkMode && isDarkMode == true
             ? 'block rounded-lg darkModeSecondLayer p-6 dark:bg-neutral-700 dark:text-neutral-50  '
-            : 'block rounded-lg bg-primary-200 p-6 dark:bg-neutral-700 dark:text-neutral-50  '
+            : 'block rounded-lg bg-secondaryDark p-6 dark:bg-neutral-700 dark:text-neutral-50  '
         "
       >
-        <div v-if="previousLicense && previousLicense.length != 0" class="w-full p-4">
+        <div
+          v-if="previousLicense && previousLicense.length != 0"
+          class="w-full p-4"
+        >
           <div class="grid grid-cols-1 sm:grid-cols-4">
             <div
               v-for="license in previousLicense"
@@ -159,7 +123,9 @@
                 <div class="border-b-2 text-main-400 p-2">
                   <div class="grid grid-cols-3">
                     <h1 class="text-lg">
-                      <a class="text-main-400 pointer-events-none" href="#">Department</a>
+                      <a class="text-main-400 pointer-events-none" href="#"
+                        >Department</a
+                      >
                     </h1>
 
                     <ul class="text-black text-sm col-span-2">
@@ -170,9 +136,13 @@
                       >
                         <span class="text-grey-800 text-sm">
                           {{
-                            education.department ? "*" + education.department.name : "-"
+                            education.department
+                              ? "*" + education.department.name
+                              : "-"
                           }}
-                          <span v-if="index != license.educations.length - 1">,</span>
+                          <span v-if="index != license.educations.length - 1"
+                            >,</span
+                          >
                         </span>
                       </li>
                     </ul>
@@ -180,7 +150,9 @@
 
                   <div class="grid grid-cols-3">
                     <h1 class="text-lg">
-                      <a class="text-main-400 pointer-events-none" href="#">Profession</a>
+                      <a class="text-main-400 pointer-events-none" href="#"
+                        >Profession</a
+                      >
                     </h1>
                     <ul class="text-black text-sm col-span-2">
                       <li
@@ -194,7 +166,9 @@
                               ? education.professionType.name
                               : "-"
                           }}
-                          <span v-if="index != license.educations.length - 1">,</span>
+                          <span v-if="index != license.educations.length - 1"
+                            >,</span
+                          >
                         </span>
                       </li>
                     </ul>
@@ -219,7 +193,9 @@
                     </ul>
                   </div>
                 </div>
-                <footer class="flex items-center justify-between leading-none p-2 md:p-2">
+                <footer
+                  class="flex items-center justify-between leading-none p-2 md:p-2"
+                >
                   <span class="text-main-400 text-sm">
                     {{ license.createdAt.slice(0, 10) }}
                   </span>
@@ -272,7 +248,9 @@
                       }}
                       Days Remaining For Expiration</span
                     >
-                    <h4 v-else class="text-red-300 text-2xl font-bold">Expired</h4>
+                    <h4 v-else class="text-red-300 text-2xl font-bold">
+                      Expired
+                    </h4>
                   </h2>
                 </div>
               </div>
@@ -288,32 +266,25 @@
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, getCurrentInstance } from "vue";
+import { ref, onMounted } from "vue";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import PageHeader from "../../Shared/PagesHeader.vue";
 export default {
-  props: ["activeState"],
-  components: { Loading },
-  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
+  props: ["activeState", "isDarkMode"],
+  components: { Loading, PageHeader },
+  emits: ["changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     let isLoading = ref(false);
     const store = useStore();
     const id = +localStorage.getItem("userId");
-    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let previousLicense = ref([]);
-    const darkMode = () => {
-      emit("darkMode");
-      const instance = getCurrentInstance();
+    const path = ref([
+      { name: "Home", link: "/menu" },
+      { name: "Renewal", link: "/Applicant/Renewal" },
+      { name: "Renewal Home", link: "/Applicant/Renewal" },
+    ]);
 
-      if (isDarkMode.value == true) {
-        isDarkMode.value = false;
-        instance?.proxy?.forceUpdate();
-      } else {
-        isDarkMode.value = true;
-
-        instance?.proxy?.forceUpdate();
-      }
-    };
     const expirationDatesHelper = (date_1) => {
       let date_2 = new Date().toISOString().slice(0, 10);
       let difference = new Date(date_1).getTime() - new Date(date_2).getTime();
@@ -358,8 +329,12 @@ export default {
       tempApplicationData.occupationSelected = license.occupationType
         ? license.occupationType
         : null;
-      tempApplicationData.woredaSelected = license.woreda ? license.woreda : null;
-      tempApplicationData.zoneSelected = license.woreda ? license.woreda.zone : null;
+      tempApplicationData.woredaSelected = license.woreda
+        ? license.woreda
+        : null;
+      tempApplicationData.zoneSelected = license.woreda
+        ? license.woreda.zone
+        : null;
       tempApplicationData.regionSelected = license.woreda
         ? license.woreda.zone.region
         : null;
@@ -380,13 +355,12 @@ export default {
       emit("changeActiveState");
     };
     return {
-      darkMode,
       renewExisting,
       applyForNew,
       isLoading,
       expirationDatesHelper,
-      isDarkMode,
       previousLicense,
+      path,
     };
   },
 };

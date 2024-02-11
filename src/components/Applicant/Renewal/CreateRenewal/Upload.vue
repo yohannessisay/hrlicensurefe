@@ -56,7 +56,11 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-1 mt-8 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0 mr-1">
           <button
@@ -105,7 +109,12 @@
           v-for="(error, index) in errorDocuments"
           :key="error"
         >
-          <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+          <small
+            :class="
+              isDarkMode ? 'text-primary-200 text-xl' : 'text-grey-800 text-xl'
+            "
+            >{{ index + 1 }}-
+          </small>
           {{ error.name }}
         </li>
       </div>
@@ -116,6 +125,7 @@
         :is-full-page="false"
         :color="'#2F639D'"
         :opacity="1"
+        class="rounded-md"
       ></loading>
       <div class="flex justify-end mr-8 mb-8">
         <button
@@ -154,7 +164,6 @@ import CommonFileUploadTable from "../../Shared/FileUpload/CommonFileUploadTable
 import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 export default {
   components: { Loading, CommonFileUploadTable, FileUploadTable },
-
   // eslint-disable-next-line vue/no-setup-props-destructure
   setup(props, { emit }) {
     let store = useStore();
@@ -163,6 +172,7 @@ export default {
     let documents = ref([]);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let goToNext = ref(false);
     let alreadyUploaded = ref(false);
     let educationalDocs = ref([]);
@@ -182,7 +192,6 @@ export default {
     let generalInfo = ref({});
     let documentToSave = ref({});
     let isBackButtonClicked = ref(false);
-    let isDarkMode = ref(false);
     let fileUploadError = ref([]);
     let imageData = [];
     let formData = new FormData();
@@ -726,6 +735,7 @@ export default {
         documentsUploaded.value,
         renewalDocuments.value
       );
+      console.log(documentValidation);
       fileUploadError.value = documentValidation.fileUploadError
         ? documentValidation.fileUploadError
         : [];
@@ -733,7 +743,7 @@ export default {
         ? documentValidation.errorDocuments
         : [];
 
-      if (documentValidation && Object.keys(documentValidation).length == 0) {
+      if (documentValidation?.errorDocuments?.length == 0) {
         let finalLocalData = {
           created: new Date(),
           data: [],
@@ -970,7 +980,9 @@ export default {
       let tryAgain = localStorage.getItem("tempRN")
         ? JSON.parse(localStorage.getItem("tempRN"))
         : false;
-
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {
         alert(
@@ -1107,7 +1119,6 @@ export default {
     };
     return {
       removeChildUpload,
-      isDarkMode,
       documents,
       commonDocuments,
       files,
@@ -1132,6 +1143,7 @@ export default {
       fileSizeExceed,
       isLoading,
       commonFileUploadHeaders,
+      isDarkMode,
     };
   },
 };
