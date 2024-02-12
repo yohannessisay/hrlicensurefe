@@ -14,12 +14,12 @@
       <h1
         :class="
           isDarkMode && isDarkMode == true
-            ? 'text-2xl sm:text-3x text-white'
+            ? 'text-2xl sm:text-3xl text-white'
             : 'text-2xl sm:text-3xl text-yellow-300'
         "
       >
         You have the option to select a license you already have in the system
-        for renewal or fill out a new application form for renewal.
+        for renewal or fill out a new application form for the renewal process.
       </h1>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 m-4">
@@ -271,13 +271,14 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import PageHeader from "../../Shared/PagesHeader.vue";
 export default {
-  props: ["activeState", "isDarkMode"],
+  props: ["activeState"],
   components: { Loading, PageHeader },
   emits: ["changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     let isLoading = ref(false);
     const store = useStore();
     const id = +localStorage.getItem("userId");
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let previousLicense = ref([]);
     const path = ref([
       { name: "Home", link: "/menu" },
@@ -292,6 +293,9 @@ export default {
       return TotalDays;
     };
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
 
       checkForNewLicenses(id);
@@ -361,6 +365,7 @@ export default {
       expirationDatesHelper,
       previousLicense,
       path,
+      isDarkMode,
     };
   },
 };

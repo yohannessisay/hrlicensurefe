@@ -15,24 +15,22 @@
         <div
           v-for="license in applications"
           :key="license.id"
-          :class="isDarkMode?'bg-secondaryDark text-primary-200 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2':'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 text-main-400 ease-in-out hover:-translate-y-2'"
+          :class="
+            isDarkMode
+              ? 'bg-secondaryDark text-primary-200 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+              : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 text-main-400 ease-in-out hover:-translate-y-2'
+          "
         >
           <!-- Article -->
           <div>
-            <h2 class="  border-b-2 text-xl p-2">
+            <h2 class="border-b-2 text-xl p-2">
               License Number
-              <span class="text-base  ">{{
-                license.newLicenseCode
-              }}</span>
+              <span class="text-base">{{ license.newLicenseCode }}</span>
             </h2>
 
-            <div class="border-b-2  ">
+            <div class="border-b-2">
               <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
-                <h1 class="text-xl underline">
-                  
-                    Department
-                 
-                </h1>
+                <h1 class="text-xl underline">Department</h1>
 
                 <ul class="text-black text-sm">
                   <li
@@ -58,10 +56,7 @@
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline  "
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline" href="#">
                     Certified Date
                   </a>
                 </h1>
@@ -77,10 +72,7 @@
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline "
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline" href="#">
                     Expiry Date
                   </a>
                 </h1>
@@ -97,10 +89,7 @@
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline  "
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline" href="#">
                     Retrival Date
                   </a>
                 </h1>
@@ -116,9 +105,9 @@
             <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
             >
-              <h2 class="text-lg  ">Applied Date</h2>
+              <h2 class="text-lg">Applied Date</h2>
 
-              <span class="  text-sm">{{
+              <span class="text-sm">{{
                 license.createdAt ? license.createdAt.slice(0, 10) : ""
               }}</span>
             </footer>
@@ -131,6 +120,13 @@
               >
                 View Detail
               </button>
+              <router-link :to="`${editSubmittedLink}${license.id}`">
+                <button
+                  class="inline-block px-6 ml-4 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
+                >
+                  Edit
+                </button>
+              </router-link>
             </div>
           </div>
 
@@ -172,7 +168,7 @@ import ApplicationDetail from "./ApplicationDetailModal.vue";
 import PageHeader from "../PagesHeader.vue";
 export default {
   components: { MainContent, ApplicationDetail, PageHeader },
-  props: ["path", "link", "status", "detailModalLink"],
+  props: ["path", "link", "status", "detailModalLink", "editSubmittedLink"],
   setup(props) {
     let store = useStore();
     let applications = ref([]);

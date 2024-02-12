@@ -4,6 +4,7 @@
       :path="path"
       :link="'renewal/getRenewalLicense'"
       :status="status"
+      :editSubmittedLink="'/Applicant/Renewal/draft/detail/'"
       :detailModalLink="'renewal/getRenewalApplication'"
     ></ApplicationsList>
   </div>

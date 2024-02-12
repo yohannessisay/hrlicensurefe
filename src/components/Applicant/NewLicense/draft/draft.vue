@@ -5,6 +5,7 @@
       :link="'newlicense/getNewLicenseByUser'"
       :status="status"
       :detailModalLink="'newlicense/getNewLicenseApplication'"
+      :editSubmittedLink="'/Applicant/NewLicense/draft/detail/'"
     ></ApplicationsList>
   </div>
 </template>

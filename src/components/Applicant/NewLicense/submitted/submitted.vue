@@ -4,6 +4,7 @@
       :path="path"
       :link="'newlicense/getNewLicenseByUser'"
       :status="status"
+      :editSubmittedLink="'/Applicant/NewLicense/submitted/detail/'"
       :detailModalLink="'newlicense/getNewLicenseApplication'"
     ></ApplicationsList>
   </div>

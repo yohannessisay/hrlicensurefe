@@ -3,8 +3,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
         <Index
-          :activeState="1"
-          :isDarkMode="isDarkMode"
+          :activeState="1" 
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
         />
@@ -46,32 +45,25 @@ import Upload from "./CreateRenewal/Upload.vue";
 import Index from "./CreateRenewal/index.vue";
 import LicenseSummary from "./CreateRenewal/LicenseSummary.vue";
 import MainContent from "../Shared/Menu.vue";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 
 export default {
   setup() {
     let activeState = ref(1);
     let applicationStatuses = ref("");
-    let buttons = ref([]);
-    let isDarkMode = computed(() =>
-      JSON.parse(localStorage.getItem("darkMode"))
-    );
+    let buttons = ref([]); 
 
     const submit = (n) => {
       activeState.value = n;
     };
 
-    onMounted(async () => {
-      window.addEventListener("darkModeChanged", (data) => {
-        isDarkMode.value = data.detail ? data.detail.content : "";
-      });
+    onMounted(async () => { 
     });
     return {
       activeState,
       applicationStatuses,
       buttons,
-      submit,
-      isDarkMode,
+      submit, 
     };
   },
 
