@@ -8,7 +8,7 @@
     >
       Loading...
     </h2>
-    <div class="container my-12 mx-auto px-4 md:px-12" v-if="noData == false">
+    <div class="container my-12 mx-auto px-4 sm:px-12" v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
 
@@ -17,8 +17,8 @@
           :key="license.id"
           :class="
             isDarkMode
-              ? 'bg-secondaryDark text-primary-200 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-              : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 text-main-400 ease-in-out hover:-translate-y-2'
+              ? 'bg-secondaryDark text-primary-200 my-1 px-1 sm:w-1/4  w-full mb-4  sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+              : 'bg-white my-1 px-1  sm:w-1/4  w-full mb-4 sm:mr-4 rounded-lg transform transition duration-300 text-main-400 ease-in-out hover:-translate-y-2'
           "
         >
           <!-- Article -->

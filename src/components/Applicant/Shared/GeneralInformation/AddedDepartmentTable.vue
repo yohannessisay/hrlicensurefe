@@ -70,7 +70,13 @@
                 <td
                   class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
                 >
-                  {{ item.educationalLevel ? item.educationalLevel.name : "" }}
+                  {{
+                    item.educationalLevel
+                      ? item.educationalLevel.name
+                      : item.educationLevel
+                      ? item.educationLevel.name
+                      : ""
+                  }}
                 </td>
                 <td
                   class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
@@ -80,7 +86,13 @@
                 <td
                   class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
                 >
-                  {{ item.professionalType ? item.professionalType.name : "" }}
+                  {{
+                    item.professionalType
+                      ? item.professionalType.name
+                      : item.professionType
+                      ? item.professionType.name
+                      : ""
+                  }}
                 </td>
                 <td
                   class="text-lg text-gray-900 font-light p-5 whitespace-nowrap"
@@ -97,7 +109,7 @@
     </div>
   </div>
 </template>
-<script> 
+<script>
 export default {
   props: ["generalInfo", "isDarkMode"],
 };

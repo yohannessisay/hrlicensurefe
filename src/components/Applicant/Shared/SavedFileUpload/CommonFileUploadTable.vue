@@ -14,20 +14,20 @@
         </th>
       </tr>
     </thead>
-    <tbody class="divide-y bg-white ">
+  <tbody :class="isDarkMode?'divide-y bg-secondaryDark text-primary-200':'divide-y bg-white text-main-400'">
       <tr
         v-for="item in tableRows"
         :key="item.id"
         :class="
           fileUploadError[`file_upload_row_${item.documentType.code}`]
-            ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-            : 'text-sm border rounded-md    flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+            ? 'text-sm    flex flex-col mb-4 py-1 divide-y shadow-md  sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
+            : 'text-sm border rounded-md  shadow-md  flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
         "
       >
         <td
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+          <h2 class="sm:hidden mb-2 text-xl underline  ">
             {{ headers[0] }}
           </h2>
           <h2 class="text-lg break-words">
@@ -38,7 +38,7 @@
         <td
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+          <h2 class="sm:hidden mb-2 text-xl underline ">
             {{ headers[1] }}
           </h2>
           <h2 class="text-lg break-words">
@@ -52,7 +52,7 @@
         <td
           class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+          <h2 class="sm:hidden mb-2 text-xl underline  ">
             {{ headers[2] }}
           </h2>
 
@@ -70,7 +70,7 @@
           v-if="documentsSaved[item.documentType.code]"
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+          <h2 class="sm:hidden mb-2 text-xl underline  ">
             Uploaded File Name
           </h2>
           <h2 class="text-lg break-words">

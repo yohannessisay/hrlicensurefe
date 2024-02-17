@@ -9,12 +9,12 @@
       ><ol class="list-reset flex">
         <li>
           <router-link to="/admin/review"
-            ><span class="text-grey-300 ">Home</span></router-link
+            ><span class="text-grey-300">Home</span></router-link
           >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="pointer-events-none  text-primary-600"
+          <a href="#" class="pointer-events-none text-primary-600"
             >Verification</a
           >
         </li>
@@ -40,24 +40,7 @@
                 <div class="flex justify-end ...">
                   <button
                     type="button"
-                    class="
-                      px-6
-                      text-white
-                      bg-primary-600
-                      hover:text-primary-600
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                       
-                      focus:  focus:outline-none focus:ring-0
-                      transition
-                      duration-150
-                      mt-0
-                      ease-in-out
-                      text-right
-                    "
+                    class="px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded focus: focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right"
                     data-bs-toggle="modal"
                     data-bs-target="#addRequest"
                   >
@@ -75,7 +58,7 @@
                   class="tab-head"
                 />
                 <label for="tab1" class="tabs_wrapper_label"
-                  >Verifications Initiated By You</label
+                  >Initiated By You</label
                 >
                 <input type="radio" name="tab" id="tab2" class="tab-head" />
                 <label for="tab2" class="tabs_wrapper_label"
@@ -90,33 +73,12 @@
                       >
                         <div class="p-4 bg-grey-200 mb-4 rounded-lg">
                           <h1 class="text-2xl mb-1">Filters</h1>
-                          <div class="grid lg:grid-cols-4 xl:gap-6  mt-4">
+                          <div class="grid lg:grid-cols-4 xl:gap-6 mt-4">
                             <div class="mb-3 xl:w-full">
                               <label for="" class="">Applicant Name</label>
                               <input
                                 type="search"
-                                class="
-                    form-control
-                    relative
-                    flex-auto
-                    min-w-0
-                    block
-                    w-full
-                    px-6
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-gray-700
-                    bg-white bg-clip-padding
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-blue-600
-                    focus:outline-none
-                  "
+                                class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 @keyup.enter="applyFilter()"
                                 placeholder="Start Searching For Name"
                                 aria-label="Search"
@@ -128,28 +90,7 @@
                               <label for="" class="">Code</label>
                               <input
                                 type="search"
-                                class="
-                    form-control
-                    relative
-                    flex-auto
-                    min-w-0
-                    block
-                    w-full
-                    px-6
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-gray-700
-                    bg-white bg-clip-padding
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-blue-600
-                    focus:outline-none
-                  "
+                                class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 @keyup.enter="applyFilter()"
                                 placeholder="Start Searching For code"
                                 aria-label="Search"
@@ -160,27 +101,7 @@
                             <div class="mb-3 xl:w-full mr-2">
                               <label for="" class="ml-4">Region</label>
                               <select
-                                class="
-                    form-select
-                    appearance-none
-                    block
-                    w-full
-                    px-6
-                    ml-4
-                    py-2
-                    text-base
-                    font-normal
-                    text-gray-700
-                    bg-white bg-clip-padding bg-no-repeat
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-blue-600
-                    focus:outline-none
-                  "
+                                class="form-select appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 v-model="regionSearchTerm"
                                 @change="applyFilter()"
                                 aria-label="Default select"
@@ -190,8 +111,9 @@
                                   v-for="region in regions"
                                   :key="region.id"
                                   :value="region.id"
-                                  >{{ region.name }}</option
                                 >
+                                  {{ region.name }}
+                                </option>
                               </select>
                             </div>
                           </div>
@@ -202,26 +124,7 @@
                               <input
                                 v-model="searchTermFromDate"
                                 type="date"
-                                class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-2
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                                class="appearance-none block w-full px-6 ml-2 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 aria-label="Default select example"
                               />
                             </div>
@@ -229,26 +132,7 @@
                               <label for="" class="ml-4"> To</label>
                               <input
                                 type="date"
-                                class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                                class="appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 v-model="searchTermToDate"
                                 @change="applyFilter()"
                                 aria-label="Default select example"
@@ -257,25 +141,7 @@
                             <div class="ml-8 mt-4">
                               <button
                                 type="button"
-                                class="
-                        inline-block
-                        px-6
-                        py-2
-                        mt-2
-                        border-2 border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        bg-primary-600
-                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                                class="inline-block px-6 py-2 mt-2 border-2 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded bg-primary-600 hover:bg-white hover:bg-opacity-5 hover:text-primary-600 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                                 @click="clearFilters()"
                               >
                                 <i class="fa fa-close"></i>
@@ -285,14 +151,7 @@
                           </div>
                         </div>
                         <div
-                          class="
-                            inline-block
-                            min-w-full
-                             
-                            rounded-lg
-                            overflow-hidden
-                            bg-primary-800
-                          "
+                          class="inline-block min-w-full rounded-lg overflow-hidden bg-primary-800"
                         >
                           <vue-table-lite
                             :is-loading="verificationTable.isLoading"
@@ -315,33 +174,12 @@
                       >
                         <div class="p-4 bg-grey-200 mb-4 rounded-lg">
                           <h1 class="text-2xl mb-1">Filters</h1>
-                          <div class="grid lg:grid-cols-4 xl:gap-6  mt-4">
+                          <div class="grid lg:grid-cols-4 xl:gap-6 mt-4">
                             <div class="mb-3 xl:w-full">
                               <label for="" class="">Applicant Name</label>
                               <input
                                 type="search"
-                                class="
-                    form-control
-                    relative
-                    flex-auto
-                    min-w-0
-                    block
-                    w-full
-                    px-6
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-gray-700
-                    bg-white bg-clip-padding
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-blue-600
-                    focus:outline-none
-                  "
+                                class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 @keyup.enter="applyFilterOth()"
                                 placeholder="Start Searching For Name"
                                 aria-label="Search"
@@ -353,28 +191,7 @@
                               <label for="" class="">Code</label>
                               <input
                                 type="search"
-                                class="
-                    form-control
-                    relative
-                    flex-auto
-                    min-w-0
-                    block
-                    w-full
-                    px-6
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-gray-700
-                    bg-white bg-clip-padding
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-blue-600
-                    focus:outline-none
-                  "
+                                class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 @keyup.enter="applyFilterOth()"
                                 placeholder="Start Searching For code"
                                 aria-label="Search"
@@ -385,27 +202,7 @@
                             <div class="mb-3 xl:w-full mr-2">
                               <label for="" class="ml-4">Region</label>
                               <select
-                                class="
-                    form-select
-                    appearance-none
-                    block
-                    w-full
-                    px-6
-                    ml-4
-                    py-2
-                    text-base
-                    font-normal
-                    text-gray-700
-                    bg-white bg-clip-padding bg-no-repeat
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-blue-600
-                    focus:outline-none
-                  "
+                                class="form-select appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 v-model="regionSearchTermOth"
                                 @change="applyFilterOth()"
                                 aria-label="Default select"
@@ -415,8 +212,9 @@
                                   v-for="region in regions"
                                   :key="region.id"
                                   :value="region.id"
-                                  >{{ region.name }}</option
                                 >
+                                  {{ region.name }}
+                                </option>
                               </select>
                             </div>
                           </div>
@@ -427,26 +225,7 @@
                               <input
                                 v-model="searchTermFromDateOth"
                                 type="date"
-                                class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-2
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                                class="appearance-none block w-full px-6 ml-2 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 aria-label="Default select example"
                               />
                             </div>
@@ -454,26 +233,7 @@
                               <label for="" class="ml-4"> To</label>
                               <input
                                 type="date"
-                                class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                                class="appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 v-model="searchTermToDateOth"
                                 @change="applyFilterOth()"
                                 aria-label="Default select example"
@@ -482,25 +242,7 @@
                             <div class="ml-8 mt-4">
                               <button
                                 type="button"
-                                class="
-                        inline-block
-                        px-6
-                        py-2
-                        mt-2
-                        border-2 border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        bg-primary-600
-                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                                class="inline-block px-6 py-2 mt-2 border-2 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded bg-primary-600 hover:bg-white hover:bg-opacity-5 hover:text-primary-600 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                                 @click="clearFiltersOth()"
                               >
                                 <i class="fa fa-close"></i>
@@ -510,14 +252,7 @@
                           </div>
                         </div>
                         <div
-                          class="
-                            inline-block
-                            min-w-full
-                             
-                            rounded-lg
-                            overflow-hidden
-                            bg-primary-800
-                          "
+                          class="inline-block min-w-full rounded-lg overflow-hidden bg-primary-800"
                         >
                           <vue-table-lite
                             :is-loading="verificationTableOthers.isLoading"
@@ -603,41 +338,39 @@ export default {
     let searchTermToDateOth = ref("");
 
     const getVerification = (apiParameters) => {
+      verificationTable.value.isLoading = true;
       store
         .dispatch("applicationVerification/getRequests", {
           params: apiParameters,
         })
         .then((res) => {
-          res.data && res.data.data && res.data.data.rows
-            ? (allInfo = res.data.data.rows)
-            : (allInfo = []); 
-          allInfo
-            ? allInfo.forEach((element) => {
-                tableData.push({
-                  Number: element.id,
-                  ApplicantName:
-                    (element.profile.name ? element.profile.name : "") +
-                    " " +
-                    (element.profile.fatherName
-                      ? element.profile.fatherName
-                      : "") +
-                    " " +
-                    (element.profile.grandFatherName
-                      ? element.profile.grandFatherName
-                      : ""),
-                  RequestedRegion: element.region.name,
-                  LicenseCode: element.newLicense
-                    ? element.newLicense.newLicenseCode
-                    : element.renewal
-                    ? element.renewal.renewalCode
-                    : "-------",
-                  IsVerified: element.isVerified ? "Verified" : "Not Verified",
+          allInfo = res.data?.data || [];
+          tableData = [];
+          allInfo.rows.forEach((element) => {
+            tableData.push({
+              Number: element.id,
+              ApplicantName:
+                (element.profile.name ? element.profile.name : "") +
+                " " +
+                (element.profile.fatherName ? element.profile.fatherName : "") +
+                " " +
+                (element.profile.grandFatherName
+                  ? element.profile.grandFatherName
+                  : ""),
+              RequestedRegion: element.region.name,
+              LicenseCode: element.newLicense
+                ? element.newLicense.newLicenseCode
+                : element.renewal
+                ? element.renewal.renewalCode
+                : "-------",
+              IsVerified: element.isVerified ? "Verified" : "Not Verified",
 
-              RequestedDate: element.createdAt?element.createdAt.slice(0,10):'----',
-                  data: element,
-                });
-              })
-            : "";
+              RequestedDate: element.createdAt
+                ? element.createdAt.slice(0, 10)
+                : "----",
+              data: element,
+            });
+          });
 
           verificationTable.value = {
             columns: [
@@ -682,7 +415,7 @@ export default {
                 label: "",
                 field: "quick",
                 width: "10%",
-                display: function(row) {
+                display: function (row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row +
@@ -692,27 +425,27 @@ export default {
               },
             ],
             rows: tableData,
-            totalRecordCount:
-              res.data && res.data.data ? res.data.data.count : 0,
+            totalRecordCount: allInfo?.count,
             sortable: {
               order: "id",
               sort: "asc",
             },
           };
         });
+      verificationTable.value.isLoading = true;
     };
     const getVerificationOthers = (apiParameters) => {
+      verificationTableOthers.value.isLoading = true;
+      allInfo = [];
       apiParameters.push({ key: "others", value: 1 });
       store
         .dispatch("applicationVerification/getRequests", {
           params: apiParameters,
         })
         .then((res) => {
-          res.data && res.data.data && res.data.data.rows
-            ? (allInfoOth = res.data.data.rows)
-            : (allInfoOth = []);
-
-          allInfoOth.forEach((element) => {
+          allInfoOth = res.data?.data || [];
+          tableDataOthers = [];
+          allInfoOth.rows.forEach((element) => {
             tableDataOthers.push({
               Number: element.id,
               ApplicantName:
@@ -730,7 +463,9 @@ export default {
                 ? element.renewal.renewalCode
                 : "-------",
               IsVerified: element.isVerified ? "Verified" : "Not Verified",
-              RequestedDate: element.createdAt?element.createdAt.slice(0,10):'----',
+              RequestedDate: element.createdAt
+                ? element.createdAt.slice(0, 10)
+                : "----",
               data: element,
             });
           });
@@ -777,7 +512,7 @@ export default {
                 label: "",
                 field: "quick",
                 width: "10%",
-                display: function(row) {
+                display: function (row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
                     row +
@@ -787,32 +522,32 @@ export default {
               },
             ],
             rows: tableDataOthers,
-            totalRecordCount:
-              res.data && res.data.data ? res.data.data.count : 0,
+            totalRecordCount: allInfoOth?.count,
             sortable: {
               order: "id",
               sort: "asc",
             },
           };
         });
+      verificationTableOthers.value.isLoading = true;
     };
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function(element) {
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      }); 
+      });
     };
     const tableLoadingFinishOthers = () => {
       let elements = document.getElementsByClassName("edit-btn-others");
 
-      Array.prototype.forEach.call(elements, function(element) {
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      }); 
+      });
     };
 
     const rowClicked = (row) => {
@@ -823,13 +558,11 @@ export default {
       }
     };
     const rowClickedOthers = (row) => {
- 
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        
-        modalDataOthers.value.data = row.data ? row.data : {};
-        modalDataOthers.value.change+=1;
 
+        modalDataOthers.value.data = row.data ? row.data : {};
+        modalDataOthers.value.change += 1;
       }
     };
 
@@ -949,6 +682,7 @@ export default {
     const applyFilterOth = () => {
       verificationTableOthers.value.isLoading = true;
       tableDataOthers = [];
+      
       getVerificationOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -964,6 +698,7 @@ export default {
               : new Date().toISOString().slice(0, 10),
         },
       ]);
+      
     };
     const clearFiltersOth = () => {
       searchTermOth.value = "";

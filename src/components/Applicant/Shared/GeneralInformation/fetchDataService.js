@@ -7,13 +7,15 @@ export const fetchDataMixin = {
       if (type && type == "noReturnData") {
         await store.dispatch(url.toString(), param);
       } else {
-        const result = await store.dispatch(url.toString(), param).then(res => {
-          return res.data.data;
-        });
+        const result = await store
+          .dispatch(url.toString(), param)
+          .then((res) => {
+            return res.data.data;
+          });
         return result;
       }
     };
 
     return { fetchData };
-  }
+  },
 };

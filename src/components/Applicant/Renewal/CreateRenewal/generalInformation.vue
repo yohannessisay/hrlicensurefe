@@ -1,4 +1,5 @@
 <template>
+
   <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
 
   <div
@@ -160,7 +161,7 @@ export default {
 
     const path = ref([
       { name: "Home", link: "/menu" },
-      { name: "New License", link: "/Applicant/Renewal" },
+      { name: "Renewal", link: "/Applicant/Renewal" },
       { name: "Apply", link: "/Applicant/Renewal" },
     ]);
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));

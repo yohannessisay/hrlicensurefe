@@ -51,8 +51,8 @@
                     item.documentType.code
                   }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                 ]
-                  ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                  : 'text-sm border rounded-md   flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                  ? 'text-sm  shadow-md  flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
+                  : 'text-sm border rounded-md  shadow-md flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
               "
             >
               <td
@@ -372,11 +372,11 @@
                     }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                 ]
                   ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                  : 'text-sm border-t  bg-primary-300 flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                  : 'text-sm border-t  bg-grey-400 flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
               "
             >
               <td
-                class="flex bg-primary-300 sm flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
+                class="flex bg-grey-400 sm flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
                   {{ headers[0] }}
@@ -402,15 +402,15 @@
                 </h2>
               </td>
               <td
-                class="flex flex-col bg-primary-300 sm px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
+                class="flex flex-col bg-grey-400 sm px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               ></td>
               <td
-                class="flex flex-col bg-primary-300 sm px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
+                class="flex flex-col bg-grey-400 sm px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               ></td>
             </tr>
             <!-- For nested documents upload -->
             <tr
-              class="text-sm flex bg-primary-300 flex-col mb-8 py-1 divide-y sm:table-row sm:mb-0 sm:divide-none"
+              class="text-sm flex bg-grey-400 flex-col mb-8 py-1 divide-y sm:table-row sm:mb-0 sm:divide-none"
             >
               <div
                 v-if="
@@ -473,8 +473,8 @@
                                     parentChildItem.documentType.code
                                   }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               ]
-                                ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                                : 'text-sm  rounded-md border flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                                ? 'text-sm  shadow-md  flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
+                                : 'text-sm shadow-md rounded-md border flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
                             "
                           >
                             <td

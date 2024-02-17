@@ -20,8 +20,8 @@
         :key="item.id"
         :class="
           fileUploadError[`file_upload_row_${item.documentType.code}`]
-            ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-            : 'text-sm border rounded-md   flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+            ? 'text-sm   shadow-md flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
+            : 'text-sm border rounded-md shadow-md  flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
         "
       >
         <td

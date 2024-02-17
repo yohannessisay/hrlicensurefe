@@ -9,7 +9,7 @@
       "
     >
       <h2 class="text-3xl leading-normal mb-2 font-bold">
-        Summary For New License Application
+        Summary For Renewal Application
       </h2>
 
       <h2 class="text-black leading-relaxed font-light text-lg mx-auto pb-2">
@@ -666,6 +666,7 @@ export default {
   opacity: 0.3;
 }
 
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -673,7 +674,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.329);
   display: table;
   transition: opacity 0.3s ease;
 }
@@ -685,8 +686,7 @@ export default {
 
 .modal-container {
   margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
+  padding: 20px 30px; 
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;

@@ -346,14 +346,14 @@
                 </div>
               </div>
               <hr class="text-primary-600 " />
-              <div class="bg-white   p-4 m-4">
-                <h2 class="text-primary-600 font-bold text-xl">
+              <div class="bg-white   p-2">
+                <h2 class="text-primary-600 font-bold text-2xl ">
                   License Detail
                 </h2>
               </div>
-              <div class="grid grid-cols-2">
-                <div class="bg-white   p-4 m-4">
-                  <h4 class="text-primary-600 font-bold text-xl">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white   p-2  shadow-md rounded-md">
+                  <h4 class="text-primary-600 font-bold text-xl underline">
                     Applicant Detail
                   </h4>
                   <div class="grid grid-cols-2 mt-4">
@@ -406,8 +406,8 @@
                   </div>
                 </div>
 
-                <div class="bg-white   p-4 m-4">
-                  <h4 class="text-primary-600 font-bold text-xl">
+                <div class="bg-white p-2 shadow-md rounded-md">
+                  <h4 class="text-primary-600 font-bold text-xl underline">
                     Reviewer Detail
                   </h4>
                   <div class="grid grid-cols-2 mt-4">
@@ -493,7 +493,7 @@
                 class="grid grid-cols-3"
               >
                 <div
-                  class="bg-white   p-4 m-4"
+                  class="bg-white  p-2 shadow-md rounded-md mt-4"
                   v-for="education in licenseInfo && licenseInfo.newLicense
                     ? licenseInfo.newLicense.educations
                     : licenseInfo && licenseInfo.renewal
@@ -501,7 +501,7 @@
                     : []"
                   :key="education.id"
                 >
-                  <h4 class="text-primary-600 font-bold text-xl">
+                  <h4 class="text-primary-600 font-bold text-xl underline">
                     Education Detail
                   </h4>
                   <div class="grid grid-cols-2 mt-4">

@@ -1,18 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="addRequest"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -22,53 +11,14 @@
   >
     <div class="modal-dialog modal-lg relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-               
-              hover:bg-purple-700 hover: 
-              focus:bg-purple-700
-              focus: 
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active: 
-              transition
-              duration-150
-              ease-in-out"
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -91,34 +41,13 @@
                 </h2>
               </div>
               <div class="grid grid-cols-2 p-2">
-                <div class=" p-2 mr-2 rounded-lg   bg-white ">
+                <div class="p-2 mr-2 rounded-lg bg-white">
                   <div class="form-group mb-6">
                     <label for="region" class="ml-4"
                       >Select Application Type</label
                     >
                     <select
-                      class="
-                          m-4
-                          mt-0
-                          form-control
-                          block
-                          w-full
-                          px-3
-                          py-1.5
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                         
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
+                      class="m-4 mt-0 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       v-model="licenseType"
                     >
                       <option value="newLicense">New License</option>
@@ -129,28 +58,7 @@
                     <label for="users" class="ml-4">License Code</label>
                     <input
                       type="text"
-                      class="
-                          shadow
-                          form-control
-                          block
-                          w-full
-                          px-3
-                          py-1.5
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          m-4
-                          mt-0
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
+                      class="shadow form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       id="lNumber"
                       :disabled="licenseType == ''"
                       placeholder="License Code"
@@ -179,7 +87,7 @@
                     :opacity="0.7"
                   >
                   </loading>
-                  <div class=" p-2 rounded-lg   bg-white ">
+                  <div class="p-2 rounded-lg bg-white">
                     <h3>License Detail</h3>
                     <div class="grid grid-cols-2">
                       <h2>Applicant Name</h2>
@@ -243,9 +151,9 @@
                         {{
                           licenseData && licenseData.licenseReviewer
                             ? licenseData.licenseReviewer.reviewer.phoneNumber
-                            : 
-                             licenseData && licenseData.renewalReviewer
-                            ? licenseData.renewalReviewer.reviewer.phoneNumber:""
+                            : licenseData && licenseData.renewalReviewer
+                            ? licenseData.renewalReviewer.reviewer.phoneNumber
+                            : ""
                         }}
                       </h2>
                     </div>
@@ -255,30 +163,12 @@
 
               <section class="text-gray-800">
                 <div class="form-group mb-6">
-                  <label for="region" class="ml-4">Select Region</label>
+                  <label for="region" class="ml-4">Region</label>
+                  <h2 class="text-base text-primary-600 ml-4">
+                    Select the region to which this request will be sent to
+                  </h2>
                   <select
-                    class="
-                          m-4
-                          mt-0
-                          form-control
-                          block
-                          w-full
-                          px-3
-                          py-1.5
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                         
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
+                    class="m-4 mt-0 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     :disabled="licenseData && !licenseData.id"
                     v-model="region"
                   >
@@ -310,14 +200,7 @@
         </div>
 
         <div
-          class="
-            modal-footer p-2
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer p-2 flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         ></div>
       </div>
     </div>
