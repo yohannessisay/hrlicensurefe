@@ -29,6 +29,23 @@ export default {
       return resp;
     }
   },
+  async getInstitutions(context, apiParameter) {
+    try {
+      let url = `${baseUrl}/lookups/institutions/filter?`;
+
+      if (apiParameter[0]) {
+        apiParameter[0].params.forEach(param => {
+          url += param ? `${param.key}=${param.value}&` : "";
+        });
+      }
+      url = url.substring(0, url.length - 1);
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async getLicenseExpirationDateByRegionId(context, regionId) {
     try {
       const resp = await ApiService.get(
@@ -40,13 +57,13 @@ export default {
       return resp;
     }
   },
-  async getProfessionalType(context,apiParameter) {
+  async getProfessionalType(context, apiParameter) {
     try {
       let url = `${baseUrl + "/lookups/professionalTypes"}?`;
       let parameters = apiParameter[0].params ? apiParameter[0].params : [];
-    
+
       if (parameters) {
-        parameters.forEach((param) => {
+        parameters.forEach(param => {
           url += param ? `${param.key}=${param.value}&` : "";
         });
       }
@@ -105,7 +122,7 @@ export default {
       let url = `${baseUrl}/lookups/documentSpecs/filter?`;
 
       if (apiParameter) {
-        apiParameter.forEach((param) => {
+        apiParameter.forEach(param => {
           url += param ? `${param.key}=${param.value}&` : "";
         });
       }
@@ -202,6 +219,15 @@ export default {
   async addWoreda(id, data) {
     try {
       const resp = await ApiService.post(baseUrl + "/lookups/addWoreda", data);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async addInstitution(id, data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/lookups/institute", data);
       return resp;
     } catch (error) {
       const resp = error;
@@ -345,6 +371,17 @@ export default {
       return error;
     }
   },
+  async updateInstitute(context, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/institute/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async updateWoreda(context, data) {
     try {
       const resp = await ApiService.put(
@@ -443,5 +480,5 @@ export default {
     } catch (error) {
       return error;
     }
-  },
+  }
 };

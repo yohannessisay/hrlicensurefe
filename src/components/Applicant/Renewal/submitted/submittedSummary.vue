@@ -1,30 +1,51 @@
+<!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <div class="container xl:max-w-6xl mx-auto p-4">
     <!-- Heading start -->
-    <header class="text-center mx-auto mb-2 lg:px-20">
-      <h2 class="text-3xl leading-normal mb-2 font-bold text-main-400">
+    <header
+      :class="
+        isDarkMode
+          ? 'text-center mx-auto mb-12 lg:px-20 mt-8 sm:mt-0 text-primary-200'
+          : 'text-center mx-auto mb-12 lg:px-20 mt-8 sm:mt-0 text-main-400'
+      "
+    >
+      <h2 class="text-3xl leading-normal mb-2 font-bold">
         Summary For Renewal Application
       </h2>
 
-      <p class="text-grey-800 leading-relaxed font-light text-xl mx-auto pb-2">
+      <h2 class="text-black leading-relaxed font-light text-lg mx-auto pb-2">
         Here is the detail you have filled in so far
-      </p>
+      </h2>
     </header>
     <!-- End heading -->
     <!-- row -->
     <div class="grid grid-cols-1 gap-4 mr-0 sm:mr-8 sm:grid-cols-4">
       <div
-        class="py-2 mt-4 px-2 mb-2 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
+        :class="
+          isDarkMode
+            ? 'sm:py-8 mt-4 p-2 sm:px-12 mb-12 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-secondaryDark hover:-translate-y-2'
+            : 'sm:py-8 mt-4 p-2 sm:px-12 mb-12 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2'
+        "
         v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-university fa-3x text-main-400"></i>
+            <i
+              :class="
+                isDarkMode
+                  ? 'fa fa-university fa-3x text-primary-200'
+                  : 'fa fa-university fa-3x text-main-400'
+              "
+            ></i>
           </div>
           <div class="flex justify-center text-gray-900 mb-4">
             <h3
-              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
+              :class="
+                isDarkMode
+                  ? 'text-lg text-primary-200 leading-normal mb-2 font-semibol'
+                  : 'text-lg text-main-400 leading-normal mb-2 font-semibold t'
+              "
             >
               Department Detail
             </h3>
@@ -32,56 +53,98 @@
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-primary-200 font-bold text-xl'
+                  : 'text-main-400 font-bold text-xl'
+              "
             >
-              Department Name</span
-            >
+              Department Name
+            </h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ dep?.department?.name }}</span
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-primary-200 text-lg'
+                  : 'text-grey-800 text-lg'
+              "
             >
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-          <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >Educational level</span
-            >
-          </div>
-          <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ dep?.educationLevel?.name }}</span
-            >
+              {{ dep?.department?.name }}
+            </h2>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >Institution</span
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-primary-200 font-bold text-xl'
+                  : 'text-main-400 font-bold text-xl'
+              "
             >
+              Educational level
+            </h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ dep.institution?.name }}</span
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-primary-200 text-lg'
+                  : 'text-grey-800 text-lg'
+              "
             >
+              {{ dep?.educationLevel?.name }}
+            </h2>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-primary-200 font-bold text-xl'
+                  : 'text-main-400 font-bold text-xl'
+              "
             >
-              Professional Type</span
-            >
+              >Institution
+            </h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ dep.professionType?.name }}</span
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-primary-200 text-lg'
+                  : 'text-grey-800 text-lg'
+              "
             >
+              {{ dep.institution?.name }}
+            </h2>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+          <div>
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-primary-200 font-bold text-xl'
+                  : 'text-main-400 font-bold text-xl'
+              "
+            >
+              Professional Type
+            </h2>
+          </div>
+          <div>
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-primary-200 text-lg'
+                  : 'text-grey-800 text-lg'
+              "
+            >
+              {{ dep.professionType?.name }}
+            </h2>
           </div>
         </div>
       </div>
@@ -91,26 +154,31 @@
         :active="fileIsLoading"
         :is-full-page="false"
         :color="'#2F639D'"
-        :opacity="1"
+        :opacity="0.6"
+        class="rounded"
       ></loading>
       <div
-        class="mt-2 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-4"
+        class="mt-2 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 sm:grid-cols-4"
       >
-        <div class="bg-white flex-shrink px-4 w-full rounded-md">
-          <div class="py-8 px-2 mb-12 bg-gray-50 border-b border-white">
-            <div class="border-b-2 text-main-400 mb-4">
+        <div
+          :class="
+            isDarkMode
+              ? 'bg-secondaryDark flex-shrink px-1 w-full rounded-md text-primary-200'
+              : 'bg-white flex-shrink px-1 w-full rounded-md text-main-400'
+          "
+        >
+          <div class="py-8 mb-12 bg-gray-50 border-b border-white">
+            <div class="border-b-2 mb-4">
               <div class="text-gray-900 mb-4 flex justify-center">
                 <i class="fa fa-folder fa-3x -text-main-400"></i>
               </div>
               <div class="flex justify-center text-gray-900 mb-4">
-                <h3
-                  class="text-3xl text-main-400 leading-normal mb-2 font-semibold"
-                >
+                <h3 class="text-3xl leading-normal mb-2 font-semibold">
                   Files Uploaded
                 </h3>
               </div>
               <h2
-                class="text-xl text-grey-800"
+                class="text-xl"
                 v-if="
                   (changedDocs && changedDocs.length > 0) || localFileImages
                 "
@@ -125,14 +193,14 @@
                 class="grid grid-cols-1 sm:grid-cols-4 gap-4"
               >
                 <div
-                  class="mt-4 mb-8 bg-white border-4 text-main-400 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                  class="mt-4 mb-8 border-4 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                   v-for="changed in changedDocs"
                   :key="changed.id"
                 >
-                  <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+                  <h4 class="font-bold m-2">Document Type</h4>
                   <h6 class="m-2">{{ changed.docName }}</h6>
                   <div class="flex justify-center rounded-lg p-4">
-                    <div class="bg-white rounded-md border p-2">
+                    <div class="rounded-md border p-2">
                       Previous
                       <a
                         :href="changed.prevFile"
@@ -190,10 +258,10 @@
             </div>
 
             <div class="accordion" id="accordionExample">
-              <div class="accordion-item bg-white">
+              <div class="accordion-item">
                 <h2 class="accordion-header mb-0" id="headingOne">
                   <button
-                    class="relative flex items-center w-full py-4 px-2 text-white bg-grey-200 hover:text-main-400 hover:bg-white transition focus:outline-none hover:border-main-400 rounded-md"
+                    class="relative flex items-center w-full py-4 px-2 text-white bg-grey-400 hover:text-main-400 transition text-xl hover:border-main-400 rounded-md"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#collapseOne"
@@ -209,19 +277,17 @@
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"
                 >
-                  <div class="accordion-body py-4 px-2">
+                  <div class="accordion-body py-4">
                     <div
-                      class="grid grid-cols-1 gap-4 ml-4 sm:w-full sm:grid-cols-4 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
+                      class="grid grid-cols-1 gap-4 ml-4 sm:w-full md:w-full sm:grid-cols-4"
                     >
                       <div
                         v-if="!professionChanged"
-                        class="mt-4 border mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                        class="mt-4 border mb-8 rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
                         v-for="prev in prevDocs"
                         :key="prev.id"
                       >
-                        <h4 class="text-main-400 font-bold m-2">
-                          Document Type
-                        </h4>
+                        <h4 class="font-bold m-2">Document Type</h4>
                         <h6 class="m-2">
                           {{ prev.documentType ? prev.documentType.name : "" }}
                         </h6>
@@ -280,25 +346,33 @@
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md">
+      <div
+        :class="
+          isDarkMode
+            ? 'bg-secondaryDark flex-shrink px-4 w-full rounded-md text-primary-200'
+            : 'bg-white flex-shrink px-4 w-full rounded-md text-main-400'
+        "
+      >
         <div
           class="py-2 px-4 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
-          <div class="mb-4 border-t text-main-400">
+          <div class="mb-4 border-t  ">
             <div class="flex justify-center">
-              <label
-                for="feedback"
-                class="form-label inline-block mb-2 text-main-400"
-                >Feedback on the process and system
+              <h2 class="form-label inline-block mb-2 text-xl">
+                Feedback on the process and system
                 <span class="text-yellow-300">(optional*)</span>
-              </label>
+              </h2>
             </div>
 
             <div class="mb-3 w-full flex justify-center">
               <input
                 v-model="generalInfo.feedback"
                 @keyup="checkAgreement()"
-                class="form-control block w-full text-main-400 px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:outline-none"
+                :class="
+                  isDarkMode
+                    ? 'form-control block w-full bg-primary-200 text-lg text-main-400 px-3 py-1.5   rounded transition ease-in-out m-0'
+                    : 'form-control block w-full border text-main-400 px-3 py-1.5 text-xl   rounded transition ease-in-out m-0  '
+                "
                 id="feedback"
                 rows="6"
                 placeholder="Your feedback"
@@ -316,7 +390,7 @@
                   id="agreed"
                 />
               </div>
-              <h3 class="text-grey-800 mb-2 sm:text-lg text-sm">
+              <h3 class="  mb-2  text-xl">
                 By checking here I hereby verify the documents and details
                 filled in are legal.
               </h3>
@@ -357,18 +431,25 @@
       </div>
     </div>
     <!-- end row -->
-    <div class="modal-mask" v-if="showModal">
+
+    <div class="modal-mask h-screen p-1" v-if="showModal">
       <div class="modal-wrapper">
-        <div class="modal-container sm:w-1/2 w-5/6">
+        <div
+          :class="
+            isDarkMode
+              ? 'modal-container sm:w-1/2 w-11/12 bg-primaryDark text-primary-200'
+              : 'modal-container sm:w-1/2 w-11/12 bg-white text-main-400'
+          "
+        >
           <div class="modal-header">
-            <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
+            <h2 class=" text-xl border-b-4">Uploading</h2>
           </div>
 
           <div class="modal-body">
-            <div class="flex justify-center text-yellow-300 p-2 rounded-md">
-              <h2 class="text-yellow-300 border rounded p-2 text-xl">
+            <div class="flex justify-center text-yellow-300 sm:p-2 rounded-md">
+              <h2 class="text-yellow-300 border rounded p-1 text-xl">
                 Total file size you have uploaded so far is
-                <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+                <h2 class="  text-2xl">{{ totalSize }} MB</h2>
               </h2>
             </div>
             <div class="flex justify-center">
@@ -377,14 +458,12 @@
                 :completed-steps="progress"
                 :total-steps="totalSteps"
               >
-                <h1 class="text-3xl text-main-400 font-bold">
-                  {{ progress }} %
-                </h1>
+                <h1 class="text-3xl   font-bold">{{ progress }} %</h1>
               </RadialProgress>
             </div>
             <div>
               <div
-                class="flex border justify-center text-yellow-300 p-2 rounded-md"
+                class="flex border justify-center text-yellow-300 sm:p-2 p-1 rounded-md"
               >
                 <h2 class="text-xl">
                   Please wait patiently as your files are being uploaded, if for
@@ -421,6 +500,7 @@ export default {
     let generalInfo = ref({});
     let agreed = ref(false);
     let isLoading = ref(false);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let buttons = ref([]);
     let tempDocs = ref({});
     let savedData = ref({});
@@ -449,7 +529,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => {
+    const checkFinalStatus = action => {
       generalInfo.value.licenseFile = [];
 
       if (agreed.value == true) {
@@ -498,9 +578,9 @@ export default {
               isLegal: true,
               feedback: generalInfo.value.feedback
                 ? generalInfo.value.feedback
-                : "",
-            },
-          },
+                : ""
+            }
+          }
         };
         showModal.value = true;
         store.dispatch("renewal/updateDraft", license).then(() => {
@@ -508,7 +588,7 @@ export default {
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("renewal/updateDocuments", payload)
-            .then((res) => {
+            .then(res => {
               isLoading.value = false;
               if (res.data.status == "Success") {
                 localStorage.removeItem("applicantTypeSelected");
@@ -520,7 +600,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
 
                 router.push({ path: "/Applicant/Renewal/submitted" });
@@ -530,7 +610,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
               }
             })
@@ -541,7 +621,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
             });
         });
@@ -551,16 +631,19 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
+      window.addEventListener("darkModeChanged", data => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       fileIsLoading.value = true;
       store
         .dispatch("renewal/getRenewalApplication", route.params.id)
-        .then((res) => {
+        .then(res => {
           savedData.value = res.data.data;
 
           buttons.value = store.getters["renewal/getButtons"];
 
           buttons.value = buttons.value.filter(
-            (ele) => ele.code != "AT" && ele.code != "DRA"
+            ele => ele.code != "AT" && ele.code != "DRA"
           );
           tempDocs.value = store.getters["renewal/getTempDocs"];
 
@@ -571,15 +654,15 @@ export default {
           generalInfo.value = localData.value;
           generalInfo.value.feedback = "";
           if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("renewal/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+            store.dispatch("renewal/getExpertLevel").then(res => {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("REG");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
             });
           } else {
-            store.dispatch("renewal/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+            store.dispatch("renewal/getExpertLevel").then(res => {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("FED");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
@@ -588,17 +671,17 @@ export default {
           //Get images from indexed Db
           let request = indexedDB.open("RNdocumentUploads", 1);
 
-          request.onerror = function () {
+          request.onerror = function() {
             console.error("Unable to open database.");
           };
 
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             let db = request.result;
             const tx = db.transaction("RNdocumentUploads", "readonly");
             const store = tx.objectStore("RNdocumentUploads");
             let getAllIDB = store.getAll();
 
-            getAllIDB.onsuccess = function (evt) {
+            getAllIDB.onsuccess = function(evt) {
               localFileImages.value = evt.target.result
                 ? JSON.parse(
                     JSON.stringify(
@@ -606,15 +689,15 @@ export default {
                     )
                   )
                 : {};
-              localFileImages.value.forEach((element) => {
+              localFileImages.value.forEach(element => {
                 totalSize.value += Number(
                   Math.ceil((element.image.length * 6) / 8 / 1000)
                 );
               });
               totalSize.value = totalSize.value / 1000;
               if (localFileImages.value && savedData.value.documents) {
-                savedData.value.documents.forEach((ele) => {
-                  localFileImages.value.forEach((newFile) => {
+                savedData.value.documents.forEach(ele => {
+                  localFileImages.value.forEach(newFile => {
                     if (
                       (newFile.commonDocCode &&
                         newFile.commonDocCode == ele.fileName) ||
@@ -624,7 +707,7 @@ export default {
                         docName: newFile.documentName,
                         prevFile: googleApi + ele.filePath,
                         newFile: newFile.image,
-                        id: newFile.documenttype,
+                        id: newFile.documenttype
                       });
                     }
                   });
@@ -634,12 +717,12 @@ export default {
               if (localData.value.professionChanged == true) {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
-                localFileImages.value.forEach((element) => {
+                localFileImages.value.forEach(element => {
                   if (!element.commonDocCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
-                      path: element.image,
+                      path: element.image
                     });
                   }
                 });
@@ -651,7 +734,7 @@ export default {
           fileIsLoading.value = false;
         });
     });
-    const isPDF = (filename) => {
+    const isPDF = filename => {
       const parts = filename.split(".");
       const isPdf =
         parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
@@ -679,8 +762,9 @@ export default {
       progress,
       fileIsLoading,
       totalSize,
+      isDarkMode
     };
-  },
+  }
 };
 </script>
 <style>
@@ -707,7 +791,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.329);
   display: table;
   transition: opacity 0.3s ease;
 }
@@ -720,7 +804,6 @@ export default {
 .modal-container {
   margin: 0px auto;
   padding: 20px 30px;
-  background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;

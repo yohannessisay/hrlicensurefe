@@ -63,10 +63,10 @@
           <div class="modal-body relative">
             <div class="container">
               <section class="text-gray-800">
-                <div class="flex justify-center border-b-2 mb-4">
+               <div class="flex justify-center shadow-md mb-4">
                   <div class="text-center max-w-full">
                     <h2 class="text-2xl font-bold">
-                      Add New Professional Type
+                    Edit Professional Type
                     </h2>
                   </div>
                 </div>
@@ -338,7 +338,7 @@
                                   ease-in-out
                                   mb-2
                                 "
-                                >Prefix Status</label
+                                >Profession Type Status</label
                               >
                               <div class="toggle slim colour">
                                 <input

@@ -1,16 +1,7 @@
 <template>
  <main-content :url="'renewal'">
-    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
-      <ol class="list-reset flex">
-        <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
-        <li><span class="text-gray-500 mx-2">/</span></li>
-        <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">Renewal</a>
-        </li>
-        <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Declined</li>
-      </ol>
-    </nav>
+  <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
+
     <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
     <div class="container my-12 mx-auto px-4 md:px-12" v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
@@ -206,8 +197,9 @@ import { useStore } from "vuex";
 import MainContent from "../../Shared/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import declinedDetail from "./declinedDetail.vue";
+import PageHeader from "../../Shared/PagesHeader.vue";
 export default {
-  components: { MainContent, declinedDetail },
+  components: { MainContent, declinedDetail,PageHeader },
   setup() {
     let store = useStore();
     let declinedLicenses = ref([]);
@@ -215,7 +207,11 @@ export default {
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
-
+    const path = ref([
+      { name: "Home", link: "/menu" },
+      { name: "New License", link: "/Applicant/NewLicense" },
+      { name: "Declined", link: "/Applicant/NewLicense" },
+    ]);
     const changeLicenseId = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
@@ -253,6 +249,7 @@ export default {
       changeLicenseId,
       isLoading,
       modalDataId,
+      path
     };
   },
 };

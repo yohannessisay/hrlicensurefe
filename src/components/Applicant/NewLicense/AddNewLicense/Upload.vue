@@ -9,7 +9,7 @@
         the next step, if you wish to change any file, you can do so, else click
         next at the bottom of the screen
       </h2>
-      <h2 
+      <h2
         class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
       >
         *Please upload all documents marked with a red asterix
@@ -55,7 +55,11 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-1 mt-8 rounded-lg"
+             :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0 mr-1">
           <button
@@ -104,7 +108,7 @@
           v-for="(error, index) in errorDocuments"
           :key="error"
         >
-          <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+          <small :class="isDarkMode?'text-primary-200 text-xl':'text-grey-800 text-xl'">{{ index + 1 }}- </small>
           {{ error.name }}
         </li>
       </div>
@@ -115,6 +119,7 @@
         :is-full-page="false"
         :color="'#2F639D'"
         :opacity="1"
+           class="rounded-md"
       ></loading>
       <div class="flex justify-end mr-8 mb-8">
         <button
@@ -146,7 +151,7 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import Compressor from "compressorjs";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import { checkDocuments } from "./services/checkDocumentUpload";
+import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import CommonFileUploadTable from "../../Shared/FileUpload/CommonFileUploadTable.vue";
@@ -882,10 +887,11 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
+              localStorage.removeItem("applicantTypeSelected");
               localStorage.removeItem("NLApplicationData");
-              indexedDB.deleteDatabase("NLdocumentUploads");
-              localStorage.removeItem("isLicenseDesignation");
               localStorage.removeItem("tempNL");
+              localStorage.removeItem("isLicenseDesignation");
+              indexedDB.deleteDatabase("NLdocumentUploads");
               location.reload();
             } else {
               toast.error("Error occured, please try again", {

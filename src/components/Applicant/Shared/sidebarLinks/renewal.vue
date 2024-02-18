@@ -3,284 +3,137 @@
     <div class="parentList flex justify-start">
       <a
         href="#"
-        class="bg-white rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none"
+        :class="
+          isDarkMode
+            ? 'bg-primaryDark text-white rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none'
+            : 'bg-white text-main-400 rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none'
+        "
       >
         <span class="icon"
-          ><i class="bx bx-certification text-grey-800 text-2xl mt-1"></i
+          ><i class="bx bx-certification text-2xl mt-1"></i
         ></span>
-        <h2 class="title text-grey-800 text-xl font-bold ml-2">Renewal</h2>
+        <h2 class="text-xl font-bold ml-4">Renewal</h2>
       </a>
     </div>
 
     <li
-      :class="$route.fullPath === '/Applicant/Renewal' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal' ? 'activeMenu' : ''"
+      v-for="link in links"
+      :key="link.id"
+      :class="$route.fullPath === link.path ? 'list active' : 'list'"
+      :id="$route.fullPath === link.path ? 'activeMenu' : ''"
+      :style="link.id === 11 ? 'margin-bottom: 75px !important' : ''"
     >
       <b></b>
       <b></b>
       <a class="ml-4" href="#Renewal">
-        <router-link class="link" to="/Applicant/Renewal">
-          <span class="icon"><i class="bx bx-certification"></i></span>
-          <span class="text text-white font-bold">Apply for Renewal</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="$route.fullPath === '/Applicant/Renewal/submitted' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal/submitted' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#Renewal">
-        <router-link class="link" to="/Applicant/Renewal/submitted">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/submitted'
-                  ? 'bx bxs-save'
-                  : 'bx bx-save'
-              "
-            ></i
+        <router-link class="link" :to="link.path">
+          <span :class="isDarkMode ? 'icon dark' : 'icon light'"
+            ><i :class="link.icon"></i
           ></span>
-          <span class="text text-white font-bold">Submitted</span>
-        </router-link>
-      </a>
-    </li>
-    <li
-      :class="$route.fullPath === '/Applicant/Renewal/draft' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal/draft' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#Verification">
-        <router-link class="link" to="/Applicant/Renewal/draft">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/draft'
-                  ? 'bx bxs-paste'
-                  : 'bx bx-paste'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Draft</span>
-        </router-link>
-      </a>
-    </li>
-    <li
-      :class="$route.fullPath === '/Applicant/Renewal/withdraw' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal/withdraw' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#GoodStanding">
-        <router-link class="link" to="/Applicant/Renewal/withdraw">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/withdraw'
-                  ? 'bx bxs-x-circle'
-                  : 'bx bx-x-circle'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold hover:text-black">Withdraw</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="$route.fullPath === '/Applicant/Renewal/inReview' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal/inReview' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/Renewal/inReview">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/inReview'
-                  ? 'bx bx-refresh'
-                  : 'bx bx-refresh'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">In Review</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="$route.fullPath === '/Applicant/Renewal/approved' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal/approved' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/Renewal/approved">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/approved'
-                  ? 'bx bxs-badge-check'
-                  : 'bx bx-badge-check'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Approved</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="$route.fullPath === '/Applicant/Renewal/declined' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal/declined' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/Renewal/declined">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/declined'
-                  ? 'bx bxs-shield-x'
-                  : 'bx bx-shield-x'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Declined</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/Renewal/underSupervision' ? 'list active' : 'list'
-      "
-      :id="$route.fullPath === '/Applicant/Renewal/underSupervision' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/Renewal/underSupervision">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/underSupervision'
-                  ? 'bx bx-glasses'
-                  : 'bx bx-glasses'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Under Supervision</span>
-        </router-link>
-      </a>
-    </li>
-
-    <!-- <li
-        :class="
-          $route.fullPath === '/Applicant/Renewal/pendingPayment'
-            ? 'list active'
-            : 'list'
-        "
-      >
-        <b></b>
-        <b></b>
-        <a class="ml-4" href="#">
-          <router-link class="link" to="/Applicant/Renewal/pendingPayment">
-            <span class="icon"
-              ><i
-                :class="
-                  $route.fullPath === '/Applicant/Renewal/pendingPayment'
-                    ? 'bx bx-loader'
-                    : 'bx bx-loader'
-                "
-              ></i
-            ></span>
-            <span class="text text-white font-bold">Pending Payment</span>
-          </router-link>
-        </a>
-      </li> -->
-
-    <li
-      :class="$route.fullPath === '/Applicant/Renewal/returned' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal/returned' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/Renewal/returned">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/returned'
-                  ? 'bx bx-rotate-left'
-                  : 'bx bx-rotate-left'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Returned</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="$route.fullPath === '/Applicant/Renewal/suspended' ? 'list active' : 'list'"
-      :id="$route.fullPath === '/Applicant/Renewal/suspended' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/Renewal/suspended">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/suspended'
-                  ? 'bx bx-stop-circle'
-                  : 'bx bx-stop-circle'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Suspended</span>
-        </router-link>
-      </a>
-    </li>
-
-    <li
-      :class="
-        $route.fullPath === '/Applicant/Renewal/revoked'
-          ? 'list active mb-20'
-          : 'list mb-20'
-      "
-      style="margin-bottom: 75px !important"
-      :id="$route.fullPath === '/Applicant/Renewal/revoked' ? 'activeMenu' : ''"
-    >
-      <b></b>
-      <b></b>
-      <a class="ml-4" href="#">
-        <router-link class="link" to="/Applicant/Renewal/revoked">
-          <span class="icon"
-            ><i
-              :class="
-                $route.fullPath === '/Applicant/Renewal/revoked'
-                  ? 'bx bx-trash-alt'
-                  : 'bx bx-trash-alt'
-              "
-            ></i
-          ></span>
-          <span class="text text-white font-bold">Revoked</span>
+          <span
+            :class="
+              isDarkMode
+                ? 'text text-primary-200 font-bold dark'
+                : 'text text-white font-bold light'
+            "
+            >{{ link.name }}</span
+          >
         </router-link>
       </a>
     </li>
 
     <router-link class="" to="/menu">
-      <a class="last_menu flex justify-center hover:bg-main-400 mt-4">
-        <span class="icon"><i class="bx bx-home text-white text-2xl -ml-8"></i></span>
+      <a
+        :class="
+          isDarkMode
+            ? 'last_menu flex justify-center  mt-4'
+            : 'last_menu flex justify-center hover:bg-main-400 mt-4'
+        "
+      >
+        <span class="icon"
+          ><i class="bx bx-home text-white text-2xl -ml-8"></i
+        ></span>
         <span class="title text-white font-bold ml-2">Home</span>
       </a>
     </router-link>
   </ul>
 </template>
+<script>
+import { ref } from "vue";
+export default {
+  props: ["isDarkMode"],
+  setup() {
+    let links = ref([
+      {
+        id: 1,
+        name: "Apply For Renewal",
+        path: "/Applicant/Renewal",
+        icon: "bx bx-plus",
+      },
+      {
+        id: 2,
+        name: "Submitted",
+        path: "/Applicant/Renewal/submitted",
+        icon: "bx bxs-save",
+      },
+      {
+        id: 3,
+        name: "Draft",
+        path: "/Applicant/Renewal/draft",
+        icon: "bx bxs-paste",
+      },
+      {
+        id: 4,
+        name: "Withdraw",
+        path: "/Applicant/Renewal/withdraw",
+        icon: "bx bxs-x-circle",
+      },
+      {
+        id: 5,
+        name: "In Review",
+        path: "/Applicant/Renewal/inReview",
+        icon: "bx bx-refresh",
+      },
+      {
+        id: 6,
+        name: "Approved",
+        path: "/Applicant/Renewal/approved",
+        icon: "bx bxs-badge-check",
+      },
+      {
+        id: 7,
+        name: "Declined",
+        path: "/Applicant/Renewal/declined",
+        icon: "bx bxs-shield-x",
+      },
+      {
+        id: 8,
+        name: "Under Supervision",
+        path: "/Applicant/Renewal/underSupervision",
+        icon: "bx bx-glasses",
+      },
+      {
+        id: 9,
+        name: "Returned",
+        path: "/Applicant/Renewal/returned",
+        icon: "bx bx-rotate-left",
+      },
+      {
+        id: 10,
+        name: "Suspend",
+        path: "/Applicant/Renewal/suspended",
+        icon: "bx bx-stop-circle",
+      },
+      {
+        id: 11,
+        name: "Revoked",
+        path: "/Applicant/Renewal/revoked",
+        icon: "bx bx-trash-alt",
+      },
+    ]);
+    return {
+      links,
+    };
+  },
+};
+</script>

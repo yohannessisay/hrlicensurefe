@@ -33,7 +33,7 @@
       <b></b>
       <a class="ml-4" href="#LostLicenseSubmitted">
         <router-link class="link" to="/Applicant/LostLicense/submitted">
-                 <span class="icon"
+                 <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/LostLicense/submitted'
@@ -54,7 +54,7 @@
       <b></b>
       <a class="ml-4" href="#LostLicenseDeclined">
         <router-link class="link" to="/Applicant/LostLicense/declined">
-                 <span class="icon"
+                 <span :class="isDarkMode ? 'icon dark' : 'icon light'"
             ><i
               :class="
                 $route.fullPath === '/Applicant/LostLicense/declined'

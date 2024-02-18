@@ -139,6 +139,7 @@ import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 import { useToast } from "vue-toastification";
+import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 import CommonFileUploadTable from "../../Shared/SavedFileUpload/CommonFileUploadTable.vue";
 import FileUploadTable from "../../Shared/SavedFileUpload/FileUploadTable.vue";
 export default {
@@ -548,8 +549,23 @@ export default {
       });
     };
 
-    const next = () => {
-      let documentValidation = checkDocuments();
+    const next = async () => {
+      console.log( educationalDocs.value);
+      let documentValidation = await checkDocuments(
+        errorDocuments.value,
+        false,
+        commonDocuments.value,
+        fileUploadError.value,
+        educationalDocs.value,
+        documentsUploaded.value,
+        renewalDocuments.value
+      );
+      fileUploadError.value = documentValidation.fileUploadError
+        ? documentValidation.fileUploadError
+        : [];
+      errorDocuments.value = documentValidation.errorDocuments
+        ? documentValidation.errorDocuments
+        : [];
 
       if (documentValidation && Object.keys(documentValidation).length == 0) {
         store.dispatch("renewal/setTempDocs", formData).then(() => {
@@ -607,133 +623,7 @@ export default {
         );
       }
     };
-    const checkDocuments = () => {
-      let temp = "";
-      let CMtemp = "";
-      let NSTemp = "";
-      var tempVal;
-      errorDocuments.value = [];
-
-      commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
-          // eslint-disable-next-line no-prototype-builtins
-          CMtemp = documentsUploaded.value.hasOwnProperty(
-            element.documentType.code
-          );
-
-          if (!CMtemp) {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = true;
-
-            errorDocuments.value.push({
-              isCommon: true,
-              name: element.documentType.name,
-              code: element.documentType.code,
-            });
-          } else {
-            delete fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ];
-          }
-        });
-
-      educationalDocs.value.forEach((ed) => {
-        // check normal docs with no parents
-
-        ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
-            // eslint-disable-next-line no-prototype-builtins
-            temp = documentsUploaded.value.hasOwnProperty(
-              single.documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: single.documentType.name,
-                code:
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              delete fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ];
-            }
-          });
-
-        //// check documetns with parents
-        for (var pd in ed.parentDoc) {
-          tempVal = renewalDocuments.value.filter(
-            (nld) => nld.parentDocument == pd && nld.isRequired
-          );
-
-          if (
-            tempVal &&
-            tempVal.length > 0 &&
-            tempVal[0] &&
-            tempVal[0].isRequired == true
-          ) {
-            // eslint-disable-next-line no-prototype-builtins
-            NSTemp = documentsUploaded.value.hasOwnProperty(
-              tempVal[0].documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (NSTemp == "") {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  renewalDocuments.value.filter(
-                    (nld) => nld.parentDocument == pd && nld.isRequired
-                  )[0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: renewalDocuments.value.filter(
-                  (nld) => nld.parentDocument == pd && nld.isRequired
-                )[0].documentType.name,
-                code:
-                  renewalDocuments.value.filter(
-                    (nld) => nld.parentDocument == pd && nld.isRequired
-                  )[0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            }
-          }
-        }
-      });
-
-      return fileUploadError.value;
-    };
+ 
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
@@ -835,8 +725,12 @@ export default {
                         ),
                         parentDoc: groupByKey(resp, "parentDocument"),
                       });
+                       
                     });
+                    
                 });
+
+                    
                 //Get Common Docs
 
                 store

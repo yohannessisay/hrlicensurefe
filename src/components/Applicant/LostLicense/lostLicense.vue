@@ -3,7 +3,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1" class="">
         <GeneralInfo
-          @dark-mode="modeToggle()"
+          @dark-mode="toggleDarkMode()"
           :activeState="1"
           :applicationCategories="applicationCategories"
           @changeActiveState="activeState++"
@@ -14,7 +14,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 2" class="">
         <upload
-          @dark-mode="modeToggle()"
+          @dark-mode="toggleDarkMode()"
           :activeState="2"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -24,7 +24,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 3" class="">
         <LostLicenseSummary
-          @dark-mode="modeToggle()"
+          @dark-mode="toggleDarkMode()"
           :activeState="4"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -42,6 +42,7 @@ import MainContent from "../Shared/Menu.vue";
 import LostLicenseSummary from "./AddLostLicense/LicenseSummary.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
+import darkModeService from "../Shared/services/darkModeService";
 export default {
   components: {
     MainContent,
@@ -67,48 +68,15 @@ export default {
     let eduLevel = ref("");
     let darkMode = ref(false);
 
-    const dark = () => {
-      document.getElementById("mainContent")?.classList.add("dark-mode");
-      document.getElementById("activeMenu")?.classList.add("dark-mode");
-      document.getElementById("mainSideBar")?.classList.add("dark-mode");
-      document.getElementById("options-menu")?.classList.add("dark-mode");
-      document.getElementById("topNav")?.classList.add("dark-mode");
-      document.getElementById("menu-icon")?.classList.add("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
-
-      darkMode.value = true;
-      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
-    };
-
-    const light = () => {
-      document.getElementById("mainContent")?.classList.remove("dark-mode");
-      document.getElementById("activeMenu")?.classList.remove("dark-mode");
-      document.getElementById("topNav")?.classList.remove("dark-mode");
-      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
-      document.getElementById("options-menu")?.classList.remove("dark-mode");
-      document.getElementById("menu-icon")?.classList.remove("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
-
-      darkMode.value = false;
-      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
-    };
     const initiateDarkMode = () => {
       if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        dark();
+        darkModeService.dark();
       } else {
-        light();
+        darkModeService.light();
       }
     };
-    const modeToggle = () => {
-      if (
-        localStorage.getItem("darkMode") == true ||
-        darkMode.value ||
-        document.getElementById("main")?.classList.contains("dark-mode")
-      ) {
-        light();
-      } else {
-        dark();
-      }
+    const toggleDarkMode = () => {
+      darkMode.value= darkModeService.modeToggle(darkMode.value);
     };
     const submit = (n) => {
       activeState.value = n;
@@ -149,7 +117,7 @@ export default {
       documentSpecs,
       buttons,
       submit,
-      modeToggle,
+      toggleDarkMode,
       draftStatus,
       declinedFields,
       acceptedFields,

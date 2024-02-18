@@ -1,9 +1,9 @@
 <template>
-  <main-content :url="'newLicense'" >
+  <main-content :url="'newLicense'">
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
-        <Institution 
-          :activeState="1"
+        <Institution
+          :activeState="1" 
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
         />
@@ -11,18 +11,18 @@
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 2">
-        <Upload 
-          :activeState="2"
+        <Upload
+          :activeState="2" 
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
-
         />
       </div>
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 3">
-        <LicenseSummary 
+        <LicenseSummary
           :activeState="3"
+          :isDarkMode="isDarkMode"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
         />
@@ -36,7 +36,7 @@ import Institution from "./AddNewLicense/generalInformation.vue";
 import Upload from "./AddNewLicense/Upload.vue";
 import MainContent from "../Shared/Menu.vue";
 import LicenseSummary from "./AddNewLicense/LicenseSummary.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 import { useStore } from "vuex";
 export default {
@@ -51,7 +51,7 @@ export default {
     let store = useStore();
     let applicantType = ref(1);
     let activeState = ref(1);
-    let applicationStatuses = ref(""); 
+    let applicationStatuses = ref("");
     let documentSpecs = ref("");
     let buttons = ref([]);
     let draftStatus = ref("");
@@ -63,13 +63,12 @@ export default {
     let displayLanguageOption = ref(false);
     let displayPayrollOption = ref(false);
     let eduLevel = ref("");
-    let darkMode = ref(false);
+    let isDarkMode = computed(()=>JSON.parse(localStorage.getItem("darkMode")));
 
     const submit = (n) => {
       activeState.value = n;
     };
 
- 
     const fetchApplicationStatuses = () => {
       store.dispatch("renewal/getApplicationStatuses").then((res) => {
         const results = res.data.data;
@@ -118,25 +117,22 @@ export default {
       });
     };
     onMounted(async () => {
-      
-      fetchApplicationStatuses(); 
+      fetchApplicationStatuses();
     });
-
-    
 
     return {
       activeState,
       applicantType,
-      applicationStatuses, 
+      applicationStatuses,
       documentSpecs,
       buttons,
-      submit, 
+      submit,
       draftStatus,
       declinedFields,
       acceptedFields,
       remark,
       applicationId,
-      darkMode,
+      isDarkMode,
       draftId,
       displayLanguageOption,
       displayPayrollOption,

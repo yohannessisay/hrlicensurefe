@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <router-link to="/admin/review">
-       <div class="logo-details">
+      <div class="logo-details">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 39.082 39.096"
@@ -92,6 +92,23 @@
           </a>
         </li>
       </router-link>
+      <router-link to="/admin/lookupManagement/institution">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/institution'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#InstitutionManagement">
+            <i class="bx bx-building"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Institutions</span
+            >
+          </a>
+        </li>
+      </router-link>
 
       <router-link to="/admin/lookupManagement/educationLevel">
         <li
@@ -161,7 +178,7 @@
           </a>
         </li>
       </router-link>
-         <router-link to="/admin/lookupManagement/documentType">
+      <router-link to="/admin/lookupManagement/documentType">
         <li
           :class="
             $route.fullPath === '/admin/lookupManagement/documentType'
@@ -215,12 +232,9 @@
       </router-link>
     </ul>
     <ul class="nav-links">
-      <div
-        class="profile-details mb-8 ml-4"
-     
-      >
+      <div class="profile-details mb-8 ml-4">
         <router-link to="/admin/review/">
-          <li  style="margin-top:100px;">
+          <li style="margin-top: 100px">
             <a href="" class="ml-6">
               <i class="bx bx-arrow-to-left text-white"></i>
 

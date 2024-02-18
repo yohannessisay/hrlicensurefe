@@ -91,12 +91,7 @@ const routes = [
     component: () =>
       import("../components/Applicant/NewLicense/approved/approved.vue"),
   },
-  {
-    path: "/Applicant/NewLicense/approved/detail/:id",
-    name: "ApplicantNewLicenseApprovedDetail",
-    component: () =>
-      import("../components/Applicant/NewLicense/approved/approvedDetail.vue"),
-  },
+ 
   {
     path: "/Applicant/NewLicense/submitted",
     name: "ApplicantNewLicenseSubmitted",
@@ -877,11 +872,11 @@ const routes = [
       ),
   },
   {
-    path: "/admin/lookupManagement/regional/licenseExpirationDate",
-    name: "RegionalLicenseExpirationDateLookupManagement",
+    path: "/admin/lookupManagement/institution",
+    name: "InstitutionLookupManagement",
     component: () =>
       import(
-        "../components/Reviewer/HomeComponents/LookupManagement/Regional/licenseExpirationDate/licenseExpirationDate.vue"
+        "../components/Reviewer/HomeComponents/LookupManagement/institution/institution.vue"
       ),
   },
 

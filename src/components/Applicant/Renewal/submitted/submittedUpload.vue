@@ -2,9 +2,9 @@
   <div class="vld-parent">
     <loading
       :active="isLoading"
-      :is-full-page="true"
+      :is-full-page="false"
       :color="'#2F639D'"
-      :opacity="0.7"
+      :opacity="0.6"
     ></loading>
     <div class="text-yellow-300 p-2 rounded-md border mb-4 mt-2">
       <h2 class="text-yellow-300 font-bold text-xl">
@@ -20,11 +20,15 @@
         >Upload all files highlighted in red borders to proceed</span
       >
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-4 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingOne">
           <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-xl text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -57,8 +61,12 @@
           </div>
         </div>
       </div>
-      <div
-        class="accordion-item bg-white border border-grey-200 sm:p-2 mt-8 rounded-lg"
+       <div
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingTwo">
           <button
@@ -137,7 +145,7 @@ export default {
 
   setup(props, { emit }) {
     let isLoading = ref(false);
-    const isDarkMode = false;
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let store = useStore();
     const route = useRoute();
     let documents = ref([]);
@@ -617,6 +625,9 @@ export default {
       };
     };
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {

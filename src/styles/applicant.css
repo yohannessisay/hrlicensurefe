@@ -124,12 +124,16 @@ h6 {
   white-space: nowrap;
 }
 
-.side-navbar ul li.active a .text,
-.side-navbar ul li.active a .icon  {
+#activeMenu > a > a > span.text.text-white.font-bold.light,
+#activeMenu > a > a > span.icon.light > i {
   color: #07677e;
-  
 }
- 
+
+#activeMenu > a > a > span.text.text-white.font-bold.dark,
+#activeMenu > a > a > span.icon.dark > i{
+  color: white;
+}
+
 
 .side-navbar ul li.active {
   margin-top: 10px;
@@ -468,8 +472,7 @@ body.dark-mode {
   background: #1c1b20;
 }
 #topNav {
-  margin-top: 50px;
-  background-color: #D1D5DB;
+  margin-top: 50px; 
   border-radius: 5px;
   
 }
@@ -606,6 +609,7 @@ body.dark-mode {
 .float-container {
   position: fixed;
   top: 33%;
+  z-index: 9999;
   right: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -647,7 +651,9 @@ body.dark-mode {
   justify-content: flex-start;
   font-family: sans-serif;
 }
-
+.float-container a span{
+  margin-left: -16px;
+}
 .float-container a:hover {
   margin-right: -20px;
   background-color: #07677e;
@@ -672,8 +678,10 @@ body.dark-mode {
 @media screen and (max-width: 760px) {
   .float-container {
     position: fixed;
-    top: 88%;
+    z-index: 9999px;
+    top: 50%;
     right: 0;
+    margin-left: 10px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -686,7 +694,9 @@ body.dark-mode {
     -ms-flex-align: end;
     align-items: flex-end;
   }
-
+  .float-container a span{
+    margin-left: 0px;
+  }
   .float-container a {
     z-index: 99;
     display: -webkit-box;

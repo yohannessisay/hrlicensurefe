@@ -5,7 +5,13 @@
       :key="table"
       class="border-b-4 text-main-400 mb-8 p-1 rounded-md"
     >
-      <h4 class="text-grey-800 font-bold border-b">
+      <h4
+        :class="
+          isDarkMode
+            ? 'text-primary-200 font-bold border-b'
+            : 'text-grey-800 font-bold border-b'
+        "
+      >
         {{ table.professionType ? table.professionType.name : "" }}
         Related Files
       </h4>
@@ -26,7 +32,13 @@
             </tr>
           </thead>
           <!-- For single file uploads -->
-          <tbody class="divide-y bg-white">
+          <tbody
+            :class="
+              isDarkMode
+                ? 'divide-y bg-secondaryDark text-primary-200'
+                : 'divide-y bg-white text-main-400'
+            "
+          >
             <tr
               v-for="item in table.docs"
               :key="item.id"
@@ -36,17 +48,17 @@
                     item.documentType.code
                   }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                 ]
-                  ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                  : 'text-sm border rounded-md  text-grey-800 flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                  ? 'text-sm  shadow-md  flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
+                  : 'text-sm border rounded-md  shadow-md  flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
               "
             >
               <td
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[0] }}
                 </h2>
-                <h2 class="text-lg text-grey-800 break-words">
+                <h2 class="text-lg break-words">
                   {{ item.documentType.name }}
                   <b v-if="item.isRequired" class="text-red-300">(*)</b>
                 </h2>
@@ -54,10 +66,10 @@
               <td
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[1] }}
                 </h2>
-                <h2 class="text-lg text-grey-800 break-words">
+                <h2 class="text-lg break-words">
                   {{
                     item.documentType && item.documentType.description
                       ? item.documentType.description
@@ -68,7 +80,7 @@
               <td
                 class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[2] }}
                 </h2>
 
@@ -94,7 +106,7 @@
                 "
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   Uploaded File Name
                 </h2>
                 <h2 class="text-lg break-words">
@@ -105,9 +117,7 @@
                       }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                     ]?.name
                   }}
-                   <i
-                                  class="fa fa-check-circle text-green-300"
-                                ></i>
+                  <i class="fa fa-check-circle text-green-300"></i>
                 </h2>
               </td>
 
@@ -167,7 +177,11 @@
 
           <!-- For multiple file uploads -->
           <tbody
-            class="divide-y bg-white"
+            :class="
+              isDarkMode
+                ? 'divide-y bg-secondaryDark text-primary-200'
+                : 'divide-y bg-white text-main-400'
+            "
             v-for="parentItem in table.parentDoc"
             :key="parentItem.id"
           >
@@ -181,17 +195,17 @@
                       parentItem[0].documentType.code
                     }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                 ]
-                  ? 'text-sm  flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                  : 'text-sm border-t flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                  ? 'text-sm  shadow-md flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
+                  : 'text-sm border-t flex shadow-md flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
               "
             >
               <td
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[0] }}
                 </h2>
-                <h2 class="text-lg text-grey-800 break-words">
+                <h2 class="text-lg break-words">
                   {{ parentItem[0].documentType.name }}
                   <b v-if="parentItem[0].isRequired" class="text-red-300"
                     >(*)</b
@@ -201,10 +215,10 @@
               <td
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[1] }}
                 </h2>
-                <h2 class="text-lg text-grey-800 break-words">
+                <h2 class="text-lg break-words">
                   {{
                     parentItem[0].documentType.description
                       ? parentItem[0].documentType.description
@@ -215,7 +229,7 @@
               <td
                 class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[2] }}
                 </h2>
 
@@ -243,7 +257,7 @@
                 "
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   Uploaded File Name
                 </h2>
                 {{
@@ -321,17 +335,17 @@
                     }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                 ]
                   ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                  : 'text-sm border-t  bg-primary-300 flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                  : 'text-sm border-t  bg-grey-400 text-white flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
               "
             >
               <td
-                class="flex bg-primary-300 sm flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
+                class="flex bg-grey-400 sm flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
+                <h2 class="sm:hidden mb-2 text-xl underline">
                   {{ headers[0] }}
                 </h2>
                 <div class="flex">
-                  <h2 class="text-lg text-grey-800 break-words">
+                  <h2 class="text-lg break-words">
                     {{ parentItem[0].parentDocument }}
                     <b v-if="parentItem[0].isRequired" class="text-red-300"
                       >(*)</b
@@ -346,20 +360,20 @@
                   </button>
                 </div>
 
-                <h2 class="text-grey-800">
+                <h2 class=" ">
                   (You can upload up to {{ parentItem.length }} files)
                 </h2>
               </td>
               <td
-                class="flex flex-col bg-primary-300 sm px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
+                class="flex flex-col bg-grey-400 sm px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               ></td>
               <td
-                class="flex flex-col bg-primary-300 sm px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
+                class="flex flex-col bg-grey-400 sm px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               ></td>
             </tr>
             <!-- For nested documents upload -->
             <tr
-              class="text-sm flex bg-primary-300 flex-col mb-8 py-1 divide-y sm:table-row sm:mb-0 sm:divide-none"
+              class="text-sm flex bg-grey-400 flex-col mb-8 py-1 divide-y sm:table-row sm:mb-0 sm:divide-none"
             >
               <div
                 v-if="
@@ -369,7 +383,13 @@
                 :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
                 style="width: max-content"
               >
-                <div class="w-full border-grey-400 bg-white rounded-md">
+                <div
+                  :class="
+                    isDarkMode
+                      ? 'w-full border-grey-400 bg-secondaryDark rounded-md'
+                      : 'w-full border-grey-400 bg-white rounded-md'
+                  "
+                >
                   <div
                     :id="
                       'docAccordion_' +
@@ -399,7 +419,13 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody
+                          :class="
+                            isDarkMode
+                              ? 'divide-y bg-secondaryDark text-primary-200'
+                              : 'divide-y bg-white text-main-400'
+                          "
+                        >
                           <tr
                             v-for="(parentChildItem, index) in parentItem"
                             :key="index"
@@ -410,8 +436,8 @@
                                     parentChildItem.documentType.code
                                   }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               ]
-                                ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
-                                : 'text-sm  bg-white rounded-md border flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
+                                ? 'text-sm   shadow-md flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
+                                : 'text-sm   shadow-md rounded-md border flex flex-col mb-4  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
                             "
                           >
                             <td
@@ -422,16 +448,14 @@
                               "
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
-                              <h2
-                                class="text-xl text-main-400 underline sm:invisible"
-                              >
+                              <h2 class="text-xl underline sm:invisible">
                                 Document Name
                               </h2>
                               <h2
                                 :class="
                                   isDarkMode
                                     ? 'text-white'
-                                    : 'text-lg text-grey-800 break-all sm:-mt-5'
+                                    : 'text-lg  break-all sm:-mt-5'
                                 "
                               >
                                 {{ parentChildItem.documentType.name }}
@@ -487,7 +511,6 @@
                               </p>
                             </td>
                             <td
-                              class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                               v-if="
                                 documentsSaved[
                                   `${
@@ -495,31 +518,28 @@
                                   }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.name
                               "
+                              class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
-                              <h2
-                                class="text-xl text-main-400 underline sm:invisible mb-4"
-                              >
+                              <h2 class="sm:hidden mb-2 text-xl underline">
                                 Uploaded File Name
                               </h2>
-                              <h2 class="document-name text-xl text-grey-800">
-                                {{
-                                  documentsSaved[
-                                    `${
-                                      parentChildItem.documentType.code
-                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                  ]?.name
-                                }}
-                                <i
-                                  class="fa fa-check-circle text-green-300"
-                                ></i>
-                              </h2>
+                              {{
+                                documentsSaved[
+                                  `${
+                                    parentChildItem.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                ]?.name
+                              }}
+                              <i class="fa fa-check-circle text-green-300"></i>
                             </td>
+
                             <td
                               v-if="
-                                parentChildItem.existingFile &&
-                                showNestedDocuments[
-                                  parentItem[0].documentType.code
-                                ] >= index
+                                documentsSaved[
+                                  `${
+                                    parentChildItem.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                ]?.path
                               "
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
@@ -581,7 +601,7 @@
                             >
                               <div class="flex justify-center">
                                 <span
-                                  class="cursor-pointer text-grey-800"
+                                  class="cursor-pointer"
                                   @click="
                                     $emit(
                                       'removeChildUpload',

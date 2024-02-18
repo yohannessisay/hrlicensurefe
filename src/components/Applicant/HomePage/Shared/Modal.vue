@@ -25,13 +25,16 @@
           class="modal-header flex flex-shrink-0 items-center justify-between p-1 border-b border-grey-100 rounded-t-md"
         >
           <h2
-            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl ml-4 font-medium text-main-400 mb-2 sm:text-base md:mb-6"
+            :class="
+          isDarkMode
+            ?'text-2xl md:text-2xl lg:text-2xl  ml-4 font-medium text-primary-200  mb-2 sm:text-base md:mb-6':
+            'text-2xl md:text-2xl lg:text-2xl  ml-4 font-medium text-main-400 mb-2 sm:text-base md:mb-6'"
           >
             Required Documents for {{ modalType ? modalType : "" }} Application
           </h2>
           <button
             type="button"
-            class="inline-block px-4 py-2.5 bg-main-400 text-white font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
+            class="inline-block px-4 py-2.5 bg-main-400 text-primary-200  font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -61,7 +64,7 @@
                       <h4
                         :class="
                           isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            ? 'font-medium text-primary-200  leading-tight text-2xl border-b-4'
                             : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
@@ -73,14 +76,14 @@
                         <span
                           :class="
                             isDarkMode
-                              ? 'text-xl text-white font-semibold'
+                              ? 'text-xl text-primary-200  font-semibold'
                               : 'text-xl text-main-4oo font-semibold'
                           "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
                       <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
+                        :class="isDarkMode ? 'text-primary-200  ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -93,7 +96,7 @@
                         :key="index"
                         :class="
                           isDarkMode
-                            ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
+                            ? 'text-primary-200 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                             : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                         "
                         data-bs-toggle="tooltip"
@@ -102,7 +105,7 @@
                         <i
                           :class="
                             isDarkMode
-                              ? 'text-white  fa fa-arrow-right-long'
+                              ? 'text-primary-200   fa fa-arrow-right-long'
                               : 'fa fa-arrow-right-long text-grey-800'
                           "
                         ></i>
@@ -125,7 +128,7 @@
                       <h4
                         :class="
                           isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            ? 'font-medium text-primary-200  leading-tight text-2xl border-b-4'
                             : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
@@ -137,14 +140,14 @@
                         <span
                           :class="
                             isDarkMode
-                              ? 'text-xl text-white font-semibold'
+                              ? 'text-xl text-primary-200  font-semibold'
                               : 'text-xl text-main-4oo font-semibold'
                           "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
                       <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
+                        :class="isDarkMode ? 'text-primary-200  ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                       <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
@@ -155,7 +158,7 @@
                           :key="index"
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
+                              ? 'text-primary-200  text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -164,7 +167,7 @@
                           <i
                             :class="
                               isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
+                                ? 'text-primary-200   fa fa-arrow-right-long'
                                 : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
@@ -188,7 +191,7 @@
                       <h4
                         :class="
                           isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            ? 'font-medium text-primary-200  leading-tight text-2xl border-b-4'
                             : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
@@ -200,14 +203,14 @@
                         <span
                           :class="
                             isDarkMode
-                              ? 'text-xl text-white font-semibold'
+                              ? 'text-xl text-primary-200  font-semibold'
                               : 'text-xl text-main-4oo font-semibold'
                           "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
                       <small
-                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
+                        :class="isDarkMode ? 'text-primary-200  ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                       <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
@@ -218,7 +221,7 @@
                           :key="index"
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
+                              ? 'text-primary-200  text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -227,7 +230,7 @@
                           <i
                             :class="
                               isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
+                                ? 'text-primary-200   fa fa-arrow-right-long'
                                 : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
@@ -245,15 +248,15 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto   transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg    text-center max-w-full mx-auto  transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full    transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg    text-center max-w-full   transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
                       <h4
                         :class="
                           isDarkMode
-                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            ? 'font-medium text-primary-200  leading-tight text-2xl border-b-4'
                             : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
@@ -265,7 +268,7 @@
                         <span
                           :class="
                             isDarkMode
-                              ? 'text-xl text-white font-semibold'
+                              ? 'text-xl text-primary-200  font-semibold'
                               : 'text-xl text-main-4oo font-semibold'
                           "
                           >Attached Documents must be clear and visible.</span
@@ -279,7 +282,7 @@
                         :key="index"
                         :class="
                           isDarkMode
-                            ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
+                            ? 'text-primary-200  text-lg rounded-lg bg-secondaryDark cursor-pointer'
                             : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                         "
                         data-bs-toggle="tooltip"
@@ -288,14 +291,14 @@
                         <i
                           :class="
                             isDarkMode
-                              ? 'text-white  fa fa-arrow-right-long'
+                              ? 'text-primary-200   fa fa-arrow-right-long'
                               : 'fa fa-arrow-right-long text-grey-800'
                           "
                         ></i>
                         {{ detail ? detail.name : "" }}
                       </li>
                     </ul>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 mt-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 mt-8 gap-4">
                       <div>
                         <slot name="ethiopianDetail"> </slot>
                         <h2 class="-mt-4 text-xl">Ethiopian</h2>

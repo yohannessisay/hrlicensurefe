@@ -56,7 +56,11 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-1 mt-8 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0 mr-1">
           <button
@@ -105,7 +109,12 @@
           v-for="(error, index) in errorDocuments"
           :key="error"
         >
-          <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+          <small
+            :class="
+              isDarkMode ? 'text-primary-200 text-xl' : 'text-grey-800 text-xl'
+            "
+            >{{ index + 1 }}-
+          </small>
           {{ error.name }}
         </li>
       </div>
@@ -116,6 +125,7 @@
         :is-full-page="false"
         :color="'#2F639D'"
         :opacity="1"
+        class="rounded-md"
       ></loading>
       <div class="flex justify-end mr-8 mb-8">
         <button
@@ -151,9 +161,9 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import FileUploadTable from "../../Shared/FileUpload/FileUploadTable.vue";
 import CommonFileUploadTable from "../../Shared/FileUpload/CommonFileUploadTable.vue";
+import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 export default {
   components: { Loading, CommonFileUploadTable, FileUploadTable },
-
   // eslint-disable-next-line vue/no-setup-props-destructure
   setup(props, { emit }) {
     let store = useStore();
@@ -162,6 +172,7 @@ export default {
     let documents = ref([]);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let goToNext = ref(false);
     let alreadyUploaded = ref(false);
     let educationalDocs = ref([]);
@@ -181,7 +192,6 @@ export default {
     let generalInfo = ref({});
     let documentToSave = ref({});
     let isBackButtonClicked = ref(false);
-    let isDarkMode = ref(false);
     let fileUploadError = ref([]);
     let imageData = [];
     let formData = new FormData();
@@ -704,266 +714,6 @@ export default {
       }
     };
 
-    const checkDocuments = () => {
-      let temp = "";
-      let CMtemp = "";
-      let NSTemp = "";
-      var tempVal;
-      errorDocuments.value = [];
-      // if back button is clicked
-      if (isBackButtonClicked.value == true) {
-        // check common documents
-
-        commonDocuments.value
-          .filter((cd) => cd.isRequired)
-          .forEach((element) => {
-            CMtemp = element.fileName;
-
-            if (!CMtemp || CMtemp == "") {
-              fileUploadError.value[
-                "file_upload_row_" + element.documentType.code
-              ] = true;
-              errorDocuments.value.push({
-                isCommon: true,
-                name: element.documentType.name,
-                code: element.documentType.code,
-              });
-            } else {
-              delete fileUploadError.value[
-                "file_upload_row_" + element.documentType.code
-              ];
-            }
-          });
-
-        // check normal docs with no parents
-        educationalDocs.value.forEach((ed) => {
-          ed.docs
-            .filter((docs) => docs.isRequired)
-            .forEach((single) => {
-              let tempEdVal = documentsUploaded.value.filter(
-                (el) =>
-                  el.documentCode ==
-                  single.documentType.code.toUpperCase() +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-              );
-
-              if (tempEdVal) {
-                delete fileUploadError.value[
-                  "file_upload_row_" +
-                    single.documentType.code.toUpperCase() +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ];
-              } else {
-                fileUploadError.value[
-                  "file_upload_row_" +
-                    single.documentType.code.toUpperCase() +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ] = true;
-                errorDocuments.value.push({
-                  name: single.documentType.name,
-                  code:
-                    single.documentType.code.toUpperCase() +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase(),
-                });
-              }
-            });
-
-          //// check documetns with parents
-          for (var pd in ed.parentDoc) {
-            tempVal = renewalDocuments.value.filter(
-              (nld) => nld.parentDocument == pd && nld.isRequired
-            );
-
-            if (
-              tempVal &&
-              tempVal.length > 0 &&
-              tempVal[0] &&
-              tempVal[0].isRequired == true
-            ) {
-              // eslint-disable-next-line no-prototype-builtins
-              NSTemp = documentsUploaded.value.filter(
-                (el) =>
-                  el.documentCode ==
-                  tempVal[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-              );
-
-              if (NSTemp && NSTemp != "" && NSTemp[0]) {
-                delete fileUploadError.value[
-                  "file_upload_row_" +
-                    renewalDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ];
-              } else {
-                fileUploadError.value[
-                  "file_upload_row_" +
-                    renewalDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ] = true;
-                errorDocuments.value.push({
-                  name: renewalDocuments.value.filter(
-                    (nld) => nld.parentDocument == pd && nld.isRequired
-                  )[0].documentType.name,
-                  code:
-                    renewalDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase(),
-                });
-              }
-            }
-          }
-        });
-      } else {
-        commonDocuments.value
-          .filter((cd) => cd.isRequired)
-          .forEach((element) => {
-            // eslint-disable-next-line no-prototype-builtins
-            CMtemp = documentsUploaded.value.hasOwnProperty(
-              element.documentType.code
-            );
-
-            if (!CMtemp) {
-              fileUploadError.value[
-                "file_upload_row_" + element.documentType.code
-              ] = true;
-
-              errorDocuments.value.push({
-                isCommon: true,
-                name: element.documentType.name,
-                code: element.documentType.code,
-              });
-            } else {
-              delete fileUploadError.value[
-                "file_upload_row_" + element.documentType.code
-              ];
-            }
-          });
-
-        educationalDocs.value.forEach((ed) => {
-          // check normal docs with no parents
-
-          ed.docs
-            .filter((docs) => docs.isRequired)
-            .forEach((single) => {
-              // eslint-disable-next-line no-prototype-builtins
-              temp = documentsUploaded.value.hasOwnProperty(
-                single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              );
-              if (!temp) {
-                fileUploadError.value[
-                  "file_upload_row_" +
-                    single.documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ] = true;
-                errorDocuments.value.push({
-                  name: single.documentType.name,
-                  code:
-                    single.documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase(),
-                });
-              } else {
-                delete fileUploadError.value[
-                  "file_upload_row_" +
-                    single.documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ];
-              }
-            });
-
-          //// check documetns with parents
-          for (var pd in ed.parentDoc) {
-            tempVal = renewalDocuments.value.filter(
-              (nld) => nld.parentDocument == pd && nld.isRequired
-            );
-
-            if (
-              tempVal &&
-              tempVal.length > 0 &&
-              tempVal[0] &&
-              tempVal[0].isRequired == true
-            ) {
-              // eslint-disable-next-line no-prototype-builtins
-              NSTemp = documentsUploaded.value.hasOwnProperty(
-                tempVal[0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              );
-              if (NSTemp == "") {
-                fileUploadError.value[
-                  "file_upload_row_" +
-                    renewalDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ] = true;
-                errorDocuments.value.push({
-                  name: renewalDocuments.value.filter(
-                    (nld) => nld.parentDocument == pd && nld.isRequired
-                  )[0].documentType.name,
-                  code:
-                    renewalDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase(),
-                });
-              }
-            }
-          }
-        });
-      }
-
-      return fileUploadError.value;
-    };
     const urltoFile = async (data, fileName) => {
       let url = data;
       let file = await fetch(url)
@@ -975,10 +725,25 @@ export default {
         });
       return file;
     };
-    const next = () => {
-      let documentValidation = checkDocuments();
+    const next = async () => {
+      let documentValidation = await checkDocuments(
+        errorDocuments.value,
+        isBackButtonClicked.value,
+        commonDocuments.value,
+        fileUploadError.value,
+        educationalDocs.value,
+        documentsUploaded.value,
+        renewalDocuments.value
+      );
+      console.log(documentValidation);
+      fileUploadError.value = documentValidation.fileUploadError
+        ? documentValidation.fileUploadError
+        : [];
+      errorDocuments.value = documentValidation.errorDocuments
+        ? documentValidation.errorDocuments
+        : [];
 
-      if (documentValidation && Object.keys(documentValidation).length == 0) {
+      if (documentValidation?.errorDocuments?.length == 0) {
         let finalLocalData = {
           created: new Date(),
           data: [],
@@ -1135,6 +900,7 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
+              localStorage.removeItem("applicantTypeSelected");
               localStorage.removeItem("RNApplicationData");
               indexedDB.deleteDatabase("RNdocumentUploads");
               localStorage.removeItem("tempRN");
@@ -1214,7 +980,9 @@ export default {
       let tryAgain = localStorage.getItem("tempRN")
         ? JSON.parse(localStorage.getItem("tempRN"))
         : false;
-
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {
         alert(
@@ -1351,7 +1119,6 @@ export default {
     };
     return {
       removeChildUpload,
-      isDarkMode,
       documents,
       commonDocuments,
       files,
@@ -1376,6 +1143,7 @@ export default {
       fileSizeExceed,
       isLoading,
       commonFileUploadHeaders,
+      isDarkMode,
     };
   },
 };
