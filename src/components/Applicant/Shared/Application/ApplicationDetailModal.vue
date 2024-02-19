@@ -19,7 +19,11 @@
         "
       >
         <div
-          :class="isDarkMode?'modal-header flex flex-shrink-0 justify-end rounded-t-md bg-grey-500 shadow-md p-1':'modal-header flex flex-shrink-0 justify-end rounded-t-md  shadow-md p-1'"
+          :class="
+            isDarkMode
+              ? 'modal-header flex flex-shrink-0 justify-end rounded-t-md bg-grey-500 shadow-md p-1'
+              : 'modal-header flex flex-shrink-0 justify-end rounded-t-md  shadow-md p-1'
+          "
         >
           <button
             type="button"
@@ -121,17 +125,12 @@
                         <header
                           class="flex items-center justify-between leading-tight p-2 mb-2 border-b-4"
                         >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                          <h1 class="text-lg"> 
                               Reviewer Detail
-                            </a>
+                         
                           </h1>
                           <p class="text-sm">
-                            <i class="fa fa-thumbs-up"></i>
-                            <i class="fa fa-thumbs-down"></i>
+                            <i class="fa fa-thumbs-up fa-2x"></i> 
                           </p>
                         </header>
                         <div class="grid grid-cols-2 gap-2">
@@ -140,6 +139,11 @@
                             {{
                               licenseData && licenseData.licenseReviewer
                                 ? licenseData.licenseReviewer.reviewer.name
+                                : licenseData && licenseData.renewalReviewer
+                                ? licenseData.renewalReviewer.reviewer.name
+                                : licenseData &&
+                                  licenseData.goodstandingReviewer
+                                ? licenseData.goodstandingReviewer.reviewer.name
                                 : "Not Assigned Yet"
                             }}
                           </h2>
@@ -147,11 +151,15 @@
                           <h2 class="text-xl">Expert Level</h2>
                           <h2 class="font-bold text-lg">
                             {{
-                              licenseData &&
-                              licenseData.licenseReviewer &&
-                              licenseData.licenseReviewer.reviewer &&
-                              licenseData.licenseReviewer.reviewer.expertLevel
+                              licenseData && licenseData.licenseReviewer
                                 ? licenseData.licenseReviewer.reviewer
+                                    .expertLevel.name
+                                : licenseData && licenseData.renewalReviewer
+                                ? licenseData.renewalReviewer.reviewer
+                                    .expertLevel.name
+                                : licenseData &&
+                                  licenseData.goodstandingReviewer
+                                ? licenseData.goodstandingReviewer.reviewer
                                     .expertLevel.name
                                 : "Not Assigned Yet"
                             }}
@@ -160,12 +168,16 @@
                           <h2 class="text-xl">Region</h2>
                           <h2 class="font-bold text-lg">
                             {{
-                              licenseData &&
-                              licenseData.licenseReviewer &&
-                              licenseData.licenseReviewer.reviewer &&
-                              licenseData.licenseReviewer.reviewer.region
+                              licenseData && licenseData.licenseReviewer
                                 ? licenseData.licenseReviewer.reviewer.region
                                     .name
+                                : licenseData && licenseData.renewalReviewer
+                                ? licenseData.renewalReviewer.reviewer.region
+                                    .name
+                                : licenseData &&
+                                  licenseData.goodstandingReviewer
+                                ? licenseData.goodstandingReviewer.reviewer
+                                    .region.name
                                 : "Not Assigned Yet"
                             }}
                           </h2>
@@ -181,6 +193,7 @@
 
                     <!-- Column -->
                     <div
+                      v-if="!licenseData.goodStandingCode"
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 mb-4"
                     >
                       <!-- Article -->
@@ -246,7 +259,13 @@
                         <header
                           class="flex items-center justify-between leading-tight p-2 mb-2 border-b-4"
                         >
-                          <h1 class="text-xl">License Detail</h1>
+                          <h1 class="text-xl">
+                            {{
+                              licenseData.goodStandingCode
+                                ? "Letter "
+                                : "License "
+                            }}Detail
+                          </h1>
                         </header>
 
                         <div class="grid grid-cols-2 gap-1">

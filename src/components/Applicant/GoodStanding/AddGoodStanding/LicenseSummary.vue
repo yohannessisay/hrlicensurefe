@@ -1,12 +1,18 @@
 <template>
-  <div class="container w-full mx-auto p-4">
+  <div
+    :class="
+      isDarkMode
+        ? 'container w-full mx-auto p-4 text-white'
+        : 'container w-full mx-auto p-4 text-main-400'
+    "
+  >
     <!-- Heading start -->
-    <header class="text-center mx-auto mb-2 sm:mb-4 mt-2 lg:px-20">
-      <h2 class="text-2xl leading-normal mb-2 font-bold text-main-400">
+    <header class="text-center mx-auto mb-2 sm:mb-4 mt-8">
+      <h2 class="text-3xl leading-normal mb-2 font-bold">
         Summary For Good Standing Letter
       </h2>
 
-      <h3 class="text-grey-800 leading-relaxed font-light text-lg mx-auto pb-2">
+      <h3 class="leading-relaxed font-light text-lg mx-auto pb-2">
         Here is the detail you have filled in so far
       </h3>
     </header>
@@ -14,202 +20,148 @@
     <!-- row -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div
-        class="py-2 px-12 mb-2 sm:mb-12 bg-white mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
+        :class="
+          isDarkMode
+            ? 'py-2 px-2 mb-2 sm:mb-12 bg-secondaryDark mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+            : 'py-2 px-2 mb-2 sm:mb-12 bg-white mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+        "
       >
-        <div class="border-b-2 text-main-400 mb-4">
-          <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-folder-open fa-3x text-main-400"></i>
+        <div class="border-b-2 mb-2">
+          <div class="text-gray-900 mb-2 flex justify-center">
+            <i class="fa fa-folder-open fa-3x"></i>
           </div>
-          <div class="flex justify-center text-gray-900 mb-4">
-            <h3
-              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
-            >
-              Application Detail
-            </h3>
+          <div class="flex justify-center text-gray-900">
+            <h2 class="text-2xl font-semibold">Application Detail</h2>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              Applicant Type</span
-            >
+            <h2 class="font-bold text-xl">Applicant Type</h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-lg">
               {{
                 localData && localData.applicantTypeId
                   ? localData.applicantTypeId.name
                   : ""
-              }}</span
-            >
+              }}
+            </h3>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              Department</span
-            >
+            <h2 class="text-xl">Department</h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-lg">
               {{
                 localData && localData.departmentId
                   ? localData.departmentId.name
                   : ""
-              }}</span
-            >
+              }}
+            </h3>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >Profession</span
-            >
+            <h2 class="text-xl">Profession</h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-lg">
               {{
                 localData && localData.professionTypeId
                   ? localData.professionTypeId.name
                   : ""
               }}
-            </span>
+            </h3>
           </div>
         </div>
-        <!-- <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
-              >Education Level</span
-            >
+            <h2 class="text-xl">Applicant Title</h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.professionType.educationLevelId
-                  ? localData.professionType.educationLevelId.name
-                  : ""
-              }}
-              
-              </span
-            >
-          </div>
-        </div> -->
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-          <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              Applicant Title</span
-            >
-          </div>
-          <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-lg">
               {{
                 localData && localData.applicantTitleId
                   ? localData.applicantTitleId.name
                   : ""
-              }}</span
-            >
+              }}
+            </h3>
           </div>
         </div>
       </div>
 
       <div
-        class="py-2 px-12 mb-2 sm:mb-4 bg-white rounded-lg mt-2 sm:mt-4 text-main-400 transform transition duration-300 ease-in-out hover:-translate-y-2"
+        :class="
+          isDarkMode
+            ? 'py-2 px-2 mb-2 sm:mb-12 bg-secondaryDark mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+            : 'py-2 px-2 mb-2 sm:mb-12 bg-white mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+        "
       >
-        <div class="border-b-2 text-main-400 mb-4">
+        <div class="border-b-2 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-envelope fa-3x text-main-400"></i>
+            <i class="fa fa-envelope fa-3x"></i>
           </div>
           <div class="flex justify-center text-gray-900 mb-4">
-            <h3
-              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
-            >
-              Letter Detail
-            </h3>
+            <h2 class="text-2xl font-semibold">Letter Detail</h2>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              Who issued the letter</span
-            >
+            <h2 class="text-xl">Who issued the letter</h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-lg">
               {{
                 localData && localData.whoIssuedId
                   ? localData.whoIssuedId.name
                   : ""
-              }}</span
-            >
+              }}
+            </h3>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >To whom the letter is written for</span
-            >
+            <h2 class="text-xl">To whom the letter is written for</h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-lg">
               {{
                 localData && localData.whomGoodStandingFor
                   ? localData.whomGoodStandingFor
                   : ""
-              }}</span
-            >
+              }}
+            </h3>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >License Registration Number</span
-            >
+            <h2 class="text-xl">License Registration Number</h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-lg">
               {{
                 localData && localData.licenseRegistrationNumber
                   ? localData.licenseRegistrationNumber
                   : ""
-              }}</span
-            >
+              }}
+            </h3>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              License IssuedDate</span
-            >
+            <h2 class="text-xl">License IssuedDate</h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-lg">
               {{
                 localData && localData.licenseIssuedDate
                   ? localData.licenseIssuedDate
                   : ""
-              }}</span
-            >
+              }}
+            </h3>
           </div>
         </div>
       </div>
@@ -219,29 +171,29 @@
       <div
         class="py-2 mb-2 sm:mb-4 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
-        <div class="bg-white rounded-lg p-2 mb-4 w-full">
-          <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-folder fa-3x text-main-400"></i>
+        <div
+          :class="
+            isDarkMode
+              ? 'bg-secondaryDark rounded-lg p-2 mb-4 w-full'
+              : 'bg-white rounded-lg p-2 mb-4 w-full'
+          "
+        >
+          <div class="mb-4 flex justify-center">
+            <i class="fa fa-folder fa-3x"></i>
           </div>
-          <div
-            class="flex justify-center text-gray-900 mb-4 border-b-2 text-main-400"
-          >
-            <h3
-              class="text-lg text-main-400 leading-normal mb-2 border-b-2 font-semibold text-grey-800"
-            >
+          <div class="flex justify-center mb-4 border-b-2">
+            <h3 class="text-2xl leading-normal mb-2 font-semibold">
               Files Uploaded
             </h3>
           </div>
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 ml-4 sm:w-full"
-          >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:w-full">
             <div
-              class="mt-4 mb-2 bg-white rounded-md border p-4"
+              class="mb-2 rounded-md border"
               v-for="localFile in localFileData"
               :key="localFile.documenttype"
             >
               <div class="flex justify-center">
-                <div class="mt-large bg-white rounded-md">
+                <div class="rounded-md">
                   <a
                     v-if="!isPDF(localFile.fileName)"
                     :href="localFile.image"
@@ -258,9 +210,7 @@
                     is a placeholder
                   </div>
 
-                  <h4 class="text-main-400 font-bold border-b m-2">
-                    Document Type
-                  </h4>
+                  <h4 class="font-bold border-b m-2">Document Type</h4>
                   <h6 class="m-2">{{ localFile.documenttype }}</h6>
                 </div>
               </div>
@@ -270,17 +220,19 @@
       </div>
     </div>
 
-    <div
-      class="mt-2 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
-    >
+    <div class="mt-2 grid grid-cols-1 gap-4">
       <div
-        class="py-8 px-4 mb-12 bg-white text-main-400 transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
+        :class="
+          isDarkMode
+            ? 'py-8 px-4 mb-12 bg-secondaryDark   transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2'
+            : 'py-8 px-4 mb-12 bg-white  transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2'
+        "
       >
         <div class="mb-4">
           <div class="flex justify-center">
             <label
               for="feedback"
-              class="form-label inline-block mb-2 text-xl text-main-400"
+              class="form-label inline-block mb-2 text-xl  "
               >Feedback on the process and system
               <span class="text-yellow-300">( optional/ not required )</span>
             </label>
@@ -308,7 +260,7 @@
               />
             </div>
             <h3
-              class="text-grey-800 mb-2localFileData text-xs sm:text-xl mt-2 sm:mt-0"
+              class="  mb-2lo calFileData text-base "
             >
               By checking here I hereby verify the documents and details filled
               in here are legal.
@@ -416,7 +368,7 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: { Loading, RadialProgress },
-  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
+  emits: ["changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
@@ -425,6 +377,7 @@ export default {
     let progress = computed(
       () => store.getters["goodstanding/getUploadProgress"]
     );
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let totalSize = ref(0);
     let localData = ref({});
     let localFileData = ref({});
@@ -586,6 +539,9 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       buttons.value = store.getters["goodstanding/getButtons"];
       tempDocs.value = store.getters["goodstanding/getTempDocs"];
       localData.value = window.localStorage.getItem("GSApplicationData")
@@ -630,7 +586,7 @@ export default {
         generalInfo.value.expertLevelId = 3;
       }
     });
-       const isPDF = (filename) => {
+    const isPDF = (filename) => {
       const parts = filename.split(".");
       const isPdf =
         parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
@@ -653,6 +609,7 @@ export default {
       totalSize,
       showModal,
       progress,
+      isDarkMode,
     };
   },
 };
