@@ -13,7 +13,9 @@
       <div
         class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
+        >
           <button
             type="button"
             class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 transition duration-150 ease-in-out"
@@ -59,9 +61,11 @@
                               <picture>
                                 <source
                                   :srcset="
-                                    modalData.profile && modalData.profile.profilePicture
+                                    modalData.profile &&
+                                    modalData.profile.profilePicture
                                       ? googleApi +
-                                        modalData.profile.profilePicture.filePath
+                                        modalData.profile.profilePicture
+                                          .filePath
                                       : ''
                                   "
                                   type="image/jpg"
@@ -74,10 +78,13 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-extrabold text-2xl mb-1">Personal Info</h2>
+                            <h2 class="font-extrabold text-2xl mb-1">
+                              Personal Info
+                            </h2>
                             <div class="border text-primary-600 rounded-lg p-2">
                               <p class="text-gray-500">
-                                <span class="font-semibold text-lg text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-lg text-primary-700 mb-1"
                                   >Full Name:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
@@ -85,7 +92,8 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span class="font-semibold text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
                                   >Gender:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
@@ -93,7 +101,8 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span class="font-semibold text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
                                   >Nationality:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
@@ -101,7 +110,8 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span class="font-semibold text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
                                   >Date Of Birth:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
@@ -113,7 +123,8 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span class="font-semibold text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
                                   >Marital Status:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
@@ -137,7 +148,9 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1 text-2xl">Contact Info</h2>
+                            <h2 class="font-bold mb-1 text-2xl">
+                              Contact Info
+                            </h2>
                             <div class="border text-primary-600 rounded-lg p-2">
                               <p class="text-gray-500">
                                 <span class="font-medium text-primary-700 mb-1"
@@ -171,7 +184,9 @@
                             </div>
                           </div>
                           <div class="grow ml-6 mb-4">
-                            <h2 class="font-bold mb-1 text-2xl">Education Detail</h2>
+                            <h2 class="font-bold mb-1 text-2xl">
+                              Education Detail
+                            </h2>
 
                             <div
                               class="border-2 p-2 rounded-lg m-1 text-primary-500"
@@ -181,17 +196,21 @@
                               :key="education.id"
                             >
                               <p class="">
-                                <span class="font-semibold text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
                                 <span style="color: black">
                                   {{
-                                    education.department ? education.department.name : ""
+                                    education.department
+                                      ? education.department.name
+                                      : ""
                                   }}
                                 </span>
                               </p>
                               <p class="text-gray-500">
-                                <span class="font-semibold text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
                                 <span style="color: black">
@@ -203,7 +222,8 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span class="font-semibold text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
                                 <span style="color: black">
@@ -215,7 +235,8 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span class="font-semibold text-primary-700 mb-1"
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
                                 <span style="color: black">
@@ -230,7 +251,9 @@
                           </div>
                         </div>
                       </div>
-                      <div>
+                         <div
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
+                      >
                         <label class="font-bold text-lg text-primary-600 mb-1"
                           >Actions</label
                         >
@@ -327,7 +350,9 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="
-                                    document.filePath ? googleApi + document.filePath : ''
+                                    document.filePath
+                                      ? googleApi + document.filePath
+                                      : ''
                                   "
                                   :data-title="
                                     document.documentType
@@ -394,8 +419,12 @@
   <generate-pdf :modalData="modalData"></generate-pdf>
   <revoke-license-modal :modalData="modalData"></revoke-license-modal>
   <suspend-license-modal :modalData="modalData"></suspend-license-modal>
-  <request-status-change-modal :modalData="modalData"></request-status-change-modal>
-  <previous-license :previousLicenseData="previousLicenseData"></previous-license>
+  <request-status-change-modal
+    :modalData="modalData"
+  ></request-status-change-modal>
+  <previous-license
+    :previousLicenseData="previousLicenseData"
+  ></previous-license>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -494,7 +523,9 @@ export default {
                       });
                     }
                   });
-                  modalData.value.previousEducations = [...new Set(toBeGeneratedProfs)];
+                  modalData.value.previousEducations = [
+                    ...new Set(toBeGeneratedProfs),
+                  ];
                   if (tempEvaluateResult > 1) {
                     showGenerate.value = false;
                     showPreviousLicense.value = true;
@@ -538,7 +569,9 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.newEducations = result.educations ? result.educations : {};
+            modalData.value.newEducations = result.educations
+              ? result.educations
+              : {};
             modalData.value.profile = result.profile;
             modalData.value.certifiedDate = result.certifiedDate;
 

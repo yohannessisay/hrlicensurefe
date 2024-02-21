@@ -336,7 +336,7 @@ export default {
                 });
                 setTimeout(() => {
                   window.location.reload();
-                }, 1000);
+                }, 3000);
               })
               .catch(() => {
                 toast.error("Sms is not sent", {
@@ -525,8 +525,8 @@ export default {
     ) => {
       doc.setFontSize(15);
       doc2.setFontSize(15);
-      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+      doc.text(32, 57.5, `${certificateDetail.value.licenseNumber}`);
+      doc2.text(32, 57.5, `${certificateDetail.value.licenseNumber}`);
 
       let paddingAmharic = 5;
       let paddingEnglish = 0;
@@ -620,9 +620,9 @@ export default {
         doc2.setFontSize(10);
         xPosition.value = 158;
       } else {
-        doc.setFontSize(14);
-        doc2.setFontSize(14);
-        xPosition.value = 178;
+        doc.setFontSize(13);
+        doc2.setFontSize(13);
+        xPosition.value = 150;
       }
 
       if (certificateDetail.value.educations.length <= 3) {
@@ -700,7 +700,7 @@ export default {
       doc2.setFontSize(12);
       doc.text(
         code == "AA" ? 207 : 197,
-        code == "AA" ? 160.5 : 164,
+        code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? moment(certificateDetail.value.certifiedDate).format(
@@ -711,7 +711,7 @@ export default {
       );
       doc2.text(
         code == "AA" ? 207 : 197,
-        code == "AA" ? 160.5 : 164,
+        code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? moment(certificateDetail.value.certifiedDate).format(
@@ -720,9 +720,10 @@ export default {
             : "Not Specified"
         }`
       );
+
       doc.text(
         code == "AA" ? 238 : 226,
-        code == "AA" ? 160.5 : 164,
+        code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format(
@@ -733,7 +734,7 @@ export default {
       );
       doc2.text(
         code == "AA" ? 238 : 226,
-        code == "AA" ? 160.5 : 164,
+        code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format(
@@ -767,7 +768,7 @@ export default {
       doc2.setFontSize(15);
       let aaNamePosVer = 0;
       let aaNamePosHor = 0;
-      code == "AA" ? (aaNamePosVer = -2) : (aaNamePosVer = 0);
+      code == "AA" ? (aaNamePosVer = 4) : (aaNamePosVer = 0);
       code == "AA" ? (aaNamePosHor = -15) : (aaNamePosVer = 0);
 
       //Amharic name part
@@ -815,9 +816,9 @@ export default {
         doc2.setFontSize(11);
         xPosition.value = 35;
       } else {
-        doc.setFontSize(14);
-        doc2.setFontSize(14);
-        xPosition.value = 60;
+        doc.setFontSize(13);
+        doc2.setFontSize(13);
+        xPosition.value = 40;
       }
       if (certificateDetail.value.educations.length <= 3) {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
@@ -899,7 +900,8 @@ export default {
         }
       }
       //End of Amharic part for certificate
-
+      doc.setFontSize(12);
+      doc2.setFontSize(12);
       let getAmharicLicensedDate = doc.getTextWidth(
         toEthiopian(
           moment(certificateDetail.value.certifiedDate)._d.toISOString(),
@@ -913,7 +915,7 @@ export default {
         ) + " - "
       );
       doc.text(
-        77,
+        76,
         code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
@@ -925,7 +927,7 @@ export default {
         }`
       );
       doc2.text(
-        77,
+        76,
         code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
@@ -937,7 +939,7 @@ export default {
         }`
       );
       doc.text(
-        77 + getAmharicLicensedDate,
+        76 + getAmharicLicensedDate,
         code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.licenseExpirationDate
@@ -951,7 +953,7 @@ export default {
         }`
       );
       doc2.text(
-        77 + getAmharicLicensedDate2,
+        76 + getAmharicLicensedDate2,
         code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.licenseExpirationDate
@@ -966,7 +968,7 @@ export default {
       );
     };
 
-    const downloadPdf = () => { 
+    const downloadPdf = () => {
       const userImage = certifiedUser.value.profilePicture
         ? certifiedUser.value.profilePicture.filePath
         : null;
@@ -1009,7 +1011,7 @@ export default {
         ) {
           defaultBackground = addisAbabaCertificateBackground;
           defaultCode = "AA";
-          defaultNamePos = 110;
+          defaultNamePos = 108;
           defaultProfPos = 133;
           defaultProfGap = 4;
         } else if (
@@ -1099,7 +1101,7 @@ export default {
         ) {
           multipleBackground = addisAbabaCertificateBackground;
           multipleCode = "AA";
-          defaultNamePos = 110;
+          defaultNamePos = 108;
           defaultProfPos = 133;
           defaultProfGap = 4;
         } else if (
