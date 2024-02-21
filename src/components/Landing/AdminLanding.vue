@@ -211,6 +211,7 @@ export default {
               show.value = false;
             } else {
               show.value = false;
+            
               if (loggedInData.value.isFirstTime) {
                 show.value = false;
                 toast.success("Logged In Successfully", {
@@ -221,6 +222,7 @@ export default {
                   icon: true,
                 });
                 router.push({ path: "/admin/changePassword" });
+                return;
               } else if (loggedInData.value.role.code == "UM") {
                 show.value = false;
                 toast.success("Logged In Successfully", {
@@ -231,6 +233,7 @@ export default {
                   icon: true,
                 });
                 router.push({ path: "/admin/list" });
+                return;
               } else {
                 toast.success("Logged In Successfully", {
                   timeout: 5000,
@@ -249,6 +252,7 @@ export default {
                   }
                 });
                 router.push({ path: "/admin/review" });
+                return;
               }
             }
           } else {

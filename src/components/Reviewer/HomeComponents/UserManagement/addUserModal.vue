@@ -9,14 +9,16 @@
     aria-labelledby="addUserLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+    <div class="modal-dialog modal-lg relative w-auto pointer-events-none">
       <div
         class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
+        <div
+          class="modal-header shadow-md flex flex-shrink-0 justify-end p-2 rounded-t-md"
+        >
           <button
             type="button"
-            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -25,12 +27,10 @@
         </div>
 
         <div class="modal-body relative p-4">
-          <div class="container px-6 mx-auto">
+          <div class="container px-6">
             <section class="text-gray-800">
               <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-full">
-                  <h2 class="text-2xl font-bold mb-8 px-6">Create Admin User</h2>
-                </div>
+                <h2 class="text-3xl font-bold px-6">Create User</h2>
               </div>
 
               <div class="flex justify-center">
@@ -43,7 +43,10 @@
                       :opacity="0.7"
                     ></loading>
 
-                    <form class="w-full mt-10 p-4" @submit.prevent="registerAdmin">
+                    <form
+                      class="w-full mt-10 p-4"
+                      @submit.prevent="registerAdmin"
+                    >
                       <div class="flex w-full">
                         <div class="flex flex-col w-1/2 mr-12">
                           <label class="ml-4 text-primary-700 font-bold"
@@ -93,7 +96,9 @@
                           >
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                          <label class="ml-4 text-primary-700 font-bold">Email</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >Email</label
+                          >
                           <input
                             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             type="text"
@@ -123,7 +128,9 @@
                           >
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                          <label class="ml-4 text-primary-700 font-bold">Role</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >Role</label
+                          >
                           <select
                             class="form-control block w-full px-3 py-1 h-full text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             v-model="admin.roleId"
@@ -171,10 +178,10 @@
                           >
                         </div>
                         <span v-show="expertLevel.id == 4">
-                          <label class="ml-4">Region</label>
+                          <label class="">Region</label>
                           <div>
                             <select
-                              class="form-control block w-full px-3 py-1 h-12 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                              class="form-control block w-full px-3 py-1 h-12 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                               v-model="region"
                               @change="selectedRegion"
                             >
@@ -195,7 +202,11 @@
                         </span>
 
                         <span
-                          v-show="expertLevel.id == 4 && region && region.code == 'AMH'"
+                          v-show="
+                            expertLevel.id == 4 &&
+                            region &&
+                            region.code == 'AMH'
+                          "
                           class="mr-2 ml-2"
                         >
                           <label class="ml-2">Zone</label>
@@ -223,6 +234,13 @@
 
                       <div class="flex justify-center ml-4">
                         <button
+                          type="button"
+                          class="inline-block px-6 text-white bg-yellow-300 font-medium text-xs leading-tight uppercase border rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
                           class="inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
                         >
                           Create User
@@ -234,18 +252,6 @@
               </div>
             </section>
           </div>
-        </div>
-
-        <div
-          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
-        >
-          <button
-            type="button"
-            class="inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
         </div>
       </div>
     </div>
@@ -267,7 +273,9 @@ export default {
     const store = useStore();
     let isLoading = ref(false);
     const toast = useToast();
-    const adminExpertId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
+    const adminExpertId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevelId;
     let errorMessage = ref("");
     const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role;
     let admin = {
@@ -352,7 +360,7 @@ export default {
 
     const registerAdmin = () => {
       let isValidated = validateForm(admin);
-    
+
       showLoading.value = true;
       showButtons.value = true;
       isLoading.value = true;
@@ -363,7 +371,11 @@ export default {
       } else {
         state.value.showErrorMessages = false;
         admin.name =
-          admin.firstName + " " + admin.fatherName + " " + admin.grandfatherName;
+          admin.firstName +
+          " " +
+          admin.fatherName +
+          " " +
+          admin.grandfatherName;
 
         admin.email = admin.email.toLowerCase();
 
@@ -401,13 +413,16 @@ export default {
           })
           .catch(() => {
             isLoading.value = false;
-            toast.error("Error regarding server, please try again after few minutes", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toast.error(
+              "Error regarding server, please try again after few minutes",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
 
             setTimeout(() => {
               window.location.reload();
@@ -419,11 +434,13 @@ export default {
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.email) errors.email = "Email is Required";
-      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number is Required";
+      if (!formData.phoneNumber)
+        errors.phoneNumber = "Phone Number is Required";
       if (formData.email && !isValidEmail(formData.email)) {
         errors.email = "Invalid Email";
       }
-      if (!formData.expertLevelId) errors.expertLevel = "Expert Level is required";
+      if (!formData.expertLevelId)
+        errors.expertLevel = "Expert Level is required";
       if (!formData.regionId && formData.expertLevelId == 4)
         errors.region = "Region is required";
       if (
@@ -443,7 +460,11 @@ export default {
         errors.grandfatherName = "Grandfather name is Required";
       if (!formData.roleId) errors.role = "Role is Required";
 
-      if (errors && Object.keys(errors).length === 0 && errors.constructor === Object) {
+      if (
+        errors &&
+        Object.keys(errors).length === 0 &&
+        errors.constructor === Object
+      ) {
         return null;
       } else {
         return errors;
@@ -451,7 +472,8 @@ export default {
     };
 
     const isValidEmail = (email) => {
-      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     };
 

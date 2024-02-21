@@ -9,12 +9,12 @@
       <ol class="list-reset flex">
         <li>
           <router-link to="/admin/review"
-            ><span class="text-grey-300 ">Home</span></router-link
+            ><span class="text-grey-300">Home</span></router-link
           >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="pointer-events-none  text-primary-600"
+          <a href="#" class="pointer-events-none text-primary-600"
             >User Management</a
           >
         </li>
@@ -33,7 +33,7 @@
             <button
               data-bs-toggle="modal"
               data-bs-target="#addUser"
-              class="px-2 bg-primary-700 text-white font-medium text-xs uppercase rounded    hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+              class="px-2 bg-primary-700 text-white font-medium text-xs uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             >
               <i class="fa fa-user-plus text-xl"></i>
               Add New User
@@ -60,7 +60,7 @@
                     <button
                       data-te-toggle="tooltip"
                       title="Search user"
-                      class="inline-block hover:bg-white hover:text-primary-600 px-6 py-2 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded    focus:bg-blue-700 focus:   focus:outline-none focus:ring-0 active:bg-blue-800 active:   transition duration-150 ease-in-out items-center"
+                      class="inline-block hover:bg-white hover:text-primary-600 px-6 py-2 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out items-center"
                       @click="searchUser()"
                     >
                       <svg
@@ -81,7 +81,7 @@
                     </button>
                   </div>
                 </div>
-                <div class="col-span-1">
+                <div class="col-span-1" v-if="expertLevel!='REG'">
                   <div class="mb-3 xl:w-full">
                     <label class="ml-4">Expert Level</label>
                     <select
@@ -116,7 +116,7 @@
             </div>
 
             <div
-              class="inline-block min-w-full    rounded-lg overflow-hidden bg-primary-800"
+              class="inline-block min-w-full rounded-lg overflow-hidden bg-primary-800"
             >
               <vue-table-lite
                 :is-loading="userTable.isLoading"
@@ -166,8 +166,11 @@ export default {
     let allData = ref([]);
     let searchData = ref();
     let expertLevelFilter = ref("");
+    let expertLevel = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevel.code;
     const isUserManager =
-      localStorage.getItem("role") == "UM" || localStorage.getItem("role") == "SA";
+      localStorage.getItem("role") == "UM" ||
+      localStorage.getItem("role") == "SA";
     let expertLevels = ref([
       { name: "All", code: "all" },
       { name: "Federal", code: "FED" },
@@ -197,7 +200,9 @@ export default {
             id: element.id ? element.id : "",
             FullName: element.name ? element.name : "",
             Email: element.email ? element.email : "",
-            OrganizationalUnit: element.expertLevel ? element.expertLevel.name : "",
+            OrganizationalUnit: element.expertLevel
+              ? element.expertLevel.name
+              : "",
             Role: element.role ? element.role.name : "",
             PhoneNumber: element.phoneNumber ? element.phoneNumber : "",
             ExpertLevel: element.expertLevel ? element.expertLevel.name : "",
@@ -325,6 +330,7 @@ export default {
       expertLevels,
       expertLevelFilter,
       filterExpertLevel,
+      expertLevel
     };
   },
 };
