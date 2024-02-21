@@ -1,13 +1,13 @@
 <template>
-  <section class="fixed top-0 z-50 w-full bg-white px-tiny sm:px-small glass shadow-md">
+  <section
+    class="fixed top-0 z-50 w-full bg-white px-tiny sm:px-small glass shadow-md"
+  >
     <div class="grid grid-cols-1 mt-2 sm:mt-0 sm:grid-cols-6">
       <div
         class="flex justify-center sm:justify-start col-span-5 sm:col-span-4 border-b sm:border-none mb-2"
       >
         <RenderIllustration illustration="Logo" class="hidden sm:block" />
-        <h3 class="ml-4 text-main-400 text-sm md:text-lg lg:text-2xl mdlg:text-2xl mt-3">
-          eHPEL - License
-        </h3>
+        <h3 class="ml-4 text-main-400 text-xl md: mt-3">eHPEL - License</h3>
       </div>
       <div class="col-span-5 sm:col-span-2">
         <div class="grid grid-cols-3 sm:grid-cols-3">
@@ -17,12 +17,14 @@
             data-bs-target="#showHelp"
           >
             <h4
-              class="font-bold text-main-400 border p-2 rounded-md text-sm md:text-lg lg:text-2xl mdlg:text-2xl mt-1 sm:mt-0 hover:bg-main-400 hover:text-white"
+              class="font-bold text-main-400 border p-2 rounded-md sm:text-xl text-sm mt-1 sm:mt-0 hover:bg-main-400 hover:text-white"
             >
               How to apply?
             </h4>
           </span>
-          <div class="flex items-center justify-center mb-3 w-full mt-2 sm:mt-0">
+          <div
+            class="flex items-center justify-center mb-3 w-full mt-2 sm:mt-0"
+          >
             <button
               class="bg-white py-2.5 text-main-400 font-medium border text-base leading-tight rounded hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150 ease-in-out"
               data-bs-toggle="modal"
@@ -83,8 +85,8 @@
         <div class="relative p-2 modal-body">
           <div class="flex justify-center">
             <h2 class="text-xl text-main-400">
-              This is a demo video showing you how to use the system if you are new here.
-              Thanks for watching.
+              This is a demo video showing you how to use the system if you are
+              new here. Thanks for watching.
             </h2>
           </div>
           <div class="container bg-secondaryDark">
@@ -141,13 +143,16 @@ export default {
               icon: true,
             });
           } else {
-            toast.error("Please check permission of site or your download manager", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toast.error(
+              "Please check permission of site or your download manager",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
           }
         })
         .catch(() => {
