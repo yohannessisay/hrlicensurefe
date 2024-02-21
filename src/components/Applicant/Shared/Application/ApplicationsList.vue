@@ -23,14 +23,35 @@
         >
           <!-- Article -->
           <div>
-            <h2 class="border-b-2 text-xl p-2">
-              License Number
-              <span class="text-base">{{ license.newLicenseCode }}</span>
-            </h2>
+            <div
+              class="flex items-center border-b-2 justify-between leading-tight p-2 md:p-2"
+            >
+              <h2 class="text-lg">License Number</h2>
 
-            <div class="border-b-2">
-              <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
-                <h1 class="text-xl underline">Department</h1>
+              <h2
+                :class="
+                  isDarkMode
+                    ? 'text-main-400 text-lg   mb-2'
+                    : 'text-grey-800 text-lg  mb-2'
+                "
+              >
+                {{
+                  license.newLicenseCode
+                    ? license.newLicenseCode
+                    : license.renewalCode
+                    ? license.renewalCode
+                    : license.goodStandingCode
+                    ? license.goodStandingCode
+                    : ""
+                }}
+              </h2>
+            </div>
+
+            <div class="border-b-2" v-if="!license.goodStandingCode">
+              <div
+                class="flex items-center border-b-2 justify-between leading-tight p-2 md:p-2"
+              >
+                <h1 class="text-lg">Department</h1>
 
                 <ul class="text-black text-sm">
                   <li
@@ -38,7 +59,13 @@
                     :key="education.id"
                     style="display: inline"
                   >
-                    <span class="text-black text-sm">
+                    <h2
+                      :class="
+                        isDarkMode
+                          ? 'text-main-400 text-lg'
+                          : 'text-grey-800 text-lg'
+                      "
+                    >
                       {{
                         education.department
                           ? "*" + education.department.name
@@ -46,60 +73,104 @@
                       }}
                       <span v-if="index != license.educations.length - 1">
                         ,
-                      </span></span
-                    >
+                      </span>
+                    </h2>
                   </li>
                 </ul>
               </div>
 
               <div
-                class="flex items-center justify-between leading-tight p-2 md:p-2"
+                class="flex items-center justify-between border-b-2 leading-tight p-2 md:p-2"
               >
-                <h1 class="text-lg">
-                  <a class="no-underline hover:underline" href="#">
-                    Certified Date
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
+                <h1 class="text-lg">Certified Date</h1>
+                <h2
+                  :class="
+                    isDarkMode
+                      ? 'text-main-400 text-lg'
+                      : 'text-grey-800 text-lg'
+                  "
+                >
                   {{
                     license.certifiedDate
                       ? license.certifiedDate.slice(0, 10)
                       : "Waiting for review"
                   }}
-                </p>
+                </h2>
               </div>
               <div
-                class="flex items-center justify-between leading-tight p-2 md:p-2"
+                class="flex items-center justify-between leading-tight border-b-2 p-2 md:p-2"
               >
-                <h1 class="text-lg">
-                  <a class="no-underline hover:underline" href="#">
-                    Expiry Date
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
+                <h1 class="text-lg">Expiry Date</h1>
+                <h2
+                  :class="
+                    isDarkMode
+                      ? 'text-main-400 text-lg'
+                      : 'text-grey-800 text-lg'
+                  "
+                >
                   {{
                     license.certifiedDate
                       ? license.certifiedDate.slice(0, 10)
                       : "Waiting for review"
                   }}
-                </p>
+                </h2>
               </div>
 
               <div
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
-                <h1 class="text-lg">
-                  <a class="no-underline hover:underline" href="#">
-                    Retrival Date
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
+                <h1 class="text-lg">Retrival Date</h1>
+                <h2
+                  :class="
+                    isDarkMode
+                      ? 'text-main-400 text-lg'
+                      : 'text-grey-800 text-lg'
+                  "
+                >
                   {{
                     license.retrivalDate
                       ? license.retrivalDate
                       : "Print pending"
                   }}
-                </p>
+                </h2>
+              </div>
+            </div>
+            <div class="border-b-2" v-else>
+              <div
+                class="flex items-center border-b-2 justify-between leading-tight p-2 md:p-2"
+              >
+                <h1 class="text-lg">Who issued the letter</h1>
+
+                <h2
+                  :class="
+                    isDarkMode
+                      ? 'text-main-400 text-lg'
+                      : 'text-grey-800 text-lg'
+                  "
+                >
+                  {{
+                    license && license.whoIssued ? license.whoIssued.name : ""
+                  }}
+                </h2>
+              </div>
+
+              <div
+                class="flex items-center justify-between leading-tight p-2 md:p-2"
+              >
+                <h1 class="text-lg">License Registration Number</h1>
+                <h2
+                  :class="
+                    isDarkMode
+                      ? 'text-main-400 text-lg'
+                      : 'text-grey-800 text-lg'
+                  "
+                >
+                  {{
+                    license.licenseRegistrationNumber
+                      ? license.licenseRegistrationNumber
+                      : ""
+                  }}
+                </h2>
               </div>
             </div>
             <footer
@@ -107,9 +178,13 @@
             >
               <h2 class="text-lg">Applied Date</h2>
 
-              <span class="text-sm">{{
-                license.createdAt ? license.createdAt.slice(0, 10) : ""
-              }}</span>
+              <h2
+                :class="
+                  isDarkMode ? 'text-main-400 text-lg' : 'text-grey-800 text-lg'
+                "
+              >
+                {{ license.createdAt ? license.createdAt.slice(0, 10) : "" }}
+              </h2>
             </footer>
             <div class="flex justify-center">
               <button

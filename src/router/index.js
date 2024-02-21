@@ -91,7 +91,7 @@ const routes = [
     component: () =>
       import("../components/Applicant/NewLicense/approved/approved.vue"),
   },
- 
+
   {
     path: "/Applicant/NewLicense/submitted",
     name: "ApplicantNewLicenseSubmitted",
@@ -357,15 +357,13 @@ const routes = [
     component: () =>
       import(
         "../components/Applicant/LostLicense/submitted/submittedDetail.vue"
-      )
+      ),
   },
   {
     path: "/Applicant/LostLicense/declined/",
     name: "ApplicantLostLicenseDeclined",
     component: () =>
-      import(
-        "../components/Applicant/LostLicense/declined/declined.vue"
-      )
+      import("../components/Applicant/LostLicense/declined/declined.vue"),
   },
 
   /******************************************************************************************************************************************/
@@ -631,63 +629,63 @@ const routes = [
       ),
   },
 
-    //Admin Lost License part
-    {
-      path: "/admin/lostLicense",
-      name: "AdminLostLicense",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LostLicense/Unassigned/unassigned.vue"
-        ),
-    },
-    {
-      path: "/admin/lostLicense/assigned",
-      name: "AdminLostLicenseAssigned",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LostLicense/Assigned/assigned.vue"
-        ),
-    },
-    {
-      path: "/admin/lostLicense/draft",
-      name: "AdminLostLicenseDraft",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LostLicense/Draft/draft.vue"
-        ),
-    },
-    {
-      path: "/admin/lostLicense/approved",
-      name: "AdminLostLicenseApproved",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LostLicense/Approved/approved.vue"
-        ),
-    },
-    {
-      path: "/admin/lostLicense/declined",
-      name: "AdminLostLicenseDeclined",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LostLicense/Declined/declined.vue"
-        ),
-    },
-    {
-      path: "/admin/lostLicense/printed",
-      name: "AdminLostLicensePrinted",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LostLicense/Printed/printed.vue"
-        ),
-    },
-    {
-      path: "/admin/lostLicense/evaluate/:id",
-      name: "AdminLostLicenseEvaluate",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LostLicense/Assigned/assignedEvaluation.vue"
-        ),
-    },
+  //Admin Lost License part
+  {
+    path: "/admin/lostLicense",
+    name: "AdminLostLicense",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LostLicense/Unassigned/unassigned.vue"
+      ),
+  },
+  {
+    path: "/admin/lostLicense/assigned",
+    name: "AdminLostLicenseAssigned",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LostLicense/Assigned/assigned.vue"
+      ),
+  },
+  {
+    path: "/admin/lostLicense/draft",
+    name: "AdminLostLicenseDraft",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LostLicense/Draft/draft.vue"
+      ),
+  },
+  {
+    path: "/admin/lostLicense/approved",
+    name: "AdminLostLicenseApproved",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LostLicense/Approved/approved.vue"
+      ),
+  },
+  {
+    path: "/admin/lostLicense/declined",
+    name: "AdminLostLicenseDeclined",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LostLicense/Declined/declined.vue"
+      ),
+  },
+  {
+    path: "/admin/lostLicense/printed",
+    name: "AdminLostLicensePrinted",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LostLicense/Printed/printed.vue"
+      ),
+  },
+  {
+    path: "/admin/lostLicense/evaluate/:id",
+    name: "AdminLostLicenseEvaluate",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LostLicense/Assigned/assignedEvaluation.vue"
+      ),
+  },
   //Admin Verification part
   {
     path: "/admin/verification",
@@ -913,12 +911,17 @@ const router = createRouter({
 });
 router.beforeEach(async (to, from, next) => {
   const auth = localStorage.getItem("token");
+  const userInfo = JSON.parse(localStorage.getItem("allAdminData"));
+   
   if (
+    userInfo &&
     to.path != "/admin/list" &&
     to.path != "/admin/create" &&
-    localStorage.getItem("role") === "UM"
+    !userInfo?.isFirstTime &&
+    userInfo?.role?.name === "UM"
   ) {
     next("/admin/list");
+    return;
   }
 
   if (to.matched.some((record) => record.meta.RedirectExternalUrl)) {
@@ -928,6 +931,7 @@ router.beforeEach(async (to, from, next) => {
   }
   if (to.path.includes("/resetpassword")) {
     next();
+    return;
   } else if (
     !auth &&
     to.path != "/landing" &&
@@ -935,9 +939,12 @@ router.beforeEach(async (to, from, next) => {
     to.path != "/verifyOTP" &&
     to.path != "/admin" &&
     to.name != "scannedCertifiedUser"
-  )
+  ) {
     next("/landing");
-  else next();
+    return;
+  } else {
+    next();
+  }
 });
 
 router.beforeResolve((to, from, next) => {

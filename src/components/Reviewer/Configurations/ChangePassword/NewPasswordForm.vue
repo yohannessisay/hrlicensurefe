@@ -1,7 +1,7 @@
 <template>
   <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="submitForm">
     <div class="flex">
-      <div class="flex flex-col block mx-auto w-1/2">
+      <div class="flex flex-col  mx-auto w-1/2">
         <!-- <span v-show="!isFirstTimeLogin"> -->
         <label class="text-primary-700" v-show="!isFirstTimeLogin"
           >Old Password</label

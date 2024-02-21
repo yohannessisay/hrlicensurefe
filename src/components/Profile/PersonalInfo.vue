@@ -2,58 +2,70 @@
   <!-- If user clicks HRA -->
   <div class="w-screen max-w-4xl" v-if="approveStatus == 1">
     <div
-      class="flex flex-col mt-medium w-full bg-white blue-box-shadow-light rounded mb-large"
+      :class="
+        isDarkMode
+          ? 'flex flex-col mt-medium p-2 w-full bg-secondaryDark text-white blue-box-shadow-light rounded mb-large'
+          : 'flex flex-col mt-medium p-2 w-full bg-white blue-box-shadow-light rounded mb-large'
+      "
     >
-      <h2 class="font-bold ml-56 mt-4">
-        Search here if you are registered in HRA
-      </h2>
-      <div class="flex justify-center mt-4">
-        <div class="mb-3 xl:w-96">
-          <div
-            class="input-group relative flex flex-wrap items-stretch w-full mb-4 gap-2"
+      <div class="flex justify-center">
+        <h2 class="font-bold mb-4 mt-4 text-xl">
+          Search here using File Number and Employee ID, both are required
+        </h2>
+      </div>
+      <div class="flex justify-center">
+        <div class="grid grid-cols-1 gap-4">
+          <input
+            type="search"
+            class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out hover:text-primary-600 hover:border focus:outline-none"
+            placeholder="Employee ID *"
+            aria-label="Search"
+            aria-describedby="button-addon2"
+            v-model="searchEmployee"
+            required
+          />
+          <input
+            type="search"
+            class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out space-x-7 > * + * focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            placeholder="File Number *"
+            aria-label="Search"
+            aria-describedby="button-addon2"
+            v-model="searchByFileNumber"
+            required
+          />
+          <button
+            class="btn inline-block px-6 py-4 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
+            type="button"
+            id="button-addon2"
+            @click="searchUser()"
+            required
           >
-            <input
-              type="search"
-              class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out hover:text-primary-600 hover:border focus:outline-none"
-              placeholder="Employee ID *"
-              aria-label="Search"
-              aria-describedby="button-addon2"
-              v-model="searchEmployee"
-              required
-            />
-            <input
-              type="search"
-              class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out space-x-7 > * + * focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              placeholder="File Number *"
-              aria-label="Search"
-              aria-describedby="button-addon2"
-              v-model="searchByFileNumber"
-              required
-            />
-            <button
-              class="btn inline-block px-6 py-2.5 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
-              type="button"
-              id="button-addon2"
-              @click="searchUser()"
-              required
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="search"
+              class="w-4 ml-4"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
             >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fas"
-                data-icon="search"
-                class="w-4 ml-4"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                ></path>
-              </svg>
-            </button>
-          </div>
+              <path
+                fill="currentColor"
+                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <button
+            class="inline-block px-6 py-2.5 bg-white hover:text-white hover:bg-primary-600 hover:text-white text-primary-600 border font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
+            @click="$emit('back', 0)"
+            type="button"
+          >
+            {{ $t("Back") }}
+          </button>
         </div>
       </div>
     </div>
@@ -62,10 +74,16 @@
   <!-- If user clicks New profile -->
   <div class="w-screen max-w-4xl mb-20 p-4" v-if="approveStatus == 2">
     <div
-      class="flex flex-col w-full form_wrapper bg-white border rounded-md mb-large"
+      :class="
+        isDarkMode
+          ? 'flex flex-col w-full form_wrapper bg-secondaryDark text-white  border rounded-md mb-large'
+          : 'flex flex-col w-full form_wrapper  text-main-400 border rounded-md mb-large'
+      "
     >
       <div class="flex justify-center">
-        <h1 class="text-main-400 text-3xl">Complete profile data</h1>
+        <h1 class="text-3xl">
+          {{ $t(`Complete profile data`) }}
+        </h1>
       </div>
 
       <form
@@ -75,9 +93,8 @@
         <h2
           class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2"
         >
-          Please upload your own personal picture where the preferred size is in
-          a passport size format which is 3 X 4 as this photo will be used in
-          your generated license
+          Kindly submit your photo in a passport-size format measuring 3 X 4.
+          This photo will be the one that will be printed in your final license.
         </h2>
         <h2
           class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2"
@@ -88,7 +105,7 @@
         <div class="flex mb-4 justify-center">
           <div class="flex mb-2 justify-center" v-if="showUpload">
             <label class="text-primary-700 text-justify">
-              <div class="dropbox ml-8">
+              <div class="dropbox sm:ml-8">
                 <input
                   type="file"
                   id="photoFile"
@@ -97,10 +114,10 @@
                   accept=".jpeg,.jpg,.png,.heic,.heif"
                   v-on:change="handleFileUpload()"
                   style="margin-bottom: 15px !important"
-                /> 
+                />
                 <p>
-                  Drag your Profile Picture here to begin<br />
-                  or click to browse
+                  {{ $t(`Drag your Profile Picture here to begin`) }}<br />
+                  {{ $t(`or click to browse`) }}
                 </p>
               </div>
 
@@ -115,7 +132,7 @@
           </div>
 
           <picture v-if="!showUpload && isImage">
-            <div class="flex justify-center ">
+            <div class="flex justify-center">
               <span
                 @click="reset()"
                 class="ml-4 mb-4 cursor-pointer border text-white hover:text-main-400 rounded-lg p-2 hover:bg-white bg-main-400"
@@ -145,10 +162,10 @@
         </div>
 
         <!-- English Name Part -->
-        <h2 class="text-main-400 text-xl">Name (English)</h2>
+        <h2 class="text-main-400 text-xl">{{ $t("Name") }} (English)</h2>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2 mb-8">
           <div class="flex">
-            <div class="form-floating">
+            <div class="form-floating w-full">
               <input
                 type="text"
                 class="capitalize form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
@@ -162,7 +179,7 @@
                 placeholder="First name"
               />
               <label for="floatingInput" class="text-grey-800 text-lg"
-                >Name
+                >{{ $t("Name") }}
                 <span class="text-red-300">*</span>
               </label>
               <span
@@ -173,7 +190,7 @@
             </div>
           </div>
           <div class="flex">
-            <div class="form-floating">
+            <div class="form-floating w-full">
               <input
                 type="text"
                 class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
@@ -186,7 +203,8 @@
                 placeholder="First name"
               />
               <label for="floatingInput" class="text-grey-800 text-lg"
-                >Father Name <span class="text-red-300">*</span></label
+                >{{ $t("Father Name") }}
+                <span class="text-red-300">*</span></label
               >
               <span
                 v-if="personalInfoErrors.fatherName"
@@ -196,7 +214,7 @@
             </div>
           </div>
           <div class="flex">
-            <div class="form-floating xl:w-96">
+            <div class="form-floating w-full">
               <input
                 type="text"
                 class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
@@ -209,7 +227,8 @@
                 placeholder="First name"
               />
               <label for="floatingInput" class="text-grey-800 text-lg"
-                >Grandfather Name <span class="text-red-300">*</span></label
+                >{{ $t("Grandfather Name") }}
+                <span class="text-red-300">*</span></label
               >
               <span
                 v-if="personalInfoErrors.grandFatherName"
@@ -223,13 +242,13 @@
         <!-- End Of English Name Part -->
 
         <!-- Amharic Name Part -->
-        <h2 class="text-main-400 text-xl">Name (Amharic)</h2>
+        <h2 class="text-main-400 text-xl">{{ $t("Name") }} (Amharic)</h2>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2 mb-8">
-          <div class="flex">
-            <div class="form-floating mb-3 xl:w-96">
+          <div class="flex mt-2">
+            <div class="form-floating mb-3 w-full">
               <input
                 type="text"
-                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeName"
                 id="amhName"
@@ -239,10 +258,10 @@
             </div>
           </div>
           <div class="flex">
-            <div class="form-floating mb-3 xl:w-96">
+            <div class="form-floating mb-3 w-full">
               <input
                 type="text"
-                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeFatherName"
                 id="amhFName"
@@ -254,10 +273,10 @@
             </div>
           </div>
           <div class="flex">
-            <div class="form-floating mb-3 xl:w-96">
+            <div class="form-floating mb-3 w-full">
               <input
                 type="text"
-                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:border-main-400 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeGrandFatherName"
                 id="amhGName"
@@ -273,15 +292,13 @@
         <!-- End Of English Name Part -->
 
         <!-- General personal info Part -->
-        <h2 class="text-main-400 text-xl">General Information</h2>
-        <div
-          class="text-main-400 grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2"
-        >
-          <div class="flex">
+        <h2 class="text-xl">{{ $t("General Information") }}</h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2">
+          <div class="flex mt-2">
             <div class="form-floating mb-3 w-full mt-2">
               <input
                 type="date"
-                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2"
+                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out"
                 :max="minimumBirthDate"
                 min="1899-01-01"
                 v-model="personalInfo.dateOfBirth"
@@ -292,7 +309,8 @@
                 id="birthDate"
               />
               <label for="birthDate" class="text-grey-800 text-lg"
-                >Date of Birth <span class="text-red-300">*</span></label
+                >{{ $t("Date of Birth") }}
+                <span class="text-red-300">*</span></label
               >
               <div
                 v-if="
@@ -311,8 +329,8 @@
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 ml-2 mt-2">
               <div class="flex flex-col w-full">
-                <label class="text-main-400 text-lg"
-                  >Gender <span class="text-red-300">*</span></label
+                <label class="text-lg"
+                  >{{ $t("Gender") }} <span class="text-red-300">*</span></label
                 >
                 <div class="flex w-full">
                   <div class="flex flex-col mb-small w-full">
@@ -327,11 +345,8 @@
                           isRegisterdHRAuser == true && searchResultData.gender
                         "
                       />
-                      <label
-                        class="ml-tiny flex flex-col text-grey-800"
-                        for="male"
-                      >
-                        Male
+                      <label class="ml-tiny flex flex-col" for="male">
+                        {{ $t("Male") }}
                       </label>
                     </div>
                   </div>
@@ -346,8 +361,8 @@
                         isRegisterdHRAuser == true && searchResultData.gender
                       "
                     />
-                    <label class="ml-tiny text-grey-800" for="female">
-                      Female
+                    <label class="ml-tiny" for="female">
+                      {{ $t("Female") }}
                     </label>
                   </div>
                 </div>
@@ -360,13 +375,29 @@
               </div>
             </div>
           </div>
+          <div class="flex mt-2">
+            <div class="form-floating w-full">
+              <input
+                type="number"
+                class="form-control block w-full text-base font-normal text-main-400 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out"
+                v-model="personalInfo.poBox"
+                :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
+                id="pobox"
+                placeholder="Po-box"
+              />
+              <label for="pobox" class="text-grey-700">{{
+                $t("Po-box")
+              }}</label>
+            </div>
+          </div>
         </div>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div class="flex mt-2">
+          <div class="flex mt-4">
             <div class="flex justify-center">
-              <div class="mb-3 w-full ml-2">
-                <label class="text-grey-800 text-lg"
-                  >Nationality <span class="text-red-300">*</span></label
+              <div class="sm:mb-3 w-full">
+                <label class="text-lg"
+                  >{{ $t("Nationality") }}
+                  <span class="text-red-300">*</span></label
                 >
                 <select
                   class="form-select text-main-400 appearance-none block w-full px-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
@@ -393,10 +424,11 @@
               </div>
             </div>
           </div>
-          <div class="flex mt-2">
-            <div class="mb-3 w-full sm:ml-2 md:ml-2 mdlg:ml-2 ml-2">
-              <label class="text-grey-800 text-lg"
-                >Marital Status <span class="text-red-300">*</span></label
+          <div class="flex sm:mt-4">
+            <div class="mb-3 w-full">
+              <label class="text-lg"
+                >{{ $t("Marital Status") }}
+                <span class="text-red-300">*</span></label
               >
               <select
                 class="form-select text-main-400 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
@@ -407,11 +439,11 @@
                 "
               >
                 >
-                <option value="1">Single</option>
-                <option value="2">Married</option>
-                <option value="3">Divorced</option>
-                <option value="4">Widowed</option>
-                <option value="5">Separated</option>
+                <option value="1">{{ $t("Single") }}</option>
+                <option value="2">{{ $t("Married") }}</option>
+                <option value="3">{{ $t("Divorced") }}</option>
+                <option value="4">{{ $t("Widowed") }}</option>
+                <option value="5">{{ $t("Separated") }}</option>
               </select>
               <span
                 v-if="personalInfoErrors.maritalStatus"
@@ -420,28 +452,21 @@
               >
             </div>
           </div>
-          <div class="flex mt-2">
-            <div class="form-floating w-full">
-              <input
-                type="number"
-                class="form-control block w-full text-base font-normal text-main-400 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2"
-                v-model="personalInfo.poBox"
-                :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
-                id="pobox"
-                placeholder="Po-box"
-              />
-              <label for="pobox" class="text-grey-700">Po-box</label>
-            </div>
-          </div>
         </div>
 
         <!-- General personal info Part -->
 
-        <div class="flex justify-center mb-24">
+        <div class="flex justify-center border-t-2 mt-8 mb-2">
           <button
-            class="transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full ml-auto mt-4 rounded-lg text-md shadow-sm hover: font-semibold text-center inline-block"
+            @click="$emit('back', 0)"
+            class="transition duration-200 w-64 mt-8 bg-white text-main-400 hover:text-white hover:bg-main-400 border rounded-lg text-md shadow-sm font-semibold text-center"
           >
-            Next
+            {{ $t("Back") }}
+          </button>
+          <button
+            class="transition duration-200 w-64 mt-8 bg-main-400 text-white hover:text-main-400 hover:bg-white rounded-lg text-md shadow-sm font-semibold text-center"
+          >
+            {{ $t("Next") }}
           </button>
         </div>
       </form>
@@ -456,8 +481,8 @@ import { useToast } from "vue-toastification";
 import Compressor from "compressorjs";
 export default {
   components: {},
-  props: ["activeState", "approvalModal"],
-  emits: ["nextStep", "changeActiveState"],
+  props: ["activeState", "approvalModal", "isDarkMode"],
+  emits: ["nextStep", "changeActiveState", "back"],
   setup(props, { emit }) {
     const store = useStore();
     let approveStatus = ref(props.approvalModal);
@@ -475,6 +500,7 @@ export default {
     let minimumBirthDate = new Date(`${new Date().getFullYear() - 18}`)
       .toISOString()
       .slice(0, 10);
+
     let maritalStatus = ref("");
     let invalidBirthDate = ref(false);
     const hraUserStat = ref(false);
@@ -536,7 +562,6 @@ export default {
     const handleFileUpload = async () => {
       showUpload.value = false;
       photoFile.value = photoFileP?.value?.files[0];
-      let reader = new FileReader();
       new Compressor(photoFile.value, {
         quality: 0.5,
 
@@ -822,6 +847,7 @@ export default {
       fetchRegions();
       fetchNationalities();
     });
+
     return {
       photoFile,
       photoFileP,
@@ -905,7 +931,6 @@ img {
 }
 
 .form_wrapper {
-  background: #fff;
   width: 800px;
   max-width: 100%;
   box-sizing: border-box;

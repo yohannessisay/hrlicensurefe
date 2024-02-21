@@ -9,6 +9,7 @@
 import ModalIdle from "./sharedComponents/ModalIdle";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 export default {
   components: {
     ModalIdle,
@@ -19,10 +20,17 @@ export default {
     },
   },
   setup() {
+    const i18n = useI18n();
+    const locale = localStorage.getItem("locale")
+      ? JSON.parse(localStorage.getItem("locale"))
+      : "en";
     const router = useRouter();
     onMounted(() => {
       if (window.navigator.onLine == false) {
         router.push({ path: "/404" });
+      }
+      if (locale) {
+        i18n.locale.value = locale;
       }
     });
   },

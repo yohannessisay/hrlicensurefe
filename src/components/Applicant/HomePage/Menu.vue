@@ -26,8 +26,8 @@
               <div
                 :class="
                   isDarkMode
-                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
-                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    ? 'bg-secondaryDark text-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white text-main-400 box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
                 "
                 data-bs-toggle="modal"
                 data-bs-target="#NewLicenseModal"
@@ -44,7 +44,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                  <h1 class="text-2xl text-main-400">New License</h1>
+                  <h1 class="text-2xl ">New License</h1>
                 </div>
               </div>
             </div>
@@ -54,8 +54,8 @@
               <div
                 :class="
                   isDarkMode
-                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
-                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    ? 'bg-secondaryDark text-white  box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box rounded-2xl text-main-400  hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
                 "
                 @mouseover="changeModalData('Renewal')"
                 data-bs-toggle="modal"
@@ -72,7 +72,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                  <h1 class="text-2xl text-main-400">Renewal</h1>
+                  <h1 class="text-2xl">Renewal</h1>
                 </div>
               </div>
             </div>
@@ -82,8 +82,8 @@
               <div
                 :class="
                   isDarkMode
-                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
-                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    ? 'bg-secondaryDark box text-white rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box rounded-2xl text-main-400 hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
                 "
                 data-bs-toggle="modal"
                 data-bs-target="#GoodStandingModal"
@@ -100,7 +100,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                  <h1 class="text-2xl text-main-400">Goodstanding</h1>
+                  <h1 class="text-2xl ">Goodstanding</h1>
                 </div>
               </div>
             </div>
@@ -110,8 +110,8 @@
               <div
                 :class="
                   isDarkMode
-                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
-                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    ? 'bg-secondaryDark box text-white rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box text-main-400 rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
                 "
                 data-bs-target="#LicenseDesignationModal"
                 @mouseover="changeModalData('LicenseDesignation')"
@@ -127,7 +127,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-1">
-                  <h1 class="text-2xl text-main-400">License Designation</h1>
+                  <h1 class="text-2xl ">License Designation</h1>
                 </div>
               </div>
             </div>
@@ -138,8 +138,8 @@
               <div
                 :class="
                   isDarkMode
-                    ? 'bg-secondaryDark box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
-                    : 'bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    ? 'bg-secondaryDark box text-white  rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
+                    : 'bg-white box text-main-400 rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer'
                 "
                 data-bs-target="#LostLicenseModal"
                 @mouseover="changeModalData('LostLicense')"
@@ -155,7 +155,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-1">
-                  <h1 class="text-2xl text-main-400">Lost License</h1>
+                  <h1 class="text-2xl ">Lost License</h1>
                 </div>
               </div>
             </div>

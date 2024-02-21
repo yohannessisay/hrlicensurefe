@@ -1,25 +1,5 @@
 <template>
-  <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
-    <ol class="list-reset flex">
-      <li>
-        <router-link to="/menu">
-          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
-            >Home</a
-          >
-        </router-link>
-      </li>
-      <li><span class="text-gray-500 mx-2">/</span></li>
-      <li>
-        <router-link to="/Applicant/GoodStanding">
-          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
-            >Goodstanding</a
-          >
-        </router-link>
-      </li>
-      <li><span class="text-gray-500 mx-2">/</span></li>
-      <li :class="isDarkMode ? 'text-main-400' : 'text-main-400'">Apply</li>
-    </ol>
-  </nav>
+  <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
 
   <div class="mt-small flex justify-center">
     <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
@@ -54,7 +34,11 @@
                 >Applicant Type</label
               ><span class="text-red-300">*</span>
               <select
-                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                :class="
+                  isDarkMode
+                    ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                "
                 aria-label="Default select example"
                 @change="checkApplicantType(generalInfo.applicantTypeId)"
                 v-model="generalInfo.applicantTypeId"
@@ -88,7 +72,11 @@
                 ><span class="text-red-300">*</span>
 
                 <select
-                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  :class="
+                    isDarkMode
+                      ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                      : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                  "
                   aria-label="Default select example"
                   v-model="generalInfo.applicantTitleId"
                   required
@@ -113,11 +101,11 @@
           "
         >
           <h2 class="text-yellow-300 text-lg">
-          ***Please select the region you are applying for, not where you are currently
-          living***
-        </h2>
+            ***Please select the region you are applying for, not where you are
+            currently living***
+          </h2>
           <h2 class="text-yellow-300 font-bold text-base mb-4">
-             *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
+            *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
           </h2>
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
@@ -127,7 +115,11 @@
                 >Region<span class="text-red-300">*</span></label
               >
               <select
-                class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                :class="
+                  isDarkMode
+                    ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                "
                 v-model="generalInfo.regionSelected"
                 @change="regionChangeHandler()"
                 required
@@ -145,15 +137,19 @@
               class="flex flex-col"
               v-if="
                 generalInfo.regionSelected &&
-                generalInfo.regionSelected.code != 'FED' &&
-                generalInfo.regionSelected.code != 'HAR'
+                  generalInfo.regionSelected.code != 'FED' &&
+                  generalInfo.regionSelected.code != 'HAR'
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                 >Zone<span class="text-red-300">*</span></label
               >
               <select
-                class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                :class="
+                  isDarkMode
+                    ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                "
                 @change="zoneChangeHandler()"
                 v-model="generalInfo.zoneSelected"
               >
@@ -166,14 +162,18 @@
               class="flex flex-col"
               v-if="
                 generalInfo.regionSelected &&
-                generalInfo.regionSelected.code != 'FED'
+                  generalInfo.regionSelected.code != 'FED'
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                 >Woreda<span class="text-red-300">*</span></label
               >
               <select
-                class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                :class="
+                  isDarkMode
+                    ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                "
                 v-model="generalInfo.woredaSelected"
                 required
               >
@@ -198,7 +198,11 @@
                 >Department</label
               ><span class="text-red-300">*</span>
               <select
-                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                :class="
+                  isDarkMode
+                    ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                "
                 v-model="generalInfo.departmentId"
                 @change="setDepartment()"
                 required
@@ -218,7 +222,11 @@
                 >Education Level</label
               ><span class="text-red-300">*</span>
               <select
-                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                :class="
+                  isDarkMode
+                    ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                "
                 :disabled="!isDepartmentSelected"
                 v-model="generalInfo.educationLevelId"
                 @change="educationalLevelChange()"
@@ -240,7 +248,11 @@
                   >Profession</label
                 ><span class="text-red-300">*</span>
                 <select
-                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  :class="
+                    isDarkMode
+                      ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                      : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                  "
                   :disabled="!isEdLevelSelected"
                   @change="checkOtherProfession()"
                   v-model="generalInfo.professionTypeId"
@@ -262,12 +274,16 @@
                   type="text"
                   :required="
                     generalInfo.applicantTypeId.code != 'FOR' &&
-                    generalInfo.otherProfessionType &&
-                    generalInfo.otherProfessionType.length > 0
+                      generalInfo.otherProfessionType &&
+                      generalInfo.otherProfessionType.length > 0
                   "
                   name="otherProf"
                   v-model="generalInfo.otherProfessionType"
-                  class="mb-2 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  :class="
+                    isDarkMode
+                      ? 'appearance-none bg-primary-100 mb-2 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                      : 'appearance-none block w-full px-3 mb-2 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                  "
                   autocomplete="off"
                   placeholder="Profession english title"
                 />
@@ -279,11 +295,15 @@
                   name="otherProfAmh"
                   :required="
                     generalInfo.applicantTypeId.code != 'FOR' &&
-                    generalInfo.otherProfessionTypeAmharic &&
-                    generalInfo.otherProfessionTypeAmharic.length > 0
+                      generalInfo.otherProfessionTypeAmharic &&
+                      generalInfo.otherProfessionTypeAmharic.length > 0
                   "
                   v-model="generalInfo.otherProfessionTypeAmharic"
-                  class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  :class="
+                    isDarkMode
+                      ? 'appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                      : 'appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                  "
                   autocomplete="off"
                   placeholder="Profession amharic title"
                 />
@@ -315,7 +335,11 @@
                 name="otherProfAmh"
                 required
                 v-model="generalInfo.otherApplicantPosition"
-                class="mt-1 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                :class="
+                  isDarkMode
+                    ? 'appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out mt-1'
+                    : 'appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out mt-1'
+                "
                 autocomplete="off"
                 placeholder="Other Applicant Position"
               />
@@ -327,13 +351,13 @@
         <div
           :class="
             isDarkMode
-              ? ' rounded-sm bg-secondaryDark   mb-8'
-              : ' rounded-sm bg-white mb-8'
+              ? ' rounded-sm bg-secondaryDark  '
+              : ' rounded-sm bg-white '
           "
         >
           <div class="container mx-auto">
             <div
-              class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
+              class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 p-4 border-b"
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
@@ -346,7 +370,11 @@
                     type="text"
                     name="whomGS"
                     v-model="generalInfo.whomGoodStandingFor"
-                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    :class="
+                      isDarkMode
+                        ? 'appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                        : 'appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    "
                     autocomplete="off"
                     placeholder=""
                     required
@@ -366,7 +394,11 @@
                     type="date"
                     name="issuedDate"
                     v-model="generalInfo.licenseIssuedDate"
-                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    :class="
+                      isDarkMode
+                        ? 'appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                        : 'appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    "
                     autocomplete="off"
                     placeholder="example-MR,MRS"
                     required
@@ -385,7 +417,11 @@
                     type="text"
                     name="licenseNum"
                     v-model="generalInfo.licenseRegistrationNumber"
-                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    :class="
+                      isDarkMode
+                        ? 'appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                        : 'appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    "
                     autocomplete="off"
                     placeholder=""
                     required
@@ -402,7 +438,11 @@
                   ><span class="text-red-300">*</span>
 
                   <select
-                    class="w-full form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    :class="
+                      isDarkMode
+                        ? 'form-select appearance-none bg-primary-100 block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                        : 'form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                    "
                     v-model="generalInfo.whoIssuedId"
                     required
                   >
@@ -428,16 +468,22 @@
           :color="'#2F639D'"
           :opacity="1"
         ></loading>
-        <div class="flex justify-end mb-2 mr-1 bg-white">
+        <div
+          :class="
+            isDarkMode
+              ? 'flex justify-end mb-2  bg-secondaryDark p-2'
+              : 'flex justify-end mb-2 bg-white p-2'
+          "
+        >
           <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+            class="float-right mb-4 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             type="submit"
             @click="saveDraft()"
           >
             Save as draft
           </button>
           <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+            class="float-right mb-4 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             type="submit"
           >
             Next
@@ -449,20 +495,26 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, getCurrentInstance } from "vue";
+import { ref, onMounted } from "vue";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
+import PageHeader from "../../Shared/PagesHeader.vue";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["activeState"],
-  components: { Loading },
-  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
+  components: { Loading, PageHeader },
+  emits: [ "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
     let isLoading = ref(false);
+    const path = ref([
+      { name: "Home", link: "/menu" },
+      { name: "Goodstanding", link: "/Applicant/Goodstanding" },
+      { name: "Apply", link: "/Applicant/Goodstanding" }
+    ]);
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: JSON.parse(
@@ -488,7 +540,7 @@ export default {
       departmentId: "",
       expertLevelId: "",
       otherApplicantPosition: "",
-      licenseFile: [],
+      licenseFile: []
     });
     let showOtherProfession = ref(false);
     let localData = ref([]);
@@ -508,7 +560,7 @@ export default {
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let professionalTypes = ref([]);
 
-    const checkApplicantType = (applicantType) => {
+    const checkApplicantType = applicantType => {
       generalInfo.value.regionId = null;
       generalInfo.value.zoneId = null;
       generalInfo.value.woredaId = null;
@@ -524,15 +576,15 @@ export default {
     const zoneChangeHandler = () => {
       fetchWoredas();
     };
-    const convertOtherProf = (inputString) => {
+    const convertOtherProf = inputString => {
       let trimmedString = inputString.replace(/\s+/g, " ").trim();
-      let formattedString = trimmedString.replace(/\b\w/g, function (match) {
+      let formattedString = trimmedString.replace(/\b\w/g, function(match) {
         return match.toUpperCase();
       });
 
       return formattedString;
     };
-    const convertOtherProfAmh = (inputString) => {
+    const convertOtherProfAmh = inputString => {
       let trimmedString = inputString.replace(/\s+/g, " ").trim();
 
       return trimmedString;
@@ -551,7 +603,7 @@ export default {
             generalInfo.value.zoneSelected = {
               name: "Default Harar",
               id: 464,
-              code: "ZN_HAR_DEF_54",
+              code: "ZN_HAR_DEF_54"
             };
             fetchWoredas();
             break;
@@ -573,7 +625,7 @@ export default {
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then((res) => {
+        .then(res => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -604,53 +656,53 @@ export default {
     };
 
     const fetchApplicantType = () => {
-      store.dispatch("goodstanding/getApplicantType").then((res) => {
+      store.dispatch("goodstanding/getApplicantType").then(res => {
         applicantTypes.value = res.data.data;
       });
     };
     const fetchApplicantTitle = () => {
-      store.dispatch("goodstanding/getApplicantTitle").then((res) => {
+      store.dispatch("goodstanding/getApplicantTitle").then(res => {
         applicantTitle.value = res.data.data;
       });
     };
 
     const fetchDepartments = () => {
-      store.dispatch("goodstanding/getDepartmentType").then((res) => {
+      store.dispatch("goodstanding/getDepartmentType").then(res => {
         departments.value = res.data.data;
       });
     };
     const fetchApplicationPositions = () => {
-      store.dispatch("goodstanding/getApplicantPosition").then((res) => {
+      store.dispatch("goodstanding/getApplicantPosition").then(res => {
         applicationPositions.value = res.data.data;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("goodstanding/getRegions").then((res) => {
+      store.dispatch("goodstanding/getRegions").then(res => {
         regions.value = res.data.data;
       });
     };
     const fetchZone = () => {
       store
         .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then((res) => {
+        .then(res => {
           zones.value = res.data.data;
         });
     };
     const fetchWoredas = () => {
       store
         .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
-        .then((res) => {
+        .then(res => {
           woredas.value = res.data.data;
         });
     };
     const fetchProfessionalType = async (departmentId, educationalLevelId) => {
       let profession = {
         departmentId: departmentId,
-        educationalLevelId: educationalLevelId,
+        educationalLevelId: educationalLevelId
       };
       store
         .dispatch("newlicense/getProfessionalTypes", profession)
-        .then((res) => {
+        .then(res => {
           professionalTypes.value = res.data.data;
         });
     };
@@ -675,10 +727,10 @@ export default {
         .value.otherProfessionType
         ? convertOtherProf(generalInfo.value.otherProfessionType)
         : ""),
-        (generalInfo.value.professionType.otherProfessionTypeAmharic =
-          generalInfo.value.otherProfessionTypeAmharic
-            ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
-            : "");
+        (generalInfo.value.professionType.otherProfessionTypeAmharic = generalInfo
+          .value.otherProfessionTypeAmharic
+          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+          : "");
       generalInfo.value.professionType.other_applicant_position = generalInfo
         .value.otherApplicantPosition
         ? convertOtherProf(generalInfo.value.otherApplicantPosition)
@@ -714,22 +766,11 @@ export default {
       window.location.reload();
     };
     const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationLevel").then((res) => {
+      store.dispatch("lookups/getEducationLevel").then(res => {
         educationLevels.value = res.data.data;
       });
     };
-    const darkMode = () => {
-      const instance = getCurrentInstance();
-      emit("darkMode");
-      if (isDarkMode.value == true) {
-        isDarkMode.value = false;
-        instance?.proxy?.forceUpdate();
-      } else {
-        isDarkMode.value = true;
 
-        instance?.proxy?.forceUpdate();
-      }
-    };
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
       isLoading.value = true;
@@ -785,7 +826,7 @@ export default {
               ? convertOtherProfAmh(
                   generalInfo.value.otherProfessionTypeAmharic
                 )
-              : "",
+              : ""
           },
           other_applicant_position: generalInfo.value.otherApplicantPosition
             ? convertOtherProf(generalInfo.value.otherApplicantPosition)
@@ -803,10 +844,8 @@ export default {
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
-          feedback: generalInfo.value.feedback
-            ? generalInfo.value.feedback
-            : "",
-        },
+          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : ""
+        }
       };
       store
         .dispatch("goodstanding/addGoodstandingLicense", license)
@@ -816,7 +855,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           });
           isLoading.value = false;
           localStorage.removeItem("GSApplicationData");
@@ -825,6 +864,9 @@ export default {
     };
 
     onMounted(async () => {
+      window.addEventListener("darkModeChanged", data => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       fetchApplicantType();
       fetchDepartments();
 
@@ -864,8 +906,7 @@ export default {
       zoneChangeHandler,
       educationalLevelChange,
       setDepartment,
-      submit,
-      darkMode,
+      submit, 
       fetchZone,
       showOtherProfession,
       checkOtherApplicantPosition,
@@ -888,8 +929,9 @@ export default {
       clearLocalData,
       localData,
       isLoading,
+      path
     };
-  },
+  }
 };
 </script>
 <style>

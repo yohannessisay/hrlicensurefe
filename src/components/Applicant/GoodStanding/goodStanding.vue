@@ -2,8 +2,7 @@
   <main-content :url="'goodstanding'">
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1" class="">
-        <GeneralInfo
-          @dark-mode="toggleDarkMode()"
+        <GeneralInfo 
           :activeState="1"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -12,8 +11,7 @@
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 2" class="">
-        <upload
-          @dark-mode="toggleDarkMode()"
+        <upload 
           :activeState="2"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -22,8 +20,7 @@
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 3" class="">
-        <GoodStandingSummary
-          @dark-mode="toggleDarkMode()"
+        <GoodStandingSummary 
           :activeState="4"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -38,9 +35,8 @@ import GeneralInfo from "./AddGoodStanding/generalInformation.vue";
 import Upload from "./AddGoodStanding/Upload.vue";
 import MainContent from "../Shared/Menu.vue";
 import GoodStandingSummary from "./AddGoodStanding/LicenseSummary.vue";
-import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import darkModeService from "../Shared/services/darkModeService";
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex"; 
 export default {
   components: {
     GeneralInfo,
@@ -64,18 +60,9 @@ export default {
     let displayLanguageOption = ref(false);
     let displayPayrollOption = ref(false);
     let eduLevel = ref("");
-    let darkMode = ref(false);
+    let isDarkMode = computed(()=>JSON.parse(localStorage.getItem("darkMode")));
 
-    const initiateDarkMode = () => {
-      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        darkModeService.dark();
-      } else {
-        darkModeService.light();
-      }
-    };
-    const toggleDarkMode = () => {
-       darkMode.value=darkModeService.modeToggle(darkMode.value);
-    };
+ 
     const submit = (n) => {
       activeState.value = n;
     };
@@ -98,8 +85,7 @@ export default {
         store.dispatch("goodstanding/setButtons", buttons.value);
       });
     };
-    onMounted(async () => {
-      initiateDarkMode();
+    onMounted(async () => { 
       fetchApplicationStatuses();
       fetchApplicationCategory();
     });
@@ -111,13 +97,12 @@ export default {
       applicationCategories,
       documentSpecs,
       buttons,
-      submit,
-      toggleDarkMode,
+      submit, 
       draftStatus,
       declinedFields,
       acceptedFields,
       remark,
-      darkMode,
+      isDarkMode,
       draftId,
       displayLanguageOption,
       displayPayrollOption,

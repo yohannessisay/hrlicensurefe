@@ -1,6 +1,17 @@
 <template>
-  <div class="h-screen overflow-y-scroll">
-    <Navigation />
+  <div
+    :class="
+      isDarkMode
+        ? 'h-screen bg-primaryDark overflow-y-scroll'
+        : 'h-screen overflow-y-scroll'
+    "
+  >
+    <div class="float-container" @click="toggleDarkMode()">
+      <a href="#" :class="isDarkMode ? 'icon two' : 'icon one'">
+        <span>{{ isDarkMode ? "Light Mode" : " Dark Mode" }}</span></a
+      >
+    </div>
+    <Navigation :isDarkMode="isDarkMode" />
     <div class="flex justify-center m-4">
       <div class="progress-container">
         <div class="progress" id="progress"></div>
@@ -9,40 +20,33 @@
         <div class="circle">3</div>
       </div>
     </div>
-    <div
-      v-if="this.approvalModal == 0"
-      class=" 
-        flex 
-        justify-center
-         
-      "
-    >
+    <div v-if="this.approvalModal == 0" class="flex justify-center">
       <transition name="slide-fade-to-left">
-        <ApprovedMessageModal @approvalModal="(n) => approverespone(n)" />
+        <ApprovedMessageModal
+          :isDarkMode="isDarkMode"
+          @approvalModal="(n) => approverespone(n)"
+          @back="approverespone"
+        />
       </transition>
     </div>
-    <div
-      class=" 
-      flex 
-        justify-center
-     
-      "
-      v-if="this.approvalModal != 0"
-    >
+    <div class="flex justify-center" v-if="this.approvalModal != 0">
       <transition name="fade" mode="out-in">
         <div>
           <PersonalInfo
+            :isDarkMode="isDarkMode"
             v-if="this.activeState == 1"
             :activeState="1"
             @nextStep="(type) => nextStep(type)"
             @changeActiveState="activeState++"
             :approvalModal="this.approvalModal"
+            @back="approverespone"
           />
         </div>
       </transition>
       <div>
         <transition name="fade" mode="out-in">
           <Preview
+            :isDarkMode="isDarkMode"
             v-if="this.activeState == 2"
             :activeState="2"
             @nextStep="(type) => nextStep(type)"
@@ -60,43 +64,64 @@ import Navigation from "@/views/Navigation";
 import PersonalInfo from "@/components/Profile/PersonalInfo.vue";
 import Preview from "@/components/Profile/Preview.vue";
 import ApprovedMessageModal from "@/components/Profile/HraConfirmationModal.vue";
-
+import darkModeService from "../Applicant/Shared/services/darkModeService";
+import { onMounted, ref } from "vue";
 export default {
-  name: "NewProfile",
-  data: function() {
-    return {
-      currentActive: 1,
-      activeState: 1,
-      approvalModal: 0,
+  setup() {
+    const currentActive = ref(1);
+    const activeState = ref(1);
+    const approvalModal = ref(0);
+    const isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
+
+    const initiateDarkMode = () => {
+      darkModeService.initiateDarkMode();
+      localStorage.setItem("newProfileStep", 1);
     };
-  },
-  mounted: function() {
-    localStorage.setItem("newProfileStep", 1);
-  },
-  methods: {
-    approverespone: function(value) {
-      this.approvalModal = value;
-      this.nextStep("add");
-    },
-    nextStep: function(type) {
-      this.currentActive = +JSON.parse(localStorage.getItem("newProfileStep"));
+
+    onMounted(() => {
+      initiateDarkMode();
+    });
+
+    const approverespone = (value) => {
+      console.log(value);
+      approvalModal.value = value;
+      nextStep("add");
+    };
+
+    const nextStep = (type) => {
+      currentActive.value = +JSON.parse(localStorage.getItem("newProfileStep"));
       type && type == "add"
-        ? localStorage.setItem("newProfileStep", this.currentActive++)
-        : localStorage.setItem("newProfileStep", this.currentActive--);
+        ? localStorage.setItem("newProfileStep", currentActive.value++)
+        : localStorage.setItem("newProfileStep", currentActive.value--);
 
       const progress = document.getElementById("progress");
       const circles = document.querySelectorAll(".circle");
       circles.forEach((circle, index) => {
-        if (index < this.currentActive) circle.classList.add("active");
+        if (index < currentActive.value) circle.classList.add("active");
         else circle.classList.remove("active");
       });
       const actives = document.querySelectorAll(".active");
       progress.style.width =
         ((actives.length - 1) / (circles.length - 1)) * 100 + "%";
 
-      localStorage.setItem("newProfileStep", this.currentActive);
-    },
+      localStorage.setItem("newProfileStep", currentActive.value);
+    };
+
+    const toggleDarkMode = () => {
+      isDarkMode.value = darkModeService.modeToggle(isDarkMode.value);
+    };
+
+    return {
+      currentActive,
+      activeState,
+      approvalModal,
+      isDarkMode,
+      approverespone,
+      nextStep,
+      toggleDarkMode,
+    };
   },
+
   components: {
     PersonalInfo,
     Preview,
@@ -188,5 +213,125 @@ export default {
 .btn:disabled {
   background-color: var(--line-border-empty);
   cursor: not-allowed;
+}
+
+.float-container {
+  position: fixed;
+  top: 33%;
+  z-index: 9999;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+
+.float-container a {
+  z-index: 99;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 110px;
+  height: 50px;
+  margin-right: -70px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  color: white;
+  border-color: #46b8da;
+  border-radius: 100px;
+  background-color: #07677e;
+  -webkit-box-shadow: 0 2px 4px #7d7d7d;
+  box-shadow: 0 2px 4px #7d7d7d;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  font-family: sans-serif;
+}
+.float-container a span {
+  margin-left: -16px;
+}
+.float-container a:hover {
+  margin-right: -20px;
+  background-color: #07677e;
+  -webkit-box-shadow: 0 2px 4px #c7c7c7;
+  box-shadow: 0 2px 4px #c9c6c6;
+}
+
+.float-container .icon:before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 25px;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+.icon.one:before {
+  content: "\f186";
+}
+.icon.two:before {
+  content: "\1F323";
+}
+
+@media screen and (max-width: 760px) {
+  .float-container {
+    position: fixed;
+    z-index: 9999px;
+    top: 50%;
+    right: 0;
+    margin-left: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+  .float-container a span {
+    margin-left: 0px;
+  }
+  .float-container a {
+    z-index: 99;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 70px;
+    height: 50px;
+    margin-right: -30px;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    color: white;
+    border-color: #46b8da;
+    border-radius: 100px;
+    background-color: #07677e;
+    -webkit-box-shadow: 0 2px 4px #313131;
+    box-shadow: 0 2px 4px #3f3f3f;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    font-family: sans-serif;
+  }
 }
 </style>
