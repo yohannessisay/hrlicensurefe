@@ -1,6 +1,9 @@
 <template>
   <main-content :url="'goodstanding'">
-    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-2 sm:mb-8" id="topNav">
+    <nav
+      class="bg-gray-100 px-5 py-3 rounded-md w-full mb-2 sm:mb-8"
+      id="topNav"
+    >
       <ol class="list-reset flex">
         <li>
           <router-link to="/menu">
@@ -10,7 +13,9 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/GoodStanding">
-            <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
+            <a href="#" class="text-main-400 hover:text-blue-700"
+              >Goodstanding</a
+            >
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -31,7 +36,10 @@
           :color="'#2F639D'"
           :opacity="1"
         ></loading>
-        <form @submit.prevent="submit" class="sm:mx-auto max-w-4xl p-2 w-full mt-2">
+        <form
+          @submit.prevent="submit"
+          class="sm:mx-auto max-w-4xl p-2 w-full mt-2"
+        >
           <div class="flex justify-start">
             <h2 class="text-main-400 sm:text-3xl text-2xl font-bold">
               General Information
@@ -114,12 +122,12 @@
             <!-- region -->
             <div v-if="showLocation" class="rounded bg-white border-b-2">
               <h2 class="text-yellow-300 text-lg">
-          ***Please select the region you are applying for, not where you are currently
-          living***
-        </h2>
-          <h2 class="text-yellow-300 font-bold text-base mb-4">
-             *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
-          </h2>
+                ***Please select the region you are applying for, not where you
+                are currently living***
+              </h2>
+              <h2 class="text-yellow-300 font-bold text-base mb-4">
+                *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
+              </h2>
               <div
                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
               >
@@ -145,7 +153,11 @@
                           : ""
                       }}
                     </option>
-                    <option v-for="region in regions" :key="region.name" :value="region">
+                    <option
+                      v-for="region in regions"
+                      :key="region.name"
+                      :value="region"
+                    >
                       {{ region.name }}
                     </option>
                   </select>
@@ -178,7 +190,11 @@
                           : ""
                       }}
                     </option>
-                    <option v-for="zone in zones" :key="zone.name" :value="zone">
+                    <option
+                      v-for="zone in zones"
+                      :key="zone.name"
+                      :value="zone"
+                    >
                       {{ zone.name }}
                     </option>
                   </select>
@@ -186,7 +202,8 @@
                 <div
                   class="flex flex-col"
                   v-if="
-                    generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
+                    generalInfo.regionSelected &&
+                    generalInfo.regionSelected.code != 'FED'
                   "
                 >
                   <label class="text-main-400">Woreda</label>
@@ -209,7 +226,11 @@
                           : ""
                       }}
                     </option>
-                    <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
+                    <option
+                      v-for="woreda in woredas"
+                      :key="woreda.name"
+                      :value="woreda"
+                    >
                       {{ woreda.name }}
                     </option>
                   </select>
@@ -295,7 +316,8 @@
                     >
                       <option
                         :value="
-                          generalInfo && generalInfo.GSProfessionals.professionalTypes
+                          generalInfo &&
+                          generalInfo.GSProfessionals.professionalTypes
                             ? generalInfo.GSProfessionals.professionalTypes.id
                             : null
                         "
@@ -323,7 +345,8 @@
                   <div
                     v-if="
                       generalInfo.GSProfessionals.professionalTypes &&
-                      generalInfo.GSProfessionals.professionalTypes.name == 'other'
+                      generalInfo.GSProfessionals.professionalTypes.name ==
+                        'other'
                     "
                   >
                     <label class="text-main-400">Other Profession</label>
@@ -339,13 +362,18 @@
                   <div
                     v-if="
                       generalInfo.GSProfessionals.professionalTypes &&
-                      generalInfo.GSProfessionals.professionalTypes.name == 'other'
+                      generalInfo.GSProfessionals.professionalTypes.name ==
+                        'other'
                     "
                   >
-                    <label class="text-main-400">Other Profession Amharic</label>
+                    <label class="text-main-400"
+                      >Other Profession Amharic</label
+                    >
                     <input
                       type="text"
-                      v-model="generalInfo.GSProfessionals.otherProfessionTypeAmharic"
+                      v-model="
+                        generalInfo.GSProfessionals.otherProfessionTypeAmharic
+                      "
                       class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       autocomplete="off"
                       placeholder
@@ -393,7 +421,9 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for class="text-main-400">Organization Letter written for</label>
+                  <label for class="text-main-400"
+                    >Organization Letter written for</label
+                  >
 
                   <input
                     type="text"
@@ -408,14 +438,20 @@
 
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for class="text-main-400">Who Issued Previous License</label>
+                  <label for class="text-main-400"
+                    >Who Issued Previous License</label
+                  >
 
                   <select
                     class="form-select w-full appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     v-model="generalInfo.whoIssuedId"
                     required
                   >
-                    <option v-for="region in regions" :key="region.id" :value="region">
+                    <option
+                      v-for="region in regions"
+                      :key="region.id"
+                      :value="region"
+                    >
                       {{ region.name }}
                     </option>
                   </select>
@@ -423,7 +459,9 @@
               </div>
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for class="text-main-400">License Registration Number</label>
+                  <label for class="text-main-400"
+                    >License Registration Number</label
+                  >
 
                   <input
                     type="text"
@@ -579,7 +617,10 @@ export default {
       fetchWoredas();
     };
     const regionChangeHandler = () => {
-      if (generalInfo.value.regionSelected && generalInfo.value.regionSelected.code) {
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code
+      ) {
         switch (generalInfo.value.regionSelected.code) {
           case "FED":
             generalInfo.value.zoneSelected = null;
@@ -619,7 +660,8 @@ export default {
         generalInfo.value.GSProfessionals &&
         generalInfo.value.GSProfessionals.professionTypeId &&
         generalInfo.value.GSProfessionals.professionTypeId.name &&
-        generalInfo.value.GSProfessionals.professionTypeId.name.toLowerCase() == "other"
+        generalInfo.value.GSProfessionals.professionTypeId.name.toLowerCase() ==
+          "other"
       ) {
         showOtherProfession.value = true;
       } else {
@@ -697,9 +739,11 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
@@ -720,26 +764,31 @@ export default {
 
       (generalInfo.value.GSProfessionals.otherProfessionType = generalInfo.value
         .GSProfessionals.otherProfessionType
-        ? convertOtherProf(generalInfo.value.GSProfessionals.otherProfessionType)
+        ? convertOtherProf(
+            generalInfo.value.GSProfessionals.otherProfessionType
+          )
         : ""),
-        (generalInfo.value.GSProfessionals.otherProfessionTypeAmharic = generalInfo.value
-          .GSProfessionals.otherProfessionTypeAmharic
-          ? convertOtherProfAmh(
-              generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
-            )
-          : "");
+        (generalInfo.value.GSProfessionals.otherProfessionTypeAmharic =
+          generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+            ? convertOtherProfAmh(
+                generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+              )
+            : "");
       generalInfo.value.otherApplicantPosition = generalInfo.value
         .other_applicant_position
         ? convertOtherProf(generalInfo.value.other_applicant_position)
         : "";
       let tempApplicationData = generalInfo.value;
+      tempApplicationData.fromDraft = true;
       window.localStorage.setItem(
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
-        activeState.value++;
-      });
+      store
+        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          activeState.value++;
+        });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("GSApplicationData");
@@ -818,8 +867,11 @@ export default {
                 : generalInfo.value.GSProfessionals.educationLevelId
                 ? generalInfo.value.GSProfessionals.educationLevelId
                 : null,
-            otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
-              ? convertOtherProf(generalInfo.value.GSProfessionals.otherProfessionType)
+            otherProfessionType: generalInfo.value.GSProfessionals
+              .otherProfessionType
+              ? convertOtherProf(
+                  generalInfo.value.GSProfessionals.otherProfessionType
+                )
               : "",
             otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
               .otherProfessionTypeAmharic
@@ -840,34 +892,38 @@ export default {
             : generalInfo.value.departmentId
             ? generalInfo.value.departmentId
             : null,
-          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
           id: route.params.id,
         },
       };
 
-      store.dispatch("goodstanding/editGoodstandingLicense", license).then((res) => {
-        if (res.data.status == "Success") {
-          toast.success("Updated successfuly", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          isLoading.value = false;
-          localStorage.removeItem("GSApplicationData");
-          loadFunctions();
-        } else {
-          toast.error("Error occured, please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          isLoading.value = false;
-        }
-      });
+      store
+        .dispatch("goodstanding/editGoodstandingLicense", license)
+        .then((res) => {
+          if (res.data.status == "Success") {
+            toast.success("Updated successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            localStorage.removeItem("GSApplicationData");
+            loadFunctions();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+          }
+        });
     };
     const fetchLanguages = () => {
       store.dispatch("lookups/getNativeLanguage").then((res) => {
@@ -904,7 +960,9 @@ export default {
             ? res.data.data.licenseIssuedDate.slice(0, 10)
             : "";
           generalInfo.value.regionSelected =
-            res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
+            res.data.data && res.data.data.woreda
+              ? res.data.data.woreda.zone.region
+              : "";
           generalInfo.value.otherApplicantPosition = generalInfo.value
             .other_applicant_position
             ? generalInfo.value.other_applicant_position

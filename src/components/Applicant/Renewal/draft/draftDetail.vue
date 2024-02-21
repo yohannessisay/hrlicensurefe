@@ -928,6 +928,7 @@ export default {
     };
     const apply = () => {
       let tempApplicationData = generalInfo.value;
+        tempApplicationData.fromDraft=true;
       window.localStorage.setItem(
         "RNApplicationData",
         JSON.stringify(tempApplicationData)

@@ -91,7 +91,7 @@
             :is-full-page="false"
             :color="'#2F639D'"
             :opacity="1"
-               class="rounded-md"
+            class="rounded-md"
           ></loading>
           <div class="flex justify-end mb-2 mr-1">
             <button
@@ -537,9 +537,15 @@ export default {
         educationalLevels.value = await fetchData("lookups/getEducationLevel");
         regions.value = await fetchData("newlicense/getRegions");
         occupations.value = await fetchData("lookups/getGovernment");
+
         localData.value = window.localStorage.getItem("NLApplicationData")
           ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
           : {};
+
+        if (localData.value.fromDraft) {
+          localData.value = [];
+          localStorage.removeItem("NLApplicationData");
+        }
         if (Object.keys(localData.value).length != 0) {
           generalInfo.value = localData.value;
           isAppTypeSelected.value = true;

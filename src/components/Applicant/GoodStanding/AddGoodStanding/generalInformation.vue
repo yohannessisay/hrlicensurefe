@@ -137,8 +137,8 @@
               class="flex flex-col"
               v-if="
                 generalInfo.regionSelected &&
-                  generalInfo.regionSelected.code != 'FED' &&
-                  generalInfo.regionSelected.code != 'HAR'
+                generalInfo.regionSelected.code != 'FED' &&
+                generalInfo.regionSelected.code != 'HAR'
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
@@ -162,7 +162,7 @@
               class="flex flex-col"
               v-if="
                 generalInfo.regionSelected &&
-                  generalInfo.regionSelected.code != 'FED'
+                generalInfo.regionSelected.code != 'FED'
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
@@ -274,8 +274,8 @@
                   type="text"
                   :required="
                     generalInfo.applicantTypeId.code != 'FOR' &&
-                      generalInfo.otherProfessionType &&
-                      generalInfo.otherProfessionType.length > 0
+                    generalInfo.otherProfessionType &&
+                    generalInfo.otherProfessionType.length > 0
                   "
                   name="otherProf"
                   v-model="generalInfo.otherProfessionType"
@@ -295,8 +295,8 @@
                   name="otherProfAmh"
                   :required="
                     generalInfo.applicantTypeId.code != 'FOR' &&
-                      generalInfo.otherProfessionTypeAmharic &&
-                      generalInfo.otherProfessionTypeAmharic.length > 0
+                    generalInfo.otherProfessionTypeAmharic &&
+                    generalInfo.otherProfessionTypeAmharic.length > 0
                   "
                   v-model="generalInfo.otherProfessionTypeAmharic"
                   :class="
@@ -504,7 +504,7 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["activeState"],
   components: { Loading, PageHeader },
-  emits: [ "changeActiveState", "changeActiveStateMinus"],
+  emits: ["changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
@@ -513,7 +513,7 @@ export default {
     const path = ref([
       { name: "Home", link: "/menu" },
       { name: "Goodstanding", link: "/Applicant/Goodstanding" },
-      { name: "Apply", link: "/Applicant/Goodstanding" }
+      { name: "Apply", link: "/Applicant/Goodstanding" },
     ]);
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
@@ -540,7 +540,7 @@ export default {
       departmentId: "",
       expertLevelId: "",
       otherApplicantPosition: "",
-      licenseFile: []
+      licenseFile: [],
     });
     let showOtherProfession = ref(false);
     let localData = ref([]);
@@ -560,7 +560,7 @@ export default {
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let professionalTypes = ref([]);
 
-    const checkApplicantType = applicantType => {
+    const checkApplicantType = (applicantType) => {
       generalInfo.value.regionId = null;
       generalInfo.value.zoneId = null;
       generalInfo.value.woredaId = null;
@@ -576,15 +576,15 @@ export default {
     const zoneChangeHandler = () => {
       fetchWoredas();
     };
-    const convertOtherProf = inputString => {
+    const convertOtherProf = (inputString) => {
       let trimmedString = inputString.replace(/\s+/g, " ").trim();
-      let formattedString = trimmedString.replace(/\b\w/g, function(match) {
+      let formattedString = trimmedString.replace(/\b\w/g, function (match) {
         return match.toUpperCase();
       });
 
       return formattedString;
     };
-    const convertOtherProfAmh = inputString => {
+    const convertOtherProfAmh = (inputString) => {
       let trimmedString = inputString.replace(/\s+/g, " ").trim();
 
       return trimmedString;
@@ -603,7 +603,7 @@ export default {
             generalInfo.value.zoneSelected = {
               name: "Default Harar",
               id: 464,
-              code: "ZN_HAR_DEF_54"
+              code: "ZN_HAR_DEF_54",
             };
             fetchWoredas();
             break;
@@ -625,7 +625,7 @@ export default {
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then(res => {
+        .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -656,53 +656,53 @@ export default {
     };
 
     const fetchApplicantType = () => {
-      store.dispatch("goodstanding/getApplicantType").then(res => {
+      store.dispatch("goodstanding/getApplicantType").then((res) => {
         applicantTypes.value = res.data.data;
       });
     };
     const fetchApplicantTitle = () => {
-      store.dispatch("goodstanding/getApplicantTitle").then(res => {
+      store.dispatch("goodstanding/getApplicantTitle").then((res) => {
         applicantTitle.value = res.data.data;
       });
     };
 
     const fetchDepartments = () => {
-      store.dispatch("goodstanding/getDepartmentType").then(res => {
+      store.dispatch("goodstanding/getDepartmentType").then((res) => {
         departments.value = res.data.data;
       });
     };
     const fetchApplicationPositions = () => {
-      store.dispatch("goodstanding/getApplicantPosition").then(res => {
+      store.dispatch("goodstanding/getApplicantPosition").then((res) => {
         applicationPositions.value = res.data.data;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("goodstanding/getRegions").then(res => {
+      store.dispatch("goodstanding/getRegions").then((res) => {
         regions.value = res.data.data;
       });
     };
     const fetchZone = () => {
       store
         .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then(res => {
+        .then((res) => {
           zones.value = res.data.data;
         });
     };
     const fetchWoredas = () => {
       store
         .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
-        .then(res => {
+        .then((res) => {
           woredas.value = res.data.data;
         });
     };
     const fetchProfessionalType = async (departmentId, educationalLevelId) => {
       let profession = {
         departmentId: departmentId,
-        educationalLevelId: educationalLevelId
+        educationalLevelId: educationalLevelId,
       };
       store
         .dispatch("newlicense/getProfessionalTypes", profession)
-        .then(res => {
+        .then((res) => {
           professionalTypes.value = res.data.data;
         });
     };
@@ -727,10 +727,10 @@ export default {
         .value.otherProfessionType
         ? convertOtherProf(generalInfo.value.otherProfessionType)
         : ""),
-        (generalInfo.value.professionType.otherProfessionTypeAmharic = generalInfo
-          .value.otherProfessionTypeAmharic
-          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
-          : "");
+        (generalInfo.value.professionType.otherProfessionTypeAmharic =
+          generalInfo.value.otherProfessionTypeAmharic
+            ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+            : "");
       generalInfo.value.professionType.other_applicant_position = generalInfo
         .value.otherApplicantPosition
         ? convertOtherProf(generalInfo.value.otherApplicantPosition)
@@ -766,7 +766,7 @@ export default {
       window.location.reload();
     };
     const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationLevel").then(res => {
+      store.dispatch("lookups/getEducationLevel").then((res) => {
         educationLevels.value = res.data.data;
       });
     };
@@ -826,7 +826,7 @@ export default {
               ? convertOtherProfAmh(
                   generalInfo.value.otherProfessionTypeAmharic
                 )
-              : ""
+              : "",
           },
           other_applicant_position: generalInfo.value.otherApplicantPosition
             ? convertOtherProf(generalInfo.value.otherApplicantPosition)
@@ -844,8 +844,10 @@ export default {
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
-          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : ""
-        }
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
+        },
       };
       store
         .dispatch("goodstanding/addGoodstandingLicense", license)
@@ -855,7 +857,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
           isLoading.value = false;
           localStorage.removeItem("GSApplicationData");
@@ -864,7 +866,7 @@ export default {
     };
 
     onMounted(async () => {
-      window.addEventListener("darkModeChanged", data => {
+      window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
       fetchApplicantType();
@@ -879,6 +881,10 @@ export default {
       localData.value = window.localStorage.getItem("GSApplicationData")
         ? await JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};
+      if (localData.value.fromDraft) {
+        localData.value = [];
+        localStorage.removeItem("GSApplicationData");
+      }
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
         checkOtherApplicantPosition();
@@ -906,7 +912,7 @@ export default {
       zoneChangeHandler,
       educationalLevelChange,
       setDepartment,
-      submit, 
+      submit,
       fetchZone,
       showOtherProfession,
       checkOtherApplicantPosition,
@@ -929,9 +935,9 @@ export default {
       clearLocalData,
       localData,
       isLoading,
-      path
+      path,
     };
-  }
+  },
 };
 </script>
 <style>

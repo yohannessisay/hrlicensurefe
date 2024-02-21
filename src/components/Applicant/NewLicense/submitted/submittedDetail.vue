@@ -971,6 +971,7 @@ export default {
     };
     const apply = () => {
       let tempApplicationData = generalInfo.value;
+        tempApplicationData.fromDraft=true;
       window.localStorage.setItem(
         "NLApplicationData",
         JSON.stringify(tempApplicationData)
