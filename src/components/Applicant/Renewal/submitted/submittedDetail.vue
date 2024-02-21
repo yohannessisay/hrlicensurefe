@@ -371,6 +371,7 @@ export default {
 
     const apply = async () => {
       let tempApplicationData = generalInfo.value;
+        tempApplicationData.fromDraft=true;
       window.localStorage.setItem(
         "RNApplicationData",
         JSON.stringify(tempApplicationData)

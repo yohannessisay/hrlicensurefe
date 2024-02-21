@@ -741,6 +741,7 @@ emits: ["changeActiveState", "changeActiveStateMinus","activeState"],
         ? convertOtherProf(generalInfo.value.other_applicant_position)
         : "";
       let tempApplicationData = generalInfo.value;
+       tempApplicationData.fromDraft=true;
       window.localStorage.setItem(
         "GSApplicationData",
         JSON.stringify(tempApplicationData)

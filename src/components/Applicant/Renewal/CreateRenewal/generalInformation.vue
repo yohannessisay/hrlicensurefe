@@ -1,5 +1,4 @@
 <template>
-
   <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
 
   <div
@@ -544,6 +543,10 @@ export default {
         localData.value = window.localStorage.getItem("RNApplicationData")
           ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
           : {};
+        if (localData.value.fromDraft) {
+          localData.value = [];
+          localStorage.removeItem("RNApplicationData");
+        }
         if (Object.keys(localData.value).length != 0) {
           generalInfo.value = localData.value;
           isAppTypeSelected.value = true;
