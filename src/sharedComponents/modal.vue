@@ -1,9 +1,16 @@
 <template>
   <div class="modal-mask">
     <div class="modal-wrapper">
-      <div class="modal-container sm:w-1/2 w-5/6">
+      <div
+        :class="
+          darkMode
+            ? 'modal-container sm:w-1/2 w-11/12 bg-primaryDark text-primary-200'
+            : 'modal-container sm:w-1/2 w-11/12 bg-white text-main-400'
+        "
+      >
         <div class="modal-header">
-          <h2 class="text-main-400 text-xl border-b-4">
+          <h2 class="text-xl border-b-4">
+            
             <slot name="modalHeader"></slot>
           </h2>
         </div>
@@ -16,8 +23,15 @@
   </div>
 </template>
 <script>
+import { computed } from 'vue';
 export default {
-  setup() {},
+  props: ["isDarkMode"],
+  setup(props) {
+  let darkMode=computed(()=>props.isDarkMode);
+  return{
+    darkMode
+  }
+  },
 };
 </script>
 
@@ -41,8 +55,7 @@ export default {
 
 .modal-container {
   margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
+  padding: 20px 30px; 
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;

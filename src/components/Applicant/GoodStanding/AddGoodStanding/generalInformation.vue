@@ -2,7 +2,15 @@
   <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
 
   <div class="mt-small flex justify-center">
-    <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
+    <h2
+      :class="
+        isDarkMode
+          ? 'text-white text-3xl font-bold'
+          : 'text-main-400 text-3xl font-bold'
+      "
+    >
+      General Information
+    </h2>
   </div>
   <!-- <div class="float-container" @click="darkMode()">
     <a href="#" class="icon one"> </a>
@@ -97,7 +105,9 @@
         <div
           v-if="showLocation"
           :class="
-            isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '
+            isDarkMode
+              ? ' rounded bg-secondaryDark border-b-2'
+              : 'rounded bg-white border-b-2'
           "
         >
           <h2 class="text-yellow-300 text-lg">

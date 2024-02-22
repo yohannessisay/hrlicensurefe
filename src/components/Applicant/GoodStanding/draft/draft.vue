@@ -1,6 +1,7 @@
 <template>
   <div>
     <ApplicationsList
+     :finalUrl="'goodstanding'"
       :path="path"
       :link="'goodstanding/getGoodStandingLicense'"
       :status="status"
@@ -20,7 +21,7 @@ export default {
     const path = ref([
       { name: "Home", link: "/menu" },
       { name: "Goodstanding", link: "/Applicant/Goodstanding" },
-      { name: "Apply", link: "/Applicant/Goodstanding" },
+      { name: "Draft", link: "/Applicant/Goodstanding" },
     ]);
 
     return {

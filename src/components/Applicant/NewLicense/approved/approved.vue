@@ -1,6 +1,7 @@
 <template>
   <div>
     <ApplicationsList
+     :finalUrl="'newLicense'"
       :path="path"
       :link="'newlicense/getNewLicenseByUser'"
       :status="status"

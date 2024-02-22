@@ -1,5 +1,5 @@
 <template>
-  <main-content :url="'newLicense'">
+  <main-content :url="finalUrl">
     <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
 
     <h2
@@ -18,7 +18,7 @@
           :class="
             isDarkMode
               ? 'bg-secondaryDark text-primary-200 my-1 px-1 sm:w-1/4  w-full mb-4  sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-              : 'bg-white my-1 px-1  sm:w-1/4  w-full mb-4 sm:mr-4 rounded-lg transform transition duration-300 text-main-400 ease-in-out hover:-translate-y-2'
+              : 'bg-white my-1 px-1  sm:w-1/4  w-full mb-4 sm:mr-4 rounded-lg transform transition duration-300 text-green-200 ease-in-out hover:-translate-y-2'
           "
         >
           <!-- Article -->
@@ -31,7 +31,7 @@
               <h2
                 :class="
                   isDarkMode
-                    ? 'text-main-400 text-lg   mb-2'
+                    ? 'text-green-200 text-lg   mb-2'
                     : 'text-grey-800 text-lg  mb-2'
                 "
               >
@@ -62,7 +62,7 @@
                     <h2
                       :class="
                         isDarkMode
-                          ? 'text-main-400 text-lg'
+                          ? 'text-green-200 text-lg'
                           : 'text-grey-800 text-lg'
                       "
                     >
@@ -86,7 +86,7 @@
                 <h2
                   :class="
                     isDarkMode
-                      ? 'text-main-400 text-lg'
+                      ? 'text-green-200 text-lg'
                       : 'text-grey-800 text-lg'
                   "
                 >
@@ -104,7 +104,7 @@
                 <h2
                   :class="
                     isDarkMode
-                      ? 'text-main-400 text-lg'
+                      ? 'text-green-200 text-lg'
                       : 'text-grey-800 text-lg'
                   "
                 >
@@ -123,7 +123,7 @@
                 <h2
                   :class="
                     isDarkMode
-                      ? 'text-main-400 text-lg'
+                      ? 'text-green-200 text-lg'
                       : 'text-grey-800 text-lg'
                   "
                 >
@@ -144,7 +144,7 @@
                 <h2
                   :class="
                     isDarkMode
-                      ? 'text-main-400 text-lg'
+                      ? 'text-green-200 text-lg'
                       : 'text-grey-800 text-lg'
                   "
                 >
@@ -161,7 +161,7 @@
                 <h2
                   :class="
                     isDarkMode
-                      ? 'text-main-400 text-lg'
+                      ? 'text-green-200 text-lg'
                       : 'text-grey-800 text-lg'
                   "
                 >
@@ -180,7 +180,9 @@
 
               <h2
                 :class="
-                  isDarkMode ? 'text-main-400 text-lg' : 'text-grey-800 text-lg'
+                  isDarkMode
+                    ? 'text-green-200 text-lg'
+                    : 'text-grey-800 text-lg'
                 "
               >
                 {{ license.createdAt ? license.createdAt.slice(0, 10) : "" }}
@@ -188,7 +190,7 @@
             </footer>
             <div class="flex justify-center">
               <button
-                class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
+                class="inline-block px-6 text-white bg-main-400 hover:text-green-200 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
                 @click="openApplicationDetail(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#applicationDetail"
@@ -197,7 +199,7 @@
               </button>
               <router-link :to="`${editSubmittedLink}${license.id}`">
                 <button
-                  class="inline-block px-6 ml-4 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
+                  class="inline-block px-6 ml-4 text-white bg-main-400 hover:text-green-200 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
                 >
                   Edit
                 </button>
@@ -217,13 +219,13 @@
       :class="
         isDarkMode
           ? 'bg-secondaryDark text-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-          : 'bg-white my-1 text-main-400 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+          : 'bg-white my-1 text-green-200 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
       "
     >
       <!-- Article -->
 
       <h2 class="border-b-2 text-xl p-2">
-        There are no approved applications currently.
+        There are no applications in this status currently.
       </h2>
     </div>
     <ApplicationDetail
@@ -243,25 +245,23 @@ import ApplicationDetail from "./ApplicationDetailModal.vue";
 import PageHeader from "../PagesHeader.vue";
 export default {
   components: { MainContent, ApplicationDetail, PageHeader },
-  props: ["path", "link", "status", "detailModalLink", "editSubmittedLink"],
+  props: ["path", "link", "status", "detailModalLink", "editSubmittedLink","finalUrl"],
   setup(props) {
     let store = useStore();
     let applications = ref([]);
-    let userInfo = ref({});
     let isLoading = ref(true);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let applicationDetailLink = computed(() => props.detailModalLink);
+    let userId = ref(JSON.parse(window.localStorage.getItem("userId")));
     onMounted(() => {
       window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
       isLoading.value = true;
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      let userId = JSON.parse(window.localStorage.getItem("userId"));
 
-      store.dispatch(props.link.toString(), userId).then((res) => {
+      store.dispatch(props.link.toString(), userId.value).then((res) => {
         const results = res.data.data ? res.data.data : [];
 
         if (results.length > 0) {
@@ -289,7 +289,6 @@ export default {
     return {
       applications,
       googleApi,
-      userInfo,
       isDarkMode,
       noData,
       isLoading,

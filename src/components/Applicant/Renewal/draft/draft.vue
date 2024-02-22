@@ -1,6 +1,7 @@
 <template>
   <div>
     <ApplicationsList
+    :finalUrl="'renewal'"
       :path="path"
       :link="'renewal/getRenewalLicense'"
       :status="status"

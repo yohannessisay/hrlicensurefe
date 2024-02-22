@@ -75,7 +75,13 @@
 
                         <div class="grid grid-cols-2 gap-2">
                           <h2 class="text-xl">Applicant Name</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg'
+                                : 'text-grey-800 text-lg'
+                            "
+                          >
                             {{
                               licenseData && licenseData.profile
                                 ? licenseData.profile.name
@@ -92,7 +98,13 @@
                           </h3>
 
                           <h2 class="text-xl">Applicant Email</h2>
-                          <h2 class="text-lg font-bold">
+                          <h2
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg'
+                                : 'text-grey-800 text-lg'
+                            "
+                          >
                             {{
                               licenseData && licenseData.applicant
                                 ? licenseData.applicant.emailAddress
@@ -101,7 +113,13 @@
                           </h2>
 
                           <h2 class="text-xl">Applicant Phone</h2>
-                          <h2 class="text-lg break-words font-bold">
+                          <h2
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.applicant
                                 ? "+251" + licenseData.applicant.phoneNumber
@@ -125,17 +143,20 @@
                         <header
                           class="flex items-center justify-between leading-tight p-2 mb-2 border-b-4"
                         >
-                          <h1 class="text-lg"> 
-                              Reviewer Detail
-                         
-                          </h1>
+                          <h1 class="text-lg">Reviewer Detail</h1>
                           <p class="text-sm">
-                            <i class="fa fa-thumbs-up fa-2x"></i> 
+                            <i class="fa fa-thumbs-up fa-2x"></i>
                           </p>
                         </header>
                         <div class="grid grid-cols-2 gap-2">
                           <h2 class="text-xl">Reviewer Name</h2>
-                          <h2 class="font-bold text-lg">
+                          <h2
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.licenseReviewer
                                 ? licenseData.licenseReviewer.reviewer.name
@@ -149,7 +170,13 @@
                           </h2>
 
                           <h2 class="text-xl">Expert Level</h2>
-                          <h2 class="font-bold text-lg">
+                          <h2
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.licenseReviewer
                                 ? licenseData.licenseReviewer.reviewer
@@ -166,7 +193,13 @@
                           </h2>
 
                           <h2 class="text-xl">Region</h2>
-                          <h2 class="font-bold text-lg">
+                          <h2
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.licenseReviewer
                                 ? licenseData.licenseReviewer.reviewer.region
@@ -212,7 +245,13 @@
                           :key="education ? education.id : ''"
                         >
                           <h2 class="text-xl">Department</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               education && education.department
                                 ? education.department.name
@@ -221,7 +260,13 @@
                           </h3>
 
                           <h2 class="text-xl">Institution</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               education && education.institution
                                 ? education.institution.name
@@ -230,7 +275,13 @@
                           </h3>
 
                           <h2 class="text-xl">Education Level</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               education && education.educationLevel
                                 ? education.educationLevel.name
@@ -270,7 +321,13 @@
 
                         <div class="grid grid-cols-2 gap-1">
                           <h2 class="text-xl">Applicant Type</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.applicantType
                                 ? licenseData.applicantType.name
@@ -279,7 +336,13 @@
                           </h3>
 
                           <h2 class="text-xl">Application Status</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.applicationStatus
                                 ? licenseData.applicationStatus.name
@@ -288,7 +351,13 @@
                           </h3>
 
                           <h2 class="text-xl">Certified Status</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.certified
                                 ? "Certified"
@@ -297,7 +366,13 @@
                           </h3>
 
                           <h2 class="text-xl">Certified Date</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.certifiedDate
                                 ? licenseData.certifiedDate.slice(0, 10)
@@ -306,7 +381,13 @@
                           </h3>
 
                           <h2 class="text-xl">Expiration Date</h2>
-                          <h3 class="text-lg font-bold">
+                          <h3
+                            :class="
+                              isDarkMode
+                                ? 'text-green-200 text-lg break-words '
+                                : 'text-grey-800 text-lg break-words'
+                            "
+                          >
                             {{
                               licenseData && licenseData.licenseExpirationDate
                                 ? licenseData.licenseExpirationDate.slice(0, 10)
