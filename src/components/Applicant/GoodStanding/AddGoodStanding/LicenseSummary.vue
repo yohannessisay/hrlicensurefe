@@ -230,9 +230,7 @@
       >
         <div class="mb-4">
           <div class="flex justify-center">
-            <label
-              for="feedback"
-              class="form-label inline-block mb-2 text-xl  "
+            <label for="feedback" class="form-label inline-block mb-2 text-xl"
               >Feedback on the process and system
               <span class="text-yellow-300">( optional/ not required )</span>
             </label>
@@ -259,9 +257,7 @@
                 id="agreed"
               />
             </div>
-            <h3
-              class="  mb-2lo calFileData text-base "
-            >
+            <h3 class="mb-2lo calFileData text-base">
               By checking here I hereby verify the documents and details filled
               in here are legal.
             </h3>
@@ -316,16 +312,22 @@
     <!-- end row -->
     <div class="modal-mask" v-if="showModal">
       <div class="modal-wrapper">
-        <div class="modal-container sm:w-1/2 w-5/6">
+        <div
+          :class="
+            isDarkMode
+              ? 'modal-container sm:w-1/2 w-11/12 bg-primaryDark text-primary-200'
+              : 'modal-container sm:w-1/2 w-11/12 bg-white text-main-400'
+          "
+        >
           <div class="modal-header">
-            <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
+            <h2 class="text-xl border-b-4">Uploading</h2>
           </div>
 
           <div class="modal-body">
             <div class="flex justify-center text-yellow-300 p-2 rounded-md">
               <h2 class="text-yellow-300 border rounded p-2 text-xl">
                 Total file size you have uploaded so far is
-                <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+                <h2 class="text-2xl">{{ totalSize }} MB</h2>
               </h2>
             </div>
             <div class="flex justify-center">
@@ -334,9 +336,7 @@
                 :completed-steps="progress"
                 :total-steps="totalSteps"
               >
-                <h1 class="text-3xl text-main-400 font-bold">
-                  {{ progress }} %
-                </h1>
+                <h1 class="text-3xl font-bold">{{ progress }} %</h1>
               </RadialProgress>
             </div>
             <div>

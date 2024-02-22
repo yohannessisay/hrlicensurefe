@@ -8,7 +8,7 @@
         <span class="icon"
           ><i class="bx bx-envelope text-grey-800 text-2xl mt-1"></i
         ></span>
-        <h2 class="title text-grey-800 text-xl font-bold ml-4">Goodstanding</h2>
+        <h2 class="title text-grey-800 text-xl font-bold ml-4">Goodstandings</h2>
       </a>
     </div>
 

@@ -1,18 +1,6 @@
 <template>
   <div
-    class="
-      card-wrapper
-      bg-white
-      sm:rounded-lg
-      w-full
-      p-large
-      flex flex-col
-      justify-center
-      items-center
-      relative
-      pt-8
-      pb-8
-    "
+    class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative pt-8 pb-8"
   >
     <button
       class="absolute top-0 right-0 mr-2 mt-2"
@@ -34,14 +22,7 @@
     <label class="text-primary-700">Email address</label>
     <input class="w-full" type="email" required v-model="email" />
     <button
-      class="
-        block
-        mx-auto
-        w-1/2
-        bg-lightBlue-500
-        hover:bg-lightBlue-600
-        hover: 
-      "
+      class="block mx-auto w-1/2 bg-lightBlue-500 hover:bg-lightBlue-600 hover:"
       v-on:click="sendEmails()"
     >
       Send
@@ -60,20 +41,17 @@
 
 <script>
 import { ref } from "vue";
-import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
+import { useStore } from "vuex"; 
 import Spinner from "@/sharedComponents/Spinner";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorMessage from "@/sharedComponents/ErrorFlashMessage";
 import Title from "@/sharedComponents/Title";
-import Modal from "@/sharedComponents/Modal";
 
 export default {
   components: {
     Spinner,
     FlashMessage,
     Title,
-    Modal,
     ErrorMessage,
   },
   setup() {
@@ -83,7 +61,6 @@ export default {
     let showFlash = ref(false);
     let showFlashError = ref(false);
     const store = useStore();
-    const router = useRouter();
     const sendEmails = () => {
       let emailToBeSent = {
         email: email.value,
@@ -107,7 +84,7 @@ export default {
             }, 2500);
           }
         })
-        .catch((err) => {
+        .catch(() => {
           showLoading.value = false;
           showFlashError.value = true;
 

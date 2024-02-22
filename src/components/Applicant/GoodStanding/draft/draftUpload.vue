@@ -1,25 +1,33 @@
 <template>
   <div>
-    <div class="accordion mr-8" id="FilesAccordion">
-      <div class="accordion-item bg-white border border-grey-200 p-4 rounded-lg">
-        <h2 class="accordion-header mb-0" id="headingOne">
-          <span
-            class="rounded-md collapsed relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-main-400 hover:text-main-400 text-white border-0 transition focus:outline-none"
+    <div class="accordion sm:mr-8 mt-24" id="FilesAccordion">
+      <div
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
+      >
+        <h2 id="headingOne" class="accordion-header mb-0 mr-1">
+          <button
+            class="accordion-button relative flex items-center w-full p-4 border text-gray-800 py-8 text-xl rounded-md transition focus:outline-none"
+            style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#commonFilesAccordion"
             aria-expanded="true"
             aria-controls="commonFilesAccordion"
           >
-            Good Standing Letter Files
-          </span>
+            Good Standing Letter Document Upload
+          </button>
         </h2>
         <div class="vld-parent mt-4">
           <loading
             :active="isLoading"
             :is-full-page="false"
             :color="'#2F639D'"
-            :opacity="1"
+             :opacity="0.6"
+          class="rounded-md"
           ></loading>
           <div
             id="commonFilesAccordion"
@@ -27,129 +35,38 @@
             aria-labelledby="commonFilesAccordionheading"
             data-bs-parent="#FilesAccordion"
           >
-            <div class="accordion-body py-4 px-5">
-              <div class="bg-red-800 py-5">
-                <div class="overflow-x-auto w-full rounded-lg">
-                  <table class="max-w-4xl w-full whitespace-nowrap bg-white">
-                    <thead class="bg-lightMain-500">
-                      <tr class="text-left">
-                        <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
-                          Document Name
-                        </th>
-                        <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
-                          Document Description
-                        </th>
-                        <th
-                          class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
-                        >
-                          Upload
-                        </th>
-                        <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
-                          Previously Uploaded File
-                        </th>
-                        <th
-                          class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
-                        >
-                          View
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y">
-                      <tr
-                        v-for="item in documents"
-                        :key="item.id"
-                        :class="
-                          documentError['file_upload_row_' + item.documentType.code]
-                            ? 'border text-red-300'
-                            : 'border-b text-main-400'
-                        "
-                      >
-                        <td class="px-6 py-4">
-                          <div class="flex items-center space-x-3">
-                            <div>
-                              <p class="">{{ item.documentType.name }}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="px-6 py-4">
-                          <div class="flex items-center space-x-3">
-                            <div>
-                              <p class="">
-                                {{ item.documentType.description }}
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="px-6 py-4">
-                          <p class="text-sm font-semibold tracking-wide">
-                            <input
-                              type="file"
-                              required
-                              :id="`files${item.id}`"
-                              accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
-                              :ref="`imageUploader${item.id}`"
-                              class="custom-file-input"
-                              v-on:change="handleFileUpload(item, $event)"
-                            />
-                          </p>
-                        </td>
-                        <td class="px-6 py-4">
-                          <span
-                            class="text-grey-800"
-                            v-if="
-                              documentsSaved[item.documentType.code] &&
-                              documentsSaved[item.documentType.code].fileName
-                            "
-                            >{{ documentsSaved[item.documentType.code].fileName }}</span
-                          >
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                          <a
-                            :id="'common_image_href' + item.documentType.id + item.id"
-                            :href="documentsSaved[item.documentType.code]?.path"
-                            :data-title="item.name ? item.name : '-----'"
-                            data-lightbox="example-2"
-                          >
-                            <i
-                              :id="'common_icon' + item.documentType.id + item.id"
-                              class="fa fa-eye cursor-pointer text-main-400"
-                              aria-hidden="true"
-                            >
-                              <img
-                                :id="
-                                  'common_image_lightbox' + item.documentType.id + item.id
-                                "
-                                :src="documentsSaved[item.documentType.code]"
-                                class="w-full h-2 object-cover"
-                              />
-                            </i>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+            <div class="accordion-body sm:p-4 p-1">
+              <div class="overflow-x-auto w-full">
+                <CommonFileUploadTable
+                  :headers="commonFileUploadHeaders"
+                  :tableRows="documents"
+                  :fileUploadError="errorDocuments"
+                  :isDarkMode="isDarkMode"
+                  :documentsSaved="documentsSaved"
+                  @handleCommonFileUpload="handleCommonFileUpload"
+                ></CommonFileUploadTable>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-      <div
-        class="shadow-md p-2 m-4 rounded-md text-yellow-300  border"
-        v-if="errorDocuments && errorDocuments.length > 0"
+    <div
+      class="shadow-md p-2 m-4 rounded-md text-yellow-300 border"
+      v-if="errorDocuments && errorDocuments.length > 0"
+    >
+      <h2 class="text-yellow-300 font-bold text-3xl border-b">
+        Please attach the following files to proceed
+      </h2>
+      <li
+        class="text-yellow-300 text-xl font-bold p-2 m-1"
+        v-for="(error, index) in errorDocuments"
+        :key="error"
       >
-        <h2 class="text-yellow-300 font-bold text-3xl border-b">
-          Please attach the following files to proceed
-        </h2>
-        <li
-          class="text-yellow-300 text-xl font-bold   p-2 m-1"
-          v-for="(error,index) in errorDocuments"
-          :key="error"
-        >
-         <small class="text-grey-800 text-xl">{{index+1}}- </small> {{ error.name }}
-        </li>
-      </div>
+        <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+        {{ error.name }}
+      </li>
+    </div>
 
     <div class="flex justify-end mr-8">
       <button
@@ -177,23 +94,31 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
+import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { useToast } from "vue-toastification";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import Loading from "vue3-loading-overlay";
+import CommonFileUploadTable from "../../Shared/SavedFileUpload/CommonFileUploadTable.vue";
 export default {
-  components: { Loading },
+  components: { Loading, CommonFileUploadTable },
   setup(props, { emit }) {
     let store = useStore();
     let toast = useToast();
     let route = useRoute();
+    let commonFileUploadHeaders = ref([
+      "Document Name",
+      "Document Description",
+      "Upload Document",
+      "Uploaded File",
+      "View Uploaded",
+    ]);
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
     let isLoading = ref(false);
-    let documents = ref([]); 
+    let documents = ref([]);
     let errorDocuments = ref([]);
     let localData = ref();
     let files = ref("");
@@ -212,9 +137,9 @@ export default {
     let showPreview = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let generalInfo = ref({});
-    let documentUploaded = ref([]); 
+    let documentUploaded = ref([]);
     let formData = new FormData();
-
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
@@ -239,17 +164,23 @@ export default {
 
         previewDocuments.value[data.documentType.code] = reader.result;
 
-        imageData = imageData.filter((el) => el.documenttype != data.documentType.name);
+        imageData = imageData.filter(
+          (el) => el.documenttype != data.documentType.name
+        );
         imageData.push({
           documenttype: data.documentType ? data.documentType.name : "",
           documentCode: data.documentType ? data.documentType.code : "",
-          educationalLevel: data.educationalLevel ? data.educationalLevel.name : "",
+          educationalLevel: data.educationalLevel
+            ? data.educationalLevel.name
+            : "",
           image: reader.result,
         });
       });
       if (documentUploaded.value[data.documentType.code]) {
         if (
-          /\.(jpe?g|png|gif)$/i.test(documentUploaded.value[data.documentType.code].name)
+          /\.(jpe?g|png|gif)$/i.test(
+            documentUploaded.value[data.documentType.code].name
+          )
         ) {
           isImage.value[data.documentType.code] = true;
           isPdf.value[data.documentType.code] = false;
@@ -264,7 +195,9 @@ export default {
         }
       }
 
-      let icon = document.getElementById("common_icon" + data.documentType.id + data.id);
+      let icon = document.getElementById(
+        "common_icon" + data.documentType.id + data.id
+      );
       if (icon.classList.contains("disabled")) {
         icon.classList.toggle("disabled");
       }
@@ -302,7 +235,9 @@ export default {
         let getAllIDB = store.getAll();
         getAllIDB.onsuccess = function (evt) {
           existingDocs =
-            evt.target.result && evt.target.result[0] ? evt.target.result[0].data : {};
+            evt.target.result && evt.target.result[0]
+              ? evt.target.result[0].data
+              : {};
         };
       };
 
@@ -375,7 +310,10 @@ export default {
           let request = indexedDB.open("GSdocumentUploads", 1);
           request.onsuccess = function () {
             db = request.result;
-            let transaction = db.transaction(["GSdocumentUploads"], "readwrite");
+            let transaction = db.transaction(
+              ["GSdocumentUploads"],
+              "readwrite"
+            );
             let tempStat = false;
 
             if (
@@ -472,7 +410,9 @@ export default {
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
             ? generalInfo.value.licenseIssuedDate
             : null,
-          whoIssuedId: generalInfo.value.whoIssued ? generalInfo.value.whoIssued.id : "",
+          whoIssuedId: generalInfo.value.whoIssued
+            ? generalInfo.value.whoIssued.id
+            : "",
           licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
             ? generalInfo.value.licenseRegistrationNumber
             : "",
@@ -491,7 +431,8 @@ export default {
                 : generalInfo.value.GSProfessionals.educationLevelId
                 ? generalInfo.value.GSProfessionals.educationLevelId
                 : null,
-            otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
+            otherProfessionType: generalInfo.value.GSProfessionals
+              .otherProfessionType
               ? generalInfo.value.GSProfessionals.otherProfessionType
               : "",
             otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
@@ -511,37 +452,52 @@ export default {
             : generalInfo.value.departmentId
             ? generalInfo.value.departmentId
             : null,
-          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
           id: route.params.id,
         },
       };
 
-      store.dispatch("goodstanding/editGoodstandingLicense", license).then(() => {
-        let licenseId = route.params.id;
-        let payload = { document: formData, id: licenseId };
+      store
+        .dispatch("goodstanding/editGoodstandingLicense", license)
+        .then(() => {
+          let licenseId = route.params.id;
+          let payload = { document: formData, id: licenseId };
 
-        store
-          .dispatch(
-            generalInfo.value &&
-              generalInfo.value.documents &&
-              generalInfo.value.documents.length > 0
-              ? "goodstanding/updateDocuments"
-              : "goodstanding/uploadDocuments",
-            payload
-          )
-          .then((res) => {
-            if (res.data.status == "Success") {
-              toast.success("Applied successfuly", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              localStorage.removeItem("GSApplicationData");
-              location.reload();
-            } else {
+          store
+            .dispatch(
+              generalInfo.value &&
+                generalInfo.value.documents &&
+                generalInfo.value.documents.length > 0
+                ? "goodstanding/updateDocuments"
+                : "goodstanding/uploadDocuments",
+              payload
+            )
+            .then((res) => {
+              if (res.data.status == "Success") {
+                toast.success("Applied successfuly", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoading.value = false;
+                localStorage.removeItem("GSApplicationData");
+                location.reload();
+              } else {
+                toast.error("Error occured, please try again", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoading.value = false;
+              }
+            })
+            .catch(() => {
               toast.error("Error occured, please try again", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -550,23 +506,14 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
-            }
-          })
-          .catch(() => {
-            toast.error("Error occured, please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
             });
-            isLoading.value = false;
-          });
-      });
+        });
     };
 
     onMounted(() => {
-      //Initialize indexdb for file storage
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       if (!("indexedDB" in window)) {
         console.log("This browser doesn't support IndexedDB");
         return;
@@ -586,7 +533,8 @@ export default {
               element.documentType.name;
             documentsSaved.value[element.documentTypeCode].code =
               element.documentType.code;
-            documentsSaved.value[element.documentTypeCode].fileName = element.fileName;
+            documentsSaved.value[element.documentTypeCode].fileName =
+              element.fileName;
           });
 
           existingDocs = generalInfo.value?.documents;
@@ -608,9 +556,10 @@ export default {
             let results = res.data.data;
 
             documents.value = results.filter(
-              ((set) => (f) => !set.has(f.documentTypeId) && set.add(f.documentTypeId))(
-                new Set()
-              )
+              (
+                (set) => (f) =>
+                  !set.has(f.documentTypeId) && set.add(f.documentTypeId)
+              )(new Set())
             );
           });
       });
@@ -624,7 +573,7 @@ export default {
       previewDocuments,
       showPreview,
       documentsSaved,
-      documentsUploaded, 
+      documentsUploaded,
       saveDraft,
       documentError,
       generalInfo,
@@ -633,9 +582,11 @@ export default {
       imageUploader,
       documents,
       isLoading,
-      errorDocuments, 
+      errorDocuments,
       next,
       back,
+      isDarkMode,
+      commonFileUploadHeaders,
     };
   },
 };
