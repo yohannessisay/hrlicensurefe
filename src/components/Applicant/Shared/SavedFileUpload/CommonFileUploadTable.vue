@@ -14,7 +14,13 @@
         </th>
       </tr>
     </thead>
-  <tbody :class="isDarkMode?'divide-y bg-secondaryDark text-primary-200':'divide-y bg-white text-main-400'">
+    <tbody
+      :class="
+        isDarkMode
+          ? 'divide-y bg-secondaryDark text-primary-200'
+          : 'divide-y bg-white text-main-400'
+      "
+    >
       <tr
         v-for="item in tableRows"
         :key="item.id"
@@ -27,7 +33,7 @@
         <td
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline  ">
+          <h2 class="sm:hidden mb-2 text-xl underline">
             {{ headers[0] }}
           </h2>
           <h2 class="text-lg break-words">
@@ -38,7 +44,7 @@
         <td
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline ">
+          <h2 class="sm:hidden mb-2 text-xl underline">
             {{ headers[1] }}
           </h2>
           <h2 class="text-lg break-words">
@@ -52,7 +58,7 @@
         <td
           class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline  ">
+          <h2 class="sm:hidden mb-2 text-xl underline">
             {{ headers[2] }}
           </h2>
 
@@ -70,9 +76,7 @@
           v-if="documentsSaved[item.documentType.code]"
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline  ">
-            Uploaded File Name
-          </h2>
+          <h2 class="sm:hidden mb-2 text-xl underline">Uploaded File Name</h2>
           <h2 class="text-lg break-words">
             {{ documentsSaved[item.documentType.code].name }}
             <i class="fa fa-check-circle text-green-300"></i>

@@ -14,7 +14,13 @@
         </th>
       </tr>
     </thead>
-    <tbody :class="isDarkMode?'divide-y bg-secondaryDark text-primary-200':'divide-y bg-white text-main-400'">
+    <tbody
+      :class="
+        isDarkMode
+          ? 'divide-y bg-secondaryDark text-primary-200'
+          : 'divide-y bg-white text-main-400'
+      "
+    >
       <tr
         v-for="item in tableRows"
         :key="item.id"
@@ -27,7 +33,7 @@
         <td
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline ">
+          <h2 class="sm:hidden mb-2 text-xl underline">
             {{ headers[0] }}
           </h2>
           <h2 class="text-lg break-words">
@@ -38,7 +44,7 @@
         <td
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline  ">
+          <h2 class="sm:hidden mb-2 text-xl underline">
             {{ headers[1] }}
           </h2>
           <h2 class="text-lg break-words">
@@ -52,7 +58,7 @@
         <td
           class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline  ">
+          <h2 class="sm:hidden mb-2 text-xl underline">
             {{ headers[2] }}
           </h2>
 
@@ -70,10 +76,8 @@
           v-if="item && item.fileName"
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline ">
-            Uploaded File Name
-          </h2>
-          <h2 class="text-lg break-words"> 
+          <h2 class="sm:hidden mb-2 text-xl underline">Uploaded File Name</h2>
+          <h2 class="text-lg break-words">
             {{ item.fileName ? item.fileName : "---------------" }}
           </h2>
         </td>
@@ -82,24 +86,27 @@
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
           <div class="flex justify-center">
-          <a
-            :id="'common_image_href_' + item.documentType.id + item.id"
-            :href="item.existingFile"
-            :data-title="item.name ? item.name : '-----'"
-            data-lightbox="example-2"
-          >
-            <i
-              :id="'common_icon_' + item.documentType.id + item.id"
-              class="fa fa-eye cursor-pointer text-main-400"
-              aria-hidden="true"
+            <a
+              :id="'common_image_href_' + item.documentType.id + item.id"
+              :href="item.existingFile"
+              :data-title="item.name ? item.name : '-----'"
+              data-lightbox="example-2"
             >
-              <img
-                :id="'common_image_lightbox_' + item.documentType.id + item.id"
-                :src="item.existingFile"
-                class="w-full h-2 object-cover"
-              />
-            </i>  <small class="text-base ml-2">View</small>
-          </a>
+              <i
+                :id="'common_icon_' + item.documentType.id + item.id"
+                class="fa fa-eye cursor-pointer text-main-400"
+                aria-hidden="true"
+              >
+                <img
+                  :id="
+                    'common_image_lightbox_' + item.documentType.id + item.id
+                  "
+                  :src="item.existingFile"
+                  class="w-full h-2 object-cover"
+                />
+              </i>
+              <small class="text-base ml-2">View</small>
+            </a>
           </div>
         </td>
         <td

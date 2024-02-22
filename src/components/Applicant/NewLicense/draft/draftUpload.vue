@@ -4,23 +4,28 @@
       :active="isLoading"
       :is-full-page="true"
       :color="'#2F639D'"
-      :opacity="0.7"
+      :opacity="0.6"
+      class="rounded-md"
     ></loading>
-    <h2
-      class="text-yellow-300 border sm:p-2 rounded-md mb-4 font-bold text-xl mt-12 break-all"
-    >
-      Note:- Upload all the documents marked with a red asterisk
-      <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
-      step.
-    </h2>
+    <div class="text-yellow-300 p-2 rounded-md border mb-4 mt-2">
+      <h2 class="text-yellow-300 font-bold text-xl">
+        Note:- Please upload only the documents marked with a red asterisk
+        <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
+        step.
+      </h2>
+    </div>
     <div class="accordion sm:mr-8" id="FilesAccordion">
       <span
         v-if="errorDocuments && errorDocuments.length > 0"
         class="text-red-300"
-        >Upload all files highlighted in red borders to proceed</span
+        >Please upload files highlighted in red borders to proceed</span
       >
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-4 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingOne">
           <button
@@ -58,7 +63,11 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-2 mt-8 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingTwo">
           <button
@@ -108,7 +117,7 @@
       class="shadow-md p-2 m-4 rounded-md text-yellow-300 border"
       v-if="errorDocuments && errorDocuments.length > 0"
     >
-      <h2 class="text-yellow-300 font-bold text-3xl border-b">
+      <h2 class="text-yellow-300 font-bold text-xl sm:text-3xl border-b">
         Please attach the following files to proceed
       </h2>
       <li
@@ -116,7 +125,7 @@
         v-for="(error, index) in errorDocuments"
         :key="error"
       >
-        <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+        <small class="  text-xl">{{ index + 1 }}- </small>
         {{ error.name }}
       </li>
     </div>
@@ -137,6 +146,7 @@
   </div>
 </template>
 
+
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
@@ -156,7 +166,6 @@ export default {
   setup(props, { emit }) {
     let store = useStore();
     let isLoading = ref(false);
-    let isDarkMode = ref(false);
     const route = useRoute();
     let documents = ref([]);
     let commonDocuments = ref([]);
@@ -182,6 +191,7 @@ export default {
       "Uploaded File",
       "View Uploaded",
     ]);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let documentToSave = ref({});
     let imageData = [];
     let formData = new FormData();
@@ -246,7 +256,7 @@ export default {
           "common_icon_" + data.documentType.id + data.id
         );
 
-        if (icon.classList.contains("disabled")) {
+        if (icon?.classList?.contains("disabled")) {
           icon.classList.toggle("disabled");
         }
 
@@ -356,7 +366,7 @@ export default {
               "common_icon_" + data.documentType.id + data.id
             );
 
-            if (icon.classList.contains("disabled")) {
+            if (icon?.classList?.contains("disabled")) {
               icon.classList.toggle("disabled");
             }
 
@@ -510,7 +520,7 @@ export default {
             "_" +
             pro.professionType.code.toUpperCase()
         );
-        if (icon.classList.contains("disabled")) {
+        if (icon?.classList?.contains("disabled")) {
           icon.classList.toggle("disabled");
         }
 
@@ -754,7 +764,7 @@ export default {
                 "_" +
                 pro.professionType.code.toUpperCase()
             );
-            if (icon.classList.contains("disabled")) {
+            if (icon?.classList?.contains("disabled")) {
               icon.classList.toggle("disabled");
             }
 
@@ -800,9 +810,8 @@ export default {
         fileUploadError.value,
         educationalDocs.value,
         documentsUploaded.value,
-        newLicenseDocuments.value,
-       
-      );
+        newLicenseDocuments.value
+      ); 
       fileUploadError.value = documentValidation.fileUploadError
         ? documentValidation.fileUploadError
         : [];
@@ -810,7 +819,7 @@ export default {
         ? documentValidation.errorDocuments
         : [];
 
-      if (documentValidation && Object.keys(documentValidation).length == 0) {
+      if (errorDocuments.value && errorDocuments.value.length == 0) {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
           //Save images to indexed Db
 
@@ -901,6 +910,9 @@ export default {
       };
     };
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {

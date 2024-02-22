@@ -1,26 +1,7 @@
 <template>
   <main-content :url="'newLicense'">
-    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
-      <ol class="list-reset flex">
-        <li>
-          <router-link to="/menu">
-            <a href="#" class="text-main-400 hover:text-blue-700">Home</a>
-          </router-link>
-        </li>
-        <li><span class="text-gray-500 mx-2">/</span></li>
-        <li>
-          <router-link to="/Applicant/NewLicense">
-            <a href="#" class="text-main-400 hover:text-blue-700"
-              >New License</a
-            >
-          </router-link>
-        </li>
-        <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Draft</li>
-        <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Edit</li>
-      </ol>
-    </nav>
+    <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
+
     <div class="vld-parent">
       <loading
         :active="isLoading"
@@ -29,428 +10,104 @@
         :color="'#2F639D'"
         :opacity="0.7"
       ></loading>
-      <div v-if="invalidLicenseStat != true">
+      <div v-if="invalidLicenseStat == false">
         <div
           v-if="activeState == 1"
-          class="block p-6 rounded-lg bg-white max-w-full mr-0 sm:mr-8 mb-8 sm:p-4"
+          :class="
+            isDarkMode && isDarkMode == true
+              ? '    block p-6 rounded-lg   bg-primaryDark   mb-8 '
+              : '  block p-6 rounded-lg   bg-white max-w-full mb-8 '
+          "
         >
           <div class="mt-small flex justify-center">
-            <h2 class="text-main-400 text-3xl font-bold">
+            <h2
+              :class="
+                isDarkMode && isDarkMode == true
+                  ? 'text-primary-200 text-3xl font-bold border-b-4'
+                  : 'text-main-400 text-xl lg:text-3xl border-b-4 font-bold sm:text-xl '
+              "
+            >
               General Information
             </h2>
           </div>
 
-          <form @submit.prevent="submit" class="mx-auto w-full mt-10">
-            <div class="mb-4 border-b-2">
-              <!-- applican type -->
-              <div
-                class="grid grid-cols-1 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-2 mb-2"
-              >
-                <div class="">
-                  <label class="text-main-400">Applicant Type</label>
-
-                  <select
-                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    aria-label="Default select example"
-                    @change="applicantTypeChangeHandler()"
-                    v-model="generalInfo.applicantType"
-                    :disabled="
-                      generalInfo.multipleDepartment
-                        ? generalInfo.multipleDepartment.length > 0
-                        : 0
-                    "
-                    required
-                  >
-                    <option
-                      v-for="applicant in applicantTypes"
-                      :key="applicant.name"
-                      :value="applicant"
-                    >
-                      {{ applicant.name }}
-                    </option>
-                  </select>
-                </div>
-                <div v-if="showLanguage" class="">
-                  <label class="text-main-400 lg:ml-2">Language Type</label>
-                  <select
-                    class="form-select appearance-none block lg:ml-2 w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    v-model="generalInfo.nativeLanguageSelected"
-                  >
-                    <option
-                      v-for="language in languages"
-                      :key="language.name"
-                      :value="language"
-                    >
-                      {{ language.name }}
-                    </option>
-                  </select>
-                </div>
-                <div v-if="showOccupation">
-                  <label class="text-main-400 lg:ml-2">Occupation Type</label>
-                  <select
-                    class="form-select appearance-none block lg:ml-2 w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    v-model="generalInfo.occupationTypes"
-                  >
-                    <option
-                      v-for="occupation in occupations"
-                      :key="occupation.name"
-                      :value="occupation"
-                    >
-                      {{ occupation.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
+          <form @submit.prevent="submit" class="mx-auto w-full mt-2">
+            <!-- applicant info -->
+            <ApplicantInfo
+              :generalInfo="generalInfo"
+              :isDarkMode="isDarkMode"
+              :localDataLength="false"
+              :applicantTypes="applicantTypes"
+              :showLanguage="showLanguage"
+              :showOccupation="showOccupation"
+              :languages="languages"
+              :occupations="occupations"
+              @clearLocalData="() => {}"
+              @applicantTypeChangeHandler="applicantTypeChangeHandler"
+              @languageChangeHandler="languageChangeHandler"
+              @occupationChangeHandler="occupationChangeHandler"
+            ></ApplicantInfo>
 
             <!-- region -->
-           <div v-if="showLocation" class="border-b-2 mb-4">
-            <h2 class="text-yellow-300 text-lg mb-2 sm:border-none border-b">
-              ***Please select the region you are applying for, not where you
-              are currently living***
-            </h2>
-            <h2 class="text-yellow-300 font-bold text-base mb-4">
-              *** እባክዎ የሚያመለክቱበትን ክልል ይምረጡ እንጂ አሁን የሚኖሩበትን ቦታ አይምረጡ***
-            </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-3 ml-2">
-              <div class="col-span-12 sm:col-span-1 mb-4">
-                <label class="text-main-400">Region</label>
-                <select
-                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                  :disabled="
-                    generalInfo.multipleDepartment
-                      ? generalInfo.multipleDepartment.length > 0
-                      : 0
-                  "
-                  v-model="generalInfo.regionSelected"
-                  @change="regionChangeHandler()"
-                  required
-                >
-                  <option
-                    v-for="region in regions"
-                    :key="region.name"
-                    :value="region"
-                  >
-                    {{ region.name }}
-                  </option>
-                </select>
-              </div>
-              <div
-                class="col-span-12 sm:col-span-1 mb-4"
-                v-if="generalInfo.regionSelected.code != 'HAR'"
-              >
-                <label class="text-main-400">Zone</label>
-                <select
-                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                  :disabled="
-                    generalInfo.multipleDepartment
-                      ? generalInfo.multipleDepartment.length > 0
-                      : 0
-                  "
-                  v-model="generalInfo.zoneSelected"
-                  @change="zoneChangeHandler()"
-                  required
-                >
-                  <option
-                    :value="generalInfo.zoneSelected.id"
-                    :key="generalInfo.zoneSelected.id"
-                    selected
-                  >
-                    {{ generalInfo.zoneSelected.name }}
-                  </option>
-                  <option v-for="zone in zones" :key="zone.name" :value="zone">
-                    {{ zone.name }}
-                  </option>
-                </select>
-              </div>
-
-              <div class="col-span-12 sm:col-span-1">
-                <label class="text-main-400">Woreda</label>
-                <select
-                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  :disabled="
-                    generalInfo.multipleDepartment
-                      ? generalInfo.multipleDepartment.length > 0
-                      : 0
-                  "
-                  v-model="generalInfo.woredaSelected"
-                  required
-                >
-                  <option
-                    v-for="woreda in woredas"
-                    :key="woreda.name"
-                    :value="woreda"
-                  >
-                    {{ woreda.name }}
-                  </option>
-                  <option selected>
-                    {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
-                  </option>
-                </select>
-              </div>
-              <small
-                v-if="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                class="text-main-400 text-base col-span-12"
-                >You can change region,zone or woreda when there is no added
-                education/department data below,so in order to change location
-                data please remove current department below</small
-              >
-            </div>
-          </div>
-
-            <!-- end -->
+            <LocationInfo
+              :generalInfo="generalInfo"
+              :isDarkMode="isDarkMode"
+              :regions="regions"
+              :zones="zones"
+              :woredas="woredas"
+              :showLocation="showLocation"
+              @regionChangeHandler="regionChangeHandler"
+              @zoneChangeHandler="zoneChangeHandler"
+              @woredaChangeHandler="woredaChangeHandler"
+            ></LocationInfo>
 
             <!-- educational institution and department -->
-            <div
-              class="border-b-2 mb-4"
-              v-if="generalInfo.educations.length < 3"
-            >
-              <div
-                class="grid grid-cols-1 gap-4 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-2"
-              >
-                <div class="">
-                  <label class="text-main-400">Department</label>
-                  <select
-                    class="form-select mb-2 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    v-model="generalInfo.departmentSelected"
-                    @change="departmentChange()"
-                  >
-                    <option
-                      v-for="department in departments"
-                      :key="department.name"
-                      :value="department"
-                    >
-                      {{ department.name }}
-                    </option>
-                  </select>
-                </div>
-                <div>
-                  <label class="text-main-400">Education Level </label>
-                  <select
-                    class="form-select mb-2 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    :disabled="!isDepartmentSelected"
-                    v-model="generalInfo.educationalLevelSelected"
-                    @change="educationalLevelChange()"
-                  >
-                    <option
-                      v-for="educationalLevel in educationalLevels"
-                      :key="educationalLevel.name"
-                      :value="educationalLevel"
-                    >
-                      {{ educationalLevel.name }}
-                    </option>
-                  </select>
-                </div>
-                <div>
-                  <label class="text-main-400">Professional Types</label>
-                  <select
-                    class="form-select mb-2 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    :disabled="!isEdLevelSelected"
-                    v-model="generalInfo.professionalTypeSelected"
-                    @change="ProfessionTypeChange(institution)"
-                  >
-                    <option disabled>First Select Department from above</option>
-                    <option
-                      v-for="pf in professionalTypes"
-                      :key="pf.id"
-                      :value="pf"
-                    >
-                      {{ pf.name }}
-                    </option>
-                  </select>
-                  <div class="grid grid-rows-2">
-                    <input
-                      v-model="generalInfo.otherProfessionalType"
-                      v-if="showOtherProfession"
-                      class="mb-2 w-full"
-                      placeholder="Other profession title"
-                      type="text"
-                    />
-                    <input
-                      v-model="generalInfo.otherProfessionalTypeAmharic"
-                      v-if="showOtherProfession"
-                      class="mb-2 w-full"
-                      placeholder="Amharic other profession name"
-                      type="text"
-                    />
-                  </div>
-                </div>
+            <EducationInfo
+              :isDarkMode="isDarkMode"
+              :generalInfo="generalInfo"
+              :departments="departments"
+              :educationalLevels="educationalLevels"
+              :professionalTypes="professionalTypes"
+              :institutions="institutions"
+              :isDepartmentSelected="isDepartmentSelected"
+              :isEdLevelSelected="isEdLevelSelected"
+              :isAppTypeSelected="isAppTypeSelected"
+              :showOtherProfession="showOtherProfession"
+              :showOtherEducation="showOtherEducation"
+              :multipleDepartmentError="multipleDepartmentError"
+              :checkForAddedError="checkForAddedError"
+              :multipleDepartmentMaxError="multipleDepartmentMaxError"
+              @department-change="departmentChange"
+              @educationalLevelChange="educationalLevelChange"
+              @professionTypeChange="ProfessionTypeChange"
+              @institutionChange="institutionChange"
+              @addMultiple="addMultiple"
+            ></EducationInfo>
 
-                <div>
-                  <label class="text-main-400">Educational Institution</label>
-
-                  <select
-                    class="form-select mb-2 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    v-model="generalInfo.institutionSelected"
-                    @change="institutionChange(institution)"
-                  >
-                    <option disabled>Please Select Applicant Type first</option>
-                    <option
-                      v-for="institution in institutions"
-                      :key="institution.name"
-                      :value="institution"
-                    >
-                      {{ institution.name }}
-                    </option>
-                  </select>
-                  <input
-                    v-model="generalInfo.otherEducationalInstitution"
-                    v-if="showOtherEducation"
-                    class="mb-2 w-full"
-                    placeholder="Write Educational Institution"
-                    type="text"
-                  />
-                </div>
-              </div>
-
-              <div class="text-right">
-                <button
-                  type="button"
-                  class="px-6 mr-2 mb-8 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
-                  @click="addMultiple()"
-                >
-                  <i class="fa fa-plus"></i>
-                  Add
-                </button>
-              </div>
-
-              <span v-if="multipleDepartmentError" class="ml-8 text-red-300"
-                >Please fill in all fields</span
-              >
-              <span v-if="checkForAddedError" class="ml-8 text-red-300"
-                >You already added the department</span
-              >
-              <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
-                >Only three departments can be selected</span
-              >
-            </div>
             <!-- Table for selected departments data -->
-            <div class="table-multiple border mb-8 bg-white">
-              <h2 class="text-main-400 font-bold m-2 text-2xl">
-                Selected Departments
-              </h2>
-
-              <div class="flex flex-col">
-                <div class="overflow-x-scroll">
-                  <div
-                    class="flex justify-center"
-                    v-if="generalInfo.multipleDepartment.length < 1"
-                  >
-                    No Data
-                  </div>
-                  <div v-else>
-                    <table class="min-w-full p-4">
-                      <thead
-                        class="border-b border-t bg-primary-300 text-main-400 p-4"
-                      >
-                        <tr>
-                          <th
-                            scope="col"
-                            class="text-xl text-gray-900 p-5 text-left font-bold text-white"
-                          >
-                            Department
-                          </th>
-                          <th
-                            scope="col"
-                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
-                          >
-                            Education Level
-                          </th>
-                          <th
-                            scope="col"
-                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
-                          >
-                            Institution
-                          </th>
-                          <th
-                            scope="col"
-                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
-                          >
-                            Professional Type
-                          </th>
-                          <th
-                            scope="col"
-                            class="text-xl text-gray-900 px-6 py-4 text-left font-bold text-white"
-                          >
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                      <tbody>
-                        <tr
-                          class="border-b border-main-400 p-4"
-                          v-for="(
-                            item, index
-                          ) in generalInfo.multipleDepartment"
-                          :key="item.id"
-                        >
-                          <td
-                            class="p-4 whitespace-nowrap text-lg font-medium text-gray-900"
-                          >
-                            {{ item.department ? item.department.name : "" }}
-                          </td>
-                          <td
-                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
-                          >
-                            {{
-                              item.educationLevel
-                                ? item.educationLevel.name
-                                : ""
-                            }}
-                          </td>
-                          <td
-                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
-                          >
-                            {{ item.institution ? item.institution.name : "" }}
-                          </td>
-                          <td
-                            class="text-lg text-gray-900 font-light p-4 whitespace-nowrap"
-                          >
-                            {{
-                              item.professionType
-                                ? item.professionType.name
-                                : ""
-                            }}
-                          </td>
-                          <td
-                            class="text-lg text-gray-900 font-light p-5 whitespace-nowrap"
-                          >
-                            <span
-                              @click="removeDepartment(index)"
-                              title="Remove"
-                              ><i
-                                class="fa fa-trash text-red-300 cursor-pointer"
-                              ></i
-                            ></span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Table for selected departments data -->
-
+            <AddedDepartmentTable
+              :isDarkMode="isDarkMode"
+              :generalInfo="generalInfo"
+            ></AddedDepartmentTable>
             <div class="flex justify-end mb-2 mr-1">
               <button
-                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#withdrawalModal"
+                :class="
+                  generalInfo.multipleDepartment &&
+                  generalInfo.multipleDepartment.length > 0
+                    ? 'px-4 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-base leading-tight font-bold   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                    : 'px-4 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-base leading-tight   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+                "
+                type="submit"
+                @click="saveDraft()"
               >
-                Withdraw
+                Save as Draft
               </button>
               <button
                 :class="
-                  generalInfo.educations.length > 0
-                    ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-                    : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+                  generalInfo.multipleDepartment &&
+                  generalInfo.multipleDepartment.length > 0
+                    ? 'px-4  mr-2 mb-2 pb-4 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out'
+                    : 'px-4 mr-2 mb-2 pb-4 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out  disabled'
                 "
                 type="submit"
                 @click="apply()"
@@ -460,7 +117,6 @@
             </div>
           </form>
         </div>
-
         <transition name="fade" mode="out-in">
           <div v-if="activeState == 2">
             <Upload
@@ -536,10 +192,9 @@
           </div>
         </div>
       </div>
-
-      <div v-else>
+      <div v-if="invalidLicenseStat == true">
         <h2 class="text-main-400 font-bold text-2xl">
-          License is currently being reviewed and editing is not allowed.
+          License is currently being reviewed and editing is not allowed
         </h2>
       </div>
     </div>
@@ -552,18 +207,43 @@ import { useRoute } from "vue-router";
 import LicenseSummary from "./draftSummary.vue";
 import Upload from "./draftUpload.vue";
 import MainContent from "../../Shared/Menu.vue";
-import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
 import { useRouter } from "vue-router";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import PageHeader from "../../Shared/PagesHeader.vue";
+import ApplicantInfo from "../../Shared/GeneralInformation/ApplicantInfo.vue";
+import AddedDepartmentTable from "../../Shared/GeneralInformation/AddedDepartmentTable.vue";
+import LocationInfo from "../../Shared/GeneralInformation/LocationInfo.vue";
+import EducationInfo from "../../Shared/GeneralInformation/EducationalInfo.vue";
+import { AddMultipleDepartment } from "../../Shared/services/addMultipleDepartment";
+import { fetchDataMixin } from "../../Shared/GeneralInformation/fetchDataService";
+import { toastMixin } from "../../Shared/services/toastMessage";
 export default {
-  components: { MainContent, LicenseSummary, Upload, Loading },
+  components: {
+    MainContent,
+    LicenseSummary,
+    Upload,
+    Loading,
+    PageHeader,
+    ApplicantInfo,
+    AddedDepartmentTable,
+    LocationInfo,
+    EducationInfo,
+  },
 
   setup(props, { emit }) {
     const route = useRoute();
     const router = useRouter();
-    const toast = useToast();
+    const { fetchData } = fetchDataMixin.setup();
+    const { toastMessage } = toastMixin.setup();
+    const path = ref([
+      { name: "Home", link: "/menu" },
+      { name: "New License", link: "/Applicant/NewLicense" },
+      { name: "Draft", link: "/Applicant/NewLicense" },
+    ]);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let activeState = ref(1);
+    let isLoading = ref(true);
     let applicantTypes = ref("");
     let departments = ref([]);
     let institutions = ref([]);
@@ -573,9 +253,9 @@ export default {
     let regions = ref("");
     let woredas = ref("");
     let zones = ref("");
+    let invalidLicenseStat = ref(false);
     let store = useStore();
     let showLocation = ref(false);
-    let invalidLicenseStat = ref(false);
     let showOccupation = ref(false);
     let showLanguage = ref(false);
     let isDepartmentSelected = ref(false);
@@ -600,70 +280,17 @@ export default {
       educationalLevelSelected: "",
       applicantType: "",
       applicantPositionId: "",
-      regionSelected: "",
-      zoneSelected: "",
-      woredaSelected: "",
+      regionSelected: {},
+      selectedRegion: {},
+      zoneSelected: {},
+      woredaSelected: {},
       languageSelected: "",
       multipleDepartment: [],
       occupationTypes: "",
       nativeLanguageSelected: "",
       educations: [],
+      professionChanged: false,
     });
-    let applicationStatuses = ref([]);
-    let isLoading = ref(false);
-
-    const fetchApplicantType = () => {
-      store.dispatch("newlicense/getApplicantType").then((res) => {
-        const results = res.data.data;
-        applicantTypes.value = results;
-      });
-    };
-    const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationLevel").then((res) => {
-        educationalLevels.value = res.data.data;
-      });
-    };
-    const convertOtherProf = (inputString) => {
-      let trimmedString = inputString.replace(/\s+/g, " ").trim();
-      let formattedString = trimmedString.replace(/\b\w/g, function (match) {
-        return match.toUpperCase();
-      });
-
-      return formattedString;
-    };
-    const convertOtherProfAmh = (inputString) => {
-      let trimmedString = inputString.replace(/\s+/g, " ").trim();
-      return trimmedString;
-    };
-
-    const fetchInstitutions = (value) => {
-      store.dispatch("newlicense/getInstitution", value).then((res) => {
-        const institution = res.data.data;
-        institutions.value = institution;
-      });
-    };
-    const fetchDepartments = () => {
-      store.dispatch("newlicense/getDepartmentType").then((res) => {
-        const department = res.data.data;
-        departments.value = department;
-      });
-    };
-    const fetchRegions = () => {
-      store.dispatch("newlicense/getRegions").then((res) => {
-        const regionsResult = res.data.data;
-        regions.value = regionsResult.filter((el) => el.code != "FED");
-      });
-    };
-
-    const fetchZones = () => {
-      store
-
-        .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then((res) => {
-          const zonesResult = res.data.data;
-          zones.value = zonesResult;
-        });
-    };
 
     const withdraw = () => {
       isLoading.value = true;
@@ -676,23 +303,15 @@ export default {
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
-            toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toastMessage(
+              "Successfully withdrawed an application",
+              "Success",
+              3000
+            );
             router.push({ path: "/Applicant/NewLicense/withdraw" });
             location.reload();
           } else {
-            toast.error(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toastMessage("Please try again", "error", 3000);
             location.reload();
           }
         })
@@ -701,14 +320,6 @@ export default {
         });
     };
 
-    const fetchWoredas = () => {
-      store
-        .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
-        .then((res) => {
-          const woredasResult = res.data.data;
-          woredas.value = woredasResult;
-        });
-    };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
       let profession = {
         departmentId: departmentId,
@@ -726,20 +337,25 @@ export default {
       if (generalInfo.value.applicantType.code == "ETH") {
         showLocation.value = true;
         showOccupation.value = true;
-        fetchInstitutions(true);
+
+        institutions.value = await fetchData("newlicense/getInstitution", true);
       } else {
         showLocation.value = false;
         showOccupation.value = false;
-        fetchInstitutions(false);
+        institutions.value = await fetchData(
+          "newlicense/getInstitution",
+          false
+        );
       }
       if (generalInfo.value.applicantType.code == "FOR") {
-        fetchLanguages();
+        languages.value = await fetchData("lookups/getNativeLanguage");
         showLanguage.value = true;
       } else {
         showLanguage.value = false;
       }
     };
-    const regionChangeHandler = () => {
+    const regionChangeHandler = async (region) => {
+      if (region) generalInfo.value.regionSelected = region;
       if (
         generalInfo.value.regionSelected &&
         generalInfo.value.regionSelected.code == "HAR"
@@ -750,20 +366,25 @@ export default {
           code: "ZN_HAR_DEF_54",
         };
         fetchWoredas();
-      } else {
-        fetchZones();
       }
+      zones.value = await fetchData(
+        "newlicense/getZones",
+        generalInfo.value.regionSelected.id
+      );
+    };
+    const fetchWoredas = async () => {
+      woredas.value = await fetchData(
+        "newlicense/getWoredas",
+        generalInfo.value.zoneSelected.id
+      );
+    };
+    const woredaChangeHandler = (woreda) => {
+      generalInfo.value.woredaSelected = woreda;
     };
     const zoneChangeHandler = () => {
       fetchWoredas();
     };
-    const fetchLanguages = () => {
-      store.dispatch("lookups/getNativeLanguage").then((res) => {
-        if (res.data.status == "Success") {
-          languages.value = res.data.data;
-        }
-      });
-    };
+
     const departmentChange = () => {
       isDepartmentSelected.value = true;
       generalInfo.value.educationalLevelSelected = "";
@@ -786,169 +407,24 @@ export default {
       }
     };
 
-    const checkForAdded = (data) => {
-      let tempStatus = false;
-      if (generalInfo.value.multipleDepartment) {
-        generalInfo.value.multipleDepartment.forEach((element) => {
-          if (element.department.code == data.code) {
-            checkForAddedError.value = true;
-            tempStatus = true;
-          }
-        });
-        return tempStatus;
-      }
-    };
     const removeDepartment = (index) => {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.educations.splice(index, 1);
       generalInfo.value.professionChanged = true;
     };
-    const addMultiple = () => {
-      if (
-        generalInfo.value.departmentSelected &&
-        generalInfo.value.educationalLevelSelected &&
-        generalInfo.value.institutionSelected &&
-        generalInfo.value.professionalTypeSelected
-      ) {
-        if (
-          generalInfo.value.applicantTypeSelected.code != "FOR" &&
-          showOtherProfession.value &&
-          showOtherProfession.value == true &&
-          (generalInfo.value.otherProfessionalType == undefined ||
-            generalInfo.value.otherProfessionalTypeAmharic == undefined)
-        ) {
-          toast.error(
-            "Please fill other profession name in amharic and english",
-            {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            }
-          );
-          return;
-        }
-        if (generalInfo.value.multipleDepartment.length > 3) {
-          multipleDepartmentMaxError.value = true;
-        } else {
-          multipleDepartmentMaxError.value = false;
-          multipleDepartmentError.value = false;
-
-          if (
-            generalInfo.value.multipleDepartment.length > 0 &&
-            generalInfo.value.multipleDepartment.length <= 3
-          ) {
-            if (
-              checkForAdded(
-                generalInfo.value.departmentSelected
-                  ? generalInfo.value.departmentSelected
-                  : ""
-              ) == false
-            ) {
-              checkForAddedError.value = false;
-              generalInfo.value.professionChanged = true;
-              generalInfo.value.multipleDepartment.push({
-                department: generalInfo.value.departmentSelected,
-                educationLevel: generalInfo.value.educationalLevelSelected,
-                institution: generalInfo.value.institutionSelected,
-                professionType: generalInfo.value.professionalTypeSelected,
-
-                otherEducationalInstitution: generalInfo.value
-                  .otherEducationalInstitution
-                  ? convertOtherProf(
-                      generalInfo.value.otherEducationalInstitution
-                    )
-                  : "",
-                otherProfessionTypeAmharic: generalInfo.value
-                  .otherProfessionalTypeAmharic
-                  ? convertOtherProfAmh(
-                      generalInfo.value.otherProfessionalTypeAmharic
-                    )
-                  : "",
-                otherProfessionType: generalInfo.value.otherProfessionalType
-                  ? convertOtherProf(generalInfo.value.otherProfessionalType)
-                  : "",
-              });
-              generalInfo.value.educations.push({
-                departmentId: generalInfo.value.departmentSelected.id,
-                educationalLevelId:
-                  generalInfo.value.educationalLevelSelected.id,
-                institutionId: generalInfo.value.institutionSelected.id,
-                professionTypeId: generalInfo.value.professionalTypeSelected.id,
-                otherInstitution: generalInfo.value.otherEducationalInstitution
-                  ? convertOtherProf(
-                      generalInfo.value.otherEducationalInstitution
-                    )
-                  : "",
-                otherProfessionTypeAmharic: generalInfo.value
-                  .otherProfessionalTypeAmharic
-                  ? convertOtherProfAmh(
-                      generalInfo.value.otherProfessionalTypeAmharic
-                    )
-                  : "",
-                otherProfessionType: generalInfo.value.otherProfessionalType
-                  ? convertOtherProf(generalInfo.value.otherProfessionalType)
-                  : "",
-              });
-            }
-          } else {
-            checkForAddedError.value = false;
-            generalInfo.value.professionChanged = true;
-            generalInfo.value.multipleDepartment.push({
-              department: generalInfo.value.departmentSelected,
-              educationLevel: generalInfo.value.educationalLevelSelected,
-              institution: generalInfo.value.institutionSelected,
-              professionType: generalInfo.value.professionalTypeSelected,
-
-              otherEducationalInstitution: generalInfo.value
-                .otherEducationalInstitution
-                ? convertOtherProf(
-                    generalInfo.value.otherEducationalInstitution
-                  )
-                : "",
-              otherProfessionalTypeAmharic: generalInfo.value
-                .otherProfessionalTypeAmharic
-                ? convertOtherProfAmh(
-                    generalInfo.value.otherProfessionalTypeAmharic
-                  )
-                : "",
-              otherProfessionalType: generalInfo.value.otherProfessionalType
-                ? convertOtherProf(generalInfo.value.otherProfessionalType)
-                : "",
-            });
-            generalInfo.value.educations.push({
-              departmentId: generalInfo.value.departmentSelected.id,
-              educationalLevelId: generalInfo.value.educationalLevelSelected.id,
-              institutionId: generalInfo.value.institutionSelected.id,
-              professionTypeId: generalInfo.value.professionalTypeSelected.id,
-              otherInstitution: generalInfo.value.otherEducationalInstitution
-                ? convertOtherProf(
-                    generalInfo.value.otherEducationalInstitution
-                  )
-                : "",
-              otherProfessionTypeAmharic: generalInfo.value
-                .otherProfessionalTypeAmharic
-                ? convertOtherProfAmh(
-                    generalInfo.value.otherProfessionalTypeAmharic
-                  )
-                : "",
-              otherProfessionType: generalInfo.value.otherProfessionalType
-                ? convertOtherProf(generalInfo.value.otherProfessionalType)
-                : "",
-            });
-          }
-          generalInfo.value.departmentSelected = "";
-          generalInfo.value.educationalLevelSelected = "";
-          generalInfo.value.institutionSelected = "";
-          generalInfo.value.professionalTypeSelected = "";
-          generalInfo.value.otherProfessionalType = "";
-          generalInfo.value.otherProfessionalTypeAmharic = "";
-          generalInfo.value.otherEducationalInstitution = "";
-        }
-      } else {
-        multipleDepartmentError.value = true;
-      }
+    const addMultiple = async () => {
+      let result = await AddMultipleDepartment(
+        generalInfo.value,
+        showOtherProfession.value,
+        multipleDepartmentMaxError.value,
+        multipleDepartmentError.value,
+        checkForAddedError.value
+      );
+      generalInfo.value = result.generalInfo;
+      showOtherProfession.value = result.showOtherProfession;
+      multipleDepartmentMaxError.value = result.multipleDepartmentMaxError;
+      multipleDepartmentError.value = result.multipleDepartmentError;
+      checkForAddedError.value = result.checkForAddedError;
     };
     const fetchOccupation = () => {
       store.dispatch("lookups/getGovernment").then((res) => {
@@ -957,31 +433,24 @@ export default {
         }
       });
     };
-    const apply = () => {
+    const apply = async () => {
       let tempApplicationData = generalInfo.value;
-      tempApplicationData.fromDraft=true;
       window.localStorage.setItem(
         "NLApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          emit("changeActiveState");
-          activeState.value += 1;
-        });
-    };
-    const fetchApplicationStatuses = () => {
-      store.dispatch("newlicense/getApplicationStatuses").then((res) => {
-        const results = res.data.data;
-        applicationStatuses.value = results;
 
-        let status = applicationStatuses.value.filter(function (e) {
-          return e.code == "DRA";
-        });
-        store.dispatch("newlicense/setButtons", status[0].buttons);
-      });
+      await fetchData(
+        "newlicense/setGeneralInfo",
+        generalInfo.value,
+        "noReturnData"
+      );
+      let tempNL = { step: 2 };
+      localStorage.setItem("tempNL", JSON.stringify(tempNL));
+      emit("changeActiveState");
+      activeState.value += 1;
     };
+
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
       fetchProfessionalType(
@@ -989,31 +458,38 @@ export default {
         generalInfo.value.educationalLevelSelected.id
       );
     };
+
+    const languageChangeHandler = (language) => {
+      generalInfo.value.languageSelected = language;
+    };
+    const occupationChangeHandler = (occupation) => {
+      generalInfo.value.occupationSelected = occupation;
+    };
     onMounted(async () => {
       window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
-      isLoading.value = true;
-      fetchApplicantType();
-      fetchDepartments();
-      fetchInstitutions();
-      fetchEducationLevel();
-      fetchRegions();
-      fetchOccupation();
-      fetchApplicationStatuses();
+      applicantTypes.value = await fetchData("newlicense/getApplicantType");
+      departments.value = await fetchData("newlicense/getDepartmentType");
+      educationalLevels.value = await fetchData("lookups/getEducationLevel");
+      regions.value = await fetchData("newlicense/getRegions");
+      occupations.value = await fetchData("lookups/getGovernment");
+      const statuses = await fetchData("newlicense/getApplicationStatuses");
 
+      let status = statuses.filter(function (e) {
+        return e.code == "DRA";
+      });
+      await fetchData(
+        "newlicense/setButtons",
+        status[0].buttons,
+        "noReturnData"
+      );
       store
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)
         .then((res) => {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
-          if (
-            generalInfo.value &&
-            generalInfo.value.applicationStatus &&
-            generalInfo.value.applicationStatus.code != "DRA"
-          ) {
-            invalidLicenseStat.value = true;
-          }
+
           generalInfo.value.regionSelected =
             res.data.data && res.data.data.woreda
               ? res.data.data.woreda.zone.region
@@ -1053,10 +529,20 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
-          isLoading.value = false;
+          generalInfo.value.occupationSelected = res.data.data.occupationTypes;
+          generalInfo.value.languageSelected = res.data.data.nativeLanguages; 
+
+          if (
+            generalInfo.value.applicationStatus.code == "UPD" ||
+            generalInfo.value.applicationStatus.code == "SUB"
+          ) {
+            invalidLicenseStat.value = false;
+            isLoading.value = false;
+          } else {
+            isLoading.value = false;
+          }
         });
     });
-    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     return {
       applicantTypeChangeHandler,
       regionChangeHandler,
@@ -1071,10 +557,8 @@ export default {
       educationalLevelChange,
       showLocation,
       departments,
-      isDarkMode,
       withdraw,
       institutions,
-      invalidLicenseStat,
       educationalLevels,
       applicantTypes,
       regions,
@@ -1084,6 +568,7 @@ export default {
       isEdLevelSelected,
       checkForAddedError,
       zones,
+      isDarkMode,
       professionalTypes,
       showOccupation,
       showLanguage,
@@ -1104,6 +589,11 @@ export default {
       multipleDepartmentError,
       multipleDepartmentMaxError,
       generalInfo,
+      invalidLicenseStat,
+      path,
+      languageChangeHandler,
+      occupationChangeHandler,
+      woredaChangeHandler,
     };
   },
 };
