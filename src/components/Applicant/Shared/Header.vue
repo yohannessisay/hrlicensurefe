@@ -1,53 +1,46 @@
 <template>
-  <div class="top-navbar glass">
+  <div
+    :class="
+      isDarkMode
+        ? 'top-navbar glass text-white'
+        : 'top-navbar glass text-main-400'
+    "
+  >
     <div id="menu-icon">
-      <i class="bx bx-menu text-main-400" @click="sidebarMenu()"></i>
+      <i class="bx bx-menu" @click="sidebarMenu()"></i>
     </div>
     <div class="profile">
-      <div class="flex items-center space-x-5">
-        <!-- <div class="m-4">
-          <div class="toggle slim colour">
-            <input
-              id="check4"
-              class="toggle-checkbox hidden"
-              type="checkbox"
-              :checked="isDarkMode==true"
-              @click="toggleDarkMode()"
-            />
-            <label
-              for="check4"
-              class="
-                toggle-label
-                block
-                w-10
-                h-4
-                rounded-full
-                transition-color
-                duration-150
-                ease-out
-              "
-            ></label>
-          </div>
-        </div> -->
-
-        <div class="relative inline-block text-left" style="z-index: 1">
+      <div class="flex justify-end items-end space-x-2">
+        <div class="relative inline-block mb-1">
           <span
             :class="
-              notif && notif.length > 0 ? 'cursor-pointer notifIcon ' : ''
+              notif && notif.length > 0
+                ? 'cursor-pointer notifIcon mr-4'
+                : 'cursor-pointer mr-4 '
             "
             v-on:click="showNotifications()"
-            ><i class="fa fa-bell text-main-400 text-2xl"></i
+            ><i
+              :class="
+                isDarkMode
+                  ? 'fa fa-bell text-xl text-white cursor-pointer  shadow-md p-1 rounded-md bg-primary-400'
+                  : 'fa fa-bell  text-xl text-white cursor-pointer  shadow-md p-1 rounded-md bg-primary-400'
+              "
+            ></i
           ></span>
           <div
             v-if="showNotif == true"
-            class="origin-top-right absolute right-0 sm:w-40 lg:w-64 mt-1 h-64 overflow-y-scroll p-4 rounded-md bg-white focus:outline-none"
+            :class="
+              isDarkMode
+                ? 'origin-top-right absolute right-0 bg-primary-300 w-56 mt-1 h-64 overflow-y-scroll p-4 rounded-md shadow-md focus:outline-none'
+                : 'origin-top-right absolute right-0 bg-primary-300  w-56 mt-1 h-64 overflow-y-scroll p-4 rounded-md shadow-md focus:outline-none'
+            "
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
             <span v-if="notif && notif.length > 0">
               <li
-                class="text-main-400 cursor-pointer hover:underline hover:bg-primary-300 p-2 rounded-md border-b-4"
+                class="cursor-pointer hover:underline hover:bg-primary-300 p-2 rounded-md border-b-4"
                 v-for="notif in notif"
                 :key="notif"
               >
@@ -62,14 +55,156 @@
             <span v-else>No Notifications</span>
           </div>
         </div>
+        <div
+          class="dropdown mb-1 transition duration-300 ease-in-out mr-2 sm:mr-8"
+        >
+          <i
+            class="fa fa-globe fa-lg text-white cursor-pointer shadow-md p-2 rounded-md bg-primary-400"
+          >
+          </i>
+          <span class="text-base ml-1" style="margin-top: -2px !important">{{
+            locale ? locale.toUpperCase() : ""
+          }}</span>
+          <ul
+            class="dropdown-menu absolute hidden p-2 sm:w-40 text-gray-700 bg-grey-300 rounded-md shadow-md"
+          >
+            <li
+              @click="changeLocale('am')"
+              class="border-lightBlueB-500 border-b p-1 hover:text-yellow-300 rounded-t-md cursor-pointer"
+            >
+              <div class="flex">
+                <svg
+                  class="mt-2 mr-2"
+                  width="20"
+                  height="20"
+                  version="1.1"
+                  id="Capa_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  x="0px"
+                  y="0px"
+                  viewBox="0 0 473.68 473.68"
+                  style="enable-background: new 0 0 473.68 473.68"
+                  xml:space="preserve"
+                >
+                  <circle
+                    style="fill: #ffffff"
+                    cx="236.85"
+                    cy="236.85"
+                    r="236.83"
+                  />
+                  <path
+                    style="fill: #d32027"
+                    d="M326.532,314.868H13.219c0.079,0.221,0.15,0.445,0.228,0.673
+		c32.452,92.102,120.19,158.135,223.387,158.135c7.173,0,14.263-0.352,21.274-0.98C294.514,452.743,317.336,389.338,326.532,314.868z"
+                  />
+                  <path
+                    style="fill: #258f44"
+                    d="M13.608,157.668c-0.026,0.067-0.049,0.131-0.075,0.206h312.879
+		c-9.27-74.07-32.052-137.029-68.303-156.901C251.097,0.352,244.007,0,236.835,0C133.806,0,46.187,65.802,13.608,157.668z"
+                  />
+                  <path
+                    style="fill: #f8d12e"
+                    d="M0,236.842c0,27.348,4.693,53.588,13.219,78.026h313.313c6.256-50.66,6.215-106.402-0.12-156.995
+		H13.534C4.798,182.573,0,209.139,0,236.842z"
+                  />
+                  <path
+                    style="fill: #d32027"
+                    d="M258.113,472.697c93.848-8.362,171.927-71.46,202.12-157.156c0.079-0.228,0.146-0.453,0.228-0.673
+		h-146.12C305.145,389.338,294.514,452.743,258.113,472.697z"
+                  />
+                  <path
+                    style="fill: #258f44"
+                    d="M314.218,157.874H460.14c-0.026-0.075-0.049-0.138-0.075-0.206
+		C429.752,72.2,351.785,9.319,258.105,0.972C294.361,20.844,304.947,83.804,314.218,157.874z"
+                  />
+                  <path
+                    style="fill: #f8d12e"
+                    d="M460.143,157.874H314.218c6.335,50.593,6.376,106.339,0.12,156.995h146.116
+		c8.526-24.438,13.219-50.682,13.219-78.026C473.677,209.139,468.879,182.573,460.143,157.874z"
+                  />
+                </svg>
 
+                <a class="bg-gray-200 py-2 block whitespace-no-wrap" href="#"
+                  >Amharic</a
+                >
+              </div>
+            </li>
+            <li
+              class="hover:text-yellow-300 rounded-b-md cursor-pointer p-1"
+              @click="changeLocale('en')"
+            >
+              <div class="flex">
+                <svg
+                  class="mr-2 mt-2"
+                  width="20"
+                  height="20"
+                  version="1.1"
+                  id="Layer_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  x="0px"
+                  y="0px"
+                  viewBox="0 0 512 512"
+                  style="enable-background: new 0 0 512 512"
+                  xml:space="preserve"
+                >
+                  <circle style="fill: #f0f0f0" cx="256" cy="256" r="256" />
+                  <g>
+                    <path
+                      style="fill: #d80027"
+                      d="M244.87,256H512c0-23.106-3.08-45.49-8.819-66.783H244.87V256z"
+                    />
+                    <path
+                      style="fill: #d80027"
+                      d="M244.87,122.435h229.556c-15.671-25.572-35.708-48.175-59.07-66.783H244.87V122.435z"
+                    />
+                    <path
+                      style="fill: #d80027"
+                      d="M256,512c60.249,0,115.626-20.824,159.356-55.652H96.644C140.374,491.176,195.751,512,256,512z"
+                    />
+                    <path
+                      style="fill: #d80027"
+                      d="M37.574,389.565h436.852c12.581-20.529,22.338-42.969,28.755-66.783H8.819
+		C15.236,346.596,24.993,369.036,37.574,389.565z"
+                    />
+                  </g>
+                  <path
+                    style="fill: #0052b4"
+                    d="M118.584,39.978h23.329l-21.7,15.765l8.289,25.509l-21.699-15.765L85.104,81.252l7.16-22.037
+	C73.158,75.13,56.412,93.776,42.612,114.552h7.475l-13.813,10.035c-2.152,3.59-4.216,7.237-6.194,10.938l6.596,20.301l-12.306-8.941
+	c-3.059,6.481-5.857,13.108-8.372,19.873l7.267,22.368h26.822l-21.7,15.765l8.289,25.509l-21.699-15.765l-12.998,9.444
+	C0.678,234.537,0,245.189,0,256h256c0-141.384,0-158.052,0-256C205.428,0,158.285,14.67,118.584,39.978z M128.502,230.4
+	l-21.699-15.765L85.104,230.4l8.289-25.509l-21.7-15.765h26.822l8.288-25.509l8.288,25.509h26.822l-21.7,15.765L128.502,230.4z
+	 M120.213,130.317l8.289,25.509l-21.699-15.765l-21.699,15.765l8.289-25.509l-21.7-15.765h26.822l8.288-25.509l8.288,25.509h26.822
+	L120.213,130.317z M220.328,230.4l-21.699-15.765L176.93,230.4l8.289-25.509l-21.7-15.765h26.822l8.288-25.509l8.288,25.509h26.822
+	l-21.7,15.765L220.328,230.4z M212.039,130.317l8.289,25.509l-21.699-15.765l-21.699,15.765l8.289-25.509l-21.7-15.765h26.822
+	l8.288-25.509l8.288,25.509h26.822L212.039,130.317z M212.039,55.743l8.289,25.509l-21.699-15.765L176.93,81.252l8.289-25.509
+	l-21.7-15.765h26.822l8.288-25.509l8.288,25.509h26.822L212.039,55.743z"
+                  />
+                </svg>
+
+                <a
+                  class="bg-gray-200 hover:bg-gray-400 py-2 block whitespace-no-wrap"
+                  href="#"
+                  >English</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
         <h2
-          class="text-main-400 font-bold hidden sm:block"
-          v-text="userInfo.fullName"
-        ></h2>
+          :class="
+            isDarkMode
+              ? 'text-lg text-main-400 hidden sm:block mb-2'
+              : 'text-lg text-main-400 hidden sm:block mb-2'
+          "
+        >
+          {{ userInfo.fullName }}
+        </h2>
         <div class="relative inline-block text-left" style="z-index: 1">
           <a
-            class="focus:outline-none bg-lightBlueB-300 text-main-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
+            class="focus:outline-none bg-grey-200 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
             id="options-menu"
             aria-expanded="true"
             aria-haspopup="true"
@@ -97,7 +232,7 @@
           </a>
           <div
             v-if="showDD == true"
-            class="origin-top-right absolute right-0 mt-1 w-56 p-4 rounded-md bg-white focus:outline-none"
+            class="origin-top-right shadow-md absolute right-0 mt-1 w-56 p-2 rounded-md bg-primary-300 focus:outline-none"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"
@@ -105,7 +240,7 @@
             <div role="none">
               <router-link to="/about">
                 <li
-                  class="block border-b px-4 py-2 p-2 text-sm text-main-400 font-bold hover:bg-grey-100 hover:text-gray-900 cursor-pointer"
+                  class="block border-b mb-2 text-lg text-main-400 font-bold hover:bg-white rounded-t-md cursor-pointer"
                   role="menuitem"
                 >
                   <i class="fa fa-info-circle"></i>
@@ -116,7 +251,7 @@
             <div role="none">
               <router-link to="/google-form">
                 <li
-                  class="block border-b px-4 py-2 p-2 text-sm text-main-400 font-bold hover:bg-grey-100 hover:text-gray-900 cursor-pointer"
+                  class="block border-b mb-2 text-lg text-main-400 font-bold hover:bg-white rounded-t-md cursor-pointer"
                   role="menuitem"
                 >
                   <i class="fa fa-message"></i>
@@ -125,7 +260,7 @@
               </router-link>
               <a href="/applicant/profile">
                 <li
-                  class="block border-b px-4 py-2 p-2 text-sm text-main-400 font-bold hover:bg-grey-100 hover:text-gray-900 cursor-pointer"
+                  class="block border-b mb-2 text-lg text-main-400 font-bold hover:bg-white rounded-t-md cursor-pointer"
                   role="menuitem"
                 >
                   <i class="fa fa-user"></i>
@@ -134,7 +269,7 @@
               </a>
               <a
                 @click="logout()"
-                class="block border-b px-4 py-2 p-2 text-sm text-main-400 font-bold hover:bg-grey-100 hover:text-gray-900 cursor-pointer"
+                class="block border-b text-lg text-main-400 font-bold hover:bg-white rounded-t-md cursor-pointer"
                 role="menuitem"
                 id="logout"
               >
@@ -154,15 +289,17 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import darkModeService from "../Shared/services/darkModeService";
+import { useI18n } from "vue-i18n";
 export default {
   props: ["userInfo"],
 
   setup() {
     const store = useStore();
     let showDD = ref(false);
-    let darkMode = ref(false);
     let showNotif = ref(false);
     const router = useRouter();
+    const i18n = useI18n();
+    const locale = ref(JSON.parse(localStorage.getItem("locale")));
     let checkedForNotification = JSON.parse(
       localStorage.getItem("checkedForExpired")
     );
@@ -171,7 +308,7 @@ export default {
     const id = +localStorage.getItem("userId");
     let notifications = ref([]);
     let showNotificationDropDown = ref(false);
-    let isDarkMode = JSON.parse(localStorage.getItem("nightMode"));
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     const logout = () => {
       localStorage.clear();
       window.indexedDB.deleteDatabase("NLdocumentUploads");
@@ -282,22 +419,23 @@ export default {
         sidenavbarHeader.classList.toggle("disable-header-text");
       };
     };
-
-    const toggleDarkMode = () => {
-     darkMode.value=  darkModeService.modeToggle(darkMode.value);
+    const changeLocale = (language) => {
+      i18n.locale.value = language;
+      locale.value = language;
+      localStorage.setItem("locale", JSON.stringify(language));
     };
     onMounted(() => {
       checkForExpiredLicense();
       checkForNotification();
+      darkModeService.initiateDarkMode();
     });
     return {
+      changeLocale,
       showDropDown,
       showNotification,
       showNotifications,
       showNotif,
       updateNotif,
-      toggleDarkMode,
-      darkMode,
       isDarkMode,
       notifications,
       showDD,
@@ -305,82 +443,13 @@ export default {
       sidebarMenu,
       updateProfile,
       logout,
+      locale,
     };
   },
 };
 </script>
 <style scoped>
-.notifIcon {
-  animation: pulse 2s infinite;
-  border-radius: 50%;
-  margin: 5px;
-}
-@-webkit-keyframes pulse {
-  0% {
-    -webkit-box-shadow: 0 0 0 0 #ffc400;
-  }
-  70% {
-    -webkit-box-shadow: 0 0 0 10px #ffc400;
-  }
-  100% {
-    -webkit-box-shadow: 0 0 0 0 #ffc400;
-  }
-}
-@keyframes pulse {
-  0% {
-    -moz-box-shadow: 0 0 0 0 #ffc400;
-    color: #fcca2946;
-    box-shadow: 0 0 0 0 rgba(244, 157, 22, 1);
-  }
-  70% {
-    -moz-box-shadow: 0 0 0 10px #ffc400;
-
-    box-shadow: 0 0 0 10px rgba(244, 157, 22, 0);
-  }
-  100% {
-    -moz-box-shadow: 0 0 0 0 #ffc400;
-    box-shadow: 0 0 0 0 rgba(244, 157, 22, 0);
-  }
-}
-.toggle-label {
-  position: relative;
-}
-.toggle-label:before {
-  position: absolute;
-  top: 0.125rem;
-  left: 0.125rem;
+.dropdown:hover .dropdown-menu {
   display: block;
-  content: "";
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 9999%;
-  background-color: white;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 40%;
-  background-image: url('data:image/svg+xml;charset=UTF-8,<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 240 240" style="enable-background:new 0 0 240 240" xml:space="preserve"><g><path d="M58.57,25.81c-2.13-3.67-0.87-8.38,2.8-10.51c3.67-2.13,8.38-0.88,10.51,2.8l9.88,17.1c2.13,3.67,0.87,8.38-2.8,10.51 c-3.67,2.13-8.38,0.88-10.51-2.8L58.57,25.81L58.57,25.81z M120,51.17c19.01,0,36.21,7.7,48.67,20.16 C181.12,83.79,188.83,101,188.83,120c0,19.01-7.7,36.21-20.16,48.67c-12.46,12.46-29.66,20.16-48.67,20.16 c-19.01,0-36.21-7.7-48.67-20.16C58.88,156.21,51.17,139.01,51.17,120c0-19.01,7.7-36.21,20.16-48.67 C83.79,58.88,101,51.17,120,51.17L120,51.17z M158.27,81.73c-9.79-9.79-23.32-15.85-38.27-15.85c-14.95,0-28.48,6.06-38.27,15.85 c-9.79,9.79-15.85,23.32-15.85,38.27c0,14.95,6.06,28.48,15.85,38.27c9.79,9.79,23.32,15.85,38.27,15.85 c14.95,0,28.48-6.06,38.27-15.85c9.79-9.79,15.85-23.32,15.85-38.27C174.12,105.05,168.06,91.52,158.27,81.73L158.27,81.73z M113.88,7.71c0-4.26,3.45-7.71,7.71-7.71c4.26,0,7.71,3.45,7.71,7.71v19.75c0,4.26-3.45,7.71-7.71,7.71 c-4.26,0-7.71-3.45-7.71-7.71V7.71L113.88,7.71z M170.87,19.72c2.11-3.67,6.8-4.94,10.48-2.83c3.67,2.11,4.94,6.8,2.83,10.48 l-9.88,17.1c-2.11,3.67-6.8,4.94-10.48,2.83c-3.67-2.11-4.94-6.8-2.83-10.48L170.87,19.72L170.87,19.72z M214.19,58.57 c3.67-2.13,8.38-0.87,10.51,2.8c2.13,3.67,0.88,8.38-2.8,10.51l-17.1,9.88c-3.67,2.13-8.38,0.87-10.51-2.8 c-2.13-3.67-0.88-8.38,2.8-10.51L214.19,58.57L214.19,58.57z M232.29,113.88c4.26,0,7.71,3.45,7.71,7.71 c0,4.26-3.45,7.71-7.71,7.71h-19.75c-4.26,0-7.71-3.45-7.71-7.71c0-4.26,3.45-7.71,7.71-7.71H232.29L232.29,113.88z M220.28,170.87 c3.67,2.11,4.94,6.8,2.83,10.48c-2.11,3.67-6.8,4.94-10.48,2.83l-17.1-9.88c-3.67-2.11-4.94-6.8-2.83-10.48 c2.11-3.67,6.8-4.94,10.48-2.83L220.28,170.87L220.28,170.87z M181.43,214.19c2.13,3.67,0.87,8.38-2.8,10.51 c-3.67,2.13-8.38,0.88-10.51-2.8l-9.88-17.1c-2.13-3.67-0.87-8.38,2.8-10.51c3.67-2.13,8.38-0.88,10.51,2.8L181.43,214.19 L181.43,214.19z M126.12,232.29c0,4.26-3.45,7.71-7.71,7.71c-4.26,0-7.71-3.45-7.71-7.71v-19.75c0-4.26,3.45-7.71,7.71-7.71 c4.26,0,7.71,3.45,7.71,7.71V232.29L126.12,232.29z M69.13,220.28c-2.11,3.67-6.8,4.94-10.48,2.83c-3.67-2.11-4.94-6.8-2.83-10.48 l9.88-17.1c2.11-3.67,6.8-4.94,10.48-2.83c3.67,2.11,4.94,6.8,2.83,10.48L69.13,220.28L69.13,220.28z M25.81,181.43 c-3.67,2.13-8.38,0.87-10.51-2.8c-2.13-3.67-0.88-8.38,2.8-10.51l17.1-9.88c3.67-2.13,8.38-0.87,10.51,2.8 c2.13,3.67,0.88,8.38-2.8,10.51L25.81,181.43L25.81,181.43z M7.71,126.12c-4.26,0-7.71-3.45-7.71-7.71c0-4.26,3.45-7.71,7.71-7.71 h19.75c4.26,0,7.71,3.45,7.71,7.71c0,4.26-3.45,7.71-7.71,7.71H7.71L7.71,126.12z M19.72,69.13c-3.67-2.11-4.94-6.8-2.83-10.48 c2.11-3.67,6.8-4.94,10.48-2.83l17.1,9.88c3.67,2.11,4.94,6.8,2.83,10.48c-2.11,3.67-6.8,4.94-10.48,2.83L19.72,69.13L19.72,69.13z"/></g></svg>');
-  transition: transform 0.15s cubic-bezier(0, 0, 0.2, 1);
-  transform: translateX(0);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.toggle-checkbox:checked + .toggle-label:before {
-  transform: translateX(1.5rem);
-  background-image: url('data:image/svg+xml;charset=UTF-8,<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 122.89" style="enable-background:new 0 0 122.88 122.89" xml:space="preserve"><g><path d="M49.06,1.27c2.17-0.45,4.34-0.77,6.48-0.98c2.2-0.21,4.38-0.31,6.53-0.29c1.21,0.01,2.18,1,2.17,2.21 c-0.01,0.93-0.6,1.72-1.42,2.03c-9.15,3.6-16.47,10.31-20.96,18.62c-4.42,8.17-6.1,17.88-4.09,27.68l0.01,0.07 c2.29,11.06,8.83,20.15,17.58,25.91c8.74,5.76,19.67,8.18,30.73,5.92l0.07-0.01c7.96-1.65,14.89-5.49,20.3-10.78 c5.6-5.47,9.56-12.48,11.33-20.16c0.27-1.18,1.45-1.91,2.62-1.64c0.89,0.21,1.53,0.93,1.67,1.78c2.64,16.2-1.35,32.07-10.06,44.71 c-8.67,12.58-22.03,21.97-38.18,25.29c-16.62,3.42-33.05-0.22-46.18-8.86C14.52,104.1,4.69,90.45,1.27,73.83 C-2.07,57.6,1.32,41.55,9.53,28.58C17.78,15.57,30.88,5.64,46.91,1.75c0.31-0.08,0.67-0.16,1.06-0.25l0.01,0l0,0L49.06,1.27 L49.06,1.27z"/></g></svg>');
-}
-
-.toggle.slim .toggle-label:before {
-  top: -0.15rem;
-  left: 0;
-}
-.toggle.slim .toggle-checkbox:checked + .toggle-label:before {
-  transform: translateX(1.75rem);
-}
-.toggle.colour .toggle-label {
-  background-color: #000000;
-}
-.toggle.colour .toggle-checkbox:checked + .toggle-label {
-  background-color: #07677e;
 }
 </style>

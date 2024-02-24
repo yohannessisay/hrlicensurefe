@@ -31,7 +31,7 @@
               ></span>
               <span
                 :class="isDarkMode ? 'text-white title' : 'text-main-400 title'"
-                >Home</span
+                >{{$t('Home')}}</span
               >
             </router-link>
           </a>
@@ -44,7 +44,7 @@
               <span class="icon"
                 ><i class="bx bxs-certification text-white"></i
               ></span>
-              <span class="text text-white font-bold">New License</span>
+              <span class="text text-white font-bold">{{$t('New License')}}</span>
             </router-link>
           </a>
         </li>
@@ -55,7 +55,7 @@
           <a href="#Renewal">
             <router-link class="link" to="/Applicant/Renewal">
               <span class="icon"><i class="bx bx-refresh text-white"></i></span>
-              <span class="text text-white font-bold">Renewal</span>
+              <span class="text text-white font-bold">{{$t('Renewal')}}</span>
             </router-link>
           </a>
         </li>
@@ -68,7 +68,7 @@
               <span class="icon"
                 ><i class="bx bx-mail-send text-white"></i
               ></span>
-              <span class="text text-white font-bold">Good Standing</span>
+              <span class="text text-white font-bold">{{$t('Good Standing')}}</span>
             </router-link>
           </a>
         </li>
@@ -78,7 +78,7 @@
           <a href="#LostLicense">
             <router-link class="link" to="/Applicant/LostLicense">
               <span class="icon"><i class="bx bx-recycle text-white"></i></span>
-              <span class="text text-white font-bold">Lost License</span>
+              <span class="text text-white font-bold">{{$t('Lost License')}}</span>
             </router-link>
           </a>
         </li>

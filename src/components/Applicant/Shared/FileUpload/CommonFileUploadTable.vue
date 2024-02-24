@@ -10,7 +10,7 @@
           :key="index"
           class="px-4 py-4 border-0 border-b uppercase font-medium text-white text-left text-lg"
         >
-          {{ header }}
+          {{ $t(header) }}
         </th>
       </tr>
     </thead>
@@ -34,7 +34,7 @@
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
           <h2 class="sm:hidden mb-2 text-xl underline">
-            {{ headers[0] }}
+            {{$t( headers[0]) }}
           </h2>
           <h2 class="text-lg break-words">
             {{ item.documentType.name }}
@@ -45,7 +45,7 @@
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
           <h2 class="sm:hidden mb-2 text-xl underline">
-            {{ headers[1] }}
+             {{$t( headers[1]) }}
           </h2>
           <h2 class="text-lg break-words">
             {{
@@ -59,7 +59,7 @@
           class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
           <h2 class="sm:hidden mb-2 text-xl underline">
-            {{ headers[2] }}
+            {{$t( headers[2]) }}
           </h2>
 
           <input
@@ -76,11 +76,15 @@
           v-if="item && item.fileName"
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline">Uploaded File Name</h2>
+          <h2 class="sm:hidden mb-2 text-xl underline">{{$t('Uploaded File Name') }}</h2>
           <h2 class="text-lg break-words">
             {{ item.fileName ? item.fileName : "---------------" }}
           </h2>
         </td>
+        <td
+          v-else
+          class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
+        ></td>
         <td
           v-if="item && item.existingFile"
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
@@ -105,7 +109,7 @@
                   class="w-full h-2 object-cover"
                 />
               </i>
-              <small class="text-base ml-2">View</small>
+              <small class="text-base ml-2"> {{$t('View') }}</small>
             </a>
           </div>
         </td>
@@ -133,7 +137,7 @@
                   class="w-full h-2 object-cover"
                 />
               </i>
-              <small class="text-base ml-2">View</small>
+              <small class="text-base ml-2">{{$t('View') }}</small>
             </a>
           </div>
         </td>

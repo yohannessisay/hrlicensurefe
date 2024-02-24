@@ -6,7 +6,7 @@
       :class="isDarkMode ? 'ml-8 mt-8 text-white' : 'ml-8 mt-8'"
       v-if="isLoading"
     >
-      Loading...
+      {{ $t("Loading...") }}
     </h2>
     <div class="container my-12 mx-auto px-4 sm:px-12" v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
@@ -18,7 +18,7 @@
           :class="
             isDarkMode
               ? 'bg-secondaryDark text-primary-200 my-1 px-1 sm:w-1/4  w-full mb-4  sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-              : 'bg-white my-1 px-1  sm:w-1/4  w-full mb-4 sm:mr-4 rounded-lg transform transition duration-300 text-green-200 ease-in-out hover:-translate-y-2'
+              : 'bg-white my-1 px-1  sm:w-1/4  w-full mb-4 sm:mr-4 rounded-lg transform transition duration-300 text-main-400 ease-in-out hover:-translate-y-2'
           "
         >
           <!-- Article -->
@@ -26,7 +26,7 @@
             <div
               class="flex items-center border-b-2 justify-between leading-tight p-2 md:p-2"
             >
-              <h2 class="text-lg">License Number</h2>
+              <h2 class="text-lg">{{ $t("License Number") }}</h2>
 
               <h2
                 :class="
@@ -51,7 +51,7 @@
               <div
                 class="flex items-center border-b-2 justify-between leading-tight p-2 md:p-2"
               >
-                <h1 class="text-lg">Department</h1>
+                <h1 class="text-lg">{{ $t("Department") }}</h1>
 
                 <ul class="text-black text-sm">
                   <li
@@ -82,7 +82,7 @@
               <div
                 class="flex items-center justify-between border-b-2 leading-tight p-2 md:p-2"
               >
-                <h1 class="text-lg">Certified Date</h1>
+                <h1 class="text-lg">{{ $t("Certified Date") }}</h1>
                 <h2
                   :class="
                     isDarkMode
@@ -100,7 +100,7 @@
               <div
                 class="flex items-center justify-between leading-tight border-b-2 p-2 md:p-2"
               >
-                <h1 class="text-lg">Expiry Date</h1>
+                <h1 class="text-lg">{{ $t("Expiry Date") }}</h1>
                 <h2
                   :class="
                     isDarkMode
@@ -119,7 +119,7 @@
               <div
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
-                <h1 class="text-lg">Retrival Date</h1>
+                <h1 class="text-lg">{{ $t("Retrieval Date") }}</h1>
                 <h2
                   :class="
                     isDarkMode
@@ -139,7 +139,7 @@
               <div
                 class="flex items-center border-b-2 justify-between leading-tight p-2 md:p-2"
               >
-                <h1 class="text-lg">Who issued the letter</h1>
+                <h1 class="text-lg">{{ $t("Who issued the letter") }}</h1>
 
                 <h2
                   :class="
@@ -157,7 +157,7 @@
               <div
                 class="flex items-center justify-between leading-tight p-2 md:p-2"
               >
-                <h1 class="text-lg">License Registration Number</h1>
+                <h1 class="text-lg">{{ $t("License Registration Number") }}</h1>
                 <h2
                   :class="
                     isDarkMode
@@ -176,7 +176,7 @@
             <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
             >
-              <h2 class="text-lg">Applied Date</h2>
+              <h2 class="text-lg">{{ $t("Applied Date") }}</h2>
 
               <h2
                 :class="
@@ -195,13 +195,13 @@
                 data-bs-toggle="modal"
                 data-bs-target="#applicationDetail"
               >
-                View Detail
+                {{ $t("View Detail") }}
               </button>
-              <router-link :to="`${editSubmittedLink}${license.id}`">
+              <router-link v-if="editSubmittedLink" :to="`${editSubmittedLink}${license.id}`">
                 <button
                   class="inline-block px-6 ml-4 text-white bg-main-400 hover:text-green-200 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
                 >
-                  Edit
+                  {{ $t("Edit") }}
                 </button>
               </router-link>
             </div>
@@ -218,20 +218,22 @@
       v-else
       :class="
         isDarkMode
-          ? 'bg-secondaryDark text-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-          : 'bg-white my-1 text-green-200 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+          ? 'bg-secondaryDark text-white my-1 px-1 md:w-1/4 lg:w-1/4   sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+          : 'bg-white my-1 text-green-200 px-1 md:w-1/4 lg:w-1/4  sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
       "
     >
       <!-- Article -->
 
       <h2 class="border-b-2 text-xl p-2">
-        There are no applications in this status currently.
+        {{ $t("There are no applications in this status currently.") }}
       </h2>
     </div>
     <ApplicationDetail
+      :status="status"
       :modalDataId="modalDataId"
       :isDarkMode="isDarkMode"
       :applicationDetailLink="applicationDetailLink"
+      :detailPageName="detailPageName"
     ></ApplicationDetail>
   </main-content>
 </template>
@@ -245,7 +247,15 @@ import ApplicationDetail from "./ApplicationDetailModal.vue";
 import PageHeader from "../PagesHeader.vue";
 export default {
   components: { MainContent, ApplicationDetail, PageHeader },
-  props: ["path", "link", "status", "detailModalLink", "editSubmittedLink","finalUrl"],
+  props: [
+    "path",
+    "link",
+    "status",
+    "detailModalLink",
+    "editSubmittedLink",
+    "finalUrl",
+    "detailPageName"
+  ],
   setup(props) {
     let store = useStore();
     let applications = ref([]);

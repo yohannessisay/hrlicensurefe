@@ -26,15 +26,18 @@
         >
           <h2
             :class="
-          isDarkMode
-            ?'text-2xl md:text-2xl lg:text-2xl  ml-4 font-medium text-primary-200  mb-2 sm:text-base md:mb-6':
-            'text-2xl md:text-2xl lg:text-2xl  ml-4 font-medium text-main-400 mb-2 sm:text-base md:mb-6'"
+              isDarkMode
+                ? 'text-2xl md:text-2xl lg:text-2xl  ml-4 font-medium text-primary-200  mb-2 sm:text-base md:mb-6'
+                : 'text-2xl md:text-2xl lg:text-2xl  ml-4 font-medium text-main-400 mb-2 sm:text-base md:mb-6'
+            "
           >
-            Required Documents for {{ modalType ? modalType : "" }} Application
+            {{ $t("Required Documents for") }}
+            {{ $t(modalType ? modalType : "") }}
+            {{ $t("Application") }}
           </h2>
           <button
             type="button"
-            class="inline-block px-4 py-2.5 bg-main-400 text-primary-200  font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
+            class="inline-block px-4 py-2.5 bg-main-400 text-primary-200 font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -44,13 +47,18 @@
         <div class="modal-body relative p-1 sm:p-4">
           <div
             :class="
-              isDarkMode ? 'bg-primaryDark rounded-lg p-4' : 'bg-white rounded-lg  '
+              isDarkMode
+                ? 'bg-primaryDark rounded-lg'
+                : 'bg-white rounded-lg  '
             "
           >
             <div class="container mx-auto px-1 sm:px-4">
               <div
                 class="lg:flex lg:-mx-4 mt-6 md:mt-12"
-                v-if="(modalType && modalType == 'Renewal') || modalType == 'NewLicense'"
+                v-if="
+                  (modalType && modalType == 'Renewal') ||
+                  modalType == 'NewLicense'
+                "
               >
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
                   <div
@@ -68,24 +76,28 @@
                             : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
-                        Ethiopian
+                        {{ $t("Ethiopian") }}
                       </h4>
                     </div>
-                    <div class="pricing-amount transition-colors duration-300">
+                    <div
+                      class="pricing-amount transition-colors duration-300 border-b-2 border-lightBlueB-500 mb-4"
+                    >
                       <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-primary-200  font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
+                        <h3 class="text-lg text-yellow-300 font-semibold">
+                          {{
+                            $t("Attached Documents must be clear and visible.")
+                          }}
+                        </h3>
                       </div>
-                      <small
-                        :class="isDarkMode ? 'text-primary-200  ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
+                      <h6
+                        :class="
+                          isDarkMode
+                            ? 'text-primary-200  ml-2'
+                            : 'text-main-400 ml-2'
+                        "
                       >
+                        ({{ $t("hover over lists to see details") }})
+                      </h6>
                     </div>
 
                     <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
@@ -132,50 +144,54 @@
                             : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
-                        Foreign Applicants
+                        {{ $t("Foreigner") }}
                       </h4>
                     </div>
-                    <div class="pricing-amount transition-colors duration-300">
+                    <div
+                      class="pricing-amount transition-colors duration-300 border-b-2 border-lightBlueB-500 mb-4"
+                    >
                       <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-primary-200  font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
+                    <h3 class="text-lg text-yellow-300 font-semibold">
+                          {{
+                            $t("Attached Documents must be clear and visible.")
+                          }}
+                        </h3>
                       </div>
-                      <small
-                        :class="isDarkMode ? 'text-primary-200  ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
+                      <h6
+                        :class="
+                          isDarkMode
+                            ? 'text-primary-200  ml-2'
+                            : 'text-main-400 ml-2'
+                        "
                       >
-                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
-                        <li
-                          v-for="(detail, index) in list && list.Foreigners
-                            ? list.Foreigners
-                            : []"
-                          :key="index"
+                        ({{ $t("hover over lists to see details") }})
+                      </h6>
+                    </div>
+                    <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
+                      <li
+                        v-for="(detail, index) in list && list.Foreigners
+                          ? list.Foreigners
+                          : []"
+                        :key="index"
+                        :class="
+                          isDarkMode
+                            ? 'text-primary-200  text-lg rounded-lg bg-secondaryDark cursor-pointer'
+                            : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
+                        "
+                        data-bs-toggle="tooltip"
+                        :title="detail ? detail.tooltip : ''"
+                      >
+                        <i
                           :class="
                             isDarkMode
-                              ? 'text-primary-200  text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
+                              ? 'text-primary-200   fa fa-arrow-right-long'
+                              : 'fa fa-arrow-right-long text-grey-800'
                           "
-                          data-bs-toggle="tooltip"
-                          :title="detail ? detail.tooltip : ''"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-primary-200   fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long text-grey-800'
-                            "
-                          ></i>
-                          {{ detail ? detail.name : "" }}
-                        </li>
-                      </ul>
-                      <slot name="foreignerDetail"> </slot>
-                    </div>
+                        ></i>
+                        {{ detail ? detail.name : "" }}
+                      </li>
+                    </ul>
+                    <slot name="foreignerDetail"> </slot>
                   </div>
                 </div>
 
@@ -195,27 +211,32 @@
                             : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
-                        Ethiopian From Abroad
+                        {{ $t("Ethiopian From Abroad") }}
                       </h4>
                     </div>
-                    <div class="pricing-amount transition-colors duration-300">
+                    <div
+                      class="pricing-amount transition-colors duration-300 border-b-2 border-lightBlueB-500 mb-4"
+                    >
                       <div>
-                        <span
-                          :class="
-                            isDarkMode
-                              ? 'text-xl text-primary-200  font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
-                          "
-                          >Attached Documents must be clear and visible.</span
-                        >
+                  <h3 class="text-lg text-yellow-300 font-semibold">
+                          {{
+                            $t("Attached Documents must be clear and visible.")
+                          }}
+                        </h3>
                       </div>
-                      <small
-                        :class="isDarkMode ? 'text-primary-200  ml-2' : 'text-main-400 ml-2'"
-                        >(hover over lists to see details)</small
+                      <h6
+                        :class="
+                          isDarkMode
+                            ? 'text-primary-200  ml-2'
+                            : 'text-main-400 ml-2'
+                        "
                       >
+                        ({{ $t("hover over lists to see details") }})
+                      </h6>
                       <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
                         <li
-                          v-for="(detail, index) in list && list.EthiopianFromAbroad
+                          v-for="(detail, index) in list &&
+                          list.EthiopianFromAbroad
                             ? list.EthiopianFromAbroad
                             : []"
                           :key="index"
@@ -260,19 +281,24 @@
                             : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
-                        For All Applicants
+                        {{ $t("For All Applicants") }}
                       </h4>
                     </div>
-                    <div class="pricing-amount transition-colors duration-300 mb-4">
+                    <div
+                      class="pricing-amount transition-colors duration-300 mb-4 border-b-2 border-lightBlueB-500 mb-4"
+                    >
                       <div>
-                        <span
+                        <h3
                           :class="
                             isDarkMode
-                              ? 'text-xl text-primary-200  font-semibold'
-                              : 'text-xl text-main-4oo font-semibold'
+                              ? 'text-lg text-primary-200  font-semibold'
+                              : 'text-lg text-main-400 font-semibold'
                           "
-                          >Attached Documents must be clear and visible.</span
                         >
+                          {{
+                            $t("Attached Documents must be clear and visible.")
+                          }}
+                        </h3>
                       </div>
                     </div>
 

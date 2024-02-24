@@ -17,7 +17,7 @@
                 ? 'text-white '
                 : 'text-main-400 hover:text-blue-700'
             "
-            >{{ path[0].name }}</a
+            >{{ $t(path[0].name) }}</a
           >
         </router-link>
       </li>
@@ -31,7 +31,7 @@
                 ? 'text-white '
                 : 'text-main-400 hover:text-blue-700'
             "
-            >{{ path[1].name }}</a
+            >{{ $t(path[1].name) }}</a
           >
         </router-link>
       </li>
@@ -52,7 +52,7 @@
             : 'text-yellow-300 hover:text-blue-700'
         "
       >
-        {{ path[2].name }}
+        {{ $t(path[2].name) }}
       </li>
     </ol>
   </nav>

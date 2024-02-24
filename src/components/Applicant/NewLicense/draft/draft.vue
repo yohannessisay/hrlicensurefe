@@ -7,6 +7,7 @@
       :status="status"
       :detailModalLink="'newlicense/getNewLicenseApplication'"
       :editSubmittedLink="'/Applicant/NewLicense/draft/detail/'"
+      :detailPageName="'Draft'"
     ></ApplicationsList>
   </div>
 </template>

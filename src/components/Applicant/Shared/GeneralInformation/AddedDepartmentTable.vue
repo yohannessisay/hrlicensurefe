@@ -6,7 +6,7 @@
         : 'table-multiple border mb-8 bg-white text-main-400'
     "
   >
-    <h2 class="font-bold m-2 text-2xl">Selected Departments</h2>
+    <h2 class="font-bold m-2 text-2xl">{{$t('Selected Departments')}}</h2>
 
     <div class="flex flex-col">
       <div class="">
@@ -17,7 +17,7 @@
             generalInfo.multipleDepartment.length < 1
           "
         >
-          No Data
+          {{$t('No Data')}}
         </div>
         <div v-else>
           <table class="min-w-full p-4">
@@ -27,31 +27,31 @@
                   scope="col"
                   class="text-xl text-gray-900 p-5 text-left font-bold"
                 >
-                  Department
+                 {{$t('Department')}} 
                 </th>
                 <th
                   scope="col"
                   class="text-xl text-gray-900 px-6 py-4 text-left font-bold"
                 >
-                  Education Level
+                  {{$t('Education Level')}}
                 </th>
                 <th
                   scope="col"
                   class="text-xl text-gray-900 px-6 py-4 text-left font-bold"
                 >
-                  Institution
+                  {{$t('Institution')}}
                 </th>
                 <th
                   scope="col"
                   class="text-xl text-gray-900 px-6 py-4 text-left font-bold"
                 >
-                  Professional Type
+                  {{$t('Professional Type')}}
                 </th>
                 <th
                   scope="col"
                   class="text-xl text-gray-900 px-6 py-4 text-left font-bold"
                 >
-                  Action
+                  {{$t('Action')}}
                 </th>
               </tr>
             </thead>

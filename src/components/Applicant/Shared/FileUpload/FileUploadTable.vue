@@ -3,20 +3,20 @@
     <div
       v-for="table in educationalDocs"
       :key="table"
-      class="border-b-4 text-main-400 mb-8 p-1 rounded-md"
+      class="border-b-4 mb-8 p-1 rounded-md"
     >
       <h4
         :class="
           isDarkMode
-            ? 'text-primary-200 font-bold border-b'
-            : 'text-grey-800 font-bold border-b'
+            ? 'text-primary-200 font-bold border-b mb-4'
+            : 'text-grey-800 font-bold border-b mb-4'
         "
       >
         {{ table.professionType ? table.professionType.name : "" }}
-        Related Files
+        {{ $t("Related Files") }}
       </h4>
       <h5 v-if="existingDocs && existingDocs.length > 0">
-        Images are saved, only upload files you want to change
+        {{$t('Images are saved, only upload files you want to change')}}
       </h5>
       <div class="overflow-x-auto w-full sm:p-4">
         <table
@@ -30,7 +30,7 @@
                 :key="index"
                 class="px-4 py-4 uppercase font-medium text-white text-left text-lg"
               >
-                {{ header }}
+                {{ $t(header) }}
               </th>
             </tr>
           </thead>
@@ -59,7 +59,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[0] }}
+                  {{ $t(headers[0]) }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{ item.documentType.name }}
@@ -70,7 +70,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[1] }}
+                  {{ $t(headers[1]) }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{
@@ -84,7 +84,7 @@
                 class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[2] }}
+                  {{ $t(headers[2]) }}
                 </h2>
 
                 <input
@@ -104,12 +104,20 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  Uploaded File Name
+                  {{ $t("Uploaded File Name") }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{ item.fileName ? item.fileName : "---------------" }}
                 </h2>
               </td>
+              <td
+                v-else
+                class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
+              ></td>
+              <td
+                v-if="item && item.existingFile"
+                class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
+              ></td>
               <td
                 v-if="item && item.existingFile"
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
@@ -145,7 +153,7 @@
                         class="w-full h-2 object-cover"
                       />
                     </i>
-                    <small class="text-base ml-2">View</small>
+                    <small class="text-base ml-2"> {{ $t("View") }}</small>
                   </a>
                 </div>
               </td>
@@ -186,7 +194,7 @@
                         class="w-full h-2 object-cover"
                       />
                     </i>
-                    <small class="text-base ml-2">View</small>
+                    <small class="text-base ml-2"> {{ $t("View") }}</small>
                   </a>
                 </div>
               </td>
@@ -221,7 +229,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[0] }}
+                  {{ $t(headers[0]) }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{ parentItem[0].documentType.name }}
@@ -234,7 +242,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[1] }}
+                  {{ $t(headers[1]) }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{
@@ -248,7 +256,7 @@
                 class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[2] }}
+                  {{ $t(headers[2]) }}
                 </h2>
 
                 <input
@@ -270,7 +278,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  Uploaded File Name
+                  {{ $t("Uploaded File Name") }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{
@@ -280,6 +288,11 @@
                   }}
                 </h2>
               </td>
+              <td
+                v-else
+                class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
+              ></td>
+
               <td
                 v-if="parentItem[0].existingFile"
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
@@ -316,7 +329,7 @@
                         :src="parentItem[0].existingFile"
                         class="w-full h-2 object-cover"
                       /> </i
-                    ><span class="ml-2">View</span>
+                    ><span class="ml-2">{{ $t("View") }}</span>
                   </a>
                 </div>
               </td>
@@ -356,7 +369,7 @@
                         src=""
                         class="w-full h-2 object-cover"
                       /> </i
-                    ><span class="ml-2">View</span>
+                    ><span class="ml-2">{{ $t("View") }}</span>
                   </a>
                 </div>
               </td>
@@ -378,11 +391,11 @@
               <td
                 class="flex bg-grey-400 sm flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
-                <h2 class="sm:hidden mb-2 text-xl underline text-main-400">
-                  {{ headers[0] }}
+                <h2 class="sm:hidden mb-2 text-xl underline text-white">
+                  {{ $t(headers[0]) }}
                 </h2>
                 <div class="flex">
-                  <h2 class="text-lg text-grey-800 break-words">
+                  <h2 class="text-lg text-white break-words">
                     {{ parentItem[0].parentDocument }}
                     <b v-if="parentItem[0].isRequired" class="text-red-300"
                       >(*)</b
@@ -397,8 +410,8 @@
                   </button>
                 </div>
 
-                <h2 class="text-grey-800">
-                  (You can upload up to {{ parentItem.length }} files)
+                <h2 class="text-white">
+                   ( {{$t('You can upload up to')}} {{ parentItem.length }} files)
                 </h2>
               </td>
               <td
@@ -447,12 +460,12 @@
                               :key="index"
                               class="px-2 py-2 uppercase font-medium text-white text-left text-lg"
                             >
-                              {{ header }}
+                              {{ $t(header) }}
                             </th>
                             <th
                               class="px-2 py-2 uppercase font-medium text-white text-left text-lg"
                             >
-                              Remove
+                              {{ $t("Remove") }}
                             </th>
                           </tr>
                         </thead>
@@ -486,7 +499,7 @@
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
                               <h2 class="text-xl underline sm:invisible">
-                                Document Name
+                                {{ $t("Document Name") }}
                               </h2>
                               <h2
                                 :class="
@@ -556,20 +569,22 @@
                               v-if="parentChildItem && parentChildItem.fileName"
                             >
                               <h2 class="sm:invisible text-xl underline">
-                                Uploaded File Name
+                                {{ $t("Uploaded File Name") }}
                               </h2>
                               <div class="flex justify-start p-2">
-                               
-                                  <p :class="isDarkMode ? 'text-white' : ''">
-                                    {{
-                                      parentChildItem.fileName
-                                        ? parentChildItem.fileName
-                                        : "---------------"
-                                    }}
-                                  </p>
-                                
+                                <p :class="isDarkMode ? 'text-white' : ''">
+                                  {{
+                                    parentChildItem.fileName
+                                      ? parentChildItem.fileName
+                                      : "---------------"
+                                  }}
+                                </p>
                               </div>
                             </td>
+                            <td
+                              v-else
+                              class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
+                            ></td>
                             <td
                               v-if="
                                 parentChildItem.existingFile &&
@@ -616,7 +631,9 @@
                                       class="w-full h-2 object-cover"
                                     />
                                   </i>
-                                  <small class="ml-2 text-base">View</small>
+                                  <small class="ml-2 text-base">{{
+                                    $t("View")
+                                  }}</small>
                                 </a>
                               </div>
                             </td>
@@ -657,7 +674,9 @@
                                       class="w-full h-2 object-cover"
                                     />
                                   </i>
-                                  <small class="ml-2 text-base">View</small>
+                                  <small class="ml-2 text-base">{{
+                                    $t("View")
+                                  }}</small>
                                 </a>
                               </div>
                             </td>
@@ -680,7 +699,7 @@
                                   ><i
                                     class="fa-solid fa-trash text-red-300 mr-2"
                                   ></i
-                                  >Remove</span
+                                  >{{ $t("Remove") }}</span
                                 >
                               </div>
                             </td>
@@ -695,9 +714,12 @@
           </tbody>
         </table>
 
-        <small class="text-base text-yellow-300"
-          >Note:-document names with <b class="text-red-300">(*)</b> must be
-          uploaded in order to go forward with application process</small
+        <small class="text-lg text-yellow-300 break-all"
+          >{{ $t("Note:-document names with") }}
+          <b class="text-red-300">(*)</b>
+          {{
+            $t("must be uploaded to go forward with the application process")
+          }}</small
         >
       </div>
     </div>

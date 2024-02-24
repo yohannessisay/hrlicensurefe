@@ -181,7 +181,9 @@ justify-content: start;
   background-color: #d8d8d8;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.493);
 }
-
+.shadow-md{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 .profile img {
   width: 44px;
   height: 44px;

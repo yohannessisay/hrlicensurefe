@@ -46,9 +46,9 @@
             <div class="container mx-auto">
               <section>
                 <div class="text-center border-b-4">
-                  <h2 class="sm:text-3xl text-3xl font-bold mb-2">
-                    Submitted License Detail
-                  </h2>
+                  <h1 class="sm:text-3xl text-2xl font-bold mb-2">
+                    {{ $t(detailPageName) }} {{ $t("License Detail") }}
+                  </h1>
                 </div>
 
                 <div
@@ -62,19 +62,19 @@
                     >
                       <!-- Article -->
                       <article
-                        class="overflow-hidden rounded-lg shadow-md p-2 break-all border"
+                        class="overflow-hidden rounded-lg shadow-md p-2 break-all"
                       >
                         <header
                           class="flex items-center justify-between leading-tight p-2 mb-2 border-b-4"
                         >
-                          <h1 class="text-xl">Applicant Profile</h1>
+                          <h2 class="text-xl">{{ $t("Applicant Profile") }}</h2>
                           <p class="text-sm">
                             <i class="fa fa-user fa-2x"></i>
                           </p>
                         </header>
 
                         <div class="grid grid-cols-2 gap-2">
-                          <h2 class="text-xl">Applicant Name</h2>
+                          <h2 class="text-xl">{{ $t("Applicant Name") }}</h2>
                           <h3
                             :class="
                               isDarkMode
@@ -97,7 +97,7 @@
                             }}
                           </h3>
 
-                          <h2 class="text-xl">Applicant Email</h2>
+                          <h2 class="text-xl">{{ $t("Applicant Email") }}</h2>
                           <h2
                             :class="
                               isDarkMode
@@ -112,7 +112,7 @@
                             }}
                           </h2>
 
-                          <h2 class="text-xl">Applicant Phone</h2>
+                          <h2 class="text-xl">{{ $t("Applicant Phone") }}</h2>
                           <h2
                             :class="
                               isDarkMode
@@ -138,18 +138,18 @@
                     >
                       <!-- Article -->
                       <article
-                        class="overflow-hidden rounded-lg shadow-md p-2 break-all sm:mt-0 mt-4 border"
+                        class="overflow-hidden rounded-lg shadow-md p-2 break-all sm:mt-0 mt-4"
                       >
                         <header
                           class="flex items-center justify-between leading-tight p-2 mb-2 border-b-4"
                         >
-                          <h1 class="text-lg">Reviewer Detail</h1>
+                          <h2 class="text-lg">{{ $t("Reviewer Detail") }}</h2>
                           <p class="text-sm">
                             <i class="fa fa-thumbs-up fa-2x"></i>
                           </p>
                         </header>
                         <div class="grid grid-cols-2 gap-2">
-                          <h2 class="text-xl">Reviewer Name</h2>
+                          <h2 class="text-xl">{{ $t("Reviewer Name") }}</h2>
                           <h2
                             :class="
                               isDarkMode
@@ -169,7 +169,7 @@
                             }}
                           </h2>
 
-                          <h2 class="text-xl">Expert Level</h2>
+                          <h2 class="text-xl">{{ $t("Expert Level") }}</h2>
                           <h2
                             :class="
                               isDarkMode
@@ -192,7 +192,7 @@
                             }}
                           </h2>
 
-                          <h2 class="text-xl">Region</h2>
+                          <h2 class="text-xl">{{ $t("Region") }}</h2>
                           <h2
                             :class="
                               isDarkMode
@@ -215,10 +215,6 @@
                             }}
                           </h2>
                         </div>
-
-                        <footer
-                          class="flex items-center justify-between leading-none p-2 md:p-4"
-                        ></footer>
                       </article>
                       <!-- END Article -->
                     </div>
@@ -231,12 +227,14 @@
                     >
                       <!-- Article -->
                       <article
-                        class="overflow-hidden rounded-lg shadow-md p-2 break-all border"
+                        class="overflow-hidden rounded-lg shadow-md p-2 break-all"
                       >
                         <header
                           class="flex items-center justify-between leading-tight p-2 mb-2 border-b-4"
                         >
-                          <h1 class="text-xl">Applicants Education Detail</h1>
+                          <h2 class="text-xl">
+                            {{ $t("Applicants Education Detail") }}
+                          </h2>
                         </header>
 
                         <div
@@ -244,7 +242,7 @@
                           v-for="education in licenseData.educations"
                           :key="education ? education.id : ''"
                         >
-                          <h2 class="text-xl">Department</h2>
+                          <h2 class="text-xl">{{ $t("Department") }}</h2>
                           <h3
                             :class="
                               isDarkMode
@@ -259,7 +257,7 @@
                             }}
                           </h3>
 
-                          <h2 class="text-xl">Institution</h2>
+                          <h2 class="text-xl">{{ $t("Institution") }}</h2>
                           <h3
                             :class="
                               isDarkMode
@@ -274,7 +272,7 @@
                             }}
                           </h3>
 
-                          <h2 class="text-xl">Education Level</h2>
+                          <h2 class="text-xl">{{ $t("Education Level") }}</h2>
                           <h3
                             :class="
                               isDarkMode
@@ -289,10 +287,6 @@
                             }}
                           </h3>
                         </div>
-
-                        <footer
-                          class="flex items-center justify-between leading-none p-2 md:p-4"
-                        ></footer>
                       </article>
                       <!-- END Article -->
                     </div>
@@ -305,22 +299,22 @@
                     >
                       <!-- Article -->
                       <article
-                        class="overflow-hidden rounded-lg shadow-md p-2 break-all border"
+                        class="overflow-hidden rounded-lg shadow-md p-2 break-all"
                       >
                         <header
                           class="flex items-center justify-between leading-tight p-2 mb-2 border-b-4"
                         >
-                          <h1 class="text-xl">
+                          <h2 class="text-xl">
                             {{
                               licenseData.goodStandingCode
                                 ? "Letter "
                                 : "License "
-                            }}Detail
-                          </h1>
+                            }}{{ $t("Detail") }}
+                          </h2>
                         </header>
 
                         <div class="grid grid-cols-2 gap-1">
-                          <h2 class="text-xl">Applicant Type</h2>
+                          <h2 class="text-xl">{{ $t("Applicant Type") }}</h2>
                           <h3
                             :class="
                               isDarkMode
@@ -335,7 +329,9 @@
                             }}
                           </h3>
 
-                          <h2 class="text-xl">Application Status</h2>
+                          <h2 class="text-xl">
+                            {{ $t("Application Status") }}
+                          </h2>
                           <h3
                             :class="
                               isDarkMode
@@ -350,7 +346,7 @@
                             }}
                           </h3>
 
-                          <h2 class="text-xl">Certified Status</h2>
+                          <h2 class="text-xl">{{ $t("Certified Status") }}</h2>
                           <h3
                             :class="
                               isDarkMode
@@ -365,7 +361,7 @@
                             }}
                           </h3>
 
-                          <h2 class="text-xl">Certified Date</h2>
+                          <h2 class="text-xl">{{ $t("Certified Date") }}</h2>
                           <h3
                             :class="
                               isDarkMode
@@ -380,7 +376,7 @@
                             }}
                           </h3>
 
-                          <h2 class="text-xl">Expiration Date</h2>
+                          <h2 class="text-xl">{{ $t("Expiration Date") }}</h2>
                           <h3
                             :class="
                               isDarkMode
@@ -418,7 +414,12 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
 export default {
-  props: ["modalDataId", "applicationDetailLink", "isDarkMode"],
+  props: [
+    "modalDataId",
+    "applicationDetailLink",
+    "isDarkMode",
+    "detailPageName",
+  ],
   components: { Loading },
   setup(props) {
     let store = useStore();
