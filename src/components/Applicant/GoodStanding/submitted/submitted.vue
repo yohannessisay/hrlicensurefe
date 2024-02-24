@@ -7,6 +7,7 @@
       :status="status"
       :detailModalLink="'goodstanding/getGoodStandingLicenseById'"
       :editSubmittedLink="'/Applicant/Goodstanding/submitted/detail/'"
+       :detailPageName="'Submitted'"
     ></ApplicationsList>
   </div>
 </template>

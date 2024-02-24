@@ -74,19 +74,19 @@
         type="submit"
         @click="saveDraft()"
       >
-        Update
+        {{ $t("Update")}}
       </button>
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         @click="back()"
       >
-        back
+        {{ $t("Back")}}
       </button>
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out"
         @click="next()"
       >
-        next
+        {{ $t("Next")}}
       </button>
     </div>
   </div>
