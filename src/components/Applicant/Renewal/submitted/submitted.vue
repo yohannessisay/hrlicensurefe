@@ -7,6 +7,7 @@
       :status="status"
       :detailModalLink="'renewal/getRenewalApplication'"
       :editSubmittedLink="'/Applicant/Renewal/submitted/detail/'"
+      :detailPageName="'Submitted'"
     ></ApplicationsList>
   </div>
 </template>

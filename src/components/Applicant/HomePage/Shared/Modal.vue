@@ -47,9 +47,7 @@
         <div class="modal-body relative p-1 sm:p-4">
           <div
             :class="
-              isDarkMode
-                ? 'bg-primaryDark rounded-lg'
-                : 'bg-white rounded-lg  '
+              isDarkMode ? 'bg-primaryDark rounded-lg' : 'bg-white rounded-lg  '
             "
           >
             <div class="container mx-auto px-1 sm:px-4">
@@ -57,7 +55,7 @@
                 class="lg:flex lg:-mx-4 mt-6 md:mt-12"
                 v-if="
                   (modalType && modalType == 'Renewal') ||
-                  modalType == 'NewLicense'
+                    modalType == 'NewLicense'
                 "
               >
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
@@ -151,7 +149,7 @@
                       class="pricing-amount transition-colors duration-300 border-b-2 border-lightBlueB-500 mb-4"
                     >
                       <div>
-                    <h3 class="text-lg text-yellow-300 font-semibold">
+                        <h3 class="text-lg text-yellow-300 font-semibold">
                           {{
                             $t("Attached Documents must be clear and visible.")
                           }}
@@ -218,7 +216,7 @@
                       class="pricing-amount transition-colors duration-300 border-b-2 border-lightBlueB-500 mb-4"
                     >
                       <div>
-                  <h3 class="text-lg text-yellow-300 font-semibold">
+                        <h3 class="text-lg text-yellow-300 font-semibold">
                           {{
                             $t("Attached Documents must be clear and visible.")
                           }}
@@ -285,7 +283,7 @@
                       </h4>
                     </div>
                     <div
-                      class="pricing-amount transition-colors duration-300 mb-4 border-b-2 border-lightBlueB-500 mb-4"
+                      class="pricing-amount transition-colors duration-300  border-b-2 border-lightBlueB-500 mb-4"
                     >
                       <div>
                         <h3
@@ -351,6 +349,6 @@
 </template>
 <script>
 export default {
-  props: ["modalType", "isDarkMode", "list"],
+  props: ["modalType", "isDarkMode", "list"]
 };
 </script>

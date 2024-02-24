@@ -94,7 +94,13 @@
                   : 'text-grey-800 text-lg'
               "
             >
-              {{ dep.educationLevel.name }}
+              {{
+                dep.educationLevel
+                  ? dep.educationLevel.name
+                  : dep.educationalLevel
+                  ? dep.educationalLevel.name
+                  : ""
+              }}
             </h2>
           </div>
         </div>
@@ -142,7 +148,13 @@
                   : 'text-grey-800 text-lg'
               "
             >
-              {{ dep.professionType.name }}
+              {{
+                dep.professionType
+                  ? dep.professionType.name
+                  : dep.professionalType
+                  ? dep.professionalType.name
+                  : ""
+              }}
             </h2>
           </div>
         </div>
@@ -150,7 +162,7 @@
     </div>
 
     <!-- Uploaded Files -->
-    <div class="vld-parent mt-4">
+    <div v-if="isSubmitOrDraft" class="vld-parent mt-4">
       <loading
         :active="fileIsLoading"
         :is-full-page="false"
@@ -348,6 +360,65 @@
         </div>
       </div>
     </div>
+    <div v-else class="mt-8 grid grid-cols-1 gap-4">
+      <div
+        :class="
+          isDarkMode
+            ? 'bg-secondaryDark flex-shrink px-4 w-full rounded-md text-primary-200'
+            : 'bg-white flex-shrink px-4 w-full rounded-md text-main-400'
+        "
+      >
+        <div class="py-8 px-2 sm:px-12 mb-12 bg-gray-50 border-b border-white">
+          <div class="border-b-2 mb-4">
+            <div class="text-gray-900 mb-4 flex justify-center">
+              <i class="fa fa-folder fa-3x -text-main-400"></i>
+            </div>
+            <div class="flex justify-center text-gray-900 mb-4">
+              <h3 class="text-3xl leading-normal mb-2 font-semibold">
+                {{ $t("Files Uploaded") }}
+              </h3>
+            </div>
+          </div>
+         
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 w-full">
+            <div
+              class="mt-4 mb-2 sm:mb-8 border p-2 rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
+              v-for="localFileData in updatedLocalImages?updatedLocalImages[0].data:[]"
+              :key="localFileData.documenttype"
+            >
+           
+              <div class="flex justify-center">
+                <div class="mt-4 rounded-md">
+                  <a
+                    v-if="!isPDF(localFileData.fileName)"
+                    :href="localFileData.image"
+                    :data-title="localFileData.documenttype"
+                    data-lightbox="example-2"
+                  >
+                    <img
+                      :src="localFileData.image"
+                      class="w-full h-48 object-cover"
+                    />
+                  </a>
+                  <div v-else class="m-4 p-2 bg-primary-300 rounded-md">
+                    {{
+                      $t(
+                        "The file is uploaded but since it is not an image type this is a placeholder"
+                      )
+                    }}
+                  </div>
+
+                  <h4 class="font-bold border-b m-2">
+                    {{ $t("Document Type") }}
+                  </h4>
+                  <h6 class="m-2">{{ localFileData.documenttype }}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="mt-8 grid grid-cols-1">
       <div
@@ -410,7 +481,7 @@
   </div>
 </template>
 <script>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
@@ -426,16 +497,40 @@ export default {
     "prevDocs",
     "isDarkMode",
     "googleApi",
+    "isSubmitOrDraft",
+    "localFileData",
   ],
   setup(props, { emit }) {
     const generalInfo = computed(() => props.generalInfo);
+    const localImage = computed(() => props.localFileData);
+    let updatedLocalImages = ref([]);
     let localGeneralInfo = ref(generalInfo.value);
     let localAgreed = ref(false);
     const agreement = () => {
       localAgreed.value = !localAgreed.value;
       emit("changeAgreement", localAgreed);
     };
-    return { localGeneralInfo, localAgreed, agreement };
+    const isPDF = (filename) => {
+      if (filename && filename != "" && filename.length > 0) {
+        const parts = filename.split(".");
+        const isPdf =
+          parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
+        return isPdf === "pdf";
+      } else {
+        return false;
+      }
+    };
+    watch(localImage, () => {
+      console.log(localImage);
+      updatedLocalImages.value = localImage.value;
+    });
+    return {
+      localGeneralInfo,
+      localAgreed,
+      agreement,
+      isPDF,
+      updatedLocalImages,
+    };
   },
 };
 </script>

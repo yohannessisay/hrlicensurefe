@@ -736,8 +736,7 @@ export default {
         educationalDocs.value,
         documentsUploaded.value,
         renewalDocuments.value
-      );
-      console.log(documentValidation);
+      ); 
       fileUploadError.value = documentValidation.fileUploadError
         ? documentValidation.fileUploadError
         : [];

@@ -13,6 +13,8 @@
       :isDarkMode="isDarkMode"
       :prevDocs="prevDocs"
       :googleApi="googleApi"
+      :localFileData="[]"
+      :isSubmitOrDraft="true"
     ></SummaryPage>
 
     <div class="vld-parent mt-4">

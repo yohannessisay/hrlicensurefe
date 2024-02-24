@@ -13,6 +13,8 @@
       :isDarkMode="isDarkMode"
       :prevDocs="prevDocs"
       :googleApi="googleApi"
+      :isSubmitOrDraft="true"
+      :localFileData="[]"
     ></SummaryPage>
 
     <div class="vld-parent mt-4">
@@ -106,7 +108,7 @@ export default {
       }
     };
     const checkFinalStatus = (action) => {
-      generalInfo.value.licenseFile = []; 
+      generalInfo.value.licenseFile = [];
       if (agreed.value) {
         isLoading.value = true;
         let formData = new FormData();
@@ -311,15 +313,9 @@ export default {
           fileIsLoading.value = false;
         });
     });
-    const isPDF = (filename) => {
-      const parts = filename.split(".");
-      const isPdf =
-        parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
-      return isPdf === "pdf";
-    };
+ 
     return {
-      isDarkMode,
-      isPDF,
+      isDarkMode, 
       localData,
       localFileImages,
       professionChanged,
