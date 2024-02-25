@@ -222,7 +222,10 @@
 
                     <!-- Column -->
                     <div
-                      v-if="!licenseData.goodStandingCode"
+                      v-if="
+                        !licenseData.goodStandingCode &&
+                        !licenseData.lost_license_code
+                      "
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 mb-4"
                     >
                       <!-- Article -->

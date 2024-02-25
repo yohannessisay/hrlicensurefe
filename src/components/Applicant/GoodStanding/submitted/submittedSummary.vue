@@ -182,7 +182,7 @@
       </div>
     </div>
 
-    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-4">
+   <div class="mt-8  ">
       <div class="flex-shrink w-full rounded-md">
         <div
           :class="
@@ -203,27 +203,25 @@
               </h3>
             </div>
             <span class="text-lg" v-if="changedDocs && changedDocs.length > 0">
-              {{ $t("New files") }}
+              {{ $t("New Files") }}
             </span>
           </div>
 
           <div
             :class="
               changedDocs && changedDocs.length > 0
-                ? ' border-b mb-12 grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-4 md:w-full '
-                : ' mb-12 grid grid-cols-4 gap-4 ml-4 sm:w-full   md:w-full sm:grid-cols-4'
+                ? ' border-b mb-12 grid grid-cols-1 gap-4   sm:grid-cols-4   md:w-full '
+                : ' mb-12 grid sm:grid-cols-4 gap-4  sm:w-full   md:w-full grid-cols-1'
             "
           >
             <div
-              class="mt-4 mb-8 border-4 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+              class="mt-4 mb-8 border-4 rounded-md transform transition duration-300 ease-in-out  hover:-translate-y-2"
               v-for="changed in changedDocs"
               :key="changed.id"
             >
-              <h4 class="font-bold m-2">{{ $t("Document Type") }}</h4>
-              <h6 class="m-2">{{ changed.docName }}</h6>
               <div class="flex justify-center rounded-lg p-4">
                 <div class="bg-white rounded-md border p-2">
-                  {{ $t("Previous") }}
+                  <h3 class="text-grey-800 text-lg">{{ $t("Previous") }}</h3>
                   <a
                     :href="changed.prevFile"
                     :data-title="changed.docName"
@@ -275,7 +273,7 @@
               >
                 <div class="accordion-body py-4 px-5">
                   <div
-                    class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
+                    class="grid grid-cols-1 gap-4 ml-4 sm:w-full sm:grid-cols-4"
                   >
                     <div
                       class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
@@ -285,7 +283,9 @@
                       <h4 class="text-main-400 font-bold m-2">
                         {{ $t("Document Type") }}
                       </h4>
-                      <h6 class="m-2">{{ prev.documenttype }}</h6>
+                      <h5 class="m-2 text-lg text-main-400">
+                        {{ prev.documenttype }}
+                      </h5>
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a

@@ -18,7 +18,7 @@
             aria-expanded="true"
             aria-controls="commonFilesAccordion"
           >
-            Good Standing Letter Document Upload
+            {{$t('Good Standing Letter Document Upload')}}
           </button>
         </h2>
         <div

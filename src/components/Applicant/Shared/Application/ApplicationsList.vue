@@ -42,12 +42,17 @@
                     ? license.renewalCode
                     : license.goodStandingCode
                     ? license.goodStandingCode
+                    : license.lost_license_code
+                    ? license.lost_license_code
                     : ""
                 }}
               </h2>
             </div>
 
-            <div class="border-b-2" v-if="!license.goodStandingCode">
+            <div
+              class="border-b-2"
+              v-if="!license.goodStandingCode && !license.lost_license_code"
+            >
               <div
                 class="flex items-center border-b-2 justify-between leading-tight p-2 md:p-2"
               >
@@ -135,10 +140,8 @@
                 </h2>
               </div>
             </div>
-            <div class="border-b-2" v-else>
-              <div
-                class="flex items-center border-b-2 justify-between leading-tight p-2 md:p-2"
-              >
+            <div class="border-b-2" v-if="license.goodStandingCode">
+             <div class="grid grid-cols-2 mb-2 sm:p-2 mt-4 ml-2">
                 <h1 class="text-lg">{{ $t("Who issued the letter") }}</h1>
 
                 <h2
@@ -154,9 +157,7 @@
                 </h2>
               </div>
 
-              <div
-                class="flex items-center justify-between leading-tight p-2 md:p-2"
-              >
+            <div class="grid grid-cols-2 mb-2 sm:p-2 ml-2">
                 <h1 class="text-lg">{{ $t("License Registration Number") }}</h1>
                 <h2
                   :class="
@@ -173,6 +174,45 @@
                 </h2>
               </div>
             </div>
+            <div class="border-b-2" v-else>
+              <div class="grid grid-cols-2 mb-2 sm:p-2 mt-4 ml-2">
+                <h1 class="text-lg">{{ $t("License Loss Date") }}</h1>
+
+                <h2
+                  :class="
+                    isDarkMode
+                      ? 'text-green-200 text-lg'
+                      : 'text-grey-800 text-lg'
+                  "
+                >
+                  {{
+                    license && license.loss_date
+                      ? license.loss_date.slice(0, 10)
+                      : ""
+                  }}
+                </h2>
+              </div>
+
+           <div class="grid grid-cols-2 mb-2 sm:p-2 ml-2">
+                <h1 class="text-lg">{{ $t("License Type") }}</h1>
+                <h2
+                  :class="
+                    isDarkMode
+                      ? 'text-green-200 text-lg'
+                      : 'text-grey-800 text-lg'
+                  "
+                >
+                  {{
+                    license.new_license_id
+                      ? "New License"
+                      : license.renewal_id
+                      ? "Renewal"
+                      : "Lost License Outside The System"
+                  }}
+                </h2>
+              </div>
+            </div>
+
             <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
             >
@@ -185,7 +225,7 @@
                     : 'text-grey-800 text-lg'
                 "
               >
-                {{ license.createdAt ? license.createdAt.slice(0, 10) : "" }}
+                {{ license.created_at ? license.created_at.slice(0, 10) : "" }}
               </h2>
             </footer>
             <div class="flex justify-center">
@@ -197,7 +237,10 @@
               >
                 {{ $t("View Detail") }}
               </button>
-              <router-link v-if="editSubmittedLink" :to="`${editSubmittedLink}${license.id}`">
+              <router-link
+                v-if="editSubmittedLink"
+                :to="`${editSubmittedLink}${license.id}`"
+              >
                 <button
                   class="inline-block px-6 ml-4 text-white bg-main-400 hover:text-green-200 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
                 >
@@ -254,7 +297,7 @@ export default {
     "detailModalLink",
     "editSubmittedLink",
     "finalUrl",
-    "detailPageName"
+    "detailPageName",
   ],
   setup(props) {
     let store = useStore();

@@ -320,13 +320,13 @@
           "
         >
           <div class="modal-header">
-            <h2 class="text-xl border-b-4">Uploading</h2>
+            <h2 class="text-xl border-b-4">{{$t('Uploading')}}</h2>
           </div>
 
           <div class="modal-body">
             <div class="flex justify-center text-yellow-300 p-2 rounded-md">
               <h2 class="text-yellow-300 border rounded p-2 text-xl">
-                Total file size you have uploaded so far is
+                 {{$t('Total file size you have uploaded so far is')}}
                 <h2 class="text-2xl">{{ totalSize }} MB</h2>
               </h2>
             </div>
@@ -344,10 +344,11 @@
                 class="flex border justify-center text-yellow-300 p-2 rounded-md"
               >
                 <h2 class="text-xl">
-                  Please wait patiently as your files are being uploaded, if for
-                  any reason the files you uploaded are not successful you will
-                  be redirected to the submitted page automatically so you can
-                  re-attach your documents again
+                  {{
+                    $t(
+                      " Please wait patiently as your files are being uploaded, if for any reason the files you uploaded are not successful you will be redirected to the submitted page automatically so you can re-attach your documents again"
+                    )
+                  }}
                 </h2>
               </div>
             </div>

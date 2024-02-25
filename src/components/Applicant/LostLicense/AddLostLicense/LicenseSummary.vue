@@ -1,82 +1,83 @@
 <template>
-  <div class="container w-full mx-auto p-4">
+  <div
+    :class="
+      isDarkMode
+        ? 'container w-full mx-auto  text-white'
+        : 'container w-full mx-auto  text-main-400'
+    "
+  >
     <!-- Heading start -->
-    <header class="text-center mx-auto mb-2 sm:mb-4 mt-2 lg:px-20">
-      <h2 class="text-2xl leading-normal mb-2 font-bold text-main-400">
-        Summary For Lost License
-      </h2>
+    <header class="text-center mx-auto mb-2 sm:mb-4 mt-8">
+      <h1 class="text-3xl mb-2 font-bold">
+        {{ $t("Summary For Lost License") }}
+      </h1>
 
-      <h3 class="text-grey-800 leading-relaxed font-light text-lg mx-auto pb-2">
-        Here is the detail you have filled in so far
+      <h3 class="leading-relaxed font-light text-lg mx-auto pb-2">
+        {{ $t("Here is the detail you have filled in so far") }}
       </h3>
     </header>
     <!-- End heading -->
     <!-- row -->
     <div class="grid grid-cols-1 gap-4">
       <div
-        class="py-2 px-12 mb-2 sm:mb-12 bg-white mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
+        :class="
+          isDarkMode
+            ? 'py-2 bg-secondaryDark shadow-md sm:px-12 px-3 mb-2 sm:mb-12 mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+            : 'py-2 bg-white sm:px-12 shadow-md px-3 mb-2 sm:mb-12 mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+        "
       >
-        <div class="border-b-2 text-main-400 mb-4">
+        <div class="border-b-2 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-folder-open fa-3x text-main-400"></i>
+            <i class="fa fa-folder-open fa-3x"></i>
           </div>
           <div class="flex justify-center text-gray-900 mb-4">
-            <h3
-              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
-            >
-              Application Detail
+            <h3 class="text-lg leading-normal mb-2 font-semibold">
+              {{ $t("Application Detail") }}
             </h3>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b mb-2">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              Applicant Type</span
-            >
+            <h2 class="font-bold sm:text-xl text-lg">
+              {{ $t("Applicant Type") }}
+            </h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-base sm:text-lg">
               {{
                 localData && localData.applicantType
                   ? localData.applicantType.name
                   : ""
-              }}</span
-            >
+              }}
+            </h3>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b mb-2">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-            >
-              License Loss Date</span
-            >
+            <h2 class="font-bold sm:text-xl text-lg">
+              {{ $t("License Loss Date") }}
+            </h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.loss_date ? localData.loss_date : ""
-              }}</span
-            >
+            <h3 class="text-base sm:text-lg">
+              {{ localData && localData.loss_date ? localData.loss_date : "" }}
+            </h3>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <span
-              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
-              >The region in which the license is lost</span
-            >
+            <h2 class="font-bold sm:text-xl text-lg">
+              {{ $t("The region in which the license is lost") }}
+            </h2>
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
+            <h3 class="text-base sm:text-lg">
               {{
                 localData && localData.regionSelected
                   ? localData.regionSelected.name
                   : ""
               }}
-            </span>
+            </h3>
           </div>
         </div>
       </div>
@@ -84,31 +85,31 @@
 
     <div class="mt-2 sm:mt-4 grid grid-cols-1 gap-4">
       <div
-        class="py-2 mb-2 sm:mb-4 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
+        :class="
+          isDarkMode
+            ? 'py-2 mb-2 sm:mb-4 bg-gray-50 border-b bg-secondaryDark shadow-md transform transition duration-300 ease-in-out hover:-translate-y-2'
+            : 'py-2 mb-2 sm:mb-4 bg-gray-50 border-b bg-white transform shadow-md transition duration-300 ease-in-out hover:-translate-y-2'
+        "
       >
-        <div class="bg-white rounded-lg p-2 mb-4 w-full">
+        <div class="rounded-lg mb-4 w-full">
           <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-folder fa-3x text-main-400"></i>
+            <i class="fa fa-folder fa-3x"></i>
           </div>
-          <div
-            class="flex justify-center text-gray-900 mb-4 border-b-2 text-main-400"
-          >
-            <h3
-              class="text-lg text-main-400 leading-normal mb-2 border-b-2 font-semibold text-grey-800"
-            >
-              Files Uploaded
+          <div class="flex justify-center text-gray-900 mb-4 border-b-2">
+            <h3 class="text-lg leading-normal mb-2 border-b-2 font-semibold">
+              {{ $t("Files Uploaded") }}
             </h3>
           </div>
           <div
-            class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 ml-4 sm:w-full"
+            class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 sm:ml-4 sm:w-full"
           >
             <div
-              class="mt-4 mb-2 bg-white rounded-md border p-4"
+              class="mt-4 mb-2 rounded-md border sm:p-4"
               v-for="localFile in localFileData"
               :key="localFile.documenttype"
             >
               <div class="flex justify-center">
-                <div class="mt-large bg-white rounded-md">
+                <div class="mt-large rounded-md">
                   <a
                     :href="localFile.image"
                     :data-title="localFile.documenttype"
@@ -120,10 +121,10 @@
                     />
                   </a>
 
-                  <h4 class="text-main-400 font-bold border-b m-2">
-                    Document Type
+                  <h4 class="font-bold border-b m-2">
+                    {{ $t("Document Type") }}
                   </h4>
-                  <h6 class="m-2">{{ localFile.documenttype }}</h6>
+                  <h5 class="m-2 text-lg">{{ localFile.documenttype }}</h5>
                 </div>
               </div>
             </div>
@@ -136,15 +137,17 @@
       class="mt-2 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-4 mb-12 bg-white text-main-400 transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
+        :class="
+          isDarkMode
+            ? 'py-8 px-4 mb-12 shadow-md bg-secondaryDark transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2'
+            : 'py-8 px-4 mb-12 bg-white shadow-md transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2'
+        "
       >
         <div class="mb-4">
           <div class="flex justify-center">
-            <label
-              for="feedback"
-              class="form-label inline-block mb-2 text-xl text-main-400"
-              >Feedback on the process and system
-              <span class="text-yellow-300">( optional/ not required )</span>
+            <label for="feedback" class="form-label inline-block mb-2 text-xl"
+              >{{ $t("Feedback on the process and system") }}
+              <span class="text-yellow-300">({{ $t("Optional") }} )</span>
             </label>
           </div>
 
@@ -169,11 +172,12 @@
                 id="agreed"
               />
             </div>
-            <h3
-              class="text-grey-800 mb-2localFileData text-xs sm:text-xl mt-2 sm:mt-0"
-            >
-              By checking here I hereby verify the documents and details filled
-              in here are legal.
+            <h3 class="mb-2 localFileData text-xl    mt-2 sm:mt-0">
+              {{
+                $t(
+                  "By checking here I hereby verify the documents and details filled in are legal."
+                )
+              }}.
             </h3>
             <span class="text-red-300">*</span>
           </div>
@@ -195,13 +199,13 @@
             type="button"
             :class="
               allowSave
-                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
+                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hover:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
                 : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
             "
             @click="checkFinalStatus(button.action)"
           >
             <i class="fa fa-save"></i>
-            {{ button.name }}
+            {{ $t(button.name) }}
           </button>
         </span>
 
@@ -209,7 +213,7 @@
           class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
           @click="back()"
         >
-          back
+          {{ $t("Back") }}
         </button>
       </div>
     </div>
@@ -217,16 +221,22 @@
     <!-- end row -->
     <div class="modal-mask" v-if="showModal">
       <div class="modal-wrapper">
-        <div class="modal-container sm:w-1/2 w-5/6">
+        <div
+          :class="
+            isDarkMode
+              ? 'modal-container sm:w-1/2 w-11/12 bg-primaryDark text-primary-200'
+              : 'modal-container sm:w-1/2 w-11/12 bg-white text-main-400'
+          "
+        >
           <div class="modal-header">
-            <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
+            <h2 class="text-xl border-b-4">{{$t('Uploading')}}</h2>
           </div>
 
           <div class="modal-body">
             <div class="flex justify-center text-yellow-300 p-2 rounded-md">
               <h2 class="text-yellow-300 border rounded p-2 text-xl">
-                Total file size you have uploaded so far is
-                <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+                {{$t('Total file size you have uploaded so far is')}}
+                <h2 class="text-2xl">{{ totalSize }} MB</h2>
               </h2>
             </div>
             <div class="flex justify-center">
@@ -235,9 +245,7 @@
                 :completed-steps="progress"
                 :total-steps="totalSteps"
               >
-                <h1 class="text-3xl text-main-400 font-bold">
-                  {{ progress }} %
-                </h1>
+                <h1 class="text-3xl font-bold">{{ progress }} %</h1>
               </RadialProgress>
             </div>
             <div>
@@ -245,10 +253,11 @@
                 class="flex border justify-center text-yellow-300 p-2 rounded-md"
               >
                 <h2 class="text-xl">
-                  Please wait patiently as your files are being uploaded, if for
-                  any reason the files you uploaded are not successful you will
-                  be redirected to the submitted page automatically so you can
-                  re-attach your documents again
+                  {{
+                    $t(
+                      "Please wait patiently as your files are being uploaded, if for any reason the files you uploaded are not successful you will be redirected to the submitted page automatically so you can re-attach your documents again"
+                    )
+                  }}
                 </h2>
               </div>
             </div>
@@ -289,6 +298,7 @@ export default {
     let buttons = ref([]);
     let tempDocs = ref({});
     let allowSave = ref(false);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (generalInfo.value && agreed.value != false) {
@@ -386,6 +396,9 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       buttons.value = store.getters["lostLicenses/getButtons"];
       tempDocs.value = store.getters["lostLicenses/getTempDocs"];
       localData.value = window.localStorage.getItem("LLApplicationData")
@@ -434,7 +447,7 @@ export default {
         generalInfo.value.expert_level = 3;
       }
     });
-     const isPDF = (filename) => {
+    const isPDF = (filename) => {
       const parts = filename.split(".");
       const isPdf =
         parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
@@ -457,6 +470,7 @@ export default {
       totalSize,
       showModal,
       progress,
+      isDarkMode,
     };
   },
 };
@@ -497,8 +511,7 @@ export default {
 
 .modal-container {
   margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
+  padding: 20px 30px; 
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
