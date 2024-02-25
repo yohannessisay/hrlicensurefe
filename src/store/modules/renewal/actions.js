@@ -195,7 +195,7 @@ export default {
   async updateDeclined(context, payload) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/renewals/" + payload.renewalId,
+        baseUrl + "/renewals/" + payload.licenseId,
         payload.declinedData
       );
       return resp;

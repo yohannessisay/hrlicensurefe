@@ -43,7 +43,7 @@
                   :fileUploadError="errorDocuments"
                   :isDarkMode="isDarkMode"
                   :documentsSaved="documentsSaved"
-                  @handleCommonFileUpload="handleCommonFileUpload"
+                  @handleCommonFileUpload="handleFileUpload"
                 ></CommonFileUploadTable>
               </div>
             </div>

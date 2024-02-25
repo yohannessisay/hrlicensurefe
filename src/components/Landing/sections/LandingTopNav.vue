@@ -7,7 +7,7 @@
         class="flex justify-center sm:justify-start col-span-5 sm:col-span-4 border-b sm:border-none mb-2"
       >
         <RenderIllustration illustration="Logo" class="hidden sm:block" />
-        <h3 class="ml-4 text-main-400 text-xl md: mt-3">eHPEL - License</h3>
+        <h1 class="ml-4 text-main-400 text-xl sm:text-2xl mt-3">eHPEL - License</h1>
       </div>
       <div class="col-span-5 sm:col-span-2">
         <div class="grid grid-cols-3 sm:grid-cols-3">

@@ -168,12 +168,16 @@
   "Application Detail": "የመተግበሪያ ዝርዝር",
   "No licenses found, Select this if you do not have any license or renewal application approved prior": "ምንም ፈቃዶች አልተገኙም፣ ከዚህ በፊት የተፈቀደ ምንም ዓይነት ፈቃድ ወይም እድሳት ከሌለዎት ይህንን ይምረጡ",
   "Select": "ይምረጡ",
-  "License Type":"የፍቃድ አይነት",
-  "License Loss Date":"ፈቃድ የጠፋበት ቀን",
+  "License Type": "የፍቃድ አይነት",
+  "License Loss Date": "ፈቃድ የጠፋበት ቀን",
   "Please select the region where you have taken the license from": "እባክዎ ፈቃዱን የወሰዱበትን ክልል ይምረጡ",
-  "Here you can find your previously applied licenses in the system, select the one you want to apply as a lost one":"እዚህ ቀደም ብለው የተተገበሩ ፍቃዶችዎን በሲስተሙ ውስጥ ማግኘት ይችላሉ, እንደጠፋ ለማመልከት የሚፈልጉትን ይምረጡ",
-  "Good Standing Letter Document Upload":"የጥሩ አቋም ደብዳቤ ሰነድ ሰቀላ",
-  "Lost License Document Upload":"የጠፋ ፍቃድ ሰነድ ሰቀላ",
-  "Summary For Lost License":"ለጠፋ ፍቃድ ማጠቃለያ",
-  "The region in which the license is lost":"ፈቃዱ የጠፋበት ክልል"
+  "Here you can find your previously applied licenses in the system, select the one you want to apply as a lost one": "እዚህ ቀደም ብለው የተተገበሩ ፍቃዶችዎን በሲስተሙ ውስጥ ማግኘት ይችላሉ, እንደጠፋ ለማመልከት የሚፈልጉትን ይምረጡ",
+  "Good Standing Letter Document Upload": "የጥሩ አቋም ደብዳቤ ሰነድ ሰቀላ",
+  "Lost License Document Upload": "የጠፋ ፍቃድ ሰነድ ሰቀላ",
+  "Summary For Lost License": "ለጠፋ ፍቃድ ማጠቃለያ",
+  "The region in which the license is lost": "ፈቃዱ የጠፋበት ክልል",
+  "Remark on why the license is declined": "ፍቃዱ ለምን እንደተከለከለ",
+  "Re-apply": "እንደገና ያመልክቱ",
+  "Close": "ዝጋ",
+  "To whom the letter is written for": "ደብዳቤው የተጻፈው ለማን ነው"
 }

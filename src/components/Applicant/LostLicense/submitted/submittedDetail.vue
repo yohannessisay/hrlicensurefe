@@ -66,7 +66,6 @@
                         checkApplicationType(generalInfo.applicationType)
                       "
                       v-model="generalInfo.applicationType"
-                      
                     >
                       <option
                         v-for="application in applicationCategories"
@@ -399,7 +398,7 @@ export default {
         showLocation.value = false;
       }
     };
-        const selectLicense = (type, id, license) => {
+    const selectLicense = (type, id, license) => {
       switch (type) {
         case "newLicense":
           generalInfo.value.new_license_id = id;
@@ -664,7 +663,7 @@ export default {
       showLicenses,
       licensesLoading,
       approvedLicenses,
-      selectLicense
+      selectLicense,
     };
   },
 };

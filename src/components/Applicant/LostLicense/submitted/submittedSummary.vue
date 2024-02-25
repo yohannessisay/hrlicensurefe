@@ -330,7 +330,7 @@
           <h2 class="text-xl">
             {{
               $t(
-                " Please wait patiently as your files are being uploaded, if for any reason the files you uploaded are not successful you will be redirected to the submitted page automatically so you can re-attach your documents again"
+                "Please wait patiently as your files are being uploaded, if for any reason the files you uploaded are not successful you will be redirected to the submitted page automatically so you can re-attach your documents again"
               )
             }}
           </h2>

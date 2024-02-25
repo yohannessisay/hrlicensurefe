@@ -9,7 +9,7 @@
           : 'text-main-400 text-3xl font-bold'
       "
     >
-      General Information
+      {{ $t("General Information") }}
     </h2>
   </div>
   <!-- <div class="float-container" @click="darkMode()">
@@ -39,7 +39,7 @@
           >
             <div>
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                >Applicant Type</label
+                >{{ $t("Applicant Type")}}</label
               ><span class="text-red-300">*</span>
               <select
                 :class="
@@ -67,7 +67,7 @@
                 @click="clearLocalData()"
               >
                 <i class="fa fa-close"></i>
-                Clear Form
+               {{ $t("Clear Form")}} 
               </button>
             </div>
 
@@ -76,7 +76,7 @@
                 <label
                   for=""
                   :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Applicant Title</label
+                  >{{ $t("Applicant Title")}}</label
                 ><span class="text-red-300">*</span>
 
                 <select
@@ -122,7 +122,7 @@
           >
             <div class="flex flex-col mb-4">
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                >Region<span class="text-red-300">*</span></label
+                >{{ $t("Region")}}<span class="text-red-300">*</span></label
               >
               <select
                 :class="
@@ -144,7 +144,7 @@
               </select>
             </div>
             <div
-              class="flex flex-col"
+              class="flex flex-col mb-4"
               v-if="
                 generalInfo.regionSelected &&
                 generalInfo.regionSelected.code != 'FED' &&
@@ -152,7 +152,7 @@
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                >Zone<span class="text-red-300">*</span></label
+                >{{ $t("Zone")}}<span class="text-red-300">*</span></label
               >
               <select
                 :class="
@@ -176,7 +176,7 @@
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                >Woreda<span class="text-red-300">*</span></label
+                >{{ $t("Woreda")}}<span class="text-red-300">*</span></label
               >
               <select
                 :class="
@@ -203,9 +203,9 @@
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
           >
-            <div>
+            <div class="mb-4">
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                >Department</label
+                >{{ $t("Department")}}</label
               ><span class="text-red-300">*</span>
               <select
                 :class="
@@ -227,9 +227,9 @@
               </select>
             </div>
 
-            <div>
+          <div class="mb-4">
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                >Education Level</label
+                >{{ $t("Education Level")}}</label
               ><span class="text-red-300">*</span>
               <select
                 :class="
@@ -255,7 +255,7 @@
             <div class="grid grid-cols-1">
               <div class="mb-4">
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Profession</label
+                  >{{ $t("Professional Type")}}</label
                 ><span class="text-red-300">*</span>
                 <select
                   :class="
@@ -322,7 +322,7 @@
 
             <div>
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                >Applicant Position</label
+                >{{ $t("Applicant Position")}}</label
               ><span class="text-red-300">*</span>
               <select
                 class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
@@ -370,11 +370,11 @@
               class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 p-4 border-b"
             >
               <div>
-                <div class="overflow-hidden shadow-sm">
+                <div class="overflow-hidden shadow-sm mb-4">
                   <label
                     for=""
                     :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Organization Letter written for</label
+                    >{{ $t("Organization Letter written for")}}</label
                   ><span class="text-red-300">*</span>
                   <input
                     type="text"
@@ -393,11 +393,11 @@
               </div>
 
               <div>
-                <div class="overflow-hidden shadow-sm">
+                <div class="overflow-hidden shadow-sm  mb-4">
                   <label
                     for=""
                     :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >License Issued Date</label
+                    >{{ $t("License Issued Date")}}</label
                   >
                   <span class="text-red-300">*</span>
                   <input
@@ -416,11 +416,11 @@
                 </div>
               </div>
               <div>
-                <div class="overflow-hidden shadow-sm">
+                <div class="overflow-hidden shadow-sm  mb-4">
                   <label
                     for=""
                     :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >License Registration Number</label
+                    >{{ $t("License Registration Number")}}</label
                   ><span class="text-red-300">*</span>
 
                   <input
@@ -444,7 +444,7 @@
                   <label
                     for=""
                     :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Who Issued Previous License</label
+                    >{{ $t("Who Issued Previous License")}}</label
                   ><span class="text-red-300">*</span>
 
                   <select
@@ -490,13 +490,13 @@
             type="submit"
             @click="saveDraft()"
           >
-            Save as draft
+            {{ $t("Save As Draft")}}
           </button>
           <button
             class="float-right mb-4 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             type="submit"
           >
-            Next
+            {{ $t("Next")}}
           </button>
         </div>
       </div>

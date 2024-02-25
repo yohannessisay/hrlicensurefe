@@ -141,7 +141,7 @@
               </div>
             </div>
             <div class="border-b-2" v-if="license.goodStandingCode">
-             <div class="grid grid-cols-2 mb-2 sm:p-2 mt-4 ml-2">
+              <div class="grid grid-cols-2 mb-2 sm:p-2 mt-4 ml-2">
                 <h1 class="text-lg">{{ $t("Who issued the letter") }}</h1>
 
                 <h2
@@ -157,7 +157,7 @@
                 </h2>
               </div>
 
-            <div class="grid grid-cols-2 mb-2 sm:p-2 ml-2">
+              <div class="grid grid-cols-2 mb-2 sm:p-2 ml-2">
                 <h1 class="text-lg">{{ $t("License Registration Number") }}</h1>
                 <h2
                   :class="
@@ -174,7 +174,7 @@
                 </h2>
               </div>
             </div>
-            <div class="border-b-2" v-else>
+            <div class="border-b-2" v-if="license.lost_license_code">
               <div class="grid grid-cols-2 mb-2 sm:p-2 mt-4 ml-2">
                 <h1 class="text-lg">{{ $t("License Loss Date") }}</h1>
 
@@ -193,7 +193,7 @@
                 </h2>
               </div>
 
-           <div class="grid grid-cols-2 mb-2 sm:p-2 ml-2">
+              <div class="grid grid-cols-2 mb-2 sm:p-2 ml-2">
                 <h1 class="text-lg">{{ $t("License Type") }}</h1>
                 <h2
                   :class="
@@ -225,7 +225,13 @@
                     : 'text-grey-800 text-lg'
                 "
               >
-                {{ license.created_at ? license.created_at.slice(0, 10) : "" }}
+                {{
+                  license.createdAt
+                    ? license.createdAt.slice(0, 10)
+                    : license.created_at
+                    ? license.created_at.slice(0, 10)
+                    : ""
+                }}
               </h2>
             </footer>
             <div class="flex justify-center">
@@ -277,6 +283,7 @@
       :isDarkMode="isDarkMode"
       :applicationDetailLink="applicationDetailLink"
       :detailPageName="detailPageName"
+      :finalUrl="finalUrl"
     ></ApplicationDetail>
   </main-content>
 </template>

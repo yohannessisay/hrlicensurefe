@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-hidden">
+  <div class="overflow-x-hidden bg-white">
     <LandingTopNav @setShowLogin="showLogin = true" />
     <GetCertifiedSection @setShowSignup="showSignUp = true" />
     <NewLicenseSection />
