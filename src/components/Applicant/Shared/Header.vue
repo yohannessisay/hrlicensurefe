@@ -25,7 +25,6 @@
                   ? 'fa fa-bell text-xl text-white cursor-pointer  shadow-md p-1 rounded-md bg-primary-400'
                   : 'fa fa-bell  text-xl text-white cursor-pointer  shadow-md p-1 rounded-md bg-primary-400'
               "
-               
             ></i
           ></span>
           <div
@@ -41,7 +40,7 @@
           >
             <span v-if="notif && notif.length > 0">
               <li
-                class="cursor-pointer hover:underline hover:bg-primary-300 p-2 rounded-md border-b-4"
+                class="cursor-pointer hover:underline hover:bg-primary-300 p-2   border-b-4"
                 v-for="notif in notif"
                 :key="notif"
               >
@@ -49,7 +48,7 @@
                   <span class="text-grey-800">{{
                     notif.data ? notif.data.createdAt.slice(0, 10) : ""
                   }}</span>
-                  {{ notif && notif.message ? notif.message : "" }}
+                  <span class="text-main-400 ml-2 break-all">{{ notif && notif.message ? notif.message : "" }}</span>
                 </h6>
               </li></span
             >
@@ -67,7 +66,7 @@
             locale ? locale.toUpperCase() : ""
           }}</span>
           <ul
-            class="dropdown-menu absolute hidden p-2 sm:w-40 text-gray-700 bg-grey-300 rounded-md shadow-md"
+            class="dropdown-menu absolute hidden p-2 sm:w-40 text-gray-700 bg-primary-300 rounded-md shadow-md"
           >
             <li
               @click="changeLocale('am')"
@@ -126,7 +125,9 @@
                   />
                 </svg>
 
-                <a class="bg-gray-200 py-2 block whitespace-no-wrap" href="#"
+                <a
+                  class="bg-gray-200 text-white hover:text-green-200 py-2 block whitespace-no-wrap"
+                  href="#"
                   >Amharic</a
                 >
               </div>
@@ -186,7 +187,7 @@
                 </svg>
 
                 <a
-                  class="bg-gray-200 hover:bg-gray-400 py-2 block whitespace-no-wrap"
+                  class="bg-gray-200 text-white hover:text-green-200 hover:bg-gray-400 py-2 block whitespace-no-wrap"
                   href="#"
                   >English</a
                 >
@@ -212,7 +213,11 @@
             v-on:click="showDropDown()"
           >
             <div v-if="!userInfo.isFirstTime" class="w-12 h-12">
-              <img :src="userInfo.pic" alt="image here" class="w-20 h-12 border-white border-2" />
+              <img
+                :src="userInfo.pic"
+                alt="image here"
+                class="w-20 h-12 border-white border-2"
+              />
             </div>
             <div v-if="userInfo.isFirstTime">
               <svg
