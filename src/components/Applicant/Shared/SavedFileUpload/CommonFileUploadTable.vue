@@ -10,11 +10,17 @@
           :key="index"
           class="px-4 py-4 border-0 border-b uppercase font-medium text-white text-left text-lg"
         >
-          {{ header }}
+         {{ $t(header) }}
         </th>
       </tr>
     </thead>
-  <tbody :class="isDarkMode?'divide-y bg-secondaryDark text-primary-200':'divide-y bg-white text-main-400'">
+    <tbody
+      :class="
+        isDarkMode
+          ? 'divide-y bg-secondaryDark text-primary-200'
+          : 'divide-y bg-white text-main-400'
+      "
+    >
       <tr
         v-for="item in tableRows"
         :key="item.id"
@@ -27,8 +33,8 @@
         <td
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline  ">
-            {{ headers[0] }}
+          <h2 class="sm:hidden mb-2 text-xl underline">
+        {{ $t(headers[0]) }}  
           </h2>
           <h2 class="text-lg break-words">
             {{ item.documentType.name }}
@@ -38,8 +44,8 @@
         <td
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline ">
-            {{ headers[1] }}
+          <h2 class="sm:hidden mb-2 text-xl underline">
+             {{ $t(headers[1]) }}  
           </h2>
           <h2 class="text-lg break-words">
             {{
@@ -52,8 +58,8 @@
         <td
           class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline  ">
-            {{ headers[2] }}
+          <h2 class="sm:hidden mb-2 text-xl underline">
+             {{ $t(headers[2]) }}  
           </h2>
 
           <input
@@ -70,9 +76,7 @@
           v-if="documentsSaved[item.documentType.code]"
           class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:text-[0.625rem] before:uppercase before:font-medium sm:pl-6"
         >
-          <h2 class="sm:hidden mb-2 text-xl underline  ">
-            Uploaded File Name
-          </h2>
+          <h2 class="sm:hidden mb-2 text-xl underline">{{ $t("Uploaded File Name") }}  </h2>
           <h2 class="text-lg break-words">
             {{ documentsSaved[item.documentType.code].name }}
             <i class="fa fa-check-circle text-green-300"></i>
@@ -100,7 +104,7 @@
                   :src="documentsSaved[item.documentType.code]"
                   class="w-full h-2 object-cover"
                 />
-              </i>
+              </i>{{$t('View')}}
             </a>
           </div>
         </td>

@@ -5,14 +5,16 @@
         v-if="alreadyUploaded"
         class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
       >
-        It seems like you have already attached the documents required to go to
-        the next step, if you wish to change any file, you can do so, else click
-        next at the bottom of the screen
+        {{
+          $t(
+            "It seems like you have already attached the documents required to go to the next step, if you wish to change any file, you can do so, else click next at the bottom of the screen"
+          )
+        }}
       </h2>
       <h2
         class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
       >
-        *Please upload all documents marked with a red asterix
+        {{$t('Please upload all documents marked with a red asterix')}}
         <small class="text-red-300"> (*)</small>
       </h2>
       <div
@@ -32,7 +34,7 @@
             aria-expanded="true"
             aria-controls="commonFilesAccordion"
           >
-            Common Files
+            {{$t('Common Files')}}
           </button>
         </h2>
         <div
@@ -55,7 +57,7 @@
         </div>
       </div>
       <div
-             :class="
+        :class="
           isDarkMode
             ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
             : 'accordion-item  bg-white border border-grey-200  rounded-lg'
@@ -71,7 +73,7 @@
             aria-expanded="true"
             aria-controls="departmentFilesAccordion"
           >
-            Education Level Related Files
+           {{$t('Education Level Related Files')}}
           </button>
         </h2>
         <div
@@ -101,14 +103,19 @@
         v-if="errorDocuments && errorDocuments.length > 0"
       >
         <h2 class="text-yellow-300 font-bold text-xl sm:text-3xl border-b">
-          Please attach the following files to proceed
+          {{$t('Please attach the following files to proceed')}}
         </h2>
         <li
           class="text-yellow-300 text-xl font-bold p-2 m-1 break-all"
           v-for="(error, index) in errorDocuments"
           :key="error"
         >
-          <small :class="isDarkMode?'text-primary-200 text-xl':'text-grey-800 text-xl'">{{ index + 1 }}- </small>
+          <small
+            :class="
+              isDarkMode ? 'text-primary-200 text-xl' : 'text-grey-800 text-xl'
+            "
+            >{{ index + 1 }}-
+          </small>
           {{ error.name }}
         </li>
       </div>
@@ -119,7 +126,7 @@
         :is-full-page="false"
         :color="'#2F639D'"
         :opacity="1"
-           class="rounded-md"
+        class="rounded-md"
       ></loading>
       <div class="flex justify-end mr-8 mb-8">
         <button
@@ -127,19 +134,19 @@
           type="submit"
           @click="saveDraft()"
         >
-          Save as draft
+          {{$t('Save As Draft')}}
         </button>
         <button
           class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
           @click="back()"
         >
-          back
+          {{$t('Back')}}
         </button>
         <button
           class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
           @click="next()"
         >
-          next
+          {{$t('Next')}}
         </button>
       </div>
     </div>

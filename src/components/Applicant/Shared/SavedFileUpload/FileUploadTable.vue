@@ -8,12 +8,12 @@
       <h4
         :class="
           isDarkMode
-            ? 'text-primary-200 font-bold border-b'
-            : 'text-grey-800 font-bold border-b'
+            ? 'text-primary-200 font-bold border-b mb-4'
+            : 'text-grey-800 font-bold border-b mb-4'
         "
       >
         {{ table.professionType ? table.professionType.name : "" }}
-        Related Files
+        {{ $t("Related Files") }}
       </h4>
       <div class="overflow-x-auto w-full sm:p-4">
         <table
@@ -27,7 +27,7 @@
                 :key="index"
                 class="px-4 py-4 uppercase font-medium text-white text-left text-lg"
               >
-                {{ header }}
+                {{ $t(header) }}
               </th>
             </tr>
           </thead>
@@ -43,11 +43,7 @@
               v-for="item in table.docs"
               :key="item.id"
               :class="
-                fileUploadError[
-                  `file_upload_row_${
-                    item.documentType.code
-                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                ]
+                fileUploadError[`file_upload_row_${uniqueFileId(item, table)}`]
                   ? 'text-sm  shadow-md  flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
                   : 'text-sm border rounded-md  shadow-md  flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
               "
@@ -56,7 +52,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[0] }}
+                  {{ $t(headers[0]) }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{ item.documentType.name }}
@@ -67,7 +63,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[1] }}
+                  {{ $t(headers[1]) }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{
@@ -81,15 +77,13 @@
                 class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[2] }}
+                  {{ $t(headers[2]) }}
                 </h2>
 
                 <input
                   type="file"
                   :required="item.isRequired"
-                  :id="`files_${
-                    item.documentType.code
-                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
+                  :id="`files_$${uniqueFileId(item, table)}`"
                   accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                   :ref="`imageUploader${item.id}`"
                   class="custom-file-input"
@@ -97,26 +91,14 @@
                 />
               </td>
               <td
-                v-if="
-                  documentsSaved[
-                    `${
-                      item.documentType.code
-                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                  ]?.name
-                "
+                v-if="documentsSaved[`${uniqueFileId(item, table)}`]?.name"
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  Uploaded File Name
+                  {{ $t("Uploaded File Name") }}
                 </h2>
                 <h2 class="text-lg break-words">
-                  {{
-                    documentsSaved[
-                      `${
-                        item.documentType.code
-                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                    ]?.name
-                  }}
+                  {{ documentsSaved[`${uniqueFileId(item, table)}`]?.name }}
                   <i class="fa fa-check-circle text-green-300"></i>
                 </h2>
               </td>
@@ -126,49 +108,25 @@
               >
                 <div class="flex justify-center">
                   <a
-                    :id="
-                      'image_href_' +
-                      `${
-                        item.documentType.code
-                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                    "
-                    :href="
-                      documentsSaved[
-                        `${
-                          item.documentType.code
-                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                      ]?.path
-                    "
+                    :id="'image_href_' + `${uniqueFileId(item, table)}`"
+                    :href="documentsSaved[`${uniqueFileId(item, table)}`]?.path"
                     :data-title="item.name ? item.name : '-----'"
                     data-lightbox="example-2"
                   >
                     <i
-                      :id="
-                        'educational_icon_' +
-                        `${
-                          item.documentType.code
-                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                      "
+                      :id="'educational_icon_' + `${uniqueFileId(item, table)}`"
                       class="fa fa-eye cursor-pointer text-main-400"
                       aria-hidden="true"
                     >
                       <img
-                        :id="
-                          'image_lightbox_' +
-                          `${
-                            item.documentType.code
-                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                        "
+                        :id="'image_lightbox_' + `${uniqueFileId(item, table)}`"
                         :src="
-                          documentsSaved[
-                            `${
-                              item.documentType.code
-                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                          ]?.path
+                          documentsSaved[`${uniqueFileId(item, table)}`]?.path
                         "
                         class="w-full h-2 object-cover"
                       />
                     </i>
+                    {{ $t("View") }}
                   </a>
                 </div>
               </td>
@@ -191,9 +149,7 @@
               :class="
                 fileUploadError[
                   `file_upload_row_
-                    ${
-                      parentItem[0].documentType.code
-                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                   ${uniqueFileId(parentItem[0], table)}`
                 ]
                   ? 'text-sm  shadow-md flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
                   : 'text-sm border-t flex shadow-md flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
@@ -203,7 +159,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[0] }}
+                  {{ $t(headers[0]) }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{ parentItem[0].documentType.name }}
@@ -216,7 +172,7 @@
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[1] }}
+                  {{ $t(headers[1]) }}
                 </h2>
                 <h2 class="text-lg break-words">
                   {{
@@ -230,15 +186,13 @@
                 class="flex whitespace-no-wrap flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[2] }}
+                  {{ $t(headers[2]) }}
                 </h2>
 
                 <input
                   :required="parentItem[0].isRequired"
                   type="file"
-                  :id="`files_${
-                    parentItem[0].documentType.code
-                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
+                  :id="`files_${uniqueFileId(parentItem[0], table)}`"
                   accept="*/*"
                   :ref="`imageUploader${parentItem[0].id}`"
                   class="custom-file-input"
@@ -249,23 +203,15 @@
               </td>
               <td
                 v-if="
-                  documentsSaved[
-                    `${
-                      parentItem[0].documentType.code
-                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                  ]?.name
+                  documentsSaved[`${uniqueFileId(parentItem[0], table)}`]?.name
                 "
                 class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  Uploaded File Name
+                  {{ $t("Uploaded File Name") }}
                 </h2>
                 {{
-                  documentsSaved[
-                    `${
-                      parentItem[0].documentType.code
-                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                  ]?.name
+                  documentsSaved[`${uniqueFileId(parentItem[0], table)}`]?.name
                 }}
                 <i class="fa fa-check-circle text-green-300"></i>
               </td>
@@ -276,17 +222,11 @@
                 <div class="flex justify-center">
                   <a
                     :id="
-                      'image_href_' +
-                      `${
-                        parentItem[0].documentType.code
-                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                      'image_href_' + `${uniqueFileId(parentItem[0], table)}`
                     "
                     :href="
-                      documentsSaved[
-                        `${
-                          parentItem[0].documentType.code
-                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                      ]?.path
+                      documentsSaved[`${uniqueFileId(parentItem[0], table)}`]
+                        ?.path
                     "
                     :data-title="
                       parentItem[0].name ? parentItem[0].name : '-----'
@@ -296,9 +236,7 @@
                     <i
                       :id="
                         'educational_icon_' +
-                        `${
-                          parentItem[0].documentType.code
-                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                        `${uniqueFileId(parentItem[0], table)}`
                       "
                       class="fa fa-eye cursor-pointer text-main-400"
                       aria-hidden="true"
@@ -306,20 +244,16 @@
                       <img
                         :id="
                           'image_lightbox_' +
-                          `${
-                            parentItem[0].documentType.code
-                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                          `${uniqueFileId(parentItem[0], table)}`
                         "
                         :src="
                           documentsSaved[
-                            `${
-                              parentItem[0].documentType.code
-                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            `${uniqueFileId(parentItem[0], table)}`
                           ]?.path
                         "
                         class="w-full h-2 object-cover"
-                      />
-                    </i>
+                      /> </i
+                    >{{ $t("View") }}
                   </a>
                 </div>
               </td>
@@ -329,10 +263,7 @@
               v-else
               :class="
                 fileUploadError[
-                  'file_upload_row_' +
-                    `${
-                      parentItem[0].documentType.code
-                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                  'file_upload_row_' + `${uniqueFileId(parentItem[0], table)}`
                 ]
                   ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
                   : 'text-sm border-t  bg-grey-400 text-white flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
@@ -342,7 +273,7 @@
                 class="flex bg-grey-400 sm flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
               >
                 <h2 class="sm:hidden mb-2 text-xl underline">
-                  {{ headers[0] }}
+                  {{ $t(headers[0]) }}
                 </h2>
                 <div class="flex">
                   <h2 class="text-lg break-words">
@@ -356,12 +287,13 @@
                     type="button"
                     @click="$emit('addMore', parentItem[0])"
                   >
-                    Add More
+                    {{ $t("Add More") }}
                   </button>
                 </div>
 
                 <h2 class=" ">
-                  (You can upload up to {{ parentItem.length }} files)
+                  ({{ $t("You can upload up to") }}
+                  {{ parentItem.length }} Files)
                 </h2>
               </td>
               <td
@@ -380,7 +312,7 @@
                   showNestedDocuments[parentItem[0].documentType.code] != null
                 "
                 class="accordion sm:p-2"
-                :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                :id="`accordion_${uniqueFileId(parentItem[0], table)}`"
                 style="width: max-content"
               >
                 <div
@@ -392,12 +324,17 @@
                 >
                   <div
                     :id="
-                      'docAccordion_' +
-                      `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                      'docAccordion_' + `${uniqueFileId(parentItem[0], table)}`
                     "
                     :class="isDarkMode ? 'text-white' : ''"
-                    :aria-labelledby="`headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
-                    :data-bs-parent="`#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                    :aria-labelledby="`headingOne_${uniqueFileId(
+                      parentItem[0],
+                      table
+                    )}`"
+                    :data-bs-parent="`#accordion_${uniqueFileId(
+                      parentItem[0],
+                      table
+                    )}`"
                   >
                     <div class="accordion-body py-4">
                       <table>
@@ -410,12 +347,12 @@
                               :key="index"
                               class="px-2 py-2 uppercase font-medium text-white text-left text-lg"
                             >
-                              {{ header }}
+                              {{ $t(header) }}
                             </th>
                             <th
                               class="px-2 py-2 uppercase font-medium text-white text-left text-lg"
                             >
-                              Remove
+                              {{ $t("Remove") }}
                             </th>
                           </tr>
                         </thead>
@@ -432,9 +369,7 @@
                             :class="
                               fileUploadError[
                                 'file_upload_row_' +
-                                  `${
-                                    parentChildItem.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${uniqueFileId(parentChildItem, table)}`
                               ]
                                 ? 'text-sm   shadow-md flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
                                 : 'text-sm   shadow-md rounded-md border flex flex-col mb-4  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
@@ -449,7 +384,7 @@
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
                               <h2 class="text-xl underline sm:invisible">
-                                Document Name
+                                {{ $t("Document Name") }}
                               </h2>
                               <h2
                                 :class="
@@ -495,7 +430,10 @@
                                 <input
                                   type="file"
                                   :required="parentChildItem.isRequired"
-                                  :id="`files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
+                                  :id="`files_${uniqueFileId(
+                                    parentChildItem,
+                                    table
+                                  )}`"
                                   accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                                   :ref="`imageUploader${parentChildItem.id}`"
                                   class="custom-file-input"
@@ -513,21 +451,17 @@
                             <td
                               v-if="
                                 documentsSaved[
-                                  `${
-                                    parentChildItem.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${uniqueFileId(parentChildItem, table)}`
                                 ]?.name
                               "
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
                               <h2 class="sm:hidden mb-2 text-xl underline">
-                                Uploaded File Name
+                                {{ $t("Uploaded File Name") }}
                               </h2>
                               {{
                                 documentsSaved[
-                                  `${
-                                    parentChildItem.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${uniqueFileId(parentChildItem, table)}`
                                 ]?.name
                               }}
                               <i class="fa fa-check-circle text-green-300"></i>
@@ -536,60 +470,57 @@
                             <td
                               v-if="
                                 documentsSaved[
-                                  `${
-                                    parentChildItem.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${uniqueFileId(parentChildItem, table)}`
                                 ]?.path
                               "
                               class="flex flex-col px-4 py-2 sm:table-cell sm:py-4 lg:table-cell sm:before:content-none before:uppercase before:font-medium sm:pl-6"
                             >
-                              <a
-                                :id="
-                                  'image_href_' +
-                                  `${
-                                    parentChildItem.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                "
-                                :href="
-                                  documentsSaved[
-                                    `${
-                                      parentChildItem.documentType.code
-                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                  ]?.path
-                                "
-                                :data-title="
-                                  parentChildItem.name ? item.name : '-----'
-                                "
-                                data-lightbox="example-2"
-                              >
-                                <i
+                              <div class="flex justify-center">
+                                <a
                                   :id="
-                                    'educational_icon_' +
-                                    `${
-                                      parentChildItem.documentType.code
-                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                    'image_href_' +
+                                    `${uniqueFileId(parentChildItem, table)}`
                                   "
-                                  class="fa fa-eye cursor-pointer text-main-400"
-                                  aria-hidden="true"
+                                  :href="
+                                    documentsSaved[
+                                      `${uniqueFileId(parentChildItem, table)}`
+                                    ]?.path
+                                  "
+                                  :data-title="
+                                    parentChildItem.name ? item.name : '-----'
+                                  "
+                                  data-lightbox="example-2"
                                 >
-                                  <img
+                                  <i
                                     :id="
-                                      'image_lightbox_' +
-                                      `${
-                                        parentChildItem.documentType.code
-                                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      'educational_icon_' +
+                                      `${uniqueFileId(parentChildItem, table)}`
                                     "
-                                    :src="
-                                      documentsSaved[
-                                        `${
-                                          parentChildItem.documentType.code
-                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                      ]?.path
-                                    "
-                                    class="w-full h-2 object-cover"
-                                  />
-                                </i>
-                              </a>
+                                    class="fa fa-eye cursor-pointer text-main-400"
+                                    aria-hidden="true"
+                                  >
+                                    <img
+                                      :id="
+                                        'image_lightbox_' +
+                                        `${uniqueFileId(
+                                          parentChildItem,
+                                          table
+                                        )}`
+                                      "
+                                      :src="
+                                        documentsSaved[
+                                          `${uniqueFileId(
+                                            parentChildItem,
+                                            table
+                                          )}`
+                                        ]?.path
+                                      "
+                                      class="w-full h-2 object-cover"
+                                    />
+                                  </i>
+                                  {{ $t("View") }}
+                                </a>
+                              </div>
                             </td>
 
                             <td
@@ -626,9 +557,12 @@
           </tbody>
         </table>
 
-        <small class="text-base text-yellow-300"
-          >Note:-document names with <b class="text-red-300">(*)</b> must be
-          uploaded in order to go forward with application process</small
+        <small class="text-lg text-yellow-300 break-all"
+          >{{ $t("Note:-document names with") }}
+          <b class="text-red-300">(*)</b>
+          {{
+            $t("must be uploaded to go forward with the application process")
+          }}</small
         >
       </div>
     </div>
@@ -644,5 +578,15 @@ export default {
     "showNestedDocuments",
     "documentsSaved",
   ],
+  setup() {
+    const uniqueFileId = (item, table) => {
+      return `${
+        item.documentType.code
+      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`;
+    };
+    return {
+      uniqueFileId,
+    };
+  },
 };
 </script>

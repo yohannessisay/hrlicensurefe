@@ -18,8 +18,11 @@
             : 'text-2xl sm:text-3xl text-yellow-300'
         "
       >
-        You have the option to select a license you already have in the system
-        for renewal or fill out a new application form for the renewal process.
+        {{
+          $t(
+            "You have the option to select a license you already have in the system for renewal or fill out a new application form for the renewal process."
+          )
+        }}
       </h1>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 m-4">
@@ -46,9 +49,11 @@
           data-ripple-color="light"
         >
           {{
-            previousLicense && previousLicense.length == 0
-              ? "No existing license"
-              : "Show Existing License/s"
+            $t(
+              previousLicense && previousLicense.length == 0
+                ? "No existing license"
+                : "Show Existing License/s"
+            )
           }}
         </button>
         <br />
@@ -70,7 +75,7 @@
           data-ripple-init
           data-ripple-color="light"
         >
-          Apply For A New Form
+          {{ $t("Apply For A New Form") }}
         </button>
       </div>
     </div>
@@ -114,7 +119,7 @@
               <!-- Article -->
               <div>
                 <h2 class="text-main-400 border-b-2 text-xl p-2">
-                  License Number-
+                  {{ $t("License Number") }}
                   <span class="text-base text-main-400">
                     {{ license.newLicenseCode }}
                   </span>
@@ -123,9 +128,9 @@
                 <div class="border-b-2 text-main-400 p-2">
                   <div class="grid grid-cols-3">
                     <h1 class="text-lg">
-                      <a class="text-main-400 pointer-events-none" href="#"
-                        >Department</a
-                      >
+                      <a class="text-main-400 pointer-events-none" href="#">{{
+                        $t("Department")
+                      }}</a>
                     </h1>
 
                     <ul class="text-black text-sm col-span-2">
@@ -150,9 +155,9 @@
 
                   <div class="grid grid-cols-3">
                     <h1 class="text-lg">
-                      <a class="text-main-400 pointer-events-none" href="#"
-                        >Profession</a
-                      >
+                      <a class="text-main-400 pointer-events-none" href="#">{{
+                        $t("Profession")
+                      }}</a>
                     </h1>
                     <ul class="text-black text-sm col-span-2">
                       <li
@@ -176,9 +181,9 @@
 
                   <div class="grid grid-cols-2">
                     <h1 class="text-lg">
-                      <a class="text-main-400 pointer-events-none" href="#"
-                        >License Expiration Date</a
-                      >
+                      <a class="text-main-400 pointer-events-none" href="#">{{
+                        $t("License Expiration Date")
+                      }}</a>
                     </h1>
                     <ul class="text-black text-sm">
                       <h2>
@@ -215,7 +220,7 @@
                     data-bs-target="#declinedDetail"
                     @click="renewExisting(license)"
                   >
-                    Renew
+                    {{ $t("Renew") }}
                   </button>
                 </div>
                 <div class="text-center">
@@ -246,10 +251,10 @@
                             : new Date().toISOString().slice(0, 10)
                         )
                       }}
-                      Days Remaining For Expiration</span
+                      {{ $t("Days Remaining For Expiration") }}</span
                     >
                     <h4 v-else class="text-red-300 text-2xl font-bold">
-                      Expired
+                      {{ $t("Expired") }}
                     </h4>
                   </h2>
                 </div>

@@ -310,14 +310,7 @@ const routes = [
     component: () =>
       import("../components/Applicant/GoodStanding/declined/declined.vue"),
   },
-  {
-    path: "/Applicant/GoodStanding/declined/detail/:id",
-    name: "ApplicantGoodStandingDeclinedDetail",
-    component: () =>
-      import(
-        "../components/Applicant/GoodStanding/declined/declinedDetail.vue"
-      ),
-  },
+ 
   {
     path: "/Applicant/GoodStanding/draft",
     name: "ApplicantGoodStandingDraft",

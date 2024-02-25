@@ -1,24 +1,38 @@
 <template>
-  <div>
+  <div class="vld-parent">
+    <loading
+      :active="isLoading"
+      :is-full-page="false"
+      :color="'#2F639D'"
+      :opacity="0.6"
+      class="rounded-md"
+    ></loading>
     <div class="text-yellow-300 p-2 rounded-md border mb-4 mt-2">
       <h2 class="text-yellow-300 font-bold text-xl">
-        Note:- Please upload only the documents marked with a red asterisk
-        <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
-        step.
+        {{ $t("Note:-document names with") }}
+        <small class="text-red-300 text-xl"> (*) </small>
+        {{ $t("must be uploaded to go forward with the application process") }}
       </h2>
     </div>
     <div class="accordion sm:mr-8" id="FilesAccordion">
       <span
         v-if="errorDocuments && errorDocuments.length > 0"
         class="text-red-300"
-        >Upload all files highlighted in red borders to proceed</span
+      >
+        {{
+          $t("Please upload files highlighted in red borders to proceed")
+        }}</span
       >
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-4 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingOne">
           <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-xl text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -26,7 +40,7 @@
             aria-expanded="true"
             aria-controls="commonFilesAccordion"
           >
-            Common Files
+            {{ $t("Common Files") }}
           </button>
         </h2>
         <div
@@ -52,11 +66,15 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-2 mt-8 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingTwo">
           <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-xl text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -64,7 +82,7 @@
             aria-expanded="true"
             aria-controls="departmentFilesAccordion"
           >
-            Education Level Related Files
+            {{ $t("Education Level Related Files") }}
           </button>
         </h2>
         <div
@@ -102,15 +120,15 @@
       class="shadow-md p-2 m-4 rounded-md text-yellow-300 border"
       v-if="errorDocuments && errorDocuments.length > 0"
     >
-      <h2 class="text-yellow-300 font-bold text-3xl border-b">
-        Please attach the following files to proceed
+      <h2 class="text-yellow-300 font-bold text-xl border-b">
+        {{ $t("Please attach the following files to proceed") }}
       </h2>
       <li
         class="text-yellow-300 text-xl font-bold p-2 m-1"
         v-for="(error, index) in errorDocuments"
         :key="error"
       >
-        <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+        <small class="  text-xl">{{ index + 1 }}- </small>
         {{ error.name }}
       </li>
     </div>
@@ -119,13 +137,13 @@
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         @click="back()"
       >
-        back
+        {{ $t("Back") }}
       </button>
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:bg-white hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         @click="next()"
       >
-        next
+        {{ $t("Next") }}
       </button>
     </div>
   </div>
@@ -142,6 +160,7 @@ import { useToast } from "vue-toastification";
 import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 import CommonFileUploadTable from "../../Shared/SavedFileUpload/CommonFileUploadTable.vue";
 import FileUploadTable from "../../Shared/SavedFileUpload/FileUploadTable.vue";
+
 export default {
   components: { CommonFileUploadTable, FileUploadTable },
 
@@ -180,6 +199,7 @@ export default {
       "Uploaded File",
       "View Uploaded",
     ]);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     const handleCommonFileUpload = (data, event) => {
       new Compressor(event?.target?.files[0], {
         quality: 0.5,
@@ -550,8 +570,7 @@ export default {
     };
 
     const next = async () => {
-      console.log( educationalDocs.value);
-      let documentValidation = await checkDocuments(
+        let documentValidation = await checkDocuments(
         errorDocuments.value,
         false,
         commonDocuments.value,
@@ -559,7 +578,7 @@ export default {
         educationalDocs.value,
         documentsUploaded.value,
         renewalDocuments.value
-      );
+      ); 
       fileUploadError.value = documentValidation.fileUploadError
         ? documentValidation.fileUploadError
         : [];
@@ -567,7 +586,7 @@ export default {
         ? documentValidation.errorDocuments
         : [];
 
-      if (documentValidation && Object.keys(documentValidation).length == 0) {
+      if (errorDocuments.value && errorDocuments.value.length == 0) {
         store.dispatch("renewal/setTempDocs", formData).then(() => {
           //Save images to indexed Db
 
@@ -623,7 +642,7 @@ export default {
         );
       }
     };
- 
+
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
@@ -659,7 +678,9 @@ export default {
       };
     };
     onMounted(() => {
-      //Initialize indexdb for file storage
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       if (!("indexedDB" in window)) {
         console.log("This browser doesn't support IndexedDB");
         return;
@@ -725,12 +746,9 @@ export default {
                         ),
                         parentDoc: groupByKey(resp, "parentDocument"),
                       });
-                       
                     });
-                    
                 });
 
-                    
                 //Get Common Docs
 
                 store
@@ -752,8 +770,7 @@ export default {
     };
     const removeChildUpload = (docCode) => {
       showNestedDocuments.value[docCode] -= 1;
-    };
-    const isDarkMode = false;
+    }; 
     return {
       isDarkMode,
       commonFileUploadHeaders,
@@ -777,7 +794,7 @@ export default {
       documentsSaved,
       googleApi,
       addMore,
-      showNestedDocuments,
+      showNestedDocuments, 
     };
   },
 };

@@ -17,7 +17,7 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Department</label
+          >{{ $t("Department") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -41,7 +41,8 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Education Level </label
+        >
+          {{ $t("Education Level") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -68,7 +69,7 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Professional Types</label
+          >{{ $t("Professional Types") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -109,7 +110,7 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Educational Institution</label
+          >{{ $t("Educational Institution") }}</label
         ><span class="text-red-300">*</span>
 
         <select
@@ -156,9 +157,9 @@
             generalInfo.multipleDepartment.length > 0
           "
         >
-          Add More Department
+          {{ $t("Add More Department") }}
         </span>
-        <span v-else>Add</span>
+        <span v-else>{{ $t("Add") }}</span>
       </button>
     </div>
 
@@ -177,15 +178,15 @@
         * ወደ ቀጣዩ ደረጃ ለመቀጠል እባክዎ አንድ ወይም ከዛ በላይ ክፍል(Department) ይምረጡ *
       </h2>
     </div>
-    <span v-if="multipleDepartmentError" class="text-red-300 m-4"
-      >Please fill in all fields</span
-    >
-    <span v-if="checkForAddedError" class="ml-8 text-red-300 m-4"
-      >You already added the department</span
-    >
-    <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300 m-4"
-      >Only three departments can be selected</span
-    >
+    <span v-if="multipleDepartmentError" class="text-red-300 m-4">{{
+      $t("Please fill in all fields")
+    }}</span>
+    <span v-if="checkForAddedError" class="ml-8 text-red-300 m-4">{{
+      $t("You already added the department")
+    }}</span>
+    <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300 m-4">{{
+      $t("Upto three departments can be selected at one application")
+    }}</span>
 
     <!-- ./Container -->
   </div>
@@ -217,7 +218,7 @@ export default {
     "addMultiple",
   ],
   setup(props) {
-    const localGeneralInfo = computed(()=>props.generalInfo);
+    const localGeneralInfo = computed(() => props.generalInfo);
 
     const selectClasses = computed(() => {
       return props.isDarkMode

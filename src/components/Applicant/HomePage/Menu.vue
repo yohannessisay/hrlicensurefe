@@ -4,11 +4,21 @@
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="ml-4 mr-4 sm:mt-8 sm:ml-8 sm:mr-8">
-        <nav :class="isDarkMode?'bg-secondaryDark p-4 rounded-md w-full mt-24':'bg-grey-100 p-4 rounded-md w-full mt-24'">
+        <nav
+          :class="
+            isDarkMode
+              ? 'bg-secondaryDark p-4 rounded-md w-full mt-24'
+              : 'bg-grey-100 p-4 rounded-md w-full mt-24'
+          "
+        >
           <ol class="list-reset flex">
             <li>
-              <a href="#" :class="isDarkMode?'text-white text-xl ':'text-main-400 text-xl'"
-                >Welcome Back,
+              <a
+                href="#"
+                :class="
+                  isDarkMode ? 'text-white text-xl ' : 'text-main-400 text-xl'
+                "
+                >{{ $t("Welcome Back,") }}
                 {{ userInfo.fullName ? userInfo.fullName : "" }}</a
               >
             </li>
@@ -43,8 +53,8 @@
                   />
                 </p>
 
-                <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                  <h1 class="text-2xl ">New License</h1>
+                <div class="flex justify-center px-5 mb-2 text-sm mt-5">
+                  <h1 class="text-2xl">{{ $t("New License") }}</h1>
                 </div>
               </div>
             </div>
@@ -72,7 +82,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                  <h1 class="text-2xl">Renewal</h1>
+                  <h1 class="text-2xl">{{ $t("Renewal")}}</h1>
                 </div>
               </div>
             </div>
@@ -100,7 +110,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                  <h1 class="text-2xl ">Goodstanding</h1>
+                  <h1 class="text-2xl">{{ $t("Goodstanding")}}</h1>
                 </div>
               </div>
             </div>
@@ -127,7 +137,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-1">
-                  <h1 class="text-2xl ">License Designation</h1>
+                  <h1 class="text-2xl">{{ $t("License Designation")}}</h1>
                 </div>
               </div>
             </div>
@@ -155,7 +165,7 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-1">
-                  <h1 class="text-2xl ">Lost License</h1>
+                  <h1 class="text-2xl">{{ $t("Lost License")}}</h1>
                 </div>
               </div>
             </div>
@@ -367,7 +377,7 @@ export default {
       }
     };
     const toggleDarkMode = () => {
-       isDarkMode.value=darkModeService.modeToggle(isDarkMode.value);
+      isDarkMode.value = darkModeService.modeToggle(isDarkMode.value);
     };
 
     return {

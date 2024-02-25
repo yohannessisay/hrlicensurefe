@@ -93,8 +93,9 @@ h6 {
   margin-left: 20px;
   border-bottom-left-radius: 30px;
 }
- 
-.side-navbar ul li:first-child,.parentList {
+
+.side-navbar ul li:first-child,
+.parentList {
   margin-top: 80px;
   margin-bottom: 20px;
   background: none;
@@ -130,25 +131,24 @@ h6 {
 }
 
 #activeMenu > a > a > span.text.text-white.font-bold.dark,
-#activeMenu > a > a > span.icon.dark > i{
+#activeMenu > a > a > span.icon.dark > i {
   color: white;
 }
-
 
 .side-navbar ul li.active {
   margin-top: 10px;
 }
-.last_menu{
+.last_menu {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 305px; 
+  width: 305px;
   padding: 10px;
   background-color: #5c5c5c;
   border-top: 5px solid #ffffff;
 }
-.side-navbar.active .last_menu{
-justify-content: start;
+.side-navbar.active .last_menu {
+  justify-content: start;
 }
 .content {
   position: absolute;
@@ -159,15 +159,33 @@ justify-content: start;
   transition: 0.5s ease;
   background-color: rgb(236, 236, 236);
 }
-
+#mainContent
+  > div.top-navbar.glass.text-white
+  > div.profile
+  > div
+  > div.dropdown.mb-1.transition.duration-300.ease-in-out.mr-2.sm\:mr-8
+  > svg,
+#mainContent
+  > div.top-navbar.glass.text-main-400
+  > div.profile
+  > div
+  > div.dropdown.mb-1.transition.duration-300.ease-in-out.mr-2.sm\:mr-8
+  > svg {
+  color: white !important;
+}
+ 
+#mainContent > div.top-navbar.glass.text-white > div.profile > div > h2{
+  color: #308d46;
+}
 .top-navbar {
+  color: #308d46;
   position: fixed;
   z-index: 1;
   width: calc(100% - 20%);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 20px; 
+  padding: 7px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.493);
 }
 
@@ -181,7 +199,9 @@ justify-content: start;
   background-color: #d8d8d8;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.493);
 }
-
+.shadow-md {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 .profile img {
   width: 44px;
   height: 44px;
@@ -202,24 +222,22 @@ justify-content: start;
 }
 
 .side-navbar.active {
-  width: 80px;  
+  width: 80px;
   left: 0;
 }
- 
-  .side-navbar.active ul li a .text  {
-    margin-left: 5px;
-    }
-.side-navbar.active .parentList h2{
- display: none;
 
-} 
-.side-navbar.active #sidebarLogo{
+.side-navbar.active ul li a .text {
+  margin-left: 5px;
+}
+.side-navbar.active .parentList h2 {
+  display: none;
+}
+.side-navbar.active #sidebarLogo {
   justify-content: flex-start;
 }
 #menu-icon > i {
   font-size: 36px;
 }
- 
 
 #mainSideBar > ul > li:nth-child(1) > a > a > span.icon > i,
 #mainSideBar > ul > li:nth-child(2) > a > a > span.icon > i,
@@ -328,7 +346,6 @@ justify-content: start;
   height: 20px;
   width: 100%;
   background-color: rgb(236, 236, 236);
- 
 }
 .side-navbar.active ul li.active b:nth-child(2) {
   position: absolute;
@@ -337,9 +354,7 @@ justify-content: start;
   height: 20px;
   width: 100%;
   background-color: rgb(236, 236, 236);
- 
 }
-
 
 .side-navbar ul li b:nth-child(1) {
   position: absolute;
@@ -363,7 +378,7 @@ justify-content: start;
   background: #07677e;
   transition: background-color 0.5s ease;
 }
- 
+
 .side-navbar ul li.active b:nth-child(2) {
   position: absolute;
   bottom: -20px;
@@ -373,7 +388,7 @@ justify-content: start;
   background-color: rgb(236, 236, 236);
   display: none;
 }
- 
+
 .side-navbar ul li b:nth-child(2) {
   position: absolute;
   bottom: -20px;
@@ -401,7 +416,7 @@ justify-content: start;
 .side-navbar ul li.active b:nth-child(2) {
   display: block;
 }
-.content.active .top-navbar{
+.content.active .top-navbar {
   width: 95%;
 }
 .side-navbar ul li a {
@@ -472,9 +487,8 @@ body.dark-mode {
   background: #1c1b20;
 }
 #topNav {
-  margin-top: 50px; 
+  margin-top: 50px;
   border-radius: 5px;
-  
 }
 .darkModeText,
 #menu-icon.dark-mode > i,
@@ -651,7 +665,7 @@ body.dark-mode {
   justify-content: flex-start;
   font-family: sans-serif;
 }
-.float-container a span{
+.float-container a span {
   margin-left: -16px;
 }
 .float-container a:hover {
@@ -694,7 +708,7 @@ body.dark-mode {
     -ms-flex-align: end;
     align-items: flex-end;
   }
-  .float-container a span{
+  .float-container a span {
     margin-left: 0px;
   }
   .float-container a {
@@ -745,7 +759,6 @@ body.dark-mode {
     width: calc(100% - 80px);
     left: 80px;
   }
- 
 
   #header-text {
     display: none;
@@ -759,7 +772,7 @@ body.dark-mode {
     display: none;
   }
 }
- 
+
 @media screen and (min-width: 1920px) {
   .top-navbar {
     position: fixed;

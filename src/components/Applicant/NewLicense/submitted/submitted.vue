@@ -7,6 +7,7 @@
       :status="status"
       :editSubmittedLink="'/Applicant/NewLicense/submitted/detail/'"
       :detailModalLink="'newlicense/getNewLicenseApplication'"
+      :detailPageName="'Submitted'"
     ></ApplicationsList>
   </div>
 </template>
@@ -22,7 +23,7 @@ export default {
     const path = ref([
       { name: "Home", link: "/menu" },
       { name: "New License", link: "/Applicant/NewLicense" },
-      { name: "Approved", link: "/Applicant/NewLicense" },
+      { name: "Submitted", link: "/Applicant/NewLicense" },
     ]);
 
     return {

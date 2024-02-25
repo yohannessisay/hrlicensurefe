@@ -1,177 +1,93 @@
 <template>
   <div>
-    <div class="accordion mr-8" id="FilesAccordion">
+    <div class="accordion sm:mr-8 mt-24" id="FilesAccordion">
       <div
-        class="accordion-item bg-white border border-grey-200 p-4 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
-        <h2 class="accordion-header mb-0" id="headingOne">
-          <span
-            class="rounded-md collapsed relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-main-400 hover:text-main-400 text-white border-0 transition focus:outline-none"
+        <h2 id="headingOne" class="accordion-header mb-0 mr-1">
+          <button
+            class="accordion-button relative flex items-center w-full p-4 border text-gray-800 py-8 text-xl rounded-md transition focus:outline-none"
+            style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#commonFilesAccordion"
             aria-expanded="true"
             aria-controls="commonFilesAccordion"
           >
-            Lost License Letter Files
-          </span>
+            {{ $t("Lost License Document Upload") }}
+          </button>
         </h2>
-        <div
-          id="commonFilesAccordion"
-          class="accordion-collapse collapse show"
-          aria-labelledby="commonFilesAccordionheading"
-          data-bs-parent="#FilesAccordion"
-        >
-          <div class="accordion-body py-4 px-5">
-            <div class="bg-red-800 py-5">
-              <div class="overflow-x-auto w-full rounded-lg">
-                <table class="max-w-4xl w-full whitespace-nowrap bg-white">
-                  <thead class="bg-lightMain-500">
-                    <tr class="text-left">
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      >
-                        Document Name
-                      </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      >
-                        Document Description
-                      </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
-                      >
-                        Upload
-                      </th>
-
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      >
-                        Previously Uploaded
-                      </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
-                      >
-                        View
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y">
-                    <tr
-                      v-for="item in documents"
-                      :key="item.id"
-                      :class="
-                        documentError[
-                          'file_upload_row_' + item.documentType.code
-                        ]
-                          ? 'border text-red-300'
-                          : 'border-b text-main-400'
-                      "
-                    >
-                      <td class="px-6 py-4">
-                        <div class="flex items-center space-x-3">
-                          <div>
-                            <p class="">{{ item.documentType.name }}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center space-x-3">
-                          <div>
-                            <p class="">
-                              {{ item.documentType.description }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="text-sm font-semibold tracking-wide">
-                          <input
-                            type="file"
-                            required
-                            :id="
-                              'common_image_' + item.documentType.id + item.id
-                            "
-                           accept="*/*"
-                            :ref="`imageUploader${item.id}`"
-                            class="custom-file-input"
-                            v-on:change="handleFileUpload(item, $event)"
-                          />
-                        </p>
-                      </td>
-                      <td class="px-6 py-4">
-                        
-                        <span
-                          class="document-name"
-                          v-if="documentsSaved[item.documentType.code]"
-                          >{{
-                            documentsSaved[item.documentType.code].fileName
-                          }}</span
-                        >
-                      </td>
-                      <td class="px-6 py-4 text-center">
-                        <a
-                          :id="
-                            'common_image_href_' +
-                              item.documentType.id +
-                              item.id
-                          "
-                          :href="documentsSaved[item.documentType.code]?.path"
-                          :data-title="
-                            item.documentType ? item.documentType.name : '-----'
-                          "
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'common_icon_' + item.documentType.id + item.id
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'common_image_lightbox_' +
-                                  item.documentType.id +
-                                  item.id
-                              "
-                              :src="documentsSaved[item.documentType.code]"
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+        <div class="vld-parent mt-4">
+          <loading
+            :active="isLoading"
+            :is-full-page="false"
+            :color="'#2F639D'"
+            :opacity="0.6"
+            class="rounded-md"
+          ></loading>
+          <div
+            id="commonFilesAccordion"
+            class="accordion-collapse collapse show"
+            aria-labelledby="commonFilesAccordionheading"
+            data-bs-parent="#FilesAccordion"
+          >
+            <div class="accordion-body sm:p-4 p-1">
+              <div class="overflow-x-auto w-full">
+                <CommonFileUploadTable
+                  :headers="commonFileUploadHeaders"
+                  :tableRows="documents"
+                  :fileUploadError="errorDocuments"
+                  :isDarkMode="isDarkMode"
+                  :documentsSaved="documentsSaved"
+                  @handleCommonFileUpload="handleFileUpload"
+                ></CommonFileUploadTable>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div
+      class="shadow-md p-2 m-4 rounded-md text-yellow-300 border"
+      v-if="errorDocuments && errorDocuments.length > 0"
+    >
+      <h2 class="text-yellow-300 font-bold text-3xl border-b">
+        Please attach the following files to proceed
+      </h2>
+      <li
+        class="text-yellow-300 text-xl font-bold p-2 m-1"
+        v-for="(error, index) in errorDocuments"
+        :key="error"
+      >
+        <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+        {{ error.name }}
+      </li>
+    </div>
 
-    <div class="vld-parent mt-4">
-      <loading
-        :active="isLoading"
-        :is-full-page="false"
-        :color="'#2F639D'"
-        :opacity="1"
-      ></loading>
-      <div class="flex justify-end mr-8">
-        <button
-          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
-          @click="back()"
-        >
-          back
-        </button>
-        <button
-          class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out"
-          @click="next()"
-        >
-          next
-        </button>
-      </div>
+    <div class="flex justify-end mr-8">
+      <button
+        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
+        type="submit"
+        @click="saveDraft()"
+      >
+        {{ $t("Update") }}
+      </button>
+      <button
+        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
+        @click="back()"
+      >
+        {{ $t("Back") }}
+      </button>
+      <button
+        class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out"
+        @click="next()"
+      >
+        {{ $t("Next") }}
+      </button>
     </div>
   </div>
 </template>
@@ -179,27 +95,36 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
+import { useToast } from "vue-toastification";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
-import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import Loading from "vue3-loading-overlay";
+import CommonFileUploadTable from "../../Shared/SavedFileUpload/CommonFileUploadTable.vue";
 export default {
-  components: { Loading },
-  emits: ["changeActiveState", "changeActiveStateMinus", "activeState"],
+  components: { Loading, CommonFileUploadTable },
   setup(props, { emit }) {
     let store = useStore();
+    let toast = useToast();
     let route = useRoute();
+    let commonFileUploadHeaders = ref([
+      "Document Name",
+      "Document Description",
+      "Upload Document",
+      "Uploaded File",
+      "View Uploaded"
+    ]);
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
-
+    let isLoading = ref(false);
     let documents = ref([]);
+    let errorDocuments = ref([]);
     let localData = ref();
     let files = ref("");
     let documentError = ref([]);
     let maxFileSize = ref();
     let imageData = [];
-    let isLoading = ref(false);
     let isImage = ref({});
     let documentsSaved = ref([]);
     let isPdf = ref({});
@@ -214,94 +139,86 @@ export default {
     let generalInfo = ref({});
     let documentUploaded = ref([]);
     let formData = new FormData();
-
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
 
       formData.append(data.documentType.code, event?.target?.files[0]);
       isImage.value[data.documentType.code] = true;
+      delete documentError.value["file_upload_row_" + data.documentType.code];
       let fileS = documentUploaded.value[data.documentType.code].size;
-      if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[data.documentType.code] = false;
-        showImage.value = true;
 
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener("load", function() {
-          showPreview.value = true;
+      fileSizeExceed.value[data.documentType.code] = false;
+      showImage.value = true;
 
-          previewDocuments.value[data.documentType.code] = reader.result;
-
-          imageData = imageData.filter(
-            el => el.documenttype != data.documentType.name
-          );
-          imageData.push({
-            documenttype: data.documentType ? data.documentType.name : "",
-            documentCode: data.documentType ? data.documentType.code : "",
-            educationalLevel: data.educationalLevel
-              ? data.educationalLevel.name
-              : "",
-            image: reader.result
-          });
-        });
-        if (documentUploaded.value[data.documentType.code]) {
-          if (
-            /\.(jpe?g|png|gif)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = true;
-            isPdf.value[data.documentType.code] = false;
-
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
-          } else if (
-            /\.(pdf)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = false;
-            isPdf.value[data.documentType.code] = true;
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
-          }
-        }
-        let icon = document.getElementById(
-          "common_icon" + data.documentType.id + data.id
-        );
-        if (icon.classList.contains("disabled")) {
-          icon.classList.toggle("disabled");
-        }
-
-        let output = document.getElementById(
-          "common_image_lightbox" + data.documentType.id + data.id
-        );
-
-        let outputHref = document.getElementById(
-          "common_image_href" + data.documentType.id + data.id
-        );
-        outputHref.href = URL.createObjectURL(event.target.files[0]);
-        if (output && output.src) {
-          output.src = URL.createObjectURL(event.target.files[0]);
-        }
-
-        output
-          ? (output.onload = function() {
-              URL.revokeObjectURL(output.src); // free memory
-            })
-          : "";
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
       } else {
-        fileSizeExceed.value[data.documentType.code] = true;
-        documentUploaded.value[data.documentType.code] = "";
+        fileSize.value = fileS / 1000000 + "MB";
       }
+      reader.addEventListener("load", function() {
+        showPreview.value = true;
+
+        previewDocuments.value[data.documentType.code] = reader.result;
+
+        imageData = imageData.filter(
+          el => el.documenttype != data.documentType.name
+        );
+        imageData.push({
+          documenttype: data.documentType ? data.documentType.name : "",
+          documentCode: data.documentType ? data.documentType.code : "",
+          educationalLevel: data.educationalLevel
+            ? data.educationalLevel.name
+            : "",
+          image: reader.result
+        });
+      });
+      if (documentUploaded.value[data.documentType.code]) {
+        if (
+          /\.(jpe?g|png|gif)$/i.test(
+            documentUploaded.value[data.documentType.code].name
+          )
+        ) {
+          isImage.value[data.documentType.code] = true;
+          isPdf.value[data.documentType.code] = false;
+
+          reader.readAsDataURL(documentUploaded.value[data.documentType.code]);
+        } else if (
+          /\.(pdf)$/i.test(documentUploaded.value[data.documentType.code].name)
+        ) {
+          isImage.value[data.documentType.code] = false;
+          isPdf.value[data.documentType.code] = true;
+          reader.readAsDataURL(documentUploaded.value[data.documentType.code]);
+        }
+      }
+
+      let icon = document.getElementById(
+        "common_icon" + data.documentType.id + data.id
+      );
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
+
+      let output = document.getElementById(
+        "common_image_lightbox" + data.documentType.id + data.id
+      );
+
+      let outputHref = document.getElementById(
+        "common_image_href" + data.documentType.id + data.id
+      );
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function() {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const initDb = () => {
@@ -332,78 +249,138 @@ export default {
         });
       };
     };
+    const checkDocuments = () => {
+      let temp = false;
+      documentError.value = [];
+      errorDocuments.value = [];
+      existingDocs && existingDocs.length > 0
+        ? documents.value
+            .filter(cd => cd.isRequired)
+            .forEach(element => {
+              temp = existingDocs.filter(
+                el => el.documentTypeCode == element.documentType.code
+              );
+              if (temp.length == 0 || !temp) {
+                documentError.value[
+                  "file_upload_row_" + element.documentType.code
+                ] = true;
+                errorDocuments.value.push({
+                  name: element.documentType.name,
+                  code: element.documentType.code
+                });
+              } else {
+                delete documentError.value[
+                  "file_upload_row_" + element.documentType.code
+                ];
+              }
+            })
+        : documents.value
+            .filter(cd => cd.isRequired)
+            .forEach(element => {
+              temp = imageData.filter(
+                el => el.documentCode == element.documentType.code
+              );
 
-    const next = () => {
-      store.dispatch("lostLicenses/setTempDocs", formData).then(() => {
-        let finalLocalData = {
-          created: new Date(),
-          data: []
-        };
-        let db;
-        let request = indexedDB.open("LLdocumentUploads", 1);
-        request.onsuccess = function() {
-          db = request.result;
-          let transaction = db.transaction(["LLdocumentUploads"], "readwrite");
-          let tempStat = false;
+              if (temp.length == 0 || !temp) {
+                documentError.value[
+                  "file_upload_row_" + element.documentType.code
+                ] = true;
 
-          if (
-            imageData &&
-            imageData.length > 0 &&
-            existingDocs &&
-            existingDocs.length > 0
-          ) {
-            imageData.forEach(newImage => {
-              existingDocs.forEach(existing => {
-                if (existing.documentTypeCode == newImage.documentCode) {
-                  tempStat = true;
-                  return 0;
-                } else {
-                  finalLocalData.data.push(
-                    JSON.parse(JSON.stringify(existing))
-                  );
-                }
-              });
-              if (tempStat == true) {
-                finalLocalData.data.push(newImage);
+                errorDocuments.value.push({
+                  name: element.documentType.name,
+                  code: element.documentType.code
+                });
+              } else {
+                delete documentError.value[
+                  "file_upload_row_" + element.documentType.code
+                ];
               }
             });
-            finalLocalData.data.concat(imageData);
-          } else if (imageData && imageData.length > 0) {
-            finalLocalData.data = imageData;
-          } else {
-            finalLocalData.data = JSON.parse(JSON.stringify(existingDocs));
-          }
+      return documentError.value;
+    };
+    const next = () => {
+      let documentValidation = checkDocuments();
+      if (documentValidation && Object.keys(documentValidation).length == 0) {
+        store.dispatch("lostLicenses/setTempDocs", formData).then(() => {
+          let finalLocalData = {
+            created: new Date(),
+            data: []
+          };
+          let db;
+          let request = indexedDB.open("LLdocumentUploads", 1);
+          request.onsuccess = function() {
+            db = request.result;
+            let transaction = db.transaction(
+              ["LLdocumentUploads"],
+              "readwrite"
+            );
+            let tempStat = false;
 
-          const objectStore = transaction.objectStore("LLdocumentUploads");
+            if (
+              imageData &&
+              imageData.length > 0 &&
+              existingDocs &&
+              existingDocs.length > 0
+            ) {
+              imageData.forEach(newImage => {
+                existingDocs.forEach(existing => {
+                  if (existing.documentTypeCode == newImage.documentCode) {
+                    tempStat = true;
+                    return 0;
+                  } else {
+                    finalLocalData.data.push(existing);
+                  }
+                });
+                if (tempStat == true) {
+                  finalLocalData.data.push(newImage);
+                }
+              });
+              finalLocalData.data.concat(imageData);
+            } else {
+              finalLocalData.data = imageData;
+            }
 
-          const objectStoreRequest = objectStore.clear();
+            const objectStore = transaction.objectStore("LLdocumentUploads");
 
-          objectStoreRequest.onsuccess = () => {
-            let addReq = transaction
-              .objectStore("LLdocumentUploads")
-              .put(finalLocalData);
+            const objectStoreRequest = objectStore.clear();
 
-            addReq.onerror = function() {
-              console.log(
-                "Error regarding your browser, please update your browser to the latest version"
-              );
-            };
+            objectStoreRequest.onsuccess = () => {
+              let addReq = transaction
+                .objectStore("LLdocumentUploads")
+                .put(finalLocalData);
 
-            transaction.oncomplete = function() {
-              console.log("data stored");
+              addReq.onerror = function() {
+                console.log(
+                  "Error regarding your browser, please update your browser to the latest version"
+                );
+              };
 
-              emit("changeActiveState");
+              transaction.oncomplete = function() {
+                console.log("data stored");
+
+                emit("changeActiveState");
+              };
             };
           };
-        };
-      });
+        });
+      } else {
+        toast.error("Please attach the required documents ", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true
+        });
+      }
     };
     const back = () => {
       emit("changeActiveStateMinus");
     };
 
     onMounted(() => {
-      //Initialize indexdb for file storage
+      window.addEventListener("darkModeChanged", data => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       if (!("indexedDB" in window)) {
         console.log("This browser doesn't support IndexedDB");
         return;
@@ -443,7 +420,6 @@ export default {
         store
           .dispatch("lostLicenses/getLLdocuments", categoryResults[0].id)
           .then(res => {
-            
             let results = res.data.data;
 
             documents.value = results.filter(
@@ -472,8 +448,11 @@ export default {
       imageUploader,
       documents,
       isLoading,
+      errorDocuments,
       next,
-      back
+      back,
+      isDarkMode,
+      commonFileUploadHeaders
     };
   }
 };
@@ -493,7 +472,6 @@ export default {
 }
 .document-name {
   font-size: small;
-  color: black;
 }
 .custom-file-input::-webkit-file-upload-button {
   visibility: hidden;

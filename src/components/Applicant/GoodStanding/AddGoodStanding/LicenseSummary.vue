@@ -9,11 +9,11 @@
     <!-- Heading start -->
     <header class="text-center mx-auto mb-2 sm:mb-4 mt-8">
       <h2 class="text-3xl leading-normal mb-2 font-bold">
-        Summary For Good Standing Letter
+        {{ $t("Summary For Good Standing Letter") }}
       </h2>
 
       <h3 class="leading-relaxed font-light text-lg mx-auto pb-2">
-        Here is the detail you have filled in so far
+        {{ $t("Here is the detail you have filled in so far") }}
       </h3>
     </header>
     <!-- End heading -->
@@ -31,12 +31,14 @@
             <i class="fa fa-folder-open fa-3x"></i>
           </div>
           <div class="flex justify-center text-gray-900">
-            <h2 class="text-2xl font-semibold">Application Detail</h2>
+            <h2 class="text-2xl font-semibold">
+              {{ $t("Application Detail") }}
+            </h2>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <h2 class="font-bold text-xl">Applicant Type</h2>
+            <h2 class="font-bold text-xl">{{ $t("Applicant Type") }}</h2>
           </div>
           <div>
             <h3 class="text-lg">
@@ -50,7 +52,7 @@
         </div>
         <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <h2 class="text-xl">Department</h2>
+            <h2 class="text-xl">{{ $t("Department") }}</h2>
           </div>
           <div>
             <h3 class="text-lg">
@@ -64,7 +66,7 @@
         </div>
         <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <h2 class="text-xl">Profession</h2>
+            <h2 class="text-xl">{{ $t("Professional Type") }}</h2>
           </div>
           <div>
             <h3 class="text-lg">
@@ -79,7 +81,7 @@
 
         <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <h2 class="text-xl">Applicant Title</h2>
+            <h2 class="text-xl">{{ $t("Applicant Title") }}</h2>
           </div>
           <div>
             <h3 class="text-lg">
@@ -105,12 +107,12 @@
             <i class="fa fa-envelope fa-3x"></i>
           </div>
           <div class="flex justify-center text-gray-900 mb-4">
-            <h2 class="text-2xl font-semibold">Letter Detail</h2>
+            <h2 class="text-2xl font-semibold">{{ $t("Letter Detail") }}</h2>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <h2 class="text-xl">Who issued the letter</h2>
+            <h2 class="text-xl">{{ $t("Who issued the letter") }}</h2>
           </div>
           <div>
             <h3 class="text-lg">
@@ -124,7 +126,9 @@
         </div>
         <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <h2 class="text-xl">To whom the letter is written for</h2>
+            <h2 class="text-xl">
+              {{ $t("To whom the letter is written for") }}
+            </h2>
           </div>
           <div>
             <h3 class="text-lg">
@@ -138,7 +142,7 @@
         </div>
         <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <h2 class="text-xl">License Registration Number</h2>
+            <h2 class="text-xl">{{ $t("License Registration Number") }}</h2>
           </div>
           <div>
             <h3 class="text-lg">
@@ -152,7 +156,7 @@
         </div>
         <div class="grid grid-cols-2 gap-4 border-b">
           <div>
-            <h2 class="text-xl">License IssuedDate</h2>
+            <h2 class="text-xl">{{ $t("License Issued Date") }}</h2>
           </div>
           <div>
             <h3 class="text-lg">
@@ -183,7 +187,7 @@
           </div>
           <div class="flex justify-center mb-4 border-b-2">
             <h3 class="text-2xl leading-normal mb-2 font-semibold">
-              Files Uploaded
+              {{ $t("Files Uploaded") }}
             </h3>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:w-full">
@@ -206,11 +210,16 @@
                     />
                   </a>
                   <div v-else class="m-4 p-2 bg-primary-300 rounded-md">
-                    The file is uploaded but since it is not an image type this
-                    is a placeholder
+                    {{
+                      $t(
+                        "The file is uploaded but since it is not an image type this is a placeholder"
+                      )
+                    }}
                   </div>
 
-                  <h4 class="font-bold border-b m-2">Document Type</h4>
+                  <h4 class="font-bold border-b m-2">
+                    {{ $t("Document Type") }}
+                  </h4>
                   <h6 class="m-2">{{ localFile.documenttype }}</h6>
                 </div>
               </div>
@@ -230,9 +239,9 @@
       >
         <div class="mb-4">
           <div class="flex justify-center">
-            <label for="feedback" class="form-label inline-block mb-2 text-xl"
-              >Feedback on the process and system
-              <span class="text-yellow-300">( optional/ not required )</span>
+            <label for="feedback" class="form-label inline-block mb-2 text-xl">
+              {{ $t("Feedback on the process and system") }}
+              <span class="text-yellow-300"> ({{ $t("Optional") }})</span>
             </label>
           </div>
 
@@ -258,8 +267,11 @@
               />
             </div>
             <h3 class="mb-2lo calFileData text-base">
-              By checking here I hereby verify the documents and details filled
-              in here are legal.
+              {{
+                $t(
+                  "By checking here I hereby verify the documents and details filled in are legal."
+                )
+              }}
             </h3>
             <span class="text-red-300">*</span>
           </div>
@@ -287,7 +299,7 @@
             @click="checkFinalStatus(button.action)"
           >
             <i class="fa fa-save"></i>
-            {{ button.name }}
+            {{ $t(button.name) }}
           </button>
           <button
             v-if="button.action == 'DraftEvent'"
@@ -296,7 +308,7 @@
             @click="checkFinalStatus(button.action)"
           >
             <i class="fa fa-save"></i>
-            {{ button.name }}
+            {{ $t(button.name) }}
           </button>
         </span>
 
@@ -304,7 +316,7 @@
           class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
           @click="back()"
         >
-          back
+          {{ $t("Back") }}
         </button>
       </div>
     </div>
@@ -320,13 +332,13 @@
           "
         >
           <div class="modal-header">
-            <h2 class="text-xl border-b-4">Uploading</h2>
+            <h2 class="text-xl border-b-4">{{ $t("Uploading") }}</h2>
           </div>
 
           <div class="modal-body">
             <div class="flex justify-center text-yellow-300 p-2 rounded-md">
               <h2 class="text-yellow-300 border rounded p-2 text-xl">
-                Total file size you have uploaded so far is
+                {{ $t("Total file size you have uploaded so far is") }}
                 <h2 class="text-2xl">{{ totalSize }} MB</h2>
               </h2>
             </div>
@@ -344,10 +356,11 @@
                 class="flex border justify-center text-yellow-300 p-2 rounded-md"
               >
                 <h2 class="text-xl">
-                  Please wait patiently as your files are being uploaded, if for
-                  any reason the files you uploaded are not successful you will
-                  be redirected to the submitted page automatically so you can
-                  re-attach your documents again
+                  {{
+                    $t(
+                      " Please wait patiently as your files are being uploaded, if for any reason the files you uploaded are not successful you will be redirected to the submitted page automatically so you can re-attach your documents again"
+                    )
+                  }}
                 </h2>
               </div>
             </div>
@@ -650,8 +663,7 @@ export default {
 
 .modal-container {
   margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
+  padding: 20px 30px; 
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;

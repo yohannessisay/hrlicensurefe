@@ -20,7 +20,7 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Region</label
+          >{{ $t("Region") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -46,7 +46,7 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Zone</label
+          >{{ $t("Zone") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -69,7 +69,7 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Woreda</label
+          >{{ $t("Woreda") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -97,9 +97,13 @@
             ? generalInfo.multipleDepartment.length > 0
             : 0
         "
-        class="text-main-400 text-base"
-        >You can change woreda when there is no added education/department data
-        below</small
+        class=" text-base"
+      >
+        {{
+          $t(
+            "You can change woreda when there is no added education/department data below"
+          )
+        }}</small
       >
     </div>
   </div>
@@ -118,7 +122,7 @@ export default {
   emits: ["regionChangeHandler", "zoneChangeHandler", "woredaChangeHandler"],
 
   setup(props) {
-    const localGeneralInfo = computed(()=>props.generalInfo);
+    const localGeneralInfo = computed(() => props.generalInfo);
 
     const selectClasses = computed(() => {
       return props.isDarkMode

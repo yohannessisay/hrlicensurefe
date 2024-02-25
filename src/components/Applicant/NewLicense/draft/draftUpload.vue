@@ -2,29 +2,37 @@
   <div class="vld-parent">
     <loading
       :active="isLoading"
-      :is-full-page="true"
+      :is-full-page="false"
       :color="'#2F639D'"
-      :opacity="0.7"
+      :opacity="0.6"
+      class="rounded-md"
     ></loading>
-    <h2
-      class="text-yellow-300 border sm:p-2 rounded-md mb-4 font-bold text-xl mt-12 break-all"
-    >
-      Note:- Upload all the documents marked with a red asterisk
-      <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
-      step.
-    </h2>
+    <div class="text-yellow-300 p-2 rounded-md border mb-4 mt-2">
+      <h2 class="text-yellow-300 font-bold text-xl">
+        {{ $t("Note:-document names with") }}
+        <small class="text-red-300 text-xl"> (*) </small>
+        {{ $t("must be uploaded to go forward with the application process") }}
+      </h2>
+    </div>
     <div class="accordion sm:mr-8" id="FilesAccordion">
       <span
         v-if="errorDocuments && errorDocuments.length > 0"
         class="text-red-300"
-        >Upload all files highlighted in red borders to proceed</span
+      >
+        {{
+          $t("Please upload files highlighted in red borders to proceed")
+        }}</span
       >
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-4 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingOne">
           <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-xl text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -32,7 +40,7 @@
             aria-expanded="true"
             aria-controls="commonFilesAccordion"
           >
-            Common Files
+            {{ $t("Common Files") }}
           </button>
         </h2>
         <div
@@ -58,11 +66,15 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-2 mt-8 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingTwo">
           <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-xl text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -70,7 +82,7 @@
             aria-expanded="true"
             aria-controls="departmentFilesAccordion"
           >
-            Education Level Related Files
+            {{ $t("Education Level Related Files") }}
           </button>
         </h2>
         <div
@@ -109,7 +121,7 @@
       v-if="errorDocuments && errorDocuments.length > 0"
     >
       <h2 class="text-yellow-300 font-bold text-3xl border-b">
-        Please attach the following files to proceed
+        {{ $t("Please attach the following files to proceed") }}
       </h2>
       <li
         class="text-yellow-300 text-xl font-bold p-2 m-1"
@@ -125,17 +137,18 @@
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         @click="back()"
       >
-        back
+        {{ $t("Back") }}
       </button>
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:bg-white hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         @click="next()"
       >
-        next
+        {{ $t("Next") }}
       </button>
     </div>
   </div>
 </template>
+
 
 <script>
 import { ref, onMounted } from "vue";
@@ -156,7 +169,6 @@ export default {
   setup(props, { emit }) {
     let store = useStore();
     let isLoading = ref(false);
-    let isDarkMode = ref(false);
     const route = useRoute();
     let documents = ref([]);
     let commonDocuments = ref([]);
@@ -182,6 +194,7 @@ export default {
       "Uploaded File",
       "View Uploaded",
     ]);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let documentToSave = ref({});
     let imageData = [];
     let formData = new FormData();
@@ -246,7 +259,7 @@ export default {
           "common_icon_" + data.documentType.id + data.id
         );
 
-        if (icon.classList.contains("disabled")) {
+        if (icon?.classList?.contains("disabled")) {
           icon.classList.toggle("disabled");
         }
 
@@ -356,7 +369,7 @@ export default {
               "common_icon_" + data.documentType.id + data.id
             );
 
-            if (icon.classList.contains("disabled")) {
+            if (icon?.classList?.contains("disabled")) {
               icon.classList.toggle("disabled");
             }
 
@@ -510,7 +523,7 @@ export default {
             "_" +
             pro.professionType.code.toUpperCase()
         );
-        if (icon.classList.contains("disabled")) {
+        if (icon?.classList?.contains("disabled")) {
           icon.classList.toggle("disabled");
         }
 
@@ -754,7 +767,7 @@ export default {
                 "_" +
                 pro.professionType.code.toUpperCase()
             );
-            if (icon.classList.contains("disabled")) {
+            if (icon?.classList?.contains("disabled")) {
               icon.classList.toggle("disabled");
             }
 
@@ -800,9 +813,8 @@ export default {
         fileUploadError.value,
         educationalDocs.value,
         documentsUploaded.value,
-        newLicenseDocuments.value,
-       
-      );
+        newLicenseDocuments.value
+      ); 
       fileUploadError.value = documentValidation.fileUploadError
         ? documentValidation.fileUploadError
         : [];
@@ -810,7 +822,7 @@ export default {
         ? documentValidation.errorDocuments
         : [];
 
-      if (documentValidation && Object.keys(documentValidation).length == 0) {
+      if (errorDocuments.value && errorDocuments.value.length == 0) {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
           //Save images to indexed Db
 
@@ -901,6 +913,9 @@ export default {
       };
     };
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {

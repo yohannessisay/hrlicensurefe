@@ -6,6 +6,7 @@
       :link="'newlicense/getNewLicenseByUser'"
       :status="status"
       :detailModalLink="'newlicense/getNewLicenseApplication'"
+        :detailPageName="'Suspended'"
     ></ApplicationsList>
   </div>
 </template>

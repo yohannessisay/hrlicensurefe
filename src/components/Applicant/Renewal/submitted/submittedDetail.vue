@@ -5,8 +5,8 @@
     <div
       :class="
         isDarkMode && isDarkMode == true
-          ? '    block p-6 rounded-lg   bg-primaryDark   mb-8 '
-          : '  block p-6 rounded-lg   bg-white max-w-full mb-8 '
+          ? 'block p-6 rounded-lg bg-primaryDark   mb-8 '
+          : 'block p-6 rounded-lg bg-white max-w-full mb-8 '
       "
       v-if="activeState === 1"
     >
@@ -18,7 +18,7 @@
               : 'text-main-400 text-xl lg:text-3xl border-b-4 font-bold sm:text-xl '
           "
         >
-          General Information
+          {{ $t("General Information") }}
         </h2>
       </div>
       <div class="vld-parent mt-4">
@@ -104,7 +104,7 @@
                 type="submit"
                 @click="saveDraft()"
               >
-                Save as Draft
+                {{ $t("Save as Draft") }}
               </button>
               <button
                 :class="
@@ -116,7 +116,7 @@
                 type="submit"
                 @click="apply()"
               >
-                Next
+                {{ $t("Next") }}
               </button>
             </div>
           </div>
@@ -371,7 +371,7 @@ export default {
 
     const apply = async () => {
       let tempApplicationData = generalInfo.value;
-        tempApplicationData.fromDraft=true;
+      tempApplicationData.fromDraft = true;
       window.localStorage.setItem(
         "RNApplicationData",
         JSON.stringify(tempApplicationData)

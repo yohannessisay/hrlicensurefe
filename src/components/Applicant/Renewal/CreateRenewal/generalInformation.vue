@@ -16,7 +16,7 @@
             : 'text-main-400 text-xl lg:text-3xl border-b-4 font-bold sm:text-xl '
         "
       >
-        General Information
+        {{ $t("General Information") }}
       </h2>
     </div>
     <div class="vld-parent mt-4">
@@ -104,7 +104,7 @@
               type="submit"
               @click="saveDraft()"
             >
-              Save as Draft
+              {{ $t("Save as Draft") }}
             </button>
             <button
               :class="
@@ -116,7 +116,7 @@
               type="submit"
               @click="apply()"
             >
-              Next
+              {{ $t("Next") }}
             </button>
           </div>
         </div>

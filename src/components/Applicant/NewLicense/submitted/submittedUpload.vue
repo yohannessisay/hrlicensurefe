@@ -2,30 +2,37 @@
   <div class="vld-parent">
     <loading
       :active="isLoading"
-      :is-full-page="true"
+      :is-full-page="false"
       :color="'#2F639D'"
-      :opacity="0.7"
+      :opacity="0.6"
+      class="rounded-md"
     ></loading>
     <div class="text-yellow-300 p-2 rounded-md border mb-4 mt-2">
       <h2 class="text-yellow-300 font-bold text-xl">
-        Note:- Please upload only the documents marked with a red asterisk
-        <small class="text-red-300 text-xl"> (*) </small> to proceed to the next
-        step.
+        {{ $t("Note:-document names with") }}
+        <small class="text-red-300 text-xl"> (*) </small>
+        {{ $t("must be uploaded to go forward with the application process") }}
       </h2>
- 
     </div>
     <div class="accordion sm:mr-8" id="FilesAccordion">
       <span
         v-if="errorDocuments && errorDocuments.length > 0"
         class="text-red-300"
-        >Please upload files highlighted in red borders to proceed</span
+      >
+        {{
+          $t("Please upload files highlighted in red borders to proceed")
+        }}</span
       >
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-4 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingOne">
           <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-xl text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -33,7 +40,7 @@
             aria-expanded="true"
             aria-controls="commonFilesAccordion"
           >
-            Common Files
+            {{ $t("Common Files") }}
           </button>
         </h2>
         <div
@@ -43,8 +50,8 @@
           data-bs-parent="#FilesAccordion"
         >
           <div class="accordion-body py-4">
-            <div class="bg-red-800 py-5 ">
-              <div class="overflow-x-auto w-full p-1 ">
+            <div class="bg-red-800 py-5">
+              <div class="overflow-x-auto w-full p-1">
                 <CommonFileUploadTable
                   :headers="commonFileUploadHeaders"
                   :tableRows="commonDocuments"
@@ -59,11 +66,15 @@
         </div>
       </div>
       <div
-        class="accordion-item bg-white border border-grey-200 sm:p-2 mt-8 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
+        "
       >
         <h2 class="accordion-header mb-0" id="headingTwo">
           <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-xl text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -71,7 +82,7 @@
             aria-expanded="true"
             aria-controls="departmentFilesAccordion"
           >
-            Education Level Related Files
+            {{ $t("Education Level Related Files") }}
           </button>
         </h2>
         <div
@@ -110,7 +121,7 @@
       v-if="errorDocuments && errorDocuments.length > 0"
     >
       <h2 class="text-yellow-300 font-bold text-3xl border-b">
-        Please attach the following files to proceed
+        {{ $t("Please attach the following files to proceed") }}
       </h2>
       <li
         class="text-yellow-300 text-xl font-bold p-2 m-1"
@@ -126,17 +137,18 @@
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         @click="back()"
       >
-        back
+        {{ $t("Back") }}
       </button>
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:bg-white hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         @click="next()"
       >
-        next
+        {{ $t("Next") }}
       </button>
     </div>
   </div>
 </template>
+
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
@@ -149,6 +161,7 @@ import { useRoute } from "vue-router";
 import Compressor from "compressorjs";
 import CommonFileUploadTable from "../../Shared/SavedFileUpload/CommonFileUploadTable.vue";
 import FileUploadTable from "../../Shared/SavedFileUpload/FileUploadTable.vue";
+import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 export default {
   components: { Loading, CommonFileUploadTable, FileUploadTable },
 
@@ -158,13 +171,14 @@ export default {
     let store = useStore();
     const route = useRoute();
     let documents = ref([]);
-        let commonFileUploadHeaders = ref([
+    let commonFileUploadHeaders = ref([
       "Document Name",
       "Document Description",
       "Upload Document",
       "Uploaded File",
       "View Uploaded",
     ]);
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
     let goToNext = ref(false);
@@ -797,10 +811,24 @@ export default {
       }
     };
 
-    const next = () => {
-      let documentValidation = checkDocuments();
+    const next = async () => {
+      let documentValidation = await checkDocuments(
+        errorDocuments.value,
+        false,
+        commonDocuments.value,
+        fileUploadError.value,
+        educationalDocs.value,
+        documentsUploaded.value,
+        newLicenseDocuments.value
+      );
+      fileUploadError.value = documentValidation.fileUploadError
+        ? documentValidation.fileUploadError
+        : [];
+      errorDocuments.value = documentValidation.errorDocuments
+        ? documentValidation.errorDocuments
+        : [];
 
-      if (documentValidation && Object.keys(documentValidation).length == 0) {
+      if (errorDocuments.value && errorDocuments.value.length == 0) {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
           //Save images to indexed Db
 
@@ -854,193 +882,7 @@ export default {
         );
       }
     };
-    const checkDocuments = () => {
-      let temp = "";
-      let CMtemp = "";
-      let NSTemp = "";
-      var tempVal;
-      errorDocuments.value = [];
 
-      commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
-          CMtemp =
-            // eslint-disable-next-line no-prototype-builtins
-            documentsUploaded.value.hasOwnProperty(element.documentType.code)
-              ? // eslint-disable-next-line no-prototype-builtins
-                documentsUploaded.value.hasOwnProperty(
-                  element.documentType.code
-                )
-              : // eslint-disable-next-line no-prototype-builtins
-              documentsSaved.value.hasOwnProperty(element.documentType.code)
-              ? // eslint-disable-next-line no-prototype-builtins
-                documentsSaved.value.hasOwnProperty(element.documentType.code)
-              : false;
-
-          if (!CMtemp) {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = true;
-
-            errorDocuments.value.push({
-              isCommon: true,
-              name: element.documentType.name,
-              code: element.documentType.code,
-            });
-          } else {
-            delete fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ];
-          }
-        });
-
-      educationalDocs.value.forEach((ed) => {
-        // check normal docs with no parents
-
-        ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
-            temp =
-              // eslint-disable-next-line no-prototype-builtins
-              documentsUploaded.value.hasOwnProperty(
-                single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              )
-                ? // eslint-disable-next-line no-prototype-builtins
-                  documentsUploaded.value.hasOwnProperty(
-                    single.documentType.code +
-                      "_" +
-                      ed.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      ed.professionType.code.toUpperCase()
-                  )
-                : // eslint-disable-next-line no-prototype-builtins
-                documentsSaved.value.hasOwnProperty(
-                    single.documentType.code +
-                      "_" +
-                      ed.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      ed.professionType.code.toUpperCase()
-                  )
-                ? // eslint-disable-next-line no-prototype-builtins
-                  documentsSaved.value.hasOwnProperty(
-                    single.documentType.code +
-                      "_" +
-                      ed.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      ed.professionType.code.toUpperCase()
-                  )
-                : false;
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: single.documentType.name,
-                code:
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              delete fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ];
-            }
-          });
-
-        //// check documetns with parents
-        for (var pd in ed.parentDoc) {
-          tempVal = newLicenseDocuments.value.filter(
-            (nld) => nld.parentDocument == pd && nld.isRequired
-          );
-
-          if (
-            tempVal &&
-            tempVal.length > 0 &&
-            tempVal[0] &&
-            tempVal[0].isRequired == true
-          ) {
-            NSTemp =
-              // eslint-disable-next-line no-prototype-builtins
-              documentsUploaded.value.hasOwnProperty(
-                tempVal[0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              )
-                ? // eslint-disable-next-line no-prototype-builtins
-                  documentsUploaded.value.hasOwnProperty(
-                    tempVal[0].documentType.code +
-                      "_" +
-                      ed.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      ed.professionType.code.toUpperCase()
-                  )
-                : // eslint-disable-next-line no-prototype-builtins
-                documentsSaved.value.hasOwnProperty(
-                    tempVal[0].documentType.code +
-                      "_" +
-                      ed.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      ed.professionType.code.toUpperCase()
-                  )
-                ? // eslint-disable-next-line no-prototype-builtins
-                  documentsSaved.value.hasOwnProperty(
-                    tempVal[0].documentType.code +
-                      "_" +
-                      ed.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      ed.professionType.code.toUpperCase()
-                  )
-                : false;
-            if (NSTemp == "") {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  newLicenseDocuments.value.filter(
-                    (nld) => nld.parentDocument == pd && nld.isRequired
-                  )[0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: newLicenseDocuments.value.filter(
-                  (nld) => nld.parentDocument == pd && nld.isRequired
-                )[0].documentType.name,
-                code:
-                  newLicenseDocuments.value.filter(
-                    (nld) => nld.parentDocument == pd && nld.isRequired
-                  )[0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            }
-          }
-        }
-      });
-
-      return fileUploadError.value;
-    };
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null || obj[key] == "")
@@ -1077,6 +919,9 @@ export default {
       };
     };
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {
@@ -1204,7 +1049,6 @@ export default {
     const removeChildUpload = (docCode) => {
       showNestedDocuments.value[docCode] -= 1;
     };
-    const isDarkMode=false;
     return {
       isDarkMode,
       removeChildUpload,
@@ -1229,7 +1073,7 @@ export default {
       googleApi,
       addMore,
       showNestedDocuments,
-      commonFileUploadHeaders
+      commonFileUploadHeaders,
     };
   },
 };

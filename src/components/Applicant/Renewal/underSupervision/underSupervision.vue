@@ -6,6 +6,7 @@
       :link="'renewal/getRenewalLicense'"
       :status="status"
       :detailModalLink="'renewal/getRenewalApplication'"
+      :detailPageName="'Under Supervision'"
     ></ApplicationsList>
   </div>
 </template>

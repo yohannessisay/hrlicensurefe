@@ -13,7 +13,7 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Applicant Type</label
+          >{{ $t("Applicant Type") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -47,7 +47,7 @@
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
           "
-          >Language Type</label
+          >{{ $t("Language Type") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -75,7 +75,7 @@
               ? 'text-white '
               : 'text-main-400 lg:ml-4'
           "
-          >Employer Type</label
+          >{{ $t("Employer Type") }}</label
         ><span class="text-red-300">*</span>
         <select
           :class="selectClasses"
@@ -109,8 +109,11 @@
             ? 'text-white  col-span-12 '
             : 'text-main-400 col-span-12 text-base'
         "
-        >You can change applicant type when there is no added department data
-        below</small
+        >{{
+          $t(
+            "You can change the applicant type when there is no added department data below"
+          )
+        }}</small
       >
     </div>
     <button
@@ -119,7 +122,7 @@
       @click="$emit('clearLocalData')"
     >
       <i class="fa fa-close"></i>
-      Clear Form
+      {{$t('Clear Form')}}
     </button>
   </div>
 </template>
@@ -134,7 +137,7 @@ export default {
     "showLanguage",
     "showOccupation",
     "occupations",
-    "languages"
+    "languages",
   ],
   emits: [
     "clearLocalData",
@@ -143,7 +146,7 @@ export default {
     "occupationChangeHandler",
   ],
   setup(props) {
-    const localGeneralInfo = computed(()=>props.generalInfo);
+    const localGeneralInfo = computed(() => props.generalInfo);
 
     const selectClasses = computed(() => {
       return props.isDarkMode

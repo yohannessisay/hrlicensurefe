@@ -186,6 +186,7 @@ import oromiaCertificateBackground from "../../../../../assets/Oromia_Certificat
 import direDawaCertificateBackground from "../../../../../assets/DireDawa_Certificate.jpg";
 import afarCertificateBackground from "../../../../../assets/Afar_Certificate.jpg";
 import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certificate.jpg";
+import tigrayCertificateBackground from "../../../../../assets/Tigray_Certificate.jpg";
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
@@ -533,6 +534,10 @@ export default {
       if (code == "DD") {
         paddingAmharic = 10;
         paddingEnglish = 10;
+      }
+      if (code == "TIG") {
+        paddingAmharic = 0;
+        paddingEnglish = 3;
       }
 
       //English name part
@@ -998,38 +1003,48 @@ export default {
           defaultNamePos = 100;
           defaultProfPos = 125;
           defaultProfGap = 7;
-        } else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "ORO"
-        ) {
-          defaultBackground = oromiaCertificateBackground;
-          defaultCode = "ORO";
-          defaultNamePos = 110;
-          defaultProfPos = 133;
-          defaultProfGap = 4;
-        } else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
-        ) {
-          defaultBackground = addisAbabaCertificateBackground;
-          defaultCode = "AA";
-          defaultNamePos = 108;
-          defaultProfPos = 133;
-          defaultProfGap = 4;
-        } else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
-        ) {
-          defaultBackground = direDawaCertificateBackground;
-          defaultCode = "DD";
-          defaultNamePos = 110;
-          defaultProfPos = 120;
-          defaultProfGap = 4;
-        } else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
-        ) {
-          defaultBackground = afarCertificateBackground;
-          defaultCode = "AFA";
-          defaultNamePos = 105;
-          defaultProfPos = 130;
-          defaultProfGap = 4;
+        } else {
+          switch (
+            certificateDetail.value.licenseReviewer.reviewer.region.code
+          ) {
+            case "ORO":
+              defaultBackground = oromiaCertificateBackground;
+              defaultCode = "ORO";
+              defaultNamePos = 110;
+              defaultProfPos = 133;
+              defaultProfGap = 4;
+              break;
+            case "AA":
+              defaultBackground = addisAbabaCertificateBackground;
+              defaultCode = "AA";
+              defaultNamePos = 108;
+              defaultProfPos = 133;
+              defaultProfGap = 4;
+              break;
+            case "DD":
+              defaultBackground = direDawaCertificateBackground;
+              defaultCode = "DD";
+              defaultNamePos = 110;
+              defaultProfPos = 120;
+              defaultProfGap = 4;
+              break;
+            case "AFA":
+              defaultBackground = afarCertificateBackground;
+              defaultCode = "AFA";
+              defaultNamePos = 105;
+              defaultProfPos = 130;
+              defaultProfGap = 4;
+              break;
+            case "TIG":
+              defaultBackground = tigrayCertificateBackground;
+              defaultCode = "TIG";
+              defaultNamePos = 114;
+              defaultProfPos = 129;
+              defaultProfGap = 7;
+              break;
+            default:
+              break;
+          }
         }
 
         doc.addImage(
@@ -1078,7 +1093,6 @@ export default {
         let multipleNamePos = 0;
         let multipleProfPos = 0;
         let multipleProfGap = 0;
-
         if (
           certificateDetail.value.licenseReviewer.reviewer.expertLevel.code ===
           "FED"
@@ -1088,38 +1102,48 @@ export default {
           multipleNamePos = 100;
           multipleProfPos = 125;
           multipleProfGap = 7;
-        } else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "ORO"
-        ) {
-          multipleBackground = oromiaCertificateBackground;
-          multipleCode = "ORO";
-          defaultNamePos = 110;
-          defaultProfPos = 133;
-          defaultProfGap = 4;
-        } else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
-        ) {
-          multipleBackground = addisAbabaCertificateBackground;
-          multipleCode = "AA";
-          defaultNamePos = 108;
-          defaultProfPos = 133;
-          defaultProfGap = 4;
-        } else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
-        ) {
-          multipleBackground = direDawaCertificateBackground;
-          multipleCode = "DD";
-          defaultNamePos = 110;
-          defaultProfPos = 120;
-          defaultProfGap = 4;
-        } else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
-        ) {
-          multipleBackground = afarCertificateBackground;
-          multipleCode = "AFA";
-          defaultNamePos = 105;
-          defaultProfPos = 130;
-          defaultProfGap = 4;
+        } else {
+          switch (
+            certificateDetail.value.licenseReviewer.reviewer.region.code
+          ) {
+            case "ORO":
+              multipleBackground = oromiaCertificateBackground;
+              multipleCode = "ORO";
+              defaultNamePos = 110;
+              defaultProfPos = 133;
+              defaultProfGap = 4;
+              break;
+            case "AA":
+              multipleBackground = addisAbabaCertificateBackground;
+              multipleCode = "AA";
+              defaultNamePos = 108;
+              defaultProfPos = 133;
+              defaultProfGap = 4;
+              break;
+            case "DD":
+              multipleBackground = direDawaCertificateBackground;
+              multipleCode = "DD";
+              defaultNamePos = 110;
+              defaultProfPos = 120;
+              defaultProfGap = 4;
+              break;
+            case "AFA":
+              multipleBackground = afarCertificateBackground;
+              multipleCode = "AFA";
+              defaultNamePos = 105;
+              defaultProfPos = 130;
+              defaultProfGap = 4;
+              break;
+            case "TIG":
+              multipleBackground = tigrayCertificateBackground;
+              defaultCode = "TIG";
+              defaultNamePos = 114;
+              defaultProfPos = 129;
+              defaultProfGap = 7;
+              break;
+            default:
+              break;
+          }
         }
 
         doc.addImage(

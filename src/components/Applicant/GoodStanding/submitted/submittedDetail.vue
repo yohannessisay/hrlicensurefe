@@ -2,7 +2,7 @@
   <main-content :url="'goodstanding'">
     <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
 
-    <div
+   <div
       v-if="activeState == 1"
       class="block p-6 rounded-lg max-w-full mr-0 sm:mr-8 mb-8 sm:p-4"
     >
@@ -18,7 +18,7 @@
           @submit.prevent="submit"
           class="sm:mx-auto max-w-4xl p-2 w-full mt-2"
         >
-          <div class="flex justify-start">
+          <div class="flex justify-center">
             <h2
               :class="
                 isDarkMode
@@ -26,7 +26,7 @@
                   : 'text-main-400 text-3xl font-bold'
               "
             >
-              General Information
+              {{ $t("General Information") }}
             </h2>
           </div>
           <div
@@ -40,10 +40,10 @@
               <div
                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
               >
-                <div>
-                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Applicant Type</label
-                  >
+                <div class="mb-3">
+                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'">{{
+                    $t("Applicant Type")
+                  }}</label>
                   <select
                     :class="
                       isDarkMode
@@ -85,7 +85,7 @@
                     <label
                       for
                       :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                      >Applicant Title</label
+                      >{{ $t("Applicant Title") }}</label
                     >
 
                     <select
@@ -127,7 +127,9 @@
             <div
               v-if="showLocation"
               :class="
-                isDarkMode ? ' rounded bg-secondaryDark border-b-2' : 'rounded bg-white border-b-2'
+                isDarkMode
+                  ? ' rounded bg-secondaryDark border-b-2'
+                  : 'rounded bg-white border-b-2'
               "
             >
               <h2 class="text-yellow-300 text-lg">
@@ -140,10 +142,10 @@
               <div
                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
               >
-                <div class="flex flex-col">
-                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Region</label
-                  >
+                <div class="flex flex-col mb-3">
+                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'">{{
+                    $t("Region")
+                  }}</label>
                   <select
                     class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     v-model="generalInfo.regionSelected"
@@ -174,16 +176,16 @@
                   </select>
                 </div>
                 <div
-                  class="flex flex-col"
+                  class="flex flex-col mb-3"
                   v-if="
                     generalInfo.regionSelected &&
                     generalInfo.regionSelected.code != 'FED' &&
                     generalInfo.regionSelected.code != 'HAR'
                   "
                 >
-                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Zone</label
-                  >
+                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'">{{
+                    $t("Zone")
+                  }}</label>
                   <select
                     class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     @change="zoneChangeHandler()"
@@ -219,9 +221,9 @@
                     generalInfo.regionSelected.code != 'FED'
                   "
                 >
-                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Woreda</label
-                  >
+                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'">{{
+                    $t("Woreda")
+                  }}</label>
                   <select
                     class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     v-model="generalInfo.woredaSelected"
@@ -257,10 +259,10 @@
               <div
                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
               >
-                <div>
-                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Department</label
-                  >
+                <div class="mb-3">
+                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'">{{
+                    $t("Department")
+                  }}</label>
                   <select
                     :class="
                       isDarkMode
@@ -293,10 +295,10 @@
                   </select>
                 </div>
 
-                <div>
-                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Education Level</label
-                  >
+                <div class="mb-3">
+                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'">{{
+                    $t("Education Level")
+                  }}</label>
                   <select
                     :class="
                       isDarkMode
@@ -334,9 +336,10 @@
                 </div>
 
                 <div class="grid grid-cols-1">
-                  <div class="mb-4">
-                    <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                      >Profession</label
+                  <div class="mb-3">
+                    <label
+                      :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                      >{{ $t("Professional Type") }}</label
                     >
                     <select
                       :class="
@@ -382,8 +385,9 @@
                         'other'
                     "
                   >
-                    <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                      >Other Profession</label
+                    <label
+                      :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                      >{{ $t("Other Profession") }}</label
                     >
                     <input
                       type="text"
@@ -401,8 +405,9 @@
                         'other'
                     "
                   >
-                    <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                      >Other Profession Amharic</label
+                    <label
+                      :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                      >{{ $t("Other Profession Amharic") }}</label
                     >
                     <input
                       type="text"
@@ -417,9 +422,9 @@
                 </div>
 
                 <div>
-                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Applicant Position</label
-                  >
+                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'">{{
+                    $t("Applicant Position")
+                  }}</label>
                   <select
                     :class="
                       isDarkMode
@@ -460,11 +465,11 @@
                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
               >
                 <div>
-                  <div class="overflow-hidden shadow-sm">
+                  <div class="overflow-hidden shadow-sm mb-3">
                     <label
                       for
                       :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                      >Organization Letter written for</label
+                      >{{ $t("Organization Letter written for") }}</label
                     >
 
                     <input
@@ -479,11 +484,11 @@
                 </div>
 
                 <div>
-                  <div class="overflow-hidden shadow-sm">
+                  <div class="overflow-hidden shadow-sm mb-3">
                     <label
                       for
                       :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                      >Who Issued Previous License</label
+                      >{{ $t("Who Issued Previous License") }}</label
                     >
 
                     <select
@@ -502,11 +507,11 @@
                   </div>
                 </div>
                 <div>
-                  <div class="overflow-hidden shadow-sm">
+                  <div class="overflow-hidden shadow-sm mb-3">
                     <label
                       for
                       :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                      >License Registration Number</label
+                      >{{ $t("License Registration Number") }}</label
                     >
 
                     <input
@@ -524,7 +529,7 @@
                     <label
                       for
                       :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                      >License Issued Date</label
+                      >{{ $t("License Issued Date") }}</label
                     >
 
                     <input
@@ -547,14 +552,14 @@
               type="submit"
               @click="saveDraft()"
             >
-              Update
+              {{ $t("Update") }}
             </button>
             <button
               class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-main-400 border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
               type="submit"
               @click="apply()"
             >
-              Next
+              {{ $t("Next") }}
             </button>
           </div>
         </form>
@@ -572,9 +577,7 @@
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="activeState == 3">
-        <LicenseSummary 
-          @changeActiveStateMinus="activeState--"
-        />
+        <LicenseSummary @changeActiveStateMinus="activeState--" />
       </div>
     </transition>
   </main-content>

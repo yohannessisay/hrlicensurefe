@@ -22,44 +22,60 @@
       >
     </div>
     <!-- New License routes -->
-    <NewLicense
+    <SideBarTemplate
       v-if="finalUrl && finalUrl === 'newLicense'"
       :isDarkMode="isDarkMode"
-    ></NewLicense>
+      :links="newLicenseSideBarItems"
+      :page="'New License'"
+    ></SideBarTemplate>
     <!-- End of New License routes -->
     <!-- Renewal Routes -->
-    <Renewal
+    <SideBarTemplate
       v-if="finalUrl && finalUrl === 'renewal'"
       :isDarkMode="isDarkMode"
-    ></Renewal>
+      :links="renewalSideBarItems"
+      :page="'Renewal'"
+    ></SideBarTemplate>
     <!--End of Renewal Routes -->
 
     <!-- Goodstanding routes -->
-    <Goodstanding
+    <SideBarTemplate
       v-if="finalUrl && finalUrl === 'goodstanding'"
       :isDarkMode="isDarkMode"
-    ></Goodstanding>
+      :links="gSSideBarItems"
+      :page="'Good Standing'"
+    ></SideBarTemplate>
     <!--End of Goodstanding routes -->
 
     <!--Lost License  routes -->
-    <LostLicense
+    <SideBarTemplate
       v-if="finalUrl && finalUrl === 'lostLicense'"
       :isDarkMode="isDarkMode"
-    ></LostLicense>
+      :links="LLicenseSideBarItems"
+      :page="'Lost License'"
+    ></SideBarTemplate>
     <!--End of Lost License  routes -->
   </div>
 </template>
 
-<script>
-import LostLicense from "./sidebarLinks/lostLicense.vue";
-import NewLicense from "./sidebarLinks/newLicense.vue";
-import Renewal from "./sidebarLinks/renewal.vue";
-import Goodstanding from "./sidebarLinks/goodstanding.vue";
+<script> 
+import SideBarTemplate from "./SideBar/sideBarTemplate.vue";
+import {
+  newLicenseSideBarItems,
+  renewalSideBarItems,
+  gSSideBarItems,
+  LLicenseSideBarItems,
+} from "./SideBar/sideBarLinks.js";
 export default {
   props: ["finalUrl", "isDarkMode"],
-  components: { LostLicense, NewLicense, Renewal, Goodstanding },
+  components: { SideBarTemplate },
   setup() {
-    return {};
+    return {
+      newLicenseSideBarItems,
+      renewalSideBarItems,
+      gSSideBarItems,
+      LLicenseSideBarItems,
+    };
   },
 };
 </script>

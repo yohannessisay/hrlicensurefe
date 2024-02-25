@@ -4,16 +4,16 @@
     <header
       :class="
         isDarkMode
-          ? 'text-center mx-auto mb-12 lg:px-20 mt-8 sm:mt-0 text-primary-200'
-          : 'text-center mx-auto mb-12 lg:px-20 mt-8 sm:mt-0 text-main-400'
+          ? 'text-center mx-auto mb-4 lg:px-20 mt-8 sm:mt-0 text-primary-200'
+          : 'text-center mx-auto mb-4 lg:px-20 mt-8 sm:mt-0 text-main-400'
       "
     >
       <h2 class="text-3xl leading-normal mb-2 font-bold">
-        Summary For New License Application
+        {{ $t("Summary For New License Application") }}
       </h2>
 
       <h2 class="text-black leading-relaxed font-light text-lg mx-auto pb-2">
-        Here is the detail you have filled in so far
+        {{ $t("Here is the detail you have filled in so far") }}
       </h2>
     </header>
     <!-- End heading -->
@@ -46,7 +46,7 @@
                   : 'text-lg text-main-400 leading-normal mb-2 font-semibold t'
               "
             >
-              Department Detail
+              {{ $t("Department Detail") }}
             </h3>
           </div>
         </div>
@@ -59,7 +59,7 @@
                   : 'text-main-400 font-bold text-xl'
               "
             >
-              Department Name
+              {{ $t("Department") }}
             </h2>
           </div>
           <div>
@@ -83,7 +83,7 @@
                   : 'text-main-400 font-bold text-xl'
               "
             >
-              Educational level
+              {{ $t("Education Level") }}
             </h2>
           </div>
           <div>
@@ -107,7 +107,7 @@
                   : 'text-main-400 font-bold text-xl'
               "
             >
-              Institution
+              {{ $t("Institution") }}
             </h2>
           </div>
           <div>
@@ -131,7 +131,7 @@
                   : 'text-main-400 font-bold text-xl'
               "
             >
-              Professional Type
+              {{ $t("Professional Type") }}
             </h2>
           </div>
           <div>
@@ -164,7 +164,7 @@
             </div>
             <div class="flex justify-center text-gray-900 mb-4">
               <h3 class="text-3xl leading-normal mb-2 font-semibold">
-                Files Uploaded
+                {{ $t("Files Uploaded") }}
               </h3>
             </div>
           </div>
@@ -191,11 +191,16 @@
                     />
                   </a>
                   <div v-else class="m-4 p-2 bg-primary-300 rounded-md">
-                    The file is uploaded but since it is not an image type this
-                    is a placeholder
+                    {{
+                      $t(
+                        "The file is uploaded but since it is not an image type this is a placeholder"
+                      )
+                    }}
                   </div>
 
-                  <h4 class="font-bold border-b m-2">Document Type</h4>
+                  <h4 class="font-bold border-b m-2">
+                    {{ $t("Document Type") }}
+                  </h4>
                   <h6 class="m-2">{{ localFileData.documenttype }}</h6>
                 </div>
               </div>
@@ -221,8 +226,8 @@
           <div class="mb-4">
             <div class="flex justify-center m-2">
               <h2 class="form-label text-lg inline-block mb-2">
-                Feedback on the process and system
-                <span class="text-yellow-300">(optional*)</span>
+                {{ $t("Feedback on the process and system") }}
+                <span class="text-yellow-300">({{ $t("Optional") }}*)</span>
               </h2>
             </div>
 
@@ -253,8 +258,11 @@
                 />
               </div>
               <h3 class="mb-2 sm:text-lg text-lg">
-                By checking here I hereby verify the documents and details
-                filled in are legal.
+                {{
+                  $t(
+                    "By checking here I hereby verify the documents and details filled in are legal."
+                  )
+                }}
               </h3>
             </div>
           </div>
@@ -269,7 +277,7 @@
           :is-full-page="false"
           :color="'#2F639D'"
           :opacity="1"
-             class="rounded-md"
+          class="rounded-md"
         ></loading>
         <div class="flex justify-center w-full mb-8">
           <span v-for="button in buttons" :key="button.id">
@@ -284,7 +292,7 @@
               @click="checkFinalStatus(button.action)"
             >
               <i class="fa fa-save"></i>
-              {{ button.name }}
+              {{ $t(button.name) }}
             </button>
             <button
               v-if="button.action == 'DraftEvent'"
@@ -293,7 +301,7 @@
               @click="checkFinalStatus(button.action)"
             >
               <i class="fa fa-save"></i>
-              {{ button.name }}
+              {{ $t(button.name) }}
             </button>
           </span>
 
@@ -301,7 +309,7 @@
             class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
             @click="back()"
           >
-            back
+            {{ $t("Back") }}
           </button>
         </div>
       </div>
@@ -318,14 +326,14 @@
           "
         >
           <div class="modal-header">
-            <h2 class=" text-xl border-b-4">Uploading</h2>
+            <h2 class="text-xl border-b-4">{{ $t("Uploading") }}</h2>
           </div>
 
           <div class="modal-body">
             <div class="flex justify-center text-yellow-300 p-2 rounded-md">
               <h2 class="text-yellow-300 border rounded p-2 text-xl">
-                Total file size you have uploaded so far is
-                <h2 class="  text-2xl">{{ totalSize }} MB</h2>
+                {{ $t("Total file size you have uploaded so far is") }}
+                <h2 class="text-2xl">{{ totalSize }} MB</h2>
               </h2>
             </div>
             <div class="flex justify-center">
@@ -334,9 +342,7 @@
                 :completed-steps="progress"
                 :total-steps="totalSteps"
               >
-                <h1 class="text-3xl   font-bold">
-                  {{ progress }} %
-                </h1>
+                <h1 class="text-3xl font-bold">{{ progress }} %</h1>
               </RadialProgress>
             </div>
             <div>
@@ -344,10 +350,11 @@
                 class="flex border justify-center text-yellow-300 p-2 rounded-md"
               >
                 <h2 class="text-xl">
-                  Please wait patiently as your files are being uploaded, if for
-                  any reason the files you uploaded are not successful you will
-                  be redirected to the submitted page automatically so you can
-                  re-attach your documents again
+                  {{
+                    $t(
+                      "Please wait patiently as your files are being uploaded, if for any reason the files you uploaded are not successful you will  be redirected to the submitted page automatically so you can re-attach your documents again"
+                    )
+                  }}
                 </h2>
               </div>
             </div>
