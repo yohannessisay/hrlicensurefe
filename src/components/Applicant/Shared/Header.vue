@@ -25,6 +25,7 @@
                   ? 'fa fa-bell text-xl text-white cursor-pointer  shadow-md p-1 rounded-md bg-primary-400'
                   : 'fa fa-bell  text-xl text-white cursor-pointer  shadow-md p-1 rounded-md bg-primary-400'
               "
+               
             ></i
           ></span>
           <div
@@ -59,7 +60,7 @@
           class="dropdown mb-1 transition duration-300 ease-in-out mr-2 sm:mr-8"
         >
           <i
-            class="fa fa-globe fa-lg text-white cursor-pointer shadow-md p-2 rounded-md bg-primary-400"
+            class="fa fa-globe fa-lg t cursor-pointer shadow-md p-2 rounded-md bg-primary-400"
           >
           </i>
           <span class="text-base ml-1" style="margin-top: -2px !important">{{
@@ -211,7 +212,7 @@
             v-on:click="showDropDown()"
           >
             <div v-if="!userInfo.isFirstTime" class="w-12 h-12">
-              <img :src="userInfo.pic" alt="image here" class="w-20 h-12" />
+              <img :src="userInfo.pic" alt="image here" class="w-20 h-12 border-white border-2" />
             </div>
             <div v-if="userInfo.isFirstTime">
               <svg
