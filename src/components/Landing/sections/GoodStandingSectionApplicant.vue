@@ -1,7 +1,7 @@
 <template>
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
-    class="w-full bg-white flex justify-center items-center py-large sm:py-xl box-border"
+    :class="isDarkMode?'w-full bg-secondaryDark text-white flex justify-center items-center py-large sm:py-xl box-border':'w-full bg-white text-main-400 flex justify-center items-center py-large sm:py-xl box-border'"
     ref="wrapperRef"
   >
     <section
@@ -45,10 +45,12 @@
             </h5> -->
             <!-- <hr class="yellow-gradient glow separator border-none" /> -->
           </div>
-          <h5 class="mt-small text-2xl text-main-400 text-center">
-            If your application is approved, you are expected to pay a service fee and
-            take your license. Please note that foreigners will pay in dollars and
-            Ethiopians will pay in birr.
+          <h5 class="mt-small text-2xl text-center">
+            {{
+              $t(
+                "If your application is approved, you are expected to pay a service fee and take your license. Please note that foreigners will pay in dollars and Ethiopians will pay in birr."
+              )
+            }}
           </h5>
         </section>
       </transition>
@@ -58,6 +60,7 @@
 <script>
 import useIntersectionObserver from "@/composables/useIntersectionObserver";
 export default {
+  props: ["isDarkMode"],
   setup() {
     const { showElement, wrapperRef } = useIntersectionObserver();
     return {

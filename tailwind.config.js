@@ -130,6 +130,7 @@ module.exports = {
     },
   },
   variants: {
+    scale: ["hover"],
     appearance: ["responsive"],
     backgroundAttachment: ["responsive"],
     backgroundColor: ["responsive", "hover", "focus"],

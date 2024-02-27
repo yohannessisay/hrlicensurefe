@@ -1,7 +1,11 @@
 <template>
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
-    class="w-full bg-main-400 flex justify-center items-center py-large sm:py-xl box-border"
+    :class="
+      isDarkMode
+        ? 'w-full bg-primaryDark flex justify-center items-center py-large sm:py-xl box-border'
+        : 'w-full bg-main-400 flex justify-center items-center py-large sm:py-xl box-border'
+    "
     ref="wrapperRef"
   >
     <section
@@ -82,20 +86,25 @@
             <h1
               class="text-3xl sm:text-largeDisplay white-text-gradient -mb-tiny sm:-mb-small"
             >
-              Ethiopian Applicants
+              {{ $t("Ethiopian Applicants") }}
             </h1>
           </div>
           <div class="mt-small text-primary-100 text-center block relative">
-            <h3 class="text-2xl">
-              Diploma graduates should pass level 4 COC exam before applying. If you are a
-              degree graduate and your profession is under licensure examination, you
-              should pass the exam to be able to apply.
+            <h2 class="text-2xl">
+              {{
+                $t(
+                  "Diploma graduates should pass the level 4 COC exam before applying. If you are a degree graduate and your profession is under licensure examination, you should pass the exam to apply."
+                )
+              }}
+            </h2>
+            <h3 class="text-lg">
+              &ldquo;
+              {{
+                $t(
+                  "If your profession type is not under the licensure exam please have your university send your graduation list to the Ministry of Health through nhpled.moh@gmail.com."
+                )
+              }}&ldquo;
             </h3>
-            <h4 class="text-xl">
-              &ldquo; If your profession type is not under the licensure exam please have
-              your university send your graduation list to the ministry of health through
-              this email nhpled.moh@gmail.com.&ldquo;
-            </h4>
           </div>
         </section>
       </transition>
@@ -106,6 +115,7 @@
 import useIntersectionObserver from "@/composables/useIntersectionObserver";
 
 export default {
+  props: ["isDarkMode"],
   setup() {
     const { showElement, wrapperRef } = useIntersectionObserver();
     return {

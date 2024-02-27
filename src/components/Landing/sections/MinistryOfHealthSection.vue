@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-white py-xl flex justify-center items-center">
+  <div :class="isDarkMode?'w-full bg-secondaryDark py-xl flex justify-center items-center':'w-full bg-white py-xl flex justify-center items-center'">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 219.923 188.22">
       <g data-name="MOH LOGO" fill="#0e74b8">
         <path
@@ -166,6 +166,11 @@
     </svg>
   </div>
 </template>
+<script>
+export default {
+   props: ["isDarkMode"],
+}
+</script>
 <style lang="postcss" scoped>
 svg {
   height: 188px;

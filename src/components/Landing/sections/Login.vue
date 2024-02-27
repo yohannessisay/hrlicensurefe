@@ -9,7 +9,9 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <div class="relative pointer-events-none modal-dialog modal-dialog-centered">
+    <div
+      class="relative pointer-events-none modal-dialog modal-dialog-centered"
+    >
       <div
         class="relative flex flex-col w-full text-current border-none rounded-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
@@ -19,12 +21,18 @@
               class="absolute inset-0 bg-gradient-to-r from-blue-300 bg-main-400 transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl rounded-3xl"
             ></div>
 
-            <div class="relative bg-white sm:rounded-3xl sm:p-10 rounded-3xl p-4">
+            <div
+              :class="
+                isDarkMode
+                  ? 'relative bg-secondaryDark text-white sm:rounded-3xl sm:p-10 rounded-3xl p-4'
+                  : 'relative bg-white text-main-400 sm:rounded-3xl sm:p-10 rounded-3xl p-4'
+              "
+            >
               <div class="flex justify-end">
                 <button
                   style="margin-right: -26px; margin-top: -30px"
                   type="button"
-                  class="text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-main-400 hover:text-main-400 hover:border hover:border-main-400 hover:"
+                  class="text-xs font-medium leading-tight border-2 text-white uppercase transition duration-150 ease-in-out rounded bg-main-400 hover:text-main-400 hover:border hover:border-main-400 hover:"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 >
@@ -42,6 +50,9 @@
                       alt="HPEL logo"
                     />
                   </div>
+                  <div class="flex justify-center">
+                    <h2 class=" text-xl">eHPEL</h2>
+                  </div>
                 </div>
                 <div class="divide-y divide-gray-200">
                   <div
@@ -50,12 +61,18 @@
                     <form @submit.prevent="submit">
                       <div class="flex -mx-3">
                         <div class="w-full px-3 mb-1">
-                          <label for="" class="px-1 text-base font-thin">Email</label>
+                          <label
+                            for="email"
+                            class="px-1 text-xl  font-thin"
+                            >{{ $t("Email") }}</label
+                          >
                           <div class="flex mt-1">
                             <div
                               class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"
                             >
-                              <i class="text-lg text-main-400 fa fa-mail-bulk"></i>
+                              <i
+                                class="text-lg text-main-400 fa fa-mail-bulk"
+                              ></i>
                             </div>
                             <input
                               v-model="credentials.email"
@@ -68,17 +85,19 @@
                           </div>
                         </div>
                       </div>
-                      <div class="flex -mx-3">
+                      <div class="flex -mx-3 mt-2">
                         <div class="w-full px-3 mb-1">
-                          <label for="" class="px-1 text-base font-semibold"
-                            >Password</label
+                          <label
+                            for="password"
+                            class="px-1 text-xl  font-thin"
+                            >{{ $t("Password") }}</label
                           >
                           <div class="flex mt-1">
                             <div
                               @click="showVisibility()"
                               class="z-10 flex items-center justify-center w-10 pl-1 text-center cursor-pointer"
                             >
-                              <i class="text-lg text-main-400 fa fa-lock"></i>
+                              <i class="fa-solid fa-lock text-main-400"></i>
                             </div>
                             <input
                               v-model="credentials.password"
@@ -107,16 +126,16 @@
                           <button
                             class="inline-block w-full mt-4 mb-4 ml-auto font-semibold text-center text-white transition duration-200 rounded-lg shadow-sm bg-main-400 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 hover:text-main-400 hover:bg-white text-md hover:"
                           >
-                            Login
+                            {{ $t("Login") }}
                           </button>
                         </div>
                       </div>
                       <a
                         href="#!"
-                        class="text-main-400 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
+                        class=" hover:text-blue-700 text-lg focus:text-blue-700 transition duration-200 ease-in-out"
                         data-bs-toggle="modal"
                         data-bs-target="#forgotPassword"
-                        >Forgot password?</a
+                        >{{ $t("Forgot password?") }}</a
                       >
                     </form>
                   </div>
@@ -140,7 +159,7 @@
   >
     <div class="relative pointer-events-none modal-dialog modal-md">
       <div
-        class="relative flex flex-col w-8/12 text-current bg-white border-none rounded-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
+        class="relative flex flex-col sm:w-8/12 text-current bg-white border-none rounded-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
         <div
           class="flex items-center justify-center flex-shrink-0 p-4 border-b modal-header border-grey-100 rounded-t-md"
@@ -163,7 +182,9 @@
           ></loading>
           <div class="relative p-2 modal-body">
             <div class="flex justify-center">
-              <h2 class="text-xl text-main-400">Please provide your email</h2>
+              <h2 class="text-xl text-main-400">
+                {{ $t("Please provide your email") }}
+              </h2>
             </div>
             <div class="flex justify-center">
               <input
@@ -181,7 +202,7 @@
                 @click="resetPassword()"
               >
                 <i class="fa fa-refresh"></i>
-                Reset
+                {{ $t("Reset") }}
               </button>
             </div>
           </div>
@@ -201,6 +222,7 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: { Loading },
   emits: ["setShowLogin", "setShowSignup"],
+  props: ["isDarkMode"],
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -250,7 +272,9 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                document.querySelector("#staticBackdrop").classList.remove("show");
+                document
+                  .querySelector("#staticBackdrop")
+                  .classList.remove("show");
                 document.querySelector("body").classList.remove("modal-open");
                 const mdbackdrop = document.querySelector(".modal-backdrop");
                 if (mdbackdrop) {
@@ -266,7 +290,9 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                document.querySelector("#staticBackdrop").classList.remove("show");
+                document
+                  .querySelector("#staticBackdrop")
+                  .classList.remove("show");
                 document.querySelector("body").classList.remove("modal-open");
                 const mdbackdrop = document.querySelector(".modal-backdrop");
                 if (mdbackdrop) {
