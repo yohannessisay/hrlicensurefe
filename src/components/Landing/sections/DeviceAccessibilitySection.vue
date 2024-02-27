@@ -1,6 +1,10 @@
 <template>
   <div
-    class="w-full bg-main-400 flex flex-col justify-center items-center pt-small sm:pt-xl box-border"
+    :class="
+      isDarkMode
+        ? 'w-full bg-primaryDark text-white flex flex-col justify-center items-center pt-small sm:pt-xl box-border'
+        : 'w-full bg-main-400 flex flex-col justify-center items-center pt-small sm:pt-xl box-border'
+    "
     ref="wrapperRef"
   >
     <transition name="fade">
@@ -11,7 +15,7 @@
         <h1
           class="text-2xl sm:text-largeDisplay white-text-gradient -mb-tiny sm:-mb-small text-center"
         >
-          Accessible on any device
+          {{ $t("Accessible on any device") }}
         </h1>
       </div>
     </transition>
@@ -28,7 +32,8 @@
               preserveAspectRatio="xMidYMid slice"
               width="399"
               height="249.375"
-              :xlink:href="landing_one"/>
+              :xlink:href="landing_one"
+            />
           </pattern>
           <pattern id="e" width="1" height="1" viewBox="0 0 268 169">
             <!-- Girums pic -->
@@ -36,7 +41,8 @@
               preserveAspectRatio="xMidYMid slice"
               width="268"
               height="212.725"
-              :xlink:href="landing_two"  />
+              :xlink:href="landing_two"
+            />
           </pattern>
           <pattern id="f" width="1" height="1" viewBox="0 0 54.61 98.05">
             <image
@@ -53,10 +59,7 @@
             height="100%"
             viewBox="0 0 1280 800"
           >
-            <image
-              width="1280"
-              height="800"
-              :xlink:href="landing_two"/>
+            <image width="1280" height="800" :xlink:href="landing_two" />
           </pattern>
           <filter
             id="b"
@@ -224,6 +227,7 @@ import landing_three from "../images/landing_three";
 import landing_two from "../images/landing_two";
 import landing_one from "../images/landing_one";
 export default {
+  props: ["isDarkMode"],
   setup() {
     const { showElement, wrapperRef } = useIntersectionObserver("2%");
     return {

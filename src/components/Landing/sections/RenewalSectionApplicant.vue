@@ -1,7 +1,11 @@
 <template>
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
-    class="w-full bg-white flex justify-center items-center py-large sm:py-xl renewal-wrapper"
+    :class="
+      isDarkMode
+        ? 'w-full bg-secondaryDark text-white flex justify-center items-center py-large sm:py-xl renewal-wrapper'
+        : 'w-full bg-white text-main-400 flex justify-center items-center py-large sm:py-xl renewal-wrapper'
+    "
     ref="wrapperRef"
   >
     <section
@@ -93,7 +97,9 @@
           />
 
           <path
-            style="fill: url(#SVGID_00000139274009759108834900000011828330170416738211_)"
+            style="
+              fill: url(#SVGID_00000139274009759108834900000011828330170416738211_);
+            "
             d="M520,78.7c-56.9,0-103.2,46.2-103.2,103.1
 		S463.1,285,520,285s103.1-46.2,103.1-103.2C623.1,125,576.8,78.7,520,78.7L520,78.7z M520,90.9c50.1,0,90.9,40.8,90.9,91
 		c0,18.2-5.4,35.1-14.6,49.3c-13.4-14.8-30.5-25.3-49.5-30.4c11.9-8.4,19.6-22.2,19.6-37.8c0-25.6-20.8-46.4-46.4-46.4
@@ -104,7 +110,9 @@
           />
 
           <path
-            style="fill: url(#SVGID_00000036937789321318926510000005519152967707838367_)"
+            style="
+              fill: url(#SVGID_00000036937789321318926510000005519152967707838367_);
+            "
             d="M204.4,401.4
 		c-56.9,0-103.2,46.2-103.2,103.1s46.3,103.2,103.2,103.2s103.1-46.3,103.1-103.2C307.5,447.7,261.3,401.4,204.4,401.4L204.4,401.4z
 		 M204.4,595.5c-27.5,0-52.2-12.3-68.9-31.7c17.2-20.2,42-31.7,68.8-31.7h0.1h0.1c26.7,0,51.5,11.6,68.7,31.8
@@ -139,7 +147,9 @@
           />
 
           <path
-            style="fill: url(#SVGID_00000152258613290190427970000014672087932831548319_)"
+            style="
+              fill: url(#SVGID_00000152258613290190427970000014672087932831548319_);
+            "
             d="M325.5,228l1.4,0.1l6-1.2l3.6-2.1l0.5-0.8
 	h1l1.2,0.9l0.5,0.9l0.8,1.2l1.4,0.2l3.4-0.8l1.7-0.5l1.4,0.4l1.8,0.3h1.1l2.7,1.2l3.2-0.4l1.5,0.1l1.6,0.5l2.6,1.9l3.3,2.3l4.8,1.6
 	l1,0.7l2.3,2.6l3.6,4.9l4.7,4.7l5.1,3.7l2.7,2.6l1.8,3.1l1.8,2.8l1.8,1.2l1.7,1l1.8,2.2l1.3,1.8l1.7,2.1l-1.9,2.8l-2.6,3.8l-3,4.4
@@ -170,14 +180,14 @@
           v-if="showElement"
         >
           <div class="flex flex-col items-center">
-            <h1 class="text-3xl sm:text-largeDisplay text-main-400 -mb-small">
+            <h1 class="text-3xl sm:text-largeDisplay  -mb-small">
               Ethiopian from abroad Applicants
             </h1>
           </div>
-          <h5 class="mt-small text-2xl text-main-400 text-center">
-            All your educational document should be authenticated by the Ethiopian
-            ministry of foreign affairs and you should have an equivalence letter from the
-            Educational and Training Authority (ETA)
+          <h5 class="mt-small text-2xl  text-center">
+            All your educational document should be authenticated by the
+            Ethiopian ministry of foreign affairs and you should have an
+            equivalence letter from the Educational and Training Authority (ETA)
           </h5>
         </section>
       </transition>
@@ -188,6 +198,7 @@
 import useIntersectionObserver from "@/composables/useIntersectionObserver";
 
 export default {
+  props: ["isDarkMode"],
   setup() {
     const { showElement, wrapperRef } = useIntersectionObserver();
     return {

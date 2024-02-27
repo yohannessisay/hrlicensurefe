@@ -1,17 +1,19 @@
 <template>
-  <div class="overflow-x-hidden bg-white">
-    <LandingTopNav @setShowLogin="showLogin = true" />
-    <GetCertifiedSection @setShowSignup="showSignUp = true" />
-    <NewLicenseSection />
-    <RenewalSection />
-    <VerificationSection />
-    <GoodStandingSection />
-    <DeviceAccessibilitySection />
-    <MinistryOfHealthSection />
-    <FooterSection />
-
-
- 
+  <div :class="isDarkMode?'overflow-x-hidden bg-secondaryDark':'overflow-x-hidden bg-white'">
+    <div class="float-container" @click="toggleDarkMode()">
+      <a href="#" :class="isDarkMode ? 'icon two' : 'icon one'">
+        <span>{{ isDarkMode ? "Light Mode" : " Dark Mode" }}</span></a
+      >
+    </div>
+    <LandingTopNav :isDarkMode="isDarkMode" />
+    <GetCertifiedSection :isDarkMode="isDarkMode" />
+    <NewLicenseSection :isDarkMode="isDarkMode" />
+    <RenewalSection :isDarkMode="isDarkMode" />
+    <VerificationSection :isDarkMode="isDarkMode" />
+    <GoodStandingSection :isDarkMode="isDarkMode" />
+    <DeviceAccessibilitySection :isDarkMode="isDarkMode" />
+    <MinistryOfHealthSection :isDarkMode="isDarkMode" />
+    <FooterSection :isDarkMode="isDarkMode" />
   </div>
 </template>
 <script>
@@ -24,8 +26,8 @@ import VerificationSection from "./sections/VerificationSection";
 import GoodStandingSection from "./sections/GoodStandingSectionApplicant.vue";
 import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
 import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
-import FooterSection from "./sections/FooterSection"; 
- 
+import FooterSection from "./sections/FooterSection";
+import darkModeService from "../Applicant/Shared/services/darkModeService";
 
 export default {
   components: {
@@ -37,12 +39,12 @@ export default {
     GoodStandingSection,
     DeviceAccessibilitySection,
     MinistryOfHealthSection,
-    FooterSection, 
+    FooterSection,
   },
   setup() {
-    onMounted(() => {});
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     const showLogin = ref(false);
-    const showSignUp = ref(false); 
+    const showSignUp = ref(false);
     const redirectToSignup = () => {
       showLogin.value = false;
       showSignUp.value = true;
@@ -53,14 +55,29 @@ export default {
     };
     const forgotPassword = () => {
       showLogin.value = false;
-      showSignUp.value = false; 
+      showSignUp.value = false;
     };
+    const initiateDarkMode = () => {
+      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
+        darkModeService.dark();
+      } else {
+        darkModeService.light();
+      }
+    };
+    const toggleDarkMode = () => {
+      isDarkMode.value = darkModeService.modeToggle(isDarkMode.value);
+    };
+    onMounted(() => {
+      initiateDarkMode();
+    });
     return {
       showLogin,
       showSignUp,
       redirectToSignup,
       redirectToLogin,
-      forgotPassword, 
+      forgotPassword,
+      isDarkMode,
+      toggleDarkMode,
     };
   },
 };
@@ -123,5 +140,125 @@ export default {
 .slide-fade-to-left-leave-to {
   transform: translateX(30px);
   opacity: 0;
+}
+
+.float-container {
+  position: fixed;
+  top: 33%;
+  z-index: 9999;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+
+.float-container a {
+  z-index: 99;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 110px;
+  height: 50px;
+  margin-right: -70px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  color: white;
+  border-color: #46b8da;
+  border-radius: 100px;
+  background-color: #07677e;
+  -webkit-box-shadow: 0 2px 4px #7d7d7d;
+  box-shadow: 0 2px 4px #7d7d7d;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  font-family: sans-serif;
+}
+.float-container a span {
+  margin-left: -16px;
+}
+.float-container a:hover {
+  margin-right: -20px;
+  background-color: #07677e;
+  -webkit-box-shadow: 0 2px 4px #c7c7c7;
+  box-shadow: 0 2px 4px #c9c6c6;
+}
+
+.float-container .icon:before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 25px;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+.icon.one:before {
+  content: "\f186";
+}
+.icon.two:before {
+  content: "\1F323";
+}
+
+@media screen and (max-width: 760px) {
+  .float-container {
+    position: fixed;
+    z-index: 9999px;
+    top: 50%;
+    right: 0;
+    margin-left: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+  .float-container a span {
+    margin-left: 0px;
+  }
+  .float-container a {
+    z-index: 99;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 70px;
+    height: 50px;
+    margin-right: -30px;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    color: white;
+    border-color: #46b8da;
+    border-radius: 100px;
+    background-color: #07677e;
+    -webkit-box-shadow: 0 2px 4px #313131;
+    box-shadow: 0 2px 4px #3f3f3f;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    font-family: sans-serif;
+  }
 }
 </style>

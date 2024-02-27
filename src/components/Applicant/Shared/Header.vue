@@ -66,7 +66,7 @@
             locale ? locale.toUpperCase() : ""
           }}</span>
           <ul
-            class="dropdown-menu absolute hidden p-2 sm:w-40 text-gray-700 bg-primary-300 rounded-md shadow-md"
+            class="dropdown-menu absolute hidden p-2 sm:w-40 text-gray-700 bg-main-400 rounded-md shadow-md"
           >
             <li
               @click="changeLocale('am')"
@@ -126,7 +126,7 @@
                 </svg>
 
                 <a
-                  class="bg-gray-200 text-white hover:text-green-200 py-2 block whitespace-no-wrap"
+                  class="bg-gray-200 text-white   py-2 block whitespace-no-wrap"
                   href="#"
                   >Amharic</a
                 >
@@ -187,7 +187,7 @@
                 </svg>
 
                 <a
-                  class="bg-gray-200 text-white hover:text-green-200 hover:bg-gray-400 py-2 block whitespace-no-wrap"
+                  class="bg-gray-200 text-white  hover:bg-gray-400 py-2 block whitespace-no-wrap"
                   href="#"
                   >English</a
                 >

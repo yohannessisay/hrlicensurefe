@@ -1,7 +1,7 @@
 <template>
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
-    class="w-full bg-main-400 flex justify-center items-center py-large sm:py-xl box-border"
+    :class="isDarkMode?'w-full bg-primaryDark text-white flex justify-center items-center py-large sm:py-xl box-border':'w-full bg-main-400 flex justify-center items-center py-large sm:py-xl box-border'"
     ref="wrapperRef"
   >
     <section
@@ -110,14 +110,11 @@
             <h1
               class="text-3xl sm:text-largeDisplay white-text-gradient -mb-tiny sm:-mb-small"
             >
-              Foreign Applicants
+              {{$t('Foreign Applicants')}}
             </h1>
           </div>
           <h5 class="mt-small text-2xl text-primary-100 text-center">
-            All foreigner applicants must authenticate their educational document and
-            professional license. Applicants must have at least two years of work
-            experience when applying and applicants must have a valid passport in order to
-            apply
+         {{$t('All foreigner applicants must authenticate their educational document and professional license. Applicants must have at least two years of work  experience when applying and applicants must have a valid passport in order to apply')}}
           </h5>
         </section>
       </transition>
@@ -128,6 +125,7 @@
 <script>
 import useIntersectionObserver from "@/composables/useIntersectionObserver";
 export default {
+  props:['isDarkMode'],
   setup() {
     const { showElement, wrapperRef } = useIntersectionObserver();
     return {

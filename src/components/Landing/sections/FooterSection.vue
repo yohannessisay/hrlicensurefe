@@ -1,10 +1,17 @@
 <template>
-  <h2 class="text-primary-200 blue-gradient-dark p-small text-sm sm:text-lg">
-   electronical Health Professional Licensing (eHPL)  © Ministry of Health - Ethiopia {{ new Date().getFullYear() }}
+  <h2
+    :class="
+      isDarkMode
+        ? 'text-primary-200 bg-primaryDark   p-small text-base sm:text-lg'
+        : 'text-primary-200 bg-main-400 p-small text-base sm:text-lg'
+    "
+  >
+    electronical Health Professional Licensing (eHPL) © Ministry of Health -
+    Ethiopia {{ new Date().getFullYear() }}
   </h2>
 </template>
-<style lang="postcss" scoped>
-h2 {
-  background-image: linear-gradient(to right, #07677e, #03333F);
-}
-</style>
+<script>
+export default {
+  props: ["isDarkMode"],
+};
+</script> 
