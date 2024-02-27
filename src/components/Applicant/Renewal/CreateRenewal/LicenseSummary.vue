@@ -85,7 +85,7 @@ export default {
     let buttons = ref([]);
     let tempDocs = ref({});
     let allowSave = ref(false);
-    const showModal = ref(false); 
+    const showModal = ref(false);
     const changeAgreement = (value) => {
       if (value && value != "") {
         agreed.value = value;
@@ -112,7 +112,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
-      if (agreed.value == true || action == "DraftEvent") {
+      if (agreed.value || action == "DraftEvent") {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -272,7 +272,7 @@ export default {
       }
       emit("changeActiveStateMinus");
     };
-    onMounted(() => {
+    onMounted(() => { 
       fetchApplicationStatuses();
       tempDocs.value = store.getters["renewal/getTempDocs"];
       localData.value = window.localStorage.getItem("RNApplicationData")
@@ -289,12 +289,11 @@ export default {
         let db = request.result;
         const tx = db.transaction("RNdocumentUploads", "readonly");
         const store = tx.objectStore("RNdocumentUploads");
-        let getAllIDB = store.getAll();
-
+        let getAllIDB = store.getAll(); 
         getAllIDB.onsuccess = function (evt) {
-          localFileData.value = evt.target.result ? evt.target.result : {};
-          
-          localFileData.value[0].data.forEach((element) => {
+          localFileData.value =  evt?.target?.result;
+         
+          localFileData?.value[0]?.data.forEach((element) => {
             totalSize.value += Number(
               Math.ceil((element.image.length * 6) / 8 / 1000)
             );
@@ -320,11 +319,11 @@ export default {
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       }
-    }); 
+    });
     return {
       localData,
       totalSize,
-      localFileData, 
+      localFileData,
       generalInfo,
       agreed,
       buttons,

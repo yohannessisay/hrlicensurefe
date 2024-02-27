@@ -129,8 +129,7 @@ export default {
       isLoading.value = true;
       store
         .dispatch("reviewer/addNewLicenseRequest", request.value)
-        .then((res) => {
-          console.log(res);
+        .then((res) => { 
           isLoading.value = false;
           if (res.data.status && res.data.status == "Error") {
             toast.error("Unresolved request already exists for the selected license", {

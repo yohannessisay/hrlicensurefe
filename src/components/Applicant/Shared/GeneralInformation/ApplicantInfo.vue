@@ -8,7 +8,7 @@
   >
     <!-- applicant type -->
     <div class="grid grid-cols-1 sm:grid-cols-3">
-      <div class=" ">
+      <div class=" mb-4">
         <label
           :class="
             isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'
