@@ -736,7 +736,7 @@ export default {
         educationalDocs.value,
         documentsUploaded.value,
         renewalDocuments.value
-      ); 
+      );
       fileUploadError.value = documentValidation.fileUploadError
         ? documentValidation.fileUploadError
         : [];
@@ -808,7 +808,6 @@ export default {
             };
 
             transaction.oncomplete = function () {
-              console.log("data stored");
               let tempRN = localStorage.getItem("tempRN")
                 ? JSON.parse(localStorage.getItem("tempRN"))
                 : {};
@@ -961,10 +960,7 @@ export default {
         const store = tx.objectStore("RNdocumentUploads");
         let getAllIDB = store.getAll();
         getAllIDB.onsuccess = function (evt) {
-          existingDocs =
-            evt.target.result && evt.target.result[0]
-              ? evt.target.result[0].data
-              : {};
+          existingDocs =  evt?.target?.result[0]?.data 
         };
       };
 

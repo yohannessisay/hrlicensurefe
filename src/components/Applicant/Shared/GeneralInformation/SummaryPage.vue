@@ -379,14 +379,15 @@
               </h3>
             </div>
           </div>
-         
+
           <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 w-full">
             <div
               class="mt-4 mb-2 sm:mb-8 border p-2 rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
-              v-for="localFileData in updatedLocalImages?updatedLocalImages[0].data:[]"
+              v-for="localFileData in updatedLocalImages
+                ? updatedLocalImages[0]?.data
+                : []"
               :key="localFileData.documenttype"
             >
-           
               <div class="flex justify-center">
                 <div class="mt-4 rounded-md">
                   <a

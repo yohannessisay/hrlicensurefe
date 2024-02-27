@@ -2168,8 +2168,7 @@ export default {
           });
       }
     };
-    const changeAction = (action) => {
-      console.log(action);
+    const changeAction = (action) => { 
       superviseAction.value = action;
     };
 
