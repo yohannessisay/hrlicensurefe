@@ -960,7 +960,7 @@ export default {
         const store = tx.objectStore("RNdocumentUploads");
         let getAllIDB = store.getAll();
         getAllIDB.onsuccess = function (evt) {
-          existingDocs =  evt?.target?.result[0]?.data 
+          existingDocs = evt?.target?.result[0]?.data;
         };
       };
 
@@ -1011,7 +1011,7 @@ export default {
                   categoryResults[0].id,
                   generalInfo.value.applicantTypeSelected.id,
                   element.educationalLevel.id,
-                  element.department.id,
+                  element.department ? element.department.id : null,
                 ])
                 .then((res) => {
                   let resp = res.data.data;

@@ -41,7 +41,7 @@
         </button>
         <button
           class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
-          @click="back()"
+          @click="$emit('changeActiveStateMinus')"
         >
           {{ $t("Back") }}
         </button>
@@ -93,7 +93,7 @@ export default {
     const route = useRoute();
     const showModal = ref(false);
     let allowSave = ref(false);
-    const changeAgreement = (value) => {
+    const changeAgreement = value => {
       if (value && value != "") {
         agreed.value = value;
       }
@@ -103,10 +103,10 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => {
+    const checkFinalStatus = action => {
       generalInfo.value.licenseFile = [];
 
-     if (agreed.value) {
+      if (agreed.value) {
         isLoading.value = true;
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
@@ -152,9 +152,9 @@ export default {
               isLegal: true,
               feedback: generalInfo.value.feedback
                 ? generalInfo.value.feedback
-                : "",
-            },
-          },
+                : ""
+            }
+          }
         };
         showModal.value = true;
         store.dispatch("renewal/updateDraft", license).then(() => {
@@ -162,7 +162,7 @@ export default {
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("renewal/updateDocuments", payload)
-            .then((res) => {
+            .then(res => {
               isLoading.value = false;
               if (res.data.status == "Success") {
                 localStorage.removeItem("applicantTypeSelected");
@@ -174,7 +174,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
 
                 router.push({ path: "/Applicant/Renewal/submitted" });
@@ -184,7 +184,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
               }
             })
@@ -195,7 +195,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
             });
         });
@@ -205,38 +205,37 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
-      window.addEventListener("darkModeChanged", (data) => {
+      window.addEventListener("darkModeChanged", data => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
       fileIsLoading.value = true;
       store
         .dispatch("renewal/getRenewalApplication", route.params.id)
-        .then((res) => {
+        .then(res => {
           savedData.value = res.data.data;
 
           buttons.value = store.getters["renewal/getButtons"];
 
           buttons.value = buttons.value.filter(
-            (ele) => ele.code != "AT" && ele.code != "DRA"
+            ele => ele.code != "AT" && ele.code != "DRA"
           );
           tempDocs.value = store.getters["renewal/getTempDocs"];
 
           localData.value = window.localStorage.getItem("RNApplicationData")
             ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
-            : {};
-
+            : {}; 
           generalInfo.value = localData.value;
           generalInfo.value.feedback = "";
           if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("renewal/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+            store.dispatch("renewal/getExpertLevel").then(res => {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("REG");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
             });
           } else {
-            store.dispatch("renewal/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+            store.dispatch("renewal/getExpertLevel").then(res => {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("FED");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
@@ -245,17 +244,17 @@ export default {
           //Get images from indexed Db
           let request = indexedDB.open("RNdocumentUploads", 1);
 
-          request.onerror = function () {
+          request.onerror = function() {
             console.error("Unable to open database.");
           };
 
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             let db = request.result;
             const tx = db.transaction("RNdocumentUploads", "readonly");
             const store = tx.objectStore("RNdocumentUploads");
             let getAllIDB = store.getAll();
 
-            getAllIDB.onsuccess = function (evt) {
+            getAllIDB.onsuccess = function(evt) {
               localFileImages.value = evt.target.result
                 ? JSON.parse(
                     JSON.stringify(
@@ -263,15 +262,15 @@ export default {
                     )
                   )
                 : {};
-              localFileImages.value.forEach((element) => {
+              localFileImages.value.forEach(element => {
                 totalSize.value += Number(
                   Math.ceil((element.image.length * 6) / 8 / 1000)
                 );
               });
               totalSize.value = totalSize.value / 1000;
               if (localFileImages.value && savedData.value.documents) {
-                savedData.value.documents.forEach((ele) => {
-                  localFileImages.value.forEach((newFile) => {
+                savedData.value.documents.forEach(ele => {
+                  localFileImages.value.forEach(newFile => {
                     if (
                       (newFile.commonDocCode &&
                         newFile.commonDocCode == ele.fileName) ||
@@ -281,7 +280,7 @@ export default {
                         docName: newFile.documentName,
                         prevFile: googleApi + ele.filePath,
                         newFile: newFile.image,
-                        id: newFile.documenttype,
+                        id: newFile.documenttype
                       });
                     }
                   });
@@ -291,12 +290,12 @@ export default {
               if (localData.value.professionChanged == true) {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
-                localFileImages.value.forEach((element) => {
+                localFileImages.value.forEach(element => {
                   if (!element.commonDocCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
-                      path: element.image,
+                      path: element.image
                     });
                   }
                 });
@@ -308,7 +307,7 @@ export default {
           fileIsLoading.value = false;
         });
     });
-    const isPDF = (filename) => {
+    const isPDF = filename => {
       const parts = filename.split(".");
       const isPdf =
         parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
@@ -324,7 +323,7 @@ export default {
       prevDocs,
       buttons,
       changedDocs,
-      isLoading, 
+      isLoading,
       back,
       googleApi,
       showModal,
@@ -335,9 +334,9 @@ export default {
       progress,
       fileIsLoading,
       totalSize,
-      isDarkMode,
+      isDarkMode
     };
-  },
+  }
 };
 </script>
 <style>

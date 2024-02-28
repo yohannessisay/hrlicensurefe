@@ -92,25 +92,19 @@
           data-bs-parent="#FilesAccordion"
         >
           <div class="accordion-body sm:p-2">
-            <div
-              v-for="table in educationalDocs"
-              :key="table"
-              class="accordion-body sm:p-4ounded-lg"
-            >
-              <div class="accordion-body sm:p-1 p-0">
-                <FileUploadTable
-                  :headers="commonFileUploadHeaders"
-                  :fileUploadError="fileUploadError"
-                  :isDarkMode="isDarkMode"
-                  :educationalDocs="educationalDocs"
-                  :showNestedDocuments="showNestedDocuments"
-                  :documentsSaved="documentsSaved"
-                  @handleFileUpload="handleFileUpload"
-                  @addMore="addMore"
-                  @removeChildUpload="removeChildUpload"
-                >
-                </FileUploadTable>
-              </div>
+            <div class="accordion-body sm:p-1 p-0">
+              <FileUploadTable
+                :headers="commonFileUploadHeaders"
+                :fileUploadError="fileUploadError"
+                :isDarkMode="isDarkMode"
+                :educationalDocs="educationalDocs"
+                :showNestedDocuments="showNestedDocuments"
+                :documentsSaved="documentsSaved"
+                @handleFileUpload="handleFileUpload"
+                @addMore="addMore"
+                @removeChildUpload="removeChildUpload"
+              >
+              </FileUploadTable>
             </div>
           </div>
         </div>
@@ -135,7 +129,7 @@
     <div class="flex justify-end mr-8 mb-12">
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
-        @click="back()"
+        @click="$emit('changeActiveStateMinus')"
       >
         {{ $t("Back") }}
       </button>
@@ -164,7 +158,7 @@ import FileUploadTable from "../../Shared/SavedFileUpload/FileUploadTable.vue";
 import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 export default {
   components: { Loading, CommonFileUploadTable, FileUploadTable },
-
+  props: ["activeState"],
   setup(props, { emit }) {
     let isLoading = ref(false);
     const toast = useToast();
@@ -939,9 +933,11 @@ export default {
             );
             let isLicenseDesignation = localData
               ? localData.is_license_designation
+              : res.data.data
+              ? res.data.data.is_license_designation
               : false;
             let professionChanged = localData.professionChanged;
-            generalInfo.value = await res.data.data;
+            generalInfo.value = localData;
             if (professionChanged && professionChanged == true) {
               generalInfo.value?.documents
                 ? generalInfo.value?.documents.forEach((element) => {
@@ -966,9 +962,9 @@ export default {
               documentsUploaded.value = documentsSaved.value;
             }
 
-            store
+            await store
               .dispatch("newlicense/getApplicationCategories")
-              .then((res) => {
+              .then(async (res) => {
                 let categoryResults = res.data.data
                   ? res.data.data.filter((ele) => ele.code == "NA")
                   : "";
@@ -981,16 +977,22 @@ export default {
                     : [];
 
                 //Get department docs
-                educationLevels.forEach((element) => {
+                educationalDocs.value = [];
+                await educationLevels.forEach((element) => {
                   store
                     .dispatch("newlicense/getNLdocuments", [
                       categoryResults[0].id,
                       generalInfo.value.applicantType.id,
-                      element.educationLevel ? element.educationLevel.id : "",
+                      element.educationLevel
+                        ? element.educationLevel.id
+                        : element.educationalLevel
+                        ? element.educationalLevel.id
+                        : "",
                       null,
                     ])
-                    .then((res) => {
+                    .then(async (res) => {
                       let resp = res.data.data;
+
                       if (isLicenseDesignation == true) {
                         resp = resp.filter(
                           (ed) =>
@@ -1004,14 +1006,19 @@ export default {
                             ed.documentType.code !== "SENSUP"
                         );
                       }
-                      newLicenseDocuments.value = res.data.data;
+
+                      newLicenseDocuments.value = resp;
                       educationalDocs.value.push({
                         professionType:
                           element && element.professionType
                             ? element.professionType
+                            : element && element.professionalType
+                            ? element.professionalType
                             : "",
                         educationalLevel: element.educationLevel
                           ? element.educationLevel
+                          : element.educationalLevel
+                          ? element.educationalLevel
                           : "",
                         docs: resp.filter(
                           (element) =>
@@ -1020,9 +1027,11 @@ export default {
                         ),
                         parentDoc: groupByKey(resp, "parentDocument"),
                       });
+
                       isLoading.value = false;
                     });
                 });
+
                 //Get Common Docs
 
                 store
@@ -1043,9 +1052,7 @@ export default {
           }
         });
     });
-    const back = () => {
-      emit("changeActiveStateMinus");
-    };
+
     const removeChildUpload = (docCode) => {
       showNestedDocuments.value[docCode] -= 1;
     };
@@ -1064,7 +1071,6 @@ export default {
       showPreview,
       handleCommonFileUpload,
       generalInfo,
-      back,
       goToNext,
       educationalDocs,
       imageUploader,

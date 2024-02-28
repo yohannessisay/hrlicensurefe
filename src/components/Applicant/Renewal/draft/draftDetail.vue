@@ -2,13 +2,13 @@
   <main-content :url="'renewal'">
     <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
 
-    <div class="vld-parent">
+    <div class="vld-parent mt-4">
       <loading
         :active="isLoading"
-        :can-cancel="true"
         :is-full-page="false"
         :color="'#2F639D'"
-        :opacity="0.7"
+        :opacity="0.6"
+        class="rounded-md"
       ></loading>
       <div v-if="invalidLicenseStat == false">
         <div
@@ -88,6 +88,7 @@
             <AddedDepartmentTable
               :isDarkMode="isDarkMode"
               :generalInfo="generalInfo"
+              @removeDepartment="removeDepartment"
             ></AddedDepartmentTable>
             <div class="flex justify-end mb-2 mr-1">
               <button
@@ -121,8 +122,8 @@
           <div v-if="activeState == 2">
             <Upload
               :activeState="2"
-              @changeActiveState="activeState++"
-              @changeActiveStateMinus="activeState--"
+              @changeActiveState="next"
+              @changeActiveStateMinus="back"
             />
           </div>
         </transition>
@@ -130,8 +131,8 @@
           <div v-if="activeState == 3">
             <LicenseSummary
               :activeState="3"
-              @changeActiveState="activeState++"
-              @changeActiveStateMinus="activeState--"
+              @changeActiveState="next"
+              @changeActiveStateMinus="back"
             />
           </div>
         </transition>
@@ -463,6 +464,7 @@ export default {
       departments.value = await fetchData("newlicense/getDepartmentType");
       educationalLevels.value = await fetchData("lookups/getEducationLevel");
       regions.value = await fetchData("newlicense/getRegions");
+      regions.value = regions.value?.filter((el) => el.code != "FED");
       occupations.value = await fetchData("lookups/getGovernment");
       const statuses = await fetchData("newlicense/getApplicationStatuses");
 
@@ -522,12 +524,21 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
-             generalInfo.value.occupationSelected = res.data.data.occupationTypes;
+          generalInfo.value.occupationSelected = res.data.data.occupationTypes;
           generalInfo.value.languageSelected = res.data.data.nativeLanguages;
           isLoading.value = false;
         });
     });
+    const back = () => {
+      activeState.value -= 1;
+    };
+    const next = () => {
+      activeState.value += 1;
+    };
+
     return {
+      back,
+      next,
       applicantTypeChangeHandler,
       regionChangeHandler,
       zoneChangeHandler,
@@ -577,7 +588,7 @@ export default {
       occupationChangeHandler,
       woredaChangeHandler,
       isDarkMode,
-      path
+      path,
     };
   },
 };

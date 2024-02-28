@@ -268,7 +268,7 @@
       :class="
         isDarkMode
           ? 'bg-secondaryDark text-white my-1 px-1 md:w-1/4 lg:w-1/4   sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-          : 'bg-white my-1 text-green-200 px-1 md:w-1/4 lg:w-1/4  sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+          : 'bg-white my-1 text-grey-800 px-1 md:w-1/4 lg:w-1/4  sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
       "
     >
       <!-- Article -->

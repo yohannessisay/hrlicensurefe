@@ -41,7 +41,7 @@
         </button>
         <button
           class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
-          @click="back()"
+          @click="$emit('changeActiveStateMinus')"
         >
           {{ $t("Back") }}
         </button>
@@ -70,7 +70,7 @@ import UploadProgress from "../../Shared/GeneralInformation/UploadProgress.vue";
 import SummaryPage from "../../Shared/GeneralInformation/SummaryPage.vue";
 export default {
   components: { Loading, UploadProgress, SummaryPage },
-  setup(props, { emit }) {
+  setup( ) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
@@ -205,9 +205,7 @@ export default {
         });
       }
     };
-    const back = () => {
-      emit("changeActiveStateMinus");
-    };
+ 
     onMounted(() => {
       window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
@@ -325,8 +323,7 @@ export default {
       buttons,
       changedDocs,
       isLoading,
-      changeAgreement,
-      back,
+      changeAgreement, 
       googleApi,
       allowSave,
       checkFinalStatus,

@@ -88,6 +88,7 @@
             <AddedDepartmentTable
               :isDarkMode="isDarkMode"
               :generalInfo="generalInfo"
+              @removeDepartment="removeDepartment"
             ></AddedDepartmentTable>
             <div class="flex justify-end mb-2 mr-1">
               <button
@@ -121,8 +122,8 @@
           <div v-if="activeState == 2">
             <Upload
               :activeState="2"
-              @changeActiveState="activeState++"
-              @changeActiveStateMinus="activeState--"
+              @changeActiveState="next"
+              @changeActiveStateMinus="back"
             />
           </div>
         </transition>
@@ -130,8 +131,8 @@
           <div v-if="activeState == 3">
             <LicenseSummary
               :activeState="3"
-              @changeActiveState="activeState++"
-              @changeActiveStateMinus="activeState--"
+              @changeActiveState="next"
+              @changeActiveStateMinus="back"
             />
           </div>
         </transition>
@@ -412,7 +413,10 @@ export default {
       generalInfo.value.educations.splice(index, 1);
       generalInfo.value.professionChanged = true;
     };
-    const addMultiple = async () => {
+    const addMultiple = async (localGeneralInfo) => {
+      if (localGeneralInfo) {
+        generalInfo.value = localGeneralInfo;
+      }
       let result = await AddMultipleDepartment(
         generalInfo.value,
         showOtherProfession.value,
@@ -473,6 +477,7 @@ export default {
       departments.value = await fetchData("newlicense/getDepartmentType");
       educationalLevels.value = await fetchData("lookups/getEducationLevel");
       regions.value = await fetchData("newlicense/getRegions");
+      regions.value = regions.value?.filter((el) => el.code != "FED");
       occupations.value = await fetchData("lookups/getGovernment");
       const statuses = await fetchData("newlicense/getApplicationStatuses");
 
@@ -543,7 +548,15 @@ export default {
           }
         });
     });
+    const back = () => {
+      activeState.value -= 1;
+    };
+    const next = () => {
+      activeState.value += 1;
+    };
     return {
+      back,
+      next,
       applicantTypeChangeHandler,
       regionChangeHandler,
       zoneChangeHandler,

@@ -26,6 +26,7 @@ const i18n = createI18n({
   legacy: false,
   locale: "en",
   fallbackLocale: "en",
+  missingWarn: false, 
   messages: {
     en: require("./locales/en.json"),
     am: require("./locales/am.json"),

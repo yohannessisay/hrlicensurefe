@@ -539,6 +539,7 @@ export default {
         departments.value = await fetchData("newlicense/getDepartmentType");
         educationalLevels.value = await fetchData("lookups/getEducationLevel");
         regions.value = await fetchData("newlicense/getRegions");
+        regions.value = regions.value?.filter((el) => el.code != "FED");
         occupations.value = await fetchData("lookups/getGovernment");
         localData.value = window.localStorage.getItem("RNApplicationData")
           ? JSON.parse(window.localStorage.getItem("RNApplicationData"))

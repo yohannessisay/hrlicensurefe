@@ -90,34 +90,44 @@
           data-bs-parent="#FilesAccordion"
         >
           <div class="accordion-body sm:p-2">
-            <div
-              v-for="table in educationalDocs"
-              :key="table"
-              class="accordion-body sm:p-4ounded-lg"
-            >
-              <div class="accordion-body sm:p-1 p-0">
-                <FileUploadTable
-                  :headers="commonFileUploadHeaders"
-                  :fileUploadError="fileUploadError"
-                  :isDarkMode="isDarkMode"
-                  :educationalDocs="educationalDocs"
-                  :showNestedDocuments="showNestedDocuments"
-                  :documentsSaved="documentsSaved"
-                  @handleFileUpload="handleFileUpload"
-                  @addMore="addMore"
-                  @removeChildUpload="removeChildUpload"
-                >
-                </FileUploadTable>
-              </div>
+            <div class="accordion-body sm:p-1 p-0">
+              <FileUploadTable
+                :headers="commonFileUploadHeaders"
+                :fileUploadError="fileUploadError"
+                :isDarkMode="isDarkMode"
+                :educationalDocs="educationalDocs"
+                :showNestedDocuments="showNestedDocuments"
+                :documentsSaved="documentsSaved"
+                @handleFileUpload="handleFileUpload"
+                @addMore="addMore"
+                @removeChildUpload="removeChildUpload"
+              >
+              </FileUploadTable>
             </div>
           </div>
         </div>
       </div>
     </div>
+      <div
+      class="shadow-md p-2 m-4 rounded-md text-yellow-300 border"
+      v-if="errorDocuments && errorDocuments.length > 0"
+    >
+      <h2 class="text-yellow-300 font-bold text-3xl border-b">
+        {{ $t("Please attach the following files to proceed") }}
+      </h2>
+      <li
+        class="text-yellow-300 text-xl font-bold p-2 m-1"
+        v-for="(error, index) in errorDocuments"
+        :key="error"
+      >
+        <small class="text-grey-800 text-xl">{{ index + 1 }}- </small>
+        {{ error.name }}
+      </li>
+    </div>
     <div class="flex justify-end mr-8 mb-12">
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
-        @click="back()"
+        @click="$emit('changeActiveStateMinus')"
       >
         {{ $t("Back") }}
       </button>
@@ -138,18 +148,21 @@ import Compressor from "compressorjs";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
+import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import CommonFileUploadTable from "../../Shared/SavedFileUpload/CommonFileUploadTable.vue";
 import FileUploadTable from "../../Shared/SavedFileUpload/FileUploadTable.vue";
+import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 export default {
   components: { Loading, CommonFileUploadTable, FileUploadTable },
-
+  props: ["activeState"],
   setup(props, { emit }) {
     let isLoading = ref(false);
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let store = useStore();
     const route = useRoute();
+    const toast = useToast();
     let documents = ref([]);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
@@ -550,46 +563,78 @@ export default {
       });
     };
 
-    const next = () => {
-      store.dispatch("renewal/setTempDocs", formData).then(() => {
-        //Save images to indexed Db
+    const next = async () => {
+      let documentValidation = await checkDocuments(
+        errorDocuments.value,
+        false,
+        commonDocuments.value,
+        fileUploadError.value,
+        educationalDocs.value,
+        documentsUploaded.value,
+        renewalDocuments.value
+      );
+      fileUploadError.value = documentValidation.fileUploadError
+        ? documentValidation.fileUploadError
+        : [];
+      errorDocuments.value = documentValidation.errorDocuments
+        ? documentValidation.errorDocuments
+        : [];
 
-        let finalLocalData = {
-          created: new Date(),
-          data: [],
-        };
-        let db;
-        let request = indexedDB.open("RNdocumentUploads", 1);
-        request.onsuccess = function () {
-          db = request.result;
-          let transaction = db.transaction(["RNdocumentUploads"], "readwrite");
+      if (errorDocuments.value && errorDocuments.value.length == 0) {
+        store.dispatch("renewal/setTempDocs", formData).then(() => {
+          //Save images to indexed Db
 
-          finalLocalData.data = imageData;
+          let finalLocalData = {
+            created: new Date(),
+            data: [],
+          };
+          let db;
+          let request = indexedDB.open("RNdocumentUploads", 1);
+          request.onsuccess = function () {
+            db = request.result;
+            let transaction = db.transaction(
+              ["RNdocumentUploads"],
+              "readwrite"
+            );
 
-          finalLocalData.data = [...new Set(finalLocalData.data)];
+            finalLocalData.data = imageData;
 
-          const objectStore = transaction.objectStore("RNdocumentUploads");
+            finalLocalData.data = [...new Set(finalLocalData.data)];
 
-          const objectStoreRequest = objectStore.clear();
+            const objectStore = transaction.objectStore("RNdocumentUploads");
 
-          objectStoreRequest.onsuccess = () => {
-            let addReq = transaction
-              .objectStore("RNdocumentUploads")
-              .put(finalLocalData);
+            const objectStoreRequest = objectStore.clear();
 
-            addReq.onerror = function () {
-              console.log(
-                "Error regarding your browser, please update your browser to the latest version"
-              );
-            };
+            objectStoreRequest.onsuccess = () => {
+              let addReq = transaction
+                .objectStore("RNdocumentUploads")
+                .put(finalLocalData);
 
-            transaction.oncomplete = function () {
-              console.log("data stored");
-              emit("changeActiveState");
+              addReq.onerror = function () {
+                console.log(
+                  "Error regarding your browser, please update your browser to the latest version"
+                );
+              };
+
+              transaction.oncomplete = function () {
+                console.log("data stored");
+                emit("changeActiveState");
+              };
             };
           };
-        };
-      });
+        });
+      } else {
+        toast.error(
+          "Please attach documents marked with red border and this icon (*) next to their name to proceed",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
+      }
     };
 
     const groupByKey = (array, key) => {
@@ -642,7 +687,11 @@ export default {
         .dispatch("renewal/getRenewalApplication", route.params.id)
         .then((res) => {
           if (res.data.data) {
-            generalInfo.value = res.data.data;
+            let localData = JSON.parse(
+              localStorage.getItem("RNApplicationData")
+            );
+
+            generalInfo.value = localData;
             generalInfo.value?.documents.forEach((element) => {
               documentsSaved.value[element.fileName] = {};
               documentsSaved.value[element.fileName].path =
@@ -655,8 +704,13 @@ export default {
               let categoryResults = res.data.data
                 ? res.data.data.filter((ele) => ele.code == "RA")
                 : "";
-              let educationLevels = generalInfo.value.educations;
-
+              let educationLevels =
+                generalInfo.value.multipleDepartment &&
+                generalInfo.value.multipleDepartment.length > 0
+                  ? generalInfo.value.multipleDepartment
+                  : generalInfo.value.educations
+                  ? generalInfo.value.educations
+                  : [];
               //Get department docs
               educationLevels.forEach((element) => {
                 store
@@ -668,7 +722,7 @@ export default {
                       : element.educationLevel
                       ? element.educationLevel.id
                       : "",
-                    element.department.id,
+                    element.department ? element.department.id : null,
                   ])
                   .then((res) => {
                     let resp = res.data.data;
@@ -677,13 +731,13 @@ export default {
                       professionType:
                         element && element.professionType
                           ? element.professionType
-                          : element
-                          ? element.professionTypeId
+                          : element && element.professionalType
+                          ? element.professionalType
                           : "",
-                      educationalLevel: element.educationalLevel
-                        ? element.educationalLevel
-                        : element.educationLevel
+                      educationalLevel: element.educationLevel
                         ? element.educationLevel
+                        : element.educationalLevel
+                        ? element.educationalLevel
                         : "",
                       docs: resp.filter(
                         (element) => element.parentDocument == null
