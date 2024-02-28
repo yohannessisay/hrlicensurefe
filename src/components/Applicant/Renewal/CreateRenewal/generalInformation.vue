@@ -547,10 +547,11 @@ export default {
           localData.value = [];
           localStorage.removeItem("RNApplicationData");
         }
+        applicantTypeChangeHandler();
         if (Object.keys(localData.value).length != 0) {
           generalInfo.value = localData.value;
           isAppTypeSelected.value = true;
-          applicantTypeChangeHandler();
+
           if (generalInfo.value.regionSelected) {
             regionChangeHandler();
             zoneChangeHandler();

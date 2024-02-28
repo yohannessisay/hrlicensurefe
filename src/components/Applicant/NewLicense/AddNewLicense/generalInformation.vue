@@ -16,7 +16,7 @@
             : 'text-main-400 text-xl lg:text-3xl border-b-4 font-bold sm:text-xl '
         "
       >
-        {{$t('General Information')}}
+        {{ $t("General Information") }}
       </h2>
     </div>
     <div class="vld-parent mt-4">
@@ -104,7 +104,7 @@
               type="submit"
               @click="saveDraft()"
             >
-              {{$t('Save as Draft')}}
+              {{ $t("Save as Draft") }}
             </button>
             <button
               :class="
@@ -116,7 +116,7 @@
               type="submit"
               @click="apply()"
             >
-              {{$t('Next')}}
+              {{ $t("Next") }}
             </button>
           </div>
         </div>
@@ -546,10 +546,11 @@ export default {
           localData.value = [];
           localStorage.removeItem("NLApplicationData");
         }
+        applicantTypeChangeHandler();
         if (Object.keys(localData.value).length != 0) {
           generalInfo.value = localData.value;
           isAppTypeSelected.value = true;
-          applicantTypeChangeHandler();
+
           if (generalInfo.value.regionSelected) {
             regionChangeHandler();
             zoneChangeHandler();
