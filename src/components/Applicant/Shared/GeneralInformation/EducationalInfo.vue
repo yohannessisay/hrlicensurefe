@@ -147,7 +147,7 @@
             ? 'px-4 mr-2 mb-4 bg-grey-300 text-primary-200 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400  transition duration-150 ease-in-out'
             : 'px-4 mr-2 mb-4 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400  transition duration-150 ease-in-out'
         "
-        @click="$emit('addMultiple')"
+        @click="$emit('addMultiple', localGeneralInfo)"
       >
         <i class="fa fa-plus"></i>
 

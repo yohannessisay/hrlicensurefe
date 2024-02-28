@@ -195,7 +195,7 @@ export const LLicenseSideBarItems = [
   },
   {
     id: 3,
-    name: "Draft",
+    name: "Declined",
     path: "/Applicant/LostLicense/declined",
     icon: "bx bxs-paste",
   },

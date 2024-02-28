@@ -1,10 +1,36 @@
+const convertOtherProf = inputString => {
+  let trimmedString = inputString.replace(/\s+/g, " ").trim();
+  let formattedString = trimmedString.replace(/\b\w/g, function(match) {
+    return match.toUpperCase();
+  });
+
+  return formattedString;
+};
+const convertOtherProfAmh = inputString => {
+  let trimmedString = inputString.replace(/\s+/g, " ").trim();
+
+  return trimmedString;
+};
+
 export async function AddMultipleDepartment(
   generalInfo,
   showOtherProfession,
   multipleDepartmentMaxError,
   multipleDepartmentError,
   checkForAddedError
-) { 
+) {
+  const checkForAdded = data => {
+    let tempStatus = false;
+    if (generalInfo.multipleDepartment) {
+      generalInfo.multipleDepartment.forEach(element => {
+        if (element.department.code == data.code) {
+          checkForAddedError = true;
+          tempStatus = true;
+        }
+      });
+      return tempStatus;
+    }
+  };
   if (
     generalInfo.departmentSelected &&
     generalInfo.educationalLevelSelected &&
@@ -20,7 +46,7 @@ export async function AddMultipleDepartment(
     ) {
       return {
         type: "error",
-        message: "Please fill other profession name in amharic and english",
+        message: "Please fill other profession name in amharic and english"
       };
     }
     if (generalInfo.multipleDepartment.length > 3) {
@@ -53,10 +79,10 @@ export async function AddMultipleDepartment(
               : "",
             otherProfessionalType: generalInfo.otherProfessionalType
               ? convertOtherProf(generalInfo.otherProfessionalType)
-              : "",
+              : ""
           });
 
-          generalInfo.education.push({
+          generalInfo.educations.push({
             departmentId: generalInfo.departmentSelected.id,
             educationalLevelId: generalInfo.educationalLevelSelected.id,
             institutionId: generalInfo.institutionSelected.id,
@@ -69,7 +95,7 @@ export async function AddMultipleDepartment(
               : "",
             otherProfessionType: generalInfo.otherProfessionalType
               ? convertOtherProf(generalInfo.otherProfessionalType)
-              : "",
+              : ""
           });
         }
       } else {
@@ -88,9 +114,9 @@ export async function AddMultipleDepartment(
             : "",
           otherProfessionalType: generalInfo.otherProfessionalType
             ? convertOtherProf(generalInfo.otherProfessionalType)
-            : "",
+            : ""
         });
-        generalInfo.education.push({
+        generalInfo.educations.push({
           departmentId: generalInfo.departmentSelected.id,
           educationalLevelId: generalInfo.educationalLevelSelected.id,
           institutionId: generalInfo.institutionSelected.id,
@@ -103,7 +129,7 @@ export async function AddMultipleDepartment(
             : "",
           otherProfessionType: generalInfo.otherProfessionalType
             ? convertOtherProf(generalInfo.otherProfessionalType)
-            : "",
+            : ""
         });
       }
       generalInfo.departmentSelected = "";
@@ -117,37 +143,13 @@ export async function AddMultipleDepartment(
   } else {
     multipleDepartmentError = true;
   }
-  const checkForAdded = (data) => {
-    let tempStatus = false;
-    if (generalInfo.multipleDepartment) {
-      generalInfo.multipleDepartment.forEach((element) => {
-        if (element.department.code == data.code) {
-          checkForAddedError = true;
-          tempStatus = true;
-        }
-      });
-      return tempStatus;
-    }
-  };
+
   let result = {
     generalInfo: generalInfo,
     showOtherProfession: showOtherProfession,
     multipleDepartmentMaxError: multipleDepartmentMaxError,
     multipleDepartmentError: multipleDepartmentError,
-    checkForAddedError: checkForAddedError,
+    checkForAddedError: checkForAddedError
   };
   return result;
 }
-const convertOtherProf = (inputString) => {
-  let trimmedString = inputString.replace(/\s+/g, " ").trim();
-  let formattedString = trimmedString.replace(/\b\w/g, function(match) {
-    return match.toUpperCase();
-  });
-
-  return formattedString;
-};
-const convertOtherProfAmh = (inputString) => {
-  let trimmedString = inputString.replace(/\s+/g, " ").trim();
-
-  return trimmedString;
-};

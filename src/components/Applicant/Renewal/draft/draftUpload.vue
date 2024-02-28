@@ -92,25 +92,19 @@
           data-bs-parent="#FilesAccordion"
         >
           <div class="accordion-body sm:p-2">
-            <div
-              v-for="table in educationalDocs"
-              :key="table"
-              class="accordion-body sm:p-4ounded-lg"
-            >
-              <div class="accordion-body sm:p-1 p-0">
-                <FileUploadTable
-                  :headers="commonFileUploadHeaders"
-                  :fileUploadError="fileUploadError"
-                  :isDarkMode="isDarkMode"
-                  :educationalDocs="educationalDocs"
-                  :showNestedDocuments="showNestedDocuments"
-                  :documentsSaved="documentsSaved"
-                  @handleFileUpload="handleFileUpload"
-                  @addMore="addMore"
-                  @removeChildUpload="removeChildUpload"
-                >
-                </FileUploadTable>
-              </div>
+            <div class="accordion-body sm:p-1 p-0">
+              <FileUploadTable
+                :headers="commonFileUploadHeaders"
+                :fileUploadError="fileUploadError"
+                :isDarkMode="isDarkMode"
+                :educationalDocs="educationalDocs"
+                :showNestedDocuments="showNestedDocuments"
+                :documentsSaved="documentsSaved"
+                @handleFileUpload="handleFileUpload"
+                @addMore="addMore"
+                @removeChildUpload="removeChildUpload"
+              >
+              </FileUploadTable>
             </div>
           </div>
         </div>
@@ -128,14 +122,14 @@
         v-for="(error, index) in errorDocuments"
         :key="error"
       >
-        <small class="  text-xl">{{ index + 1 }}- </small>
+        <small class="text-xl">{{ index + 1 }}- </small>
         {{ error.name }}
       </li>
     </div>
     <div class="flex justify-end mr-8 mb-12">
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
-        @click="back()"
+        @click="$emit('changeActiveStateMinus')"
       >
         {{ $t("Back") }}
       </button>
@@ -160,14 +154,16 @@ import { useToast } from "vue-toastification";
 import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 import CommonFileUploadTable from "../../Shared/SavedFileUpload/CommonFileUploadTable.vue";
 import FileUploadTable from "../../Shared/SavedFileUpload/FileUploadTable.vue";
-
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { CommonFileUploadTable, FileUploadTable },
-
+  components: { CommonFileUploadTable, FileUploadTable,Loading },
+  props: ["activeState"],
   setup(props, { emit }) {
     let store = useStore();
     const route = useRoute();
     let documents = ref([]);
+    const isLoading = ref(false);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
     let goToNext = ref(false);
@@ -570,7 +566,7 @@ export default {
     };
 
     const next = async () => {
-        let documentValidation = await checkDocuments(
+      let documentValidation = await checkDocuments(
         errorDocuments.value,
         false,
         commonDocuments.value,
@@ -578,7 +574,7 @@ export default {
         educationalDocs.value,
         documentsUploaded.value,
         renewalDocuments.value
-      ); 
+      );
       fileUploadError.value = documentValidation.fileUploadError
         ? documentValidation.fileUploadError
         : [];
@@ -678,6 +674,7 @@ export default {
       };
     };
     onMounted(() => {
+      isLoading.value = true;
       window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
@@ -694,7 +691,9 @@ export default {
             let localData = JSON.parse(
               localStorage.getItem("RNApplicationData")
             );
+
             let professionChanged = localData.professionChanged;
+            generalInfo.value = localData;
             if (professionChanged && professionChanged == true) {
               documentsUploaded.value = [];
               documentsSaved.value = [];
@@ -708,6 +707,7 @@ export default {
                 documentsSaved.value[element.fileName].name =
                   element.originalFileName;
               });
+              documentsUploaded.value = [];
               documentsUploaded.value = documentsSaved.value;
               store.dispatch("renewal/getApplicationCategories").then((res) => {
                 let categoryResults = res.data.data
@@ -727,8 +727,12 @@ export default {
                     .dispatch("renewal/getRNdocuments", [
                       categoryResults[0].id,
                       generalInfo.value.applicantType.id,
-                      element.educationLevel.id,
-                      element.department.id,
+                      element.educationalLevel
+                        ? element.educationalLevel.id
+                        : element.educationLevel
+                        ? element.educationLevel.id
+                        : "",
+                      element.department ? element.department.id : null,
                     ])
                     .then((res) => {
                       let resp = res.data.data;
@@ -737,9 +741,13 @@ export default {
                         professionType:
                           element && element.professionType
                             ? element.professionType
+                            : element && element.professionalType
+                            ? element.professionalType
                             : "",
                         educationalLevel: element.educationLevel
                           ? element.educationLevel
+                          : element.educationalLevel
+                          ? element.educationalLevel
                           : "",
                         docs: resp.filter(
                           (element) => element.parentDocument == null
@@ -747,6 +755,7 @@ export default {
                         parentDoc: groupByKey(resp, "parentDocument"),
                       });
                     });
+                  isLoading.value = false;
                 });
 
                 //Get Common Docs
@@ -765,12 +774,10 @@ export default {
           }
         });
     });
-    const back = () => {
-      emit("changeActiveStateMinus");
-    };
+
     const removeChildUpload = (docCode) => {
       showNestedDocuments.value[docCode] -= 1;
-    }; 
+    };
     return {
       isDarkMode,
       commonFileUploadHeaders,
@@ -786,7 +793,6 @@ export default {
       showPreview,
       handleCommonFileUpload,
       generalInfo,
-      back,
       goToNext,
       educationalDocs,
       imageUploader,
@@ -794,7 +800,8 @@ export default {
       documentsSaved,
       googleApi,
       addMore,
-      showNestedDocuments, 
+      showNestedDocuments,
+      isLoading
     };
   },
 };

@@ -1,34 +1,34 @@
 <template>
   <main-content :url="'renewal'">
     <PageHeader :path="path" :isDarkMode="isDarkMode"></PageHeader>
+    <div class="vld-parent mt-4">
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="0.6"
+        class="rounded-md"
+      ></loading>
+      <div
+        :class="
+          isDarkMode && isDarkMode == true
+            ? 'block p-6 rounded-lg bg-primaryDark   mb-8 '
+            : 'block p-6 rounded-lg bg-white max-w-full mb-8 '
+        "
+        v-if="activeState === 1"
+      >
+        <div class="flex justify-center">
+          <h2
+            :class="
+              isDarkMode && isDarkMode == true
+                ? 'text-primary-200 text-3xl font-bold border-b-4'
+                : 'text-main-400 text-xl lg:text-3xl border-b-4 font-bold sm:text-xl '
+            "
+          >
+            {{ $t("General Information") }}
+          </h2>
+        </div>
 
-    <div
-      :class="
-        isDarkMode && isDarkMode == true
-          ? 'block p-6 rounded-lg bg-primaryDark   mb-8 '
-          : 'block p-6 rounded-lg bg-white max-w-full mb-8 '
-      "
-      v-if="activeState === 1"
-    >
-      <div class="flex justify-center">
-        <h2
-          :class="
-            isDarkMode && isDarkMode == true
-              ? 'text-primary-200 text-3xl font-bold border-b-4'
-              : 'text-main-400 text-xl lg:text-3xl border-b-4 font-bold sm:text-xl '
-          "
-        >
-          {{ $t("General Information") }}
-        </h2>
-      </div>
-      <div class="vld-parent mt-4">
-        <loading
-          :active="isLoadingGeneral"
-          :is-full-page="false"
-          :color="'#2F639D'"
-          :opacity="0.6"
-          class="rounded-md"
-        ></loading>
         <form @submit.prevent="submit" class="mx-auto w-full mt-2">
           <!-- applicant info -->
           <ApplicantInfo
@@ -84,41 +84,34 @@
           <AddedDepartmentTable
             :isDarkMode="isDarkMode"
             :generalInfo="generalInfo"
+            @removeDepartment="removeDepartment"
           ></AddedDepartmentTable>
-          <div class="vld-parent mt-4">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="0.6"
-              class="rounded-md"
-            ></loading>
-            <div class="flex justify-end mb-2 mr-1">
-              <button
-                :class="
-                  generalInfo.multipleDepartment &&
-                  generalInfo.multipleDepartment.length > 0
-                    ? 'px-4 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-base leading-tight font-bold   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-                    : 'px-4 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-base leading-tight   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
-                "
-                type="submit"
-                @click="saveDraft()"
-              >
-                {{ $t("Save as Draft") }}
-              </button>
-              <button
-                :class="
-                  generalInfo.multipleDepartment &&
-                  generalInfo.multipleDepartment.length > 0
-                    ? 'px-4  mr-2 mb-2 pb-4 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out'
-                    : 'px-4 mr-2 mb-2 pb-4 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out  disabled'
-                "
-                type="submit"
-                @click="apply()"
-              >
-                {{ $t("Next") }}
-              </button>
-            </div>
+
+          <div class="flex justify-end mb-2 mr-1">
+            <button
+              :class="
+                generalInfo.multipleDepartment &&
+                generalInfo.multipleDepartment.length > 0
+                  ? 'px-4 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-base leading-tight font-bold   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                  : 'px-4 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-base leading-tight   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+              "
+              type="submit"
+              @click="saveDraft()"
+            >
+              {{ $t("Save as Draft") }}
+            </button>
+            <button
+              :class="
+                generalInfo.multipleDepartment &&
+                generalInfo.multipleDepartment.length > 0
+                  ? 'px-4  mr-2 mb-2 pb-4 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out'
+                  : 'px-4 mr-2 mb-2 pb-4 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out  disabled'
+              "
+              type="submit"
+              @click="apply()"
+            >
+              {{ $t("Next") }}
+            </button>
           </div>
         </form>
       </div>
@@ -127,8 +120,8 @@
       <div v-if="activeState == 2">
         <Upload
           :activeState="2"
-          @changeActiveState="activeState++"
-          @changeActiveStateMinus="activeState--"
+          @changeActiveState="next"
+          @changeActiveStateMinus="back"
         />
       </div>
     </transition>
@@ -136,8 +129,8 @@
       <div v-if="activeState == 3">
         <LicenseSummary
           :activeState="3"
-          @changeActiveState="activeState++"
-          @changeActiveStateMinus="activeState--"
+          @changeActiveState="next"
+          @changeActiveStateMinus="back"
         />
       </div>
     </transition>
@@ -413,6 +406,7 @@ export default {
       departments.value = await fetchData("newlicense/getDepartmentType");
       educationalLevels.value = await fetchData("lookups/getEducationLevel");
       regions.value = await fetchData("newlicense/getRegions");
+      regions.value = regions.value?.filter((el) => el.code != "FED");
       occupations.value = await fetchData("lookups/getGovernment");
       fetchApplicationStatuses();
 
@@ -477,7 +471,16 @@ export default {
           isLoading.value = false;
         });
     });
+    const back = () => {
+      activeState.value -= 1;
+    };
+    const next = () => {
+      activeState.value += 1;
+    };
+
     return {
+      back,
+      next,
       applicantTypeChangeHandler,
       regionChangeHandler,
       zoneChangeHandler,

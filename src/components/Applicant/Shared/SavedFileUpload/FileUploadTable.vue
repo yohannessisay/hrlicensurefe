@@ -1,22 +1,29 @@
 <template>
   <div v-if="educationalDocs && educationalDocs.length > 0">
     <div
-      v-for="table in educationalDocs"
-      :key="table"
+      v-for="(table, index) in educationalDocs"
+      :key="index"
       class="border-b-4 text-main-400 mb-8 p-1 rounded-md"
     >
-      <h4
+      <h1
         :class="
           isDarkMode
-            ? 'text-primary-200 font-bold border-b mb-4'
-            : 'text-grey-800 font-bold border-b mb-4'
+            ? 'text-primary-200 text-2xl font-bold border-b mb-4'
+            : 'text-grey-800 font-bold text-2xl border-b mb-4'
         "
       >
-        {{ table.professionType ? table.professionType.name : "" }}
+        {{
+          table.professionType
+            ? table.professionType.name
+            : table.professionalType
+            ? table.professionalType.name
+            : ""
+        }}
         {{ $t("Related Files") }}
-      </h4>
+      </h1>
       <div class="overflow-x-auto w-full sm:p-4">
         <table
+          style="border-radius: 5px"
           v-if="table"
           class="w-full rounded-md striped sm:border mt-2 mb-8"
         >
@@ -265,7 +272,7 @@
                 fileUploadError[
                   'file_upload_row_' + `${uniqueFileId(parentItem[0], table)}`
                 ]
-                  ? 'text-sm    flex flex-col mb-4 py-1 divide-y   sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
+                  ? 'text-sm    flex flex-col mb-4 py-1 divide-y text-white    sm:table-row sm:mb-0    sm:divide-none border-red-300 border-2'
                   : 'text-sm border-t  bg-grey-400 text-white flex flex-col mb-8  py-1 divide-y    sm:table-row sm:mb-0    sm:divide-none'
               "
             >
@@ -580,9 +587,19 @@ export default {
   ],
   setup() {
     const uniqueFileId = (item, table) => {
-      return `${
-        item.documentType.code
-      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`;
+      return `${item.documentType.code}_${
+        table.educationalLevel
+          ? table.educationalLevel.code.toUpperCase()
+          : table.educationLevel
+          ? table.educationLevel.code.toUpperCase()
+          : ""
+      }_${
+        table.professionType
+          ? table.professionType.code.toUpperCase()
+          : table.professionalType
+          ? table.professionalType.code.toUpperCase()
+          : ""
+      }`;
     };
     return {
       uniqueFileId,

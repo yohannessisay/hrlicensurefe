@@ -6,7 +6,7 @@
         : 'table-multiple border mb-8 bg-white text-main-400'
     "
   >
-    <h2 class="font-bold m-2 text-2xl">{{$t('Selected Departments')}}</h2>
+    <h2 class="font-bold m-2 text-2xl">{{ $t("Selected Departments") }}</h2>
 
     <div class="flex flex-col">
       <div class="">
@@ -17,7 +17,7 @@
             generalInfo.multipleDepartment.length < 1
           "
         >
-          {{$t('No Data')}}
+          {{ $t("No Data") }}
         </div>
         <div v-else>
           <table class="min-w-full p-4">
@@ -27,31 +27,31 @@
                   scope="col"
                   class="text-xl text-gray-900 p-5 text-left font-bold"
                 >
-                 {{$t('Department')}} 
+                  {{ $t("Department") }}
                 </th>
                 <th
                   scope="col"
                   class="text-xl text-gray-900 px-6 py-4 text-left font-bold"
                 >
-                  {{$t('Education Level')}}
+                  {{ $t("Education Level") }}
                 </th>
                 <th
                   scope="col"
                   class="text-xl text-gray-900 px-6 py-4 text-left font-bold"
                 >
-                  {{$t('Institution')}}
+                  {{ $t("Institution") }}
                 </th>
                 <th
                   scope="col"
                   class="text-xl text-gray-900 px-6 py-4 text-left font-bold"
                 >
-                  {{$t('Professional Type')}}
+                  {{ $t("Professional Type") }}
                 </th>
                 <th
                   scope="col"
                   class="text-xl text-gray-900 px-6 py-4 text-left font-bold"
                 >
-                  {{$t('Action')}}
+                  {{ $t("Action") }}
                 </th>
               </tr>
             </thead>
@@ -97,7 +97,7 @@
                 <td
                   class="text-lg text-gray-900 font-light p-5 whitespace-nowrap"
                 >
-                  <span @click="removeDepartment(index)" title="Remove"
+                  <span @click="$emit('removeDepartment', index)" title="Remove"
                     ><i class="fa fa-trash text-red-300 cursor-pointer"></i
                   ></span>
                 </td>
@@ -112,5 +112,6 @@
 <script>
 export default {
   props: ["generalInfo", "isDarkMode"],
+  emits: ["removeDepartment"],
 };
 </script>

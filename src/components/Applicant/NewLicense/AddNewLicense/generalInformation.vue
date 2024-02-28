@@ -147,7 +147,7 @@ export default {
     EducationInfo,
     ApplicantInfo,
     LocationInfo,
-    AddedDepartmentTable,
+    AddedDepartmentTable
   },
   emits: ["changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
@@ -158,7 +158,7 @@ export default {
     const path = ref([
       { name: "Home", link: "/menu" },
       { name: "New License", link: "/Applicant/NewLicense" },
-      { name: "Apply", link: "/Applicant/NewLicense" },
+      { name: "Apply", link: "/Applicant/NewLicense" }
     ]);
     let applicantTypes = ref("");
     let departments = ref([]);
@@ -213,11 +213,11 @@ export default {
       nativeLanguageSelected: "",
       otherEducationalInstitution: "",
       multipleDepartment: [],
-      education: [],
+      education: []
     });
     let isLoading = ref(false);
 
-    const woredaChangeHandler = (woreda) => {
+    const woredaChangeHandler = woreda => {
       generalInfo.value.woredaSelected = woreda;
     };
     const fetchWoredas = async () => {
@@ -256,7 +256,7 @@ export default {
         showLanguage.value = false;
       }
     };
-    const regionChangeHandler = async (region) => {
+    const regionChangeHandler = async region => {
       if (region) generalInfo.value.regionSelected = region;
       if (
         generalInfo.value.regionSelected &&
@@ -265,7 +265,7 @@ export default {
         generalInfo.value.zoneSelected = {
           name: "Default Harar",
           id: 464,
-          code: "ZN_HAR_DEF_54",
+          code: "ZN_HAR_DEF_54"
         };
         fetchWoredas();
       }
@@ -274,18 +274,18 @@ export default {
         generalInfo.value.regionSelected.id
       );
     };
-    const zoneChangeHandler = async (zone) => {
+    const zoneChangeHandler = async zone => {
       if (zone) generalInfo.value.zoneSelected = zone;
 
       await fetchWoredas();
     };
 
-    const departmentChange = (department) => {
+    const departmentChange = department => {
       generalInfo.value.departmentSelected = department;
       isDepartmentSelected.value = true;
       generalInfo.value.educationalLevelSelected = "";
     };
-    const institutionChange = (institution) => {
+    const institutionChange = institution => {
       generalInfo.value.institutionSelected = institution;
       if (generalInfo.value.institutionSelected.code == "OTH") {
         showOtherEducation.value = true;
@@ -293,7 +293,7 @@ export default {
         showOtherEducation.value = false;
       }
     };
-    const ProfessionTypeChange = (professionalTypeSelected) => {
+    const ProfessionTypeChange = professionalTypeSelected => {
       generalInfo.value.professionalTypeSelected = professionalTypeSelected;
       if (
         generalInfo.value.professionalTypeSelected.name &&
@@ -305,7 +305,7 @@ export default {
       }
     };
 
-    const removeDepartment = (index) => {
+    const removeDepartment = index => {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.education.splice(index, 1);
     };
@@ -386,7 +386,7 @@ export default {
         generalInfo.value.education &&
         existingLicense.value.length > 0
       ) {
-        existingLicense.value.forEach((element) => {
+        existingLicense.value.forEach(element => {
           if (
             element.educations &&
             element.applicationStatus.code != "WD" &&
@@ -395,7 +395,7 @@ export default {
             tempComparision.push({
               licenseId: element.id,
               licenseStatus: element.applicationStatus.code,
-              educations: element.educations,
+              educations: element.educations
             });
           } else if (
             element.educations &&
@@ -405,10 +405,10 @@ export default {
           }
         });
       }
-      tempComparision.forEach((existingEd) => {
-        generalInfo.value.education.forEach((newEd) => {
+      tempComparision.forEach(existingEd => {
+        generalInfo.value.education.forEach(newEd => {
           if (existingEd.educations) {
-            existingEd.educations.forEach((element) => {
+            existingEd.educations.forEach(element => {
               if (
                 element.departmentId == newEd.departmentId &&
                 element.professionTypeId == newEd.professionTypeId
@@ -434,14 +434,14 @@ export default {
         window.location.reload();
       }, 100);
     };
-    const educationalLevelChange = async (educationalLevelSelected) => {
+    const educationalLevelChange = async educationalLevelSelected => {
       generalInfo.value.educationalLevelSelected = educationalLevelSelected;
       isEdLevelSelected.value = true;
       professionalTypes.value = await fetchData(
         "newlicense/getProfessionalTypes",
         {
           departmentId: generalInfo.value.departmentSelected.id,
-          educationalLevelId: generalInfo.value.educationalLevelSelected.id,
+          educationalLevelId: generalInfo.value.educationalLevelSelected.id
         }
       );
     };
@@ -473,12 +473,12 @@ export default {
             : "",
           regionCode: generalInfo.value.regionSelected
             ? generalInfo.value.regionSelected.code
-            : "FED",
-        },
+            : "FED"
+        }
       };
       let tempError = checkForExistingLicense();
       if (!tempError) {
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        store.dispatch("newlicense/addNewLicense", license).then(res => {
           if (res.data.status == "Success") {
             toastMessage("Applied successfuly", "success", 3000);
             isLoading.value = false;
@@ -503,15 +503,15 @@ export default {
         );
       }
     };
-    const languageChangeHandler = (language) => {
+    const languageChangeHandler = language => {
       generalInfo.value.languageSelected = language;
     };
-    const occupationChangeHandler = (occupation) => {
+    const occupationChangeHandler = occupation => {
       generalInfo.value.occupationSelected = occupation;
     };
     onMounted(async () => {
       isLoadingGeneral.value = true;
-      window.addEventListener("darkModeChanged", (data) => {
+      window.addEventListener("darkModeChanged", data => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
       let tryAgain = localStorage.getItem("tempNL")
@@ -536,6 +536,7 @@ export default {
         departments.value = await fetchData("newlicense/getDepartmentType");
         educationalLevels.value = await fetchData("lookups/getEducationLevel");
         regions.value = await fetchData("newlicense/getRegions");
+        regions.value = regions.value?.filter(el => el.code != "FED");
         occupations.value = await fetchData("lookups/getGovernment");
 
         localData.value = window.localStorage.getItem("NLApplicationData")
@@ -622,9 +623,9 @@ export default {
       generalInfo,
       isLoading,
       path,
-      woredaChangeHandler,
+      woredaChangeHandler
     };
-  },
+  }
 };
 </script>
 <style scoped>

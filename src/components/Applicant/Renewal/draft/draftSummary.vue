@@ -41,7 +41,7 @@
         </button>
         <button
           class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
-          @click="back()"
+          @click="$emit('changeActiveStateMinus')"
         >
           {{ $t("Back") }}
         </button>
