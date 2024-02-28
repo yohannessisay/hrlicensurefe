@@ -16,7 +16,7 @@
         </h1>
       </div>
       <div class="col-span-5 sm:col-span-3">
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap justify-content-evenly gap-2">
           <div class="sm:w-48 w-32 mb-3 mt-2  sm:mt-3 mr-1 ">
             <button
               class="py-2.5 bg-white transform hover:scale-110  w-full text-main-400 font-medium text-base leading-tight rounded-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150 ease-in-out"
@@ -333,6 +333,7 @@ export default {
       downloadHelpVideo,
       options,
       changeLocale,
+      locale
     };
   },
 };

@@ -180,14 +180,16 @@
           v-if="showElement"
         >
           <div class="flex flex-col items-center">
-            <h1 class="text-3xl sm:text-largeDisplay  -mb-small">
-              Ethiopian from abroad Applicants
+            <h1 class="text-3xl sm:text-largeDisplay -mb-small">
+              {{ $t("Ethiopian from abroad Applicants") }}
             </h1>
           </div>
-          <h5 class="mt-small text-2xl  text-center">
-            All your educational document should be authenticated by the
-            Ethiopian ministry of foreign affairs and you should have an
-            equivalence letter from the Educational and Training Authority (ETA)
+          <h5 class="mt-small text-2xl text-center">
+            {{
+              $t(
+                "All your educational document should be authenticated by the Ethiopian ministry of foreign affairs and you should have an equivalence letter from the Educational and Training Authority (ETA)"
+              )
+            }}
           </h5>
         </section>
       </transition>
