@@ -200,3 +200,11 @@ export const LLicenseSideBarItems = [
     icon: "bx bxs-paste",
   },
 ];
+export const profileSideBarItems = [
+  {
+    id: 1,
+    name: "Profile",
+    path: "/applicant/profile",
+    icon: "bx bx-user",
+  },
+]
