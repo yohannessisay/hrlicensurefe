@@ -55,6 +55,17 @@
       :page="'Lost License'"
     ></SideBarTemplate>
     <!--End of Lost License  routes -->
+
+
+  <!--Profile  routes -->
+    <SideBarTemplate
+      v-if="finalUrl && finalUrl === 'profile'"
+      :isDarkMode="isDarkMode"
+      :links="profileSideBarItems"
+      :page="'Profile'"
+    ></SideBarTemplate>
+    <!--End of Profile routes -->
+
   </div>
 </template>
 
@@ -65,6 +76,7 @@ import {
   renewalSideBarItems,
   gSSideBarItems,
   LLicenseSideBarItems,
+  profileSideBarItems
 } from "./SideBar/sideBarLinks.js";
 export default {
   props: ["finalUrl", "isDarkMode"],
@@ -75,6 +87,7 @@ export default {
       renewalSideBarItems,
       gSSideBarItems,
       LLicenseSideBarItems,
+      profileSideBarItems
     };
   },
 };

@@ -212,11 +212,11 @@
             aria-haspopup="true"
             v-on:click="showDropDown()"
           >
-            <div v-if="!userInfo.isFirstTime" class="w-12 h-12">
+            <div v-if="!userInfo.isFirstTime" class="">
               <img
                 :src="userInfo.pic"
                 alt="image here"
-                class="w-20 h-12 border-white border-2"
+                class="w-20 h-12 border-white border-4"
               />
             </div>
             <div v-if="userInfo.isFirstTime">
