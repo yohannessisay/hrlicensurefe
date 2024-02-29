@@ -191,7 +191,7 @@
               class="font-medium leading-tight rounded-md hover:border-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out text-xl text-white pt-2 pb-4 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4"
               @click="setApplicantType('Ethiopian')"
             >
-              Get Started
+              {{$t('Get Started')}}
             </button>
           </a>
         </div>
@@ -211,7 +211,7 @@
               class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
               @click="setApplicantType('Foreign')"
             >
-              Get Started
+               {{$t('Get Started')}}
             </button>
           </a>
         </div>
@@ -231,7 +231,7 @@
               class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
               @click="setApplicantType('EthiopianFromAbroad')"
             >
-              Get Started
+              {{$t('Get Started')}}
             </button>
           </a>
         </div>
