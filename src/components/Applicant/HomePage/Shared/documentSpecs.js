@@ -45,7 +45,7 @@ export const newLicenseList = {
     },
 
     {
-      name: " Work Experience",
+      name: "Work Experience",
       tooltip: "",
     },
     {
@@ -76,7 +76,7 @@ export const newLicenseList = {
       tooltip: "Diploma,transcript for both undergraduates and postgraduates",
     },
     {
-      name: " Authenticated Professional License from Country of Origin",
+      name: "Authenticated Professional License from Country of Origin",
       tooltip: "",
     },
     {
@@ -112,7 +112,7 @@ export const newLicenseList = {
       tooltip: "Diploma,transcript for both undergraduates and postgraduates",
     },
     {
-      name: " Authenticated Professional License from Country of Origin",
+      name: "Authenticated Professional License from Country of Origin",
       tooltip: "",
     },
     {
@@ -216,7 +216,7 @@ export const goodStandingList = [
     tooltip: "",
   },
   {
-    name: " Work Experiance",
+    name: "Work Experience",
     tooltip: "",
   },
 ];
