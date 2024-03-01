@@ -84,6 +84,7 @@
         <AddedDepartmentTable
           :isDarkMode="isDarkMode"
           :generalInfo="generalInfo"
+           @removeDepartment="removeDepartment"
         ></AddedDepartmentTable>
         <div class="vld-parent mt-4">
           <loading
