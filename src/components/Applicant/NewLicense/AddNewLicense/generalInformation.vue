@@ -309,7 +309,10 @@ export default {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.education.splice(index, 1);
     };
-    const addMultiple = async () => {
+      const addMultiple = async (localGeneralInfo) => {
+      if (localGeneralInfo) {
+        generalInfo.value = localGeneralInfo;
+      }
       let result = await AddMultipleDepartment(
         generalInfo.value,
         showOtherProfession.value,
