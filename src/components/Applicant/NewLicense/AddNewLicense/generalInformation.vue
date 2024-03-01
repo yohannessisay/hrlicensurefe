@@ -213,7 +213,7 @@ export default {
       nativeLanguageSelected: "",
       otherEducationalInstitution: "",
       multipleDepartment: [],
-      education: []
+      educations: []
     });
     let isLoading = ref(false);
 
