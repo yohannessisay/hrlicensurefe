@@ -521,8 +521,7 @@ export default {
         return false;
       }
     };
-    watch(localImage, () => {
-      console.log(localImage);
+    watch(localImage, () => { 
       updatedLocalImages.value = localImage.value;
     });
     return {

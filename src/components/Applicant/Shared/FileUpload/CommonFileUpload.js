@@ -9,8 +9,7 @@ export const CommonFileUpload = (
   documentToSave, 
   formData,
   fileS
-) => {
-    console.log(documentsUploaded);
+) => { 
   if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
     documentsUploaded[data.documentType.code] = "";
     documentsUploaded[data.documentType.code] = event?.target?.files[0];

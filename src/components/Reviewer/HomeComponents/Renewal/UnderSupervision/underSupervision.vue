@@ -653,8 +653,7 @@ export default {
           }
         ])
         .then(res => {
-          allInfo = res ? res.rows : [];
-          console.log("called");
+          allInfo = res ? res.rows : []; 
           allInfo.forEach(element => {
             tableData.push({
               LicenseNumber: element ? element.renewalCode : "",
