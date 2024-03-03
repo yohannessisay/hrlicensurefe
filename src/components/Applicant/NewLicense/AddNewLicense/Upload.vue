@@ -14,7 +14,7 @@
       <h2
         class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
       >
-        {{$t('Please upload all documents marked with a red asterix')}}
+        {{ $t("Please upload all documents marked with a red asterix") }}
         <small class="text-red-300"> (*)</small>
       </h2>
       <div
@@ -34,7 +34,7 @@
             aria-expanded="true"
             aria-controls="commonFilesAccordion"
           >
-            {{$t('Common Files')}}
+            {{ $t("Common Files") }}
           </button>
         </h2>
         <div
@@ -73,7 +73,7 @@
             aria-expanded="true"
             aria-controls="departmentFilesAccordion"
           >
-           {{$t('Education Level Related Files')}}
+            {{ $t("Education Level Related Files") }}
           </button>
         </h2>
         <div
@@ -103,7 +103,7 @@
         v-if="errorDocuments && errorDocuments.length > 0"
       >
         <h2 class="text-yellow-300 font-bold text-xl sm:text-3xl border-b">
-          {{$t('Please attach the following files to proceed')}}
+          {{ $t("Please attach the following files to proceed") }}
         </h2>
         <li
           class="text-yellow-300 text-xl font-bold p-2 m-1 break-all"
@@ -134,19 +134,19 @@
           type="submit"
           @click="saveDraft()"
         >
-          {{$t('Save As Draft')}}
+          {{ $t("Save As Draft") }}
         </button>
         <button
           class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
           @click="back()"
         >
-          {{$t('Back')}}
+          {{ $t("Back") }}
         </button>
         <button
           class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
           @click="next()"
         >
-          {{$t('Next')}}
+          {{ $t("Next") }}
         </button>
       </div>
     </div>
@@ -156,13 +156,15 @@
 import { ref, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import Compressor from "compressorjs";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import CommonFileUploadTable from "../../Shared/FileUpload/CommonFileUploadTable.vue";
 import FileUploadTable from "../../Shared/FileUpload/FileUploadTable.vue";
+import { CommonFileUpload } from "../../Shared/FileUpload/CommonFileUpload.js";
+import { FileUpload } from "../../Shared/FileUpload/FileUpload.js";
+import { fetchCommonFilesMixin } from "../../Shared/FileUpload/GetDocuments.js";
 export default {
   components: { Loading, CommonFileUploadTable, FileUploadTable },
 
@@ -170,6 +172,7 @@ export default {
   setup(props, { emit }) {
     let store = useStore();
     const toast = useToast();
+    const { GetCommonDocs, GetDocs } = fetchCommonFilesMixin.setup();
     let isLoading = ref(false);
     let documents = ref([]);
     let commonDocuments = ref([]);
@@ -178,7 +181,7 @@ export default {
     let educationalDocs = ref([]);
     let localData = ref({});
     let alreadyUploaded = ref(false);
-    let existingDocs = [];
+    let existingDocs = ref([]);
     let files = ref("");
     let commonFileUploadHeaders = ref([
       "Document Name",
@@ -191,8 +194,6 @@ export default {
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let isBackButtonClicked = ref(false);
     let dbVersion = 1;
-    let isImage = ref({});
-    let isPdf = ref({});
     let fileSizeExceed = ref({});
     let fileSize = ref("");
     let showImage = ref(false);
@@ -212,512 +213,49 @@ export default {
       ? ref(JSON.parse(localStorage.getItem("isLicenseDesignation")))
       : false;
     const handleCommonFileUpload = (data, event) => {
-      if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
-        documentsUploaded.value[data.documentType.code] = "";
-        documentsUploaded.value[data.documentType.code] =
-          event?.target?.files[0];
-        let reader = new FileReader();
-
-        let fileS = documentsUploaded.value[data.documentType.code].size;
-
-        isImage.value[data.documentType.code] = false;
-
-        delete fileUploadError.value[
-          "file_upload_row_" + data.documentType.code
-        ];
-
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-
-        reader.addEventListener(
-          "load",
-          function () {
-            showPreview.value = true;
-
-            previewDocuments.value[data.documentType.code] = reader.result;
-            imageData = imageData.filter(
-              (el) => el.documenttype != data.documentType.name
-            );
-            imageData.push({
-              imageId: "common_image_lightbox_" + data.documentType.code,
-              documenttype: data.documentType ? data.documentType.name : "",
-              documentCode: data.documentType ? data.documentType.code : "",
-              educationalLevel: data.educationalLevel
-                ? data.educationalLevel.name
-                : "",
-              fileName: event?.target?.files[0].name,
-              image: reader.result,
-            });
-
-            documentToSave.value[data.documentType.code] = reader.result;
-          },
-          false
-        );
-
-        isPdf.value[data.documentType.code] = true;
-        formData.append(data.documentType.code, event?.target?.files[0]);
-        reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
-        let icon = document.getElementById(
-          "common_icon_" + data.documentType.id + data.id
-        );
-
-        if (icon.classList.contains("disabled")) {
-          icon.classList.toggle("disabled");
-        }
-
-        let output = document.getElementById(
-          "common_image_lightbox_" + data.documentType.id + data.id
-        );
-
-        let outputHref = document.getElementById(
-          "common_image_" + data.documentType.id + data.id
-        );
-
-        outputHref.href = URL.createObjectURL(event.target.files[0]);
-        if (output && output.src) {
-          output.src = URL.createObjectURL(event.target.files[0]);
-        }
-
-        output
-          ? (output.onload = function () {
-              URL.revokeObjectURL(output.src); // free memory
-            })
-          : "";
-      } else {
-        new Compressor(event?.target?.files[0], {
-          quality: 0.5,
-
-          // The compression process is asynchronous,
-          // which means you have to access the `result` in the `success` hook function.
-          success(result) {
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(new File([result], result.name));
-            event.target.files = dataTransfer.files;
-            documentsUploaded.value[data.documentType.code] = "";
-            documentsUploaded.value[data.documentType.code] =
-              event?.target?.files[0];
-            let reader = new FileReader();
-
-            let fileS = documentsUploaded.value[data.documentType.code].size;
-
-            delete fileUploadError.value[
-              "file_upload_row_" + data.documentType.code
-            ];
-            showImage.value = true;
-
-            if (fileS > 0 && fileS < 1000) {
-              fileSize.value += "B";
-            } else if (fileS > 1000 && fileS < 1000000) {
-              fileSize.value = fileS / 1000 + "kB";
-            } else {
-              fileSize.value = fileS / 1000000 + "MB";
-            }
-            let commonImageLighBox = document.getElementById(
-              "common_image_light_box_" + data.documentType.id + data.id
-            );
-            reader.addEventListener(
-              "load",
-              function () {
-                showPreview.value = true;
-
-                previewDocuments.value[data.documentType.code] = reader.result;
-                imageData = imageData.filter(
-                  (el) => el.documenttype != data.documentType.name
-                );
-                imageData.push({
-                  imageId: "common_image_lightbox_" + data.documentType.code,
-                  documenttype: data.documentType ? data.documentType.name : "",
-                  documentCode: data.documentType ? data.documentType.code : "",
-                  educationalLevel: data.educationalLevel
-                    ? data.educationalLevel.name
-                    : "",
-                  fileName: event?.target?.files[0].name,
-                  image: reader.result,
-                });
-
-                documentToSave.value[data.documentType.code] = reader.result;
-
-                if (commonImageLighBox) {
-                  commonImageLighBox.src = reader.result;
-                }
-              },
-              false
-            );
-
-            isImage.value[data.documentType.code] = true;
-            isPdf.value[data.documentType.code] = false;
-            formData.append(data.documentType.code, event?.target?.files[0]);
-            reader.readAsDataURL(
-              documentsUploaded.value[data.documentType.code]
-            );
-
-            let icon = document.getElementById(
-              "common_icon_" + data.documentType.id + data.id
-            );
-
-            if (icon.classList.contains("disabled")) {
-              icon.classList.toggle("disabled");
-            }
-
-            let output = document.getElementById(
-              "common_image_lightbox_" + data.documentType.id + data.id
-            );
-
-            let outputHref = document.getElementById(
-              "common_image_href_" + data.documentType.id + data.id
-            );
-            outputHref.href = URL.createObjectURL(event.target.files[0]);
-            if (output && output.src) {
-              output.src = URL.createObjectURL(event.target.files[0]);
-              output.onload = function () {
-                URL.revokeObjectURL(output.src);
-              };
-            }
-          },
-          error(err) {
-            console.log(err.message);
-          },
-        });
-      }
+      let fileS = 0;
+     
+      const result = CommonFileUpload(
+        data,
+        event,
+        documentsUploaded.value,
+        fileUploadError.value,
+        fileSize.value,
+        imageData,
+        documentToSave.value,
+        formData,
+        fileS
+      );
+      documentsUploaded.value = result.documentsUploaded;
+      fileUploadError.value = result.fileUploadError;
+      fileSize.value = result.fileSize;
+      imageData = result.imageData;
+      documentToSave.value = result.documentToSave;
+      formData = result.formData;
+      fileS = result.fileS;
     };
 
     const handleFileUpload = (data, event, pro) => {
-      if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
-        let reader = new FileReader();
-        documentsUploaded.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ] = "";
-
-        documentsUploaded.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ] = event?.target?.files[0];
-
-        delete fileUploadError.value[
-          "file_upload_row_" +
-            data.documentType.code.toUpperCase() +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ];
-
-        let fileS =
-          documentsUploaded.value[
-            data.documentType.code +
-              "_" +
-              data.educationalLevel.code.toUpperCase() +
-              "_" +
-              pro.professionType.code.toUpperCase()
-          ].size;
-
-        isImage.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ] = false;
-        isPdf.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ] = true;
-        formData.append(
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase(),
-
-          event?.target?.files[0]
-        );
-
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-
-        reader.addEventListener(
-          "load",
-          function () {
-            showPreview.value = true;
-
-            previewDocuments.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = reader.result;
-
-            imageData.push({
-              imageId:
-                "image_lightbox_" +
-                data.documentType.code +
-                "_" +
-                pro.educationalLevel.code +
-                "_" +
-                pro.professionType.code,
-              documenttype: data.documentType ? data.documentType.name : "",
-              documentCode:
-                data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase(),
-              educationalLevel: data.educationalLevel
-                ? data.educationalLevel.name
-                : "",
-              fileName: event?.target?.files[0].name,
-              image: reader.result,
-            });
-          },
-          false
-        );
-
-        reader.readAsDataURL(
-          documentsUploaded.value[
-            data.documentType.code +
-              "_" +
-              data.educationalLevel.code.toUpperCase() +
-              "_" +
-              pro.professionType.code.toUpperCase()
-          ]
-        );
-        let icon = document.getElementById(
-          "educational_icon_" +
-            data.documentType.code +
-            "_" +
-            pro.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        );
-        if (icon.classList.contains("disabled")) {
-          icon.classList.toggle("disabled");
-        }
-
-        let output = document.getElementById(
-          "image_lightbox_" +
-            data.documentType.code +
-            "_" +
-            pro.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        );
-        let outputHref = document.getElementById(
-          "image_href_" +
-            data.documentType.code +
-            "_" +
-            pro.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        );
-        outputHref.href = URL.createObjectURL(event.target.files[0]);
-        if (output && output.src) {
-          output.src = URL.createObjectURL(event.target.files[0]);
-        }
-
-        output
-          ? (output.onload = function () {
-              URL.revokeObjectURL(output.src); // free memory
-            })
-          : "";
-      } else {
-        new Compressor(event?.target?.files[0], {
-          quality: 0.5,
-
-          // The compression process is asynchronous,
-          // which means you have to access the `result` in the `success` hook function.
-          success(result) {
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(new File([result], result.name));
-            let reader = new FileReader();
-            event.target.files = dataTransfer.files;
-            documentsUploaded.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = "";
-            documentsUploaded.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = event?.target?.files[0];
-
-            let fileS =
-              documentsUploaded.value[
-                data.documentType.code +
-                  "_" +
-                  data.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  pro.professionType.code.toUpperCase()
-              ].size;
-
-            isImage.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = true;
-            formData.append(
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase(),
-
-              event?.target?.files[0]
-            );
-
-            showImage.value = true;
-            if (fileS > 0 && fileS < 1000) {
-              fileSize.value += "B";
-            } else if (fileS > 1000 && fileS < 1000000) {
-              fileSize.value = fileS / 1000 + "kB";
-            } else {
-              fileSize.value = fileS / 1000000 + "MB";
-            }
-
-            delete fileUploadError.value[
-              "file_upload_row_" +
-                data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ];
-            reader.addEventListener(
-              "load",
-              function () {
-                showPreview.value = true;
-
-                previewDocuments.value[
-                  data.documentType.code +
-                    "_" +
-                    data.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    pro.professionType.code.toUpperCase()
-                ] = reader.result;
-
-                imageData.push({
-                  imageId:
-                    "image_lightbox_" +
-                    data.documentType.code +
-                    "_" +
-                    pro.educationalLevel.code +
-                    "_" +
-                    pro.professionType.code,
-                  documenttype: data.documentType ? data.documentType.name : "",
-                  documentCode:
-                    data.documentType.code +
-                    "_" +
-                    data.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    pro.professionType.code.toUpperCase(),
-                  educationalLevel: data.educationalLevel
-                    ? data.educationalLevel.name
-                    : "",
-                  fileName: event?.target?.files[0].name,
-                  image: reader.result,
-                });
-                // documentsUploaded.value[data.documentType.code] = reader.result;
-              },
-              false
-            );
-
-            isImage.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = true;
-            isPdf.value[
-              data.documentType.code +
-                "_" +
-                data.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            ] = false;
-
-            reader.readAsDataURL(
-              documentsUploaded.value[
-                data.documentType.code +
-                  "_" +
-                  data.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  pro.professionType.code.toUpperCase()
-              ]
-            );
-
-            let icon = document.getElementById(
-              "educational_icon_" +
-                data.documentType.code +
-                "_" +
-                pro.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            );
-            if (icon.classList.contains("disabled")) {
-              icon.classList.toggle("disabled");
-            }
-
-            let output = document.getElementById(
-              "image_lightbox_" +
-                data.documentType.code +
-                "_" +
-                pro.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            );
-            let outputHref = document.getElementById(
-              "image_href_" +
-                data.documentType.code +
-                "_" +
-                pro.educationalLevel.code.toUpperCase() +
-                "_" +
-                pro.professionType.code.toUpperCase()
-            );
-            outputHref.href = URL.createObjectURL(event.target.files[0]);
-            if (output && output.src) {
-              output.src = URL.createObjectURL(event.target.files[0]);
-            }
-
-            output
-              ? (output.onload = function () {
-                  URL.revokeObjectURL(output.src); // free memory
-                })
-              : "";
-            // formData.append(data.documentType.code, result);
-          },
-          error(err) {
-            console.log(err.message);
-          },
-        });
-      }
+      let fileS = 0;
+      const result = FileUpload(
+        data,
+        event,
+        pro,
+        documentsUploaded.value,
+        fileUploadError.value,
+        fileSize.value,
+        imageData,
+        documentToSave.value,
+        formData,
+        fileS
+      );
+      documentsUploaded.value = result.documentsUploaded;
+      fileUploadError.value = result.fileUploadError;
+      fileSize.value = result.fileSize;
+      imageData = result.imageData;
+      documentToSave.value = result.documentToSave;
+      formData = result.formData;
+      fileS = result.fileS;
     };
 
     const urltoFile = async (data, fileName) => {
@@ -732,6 +270,7 @@ export default {
       return file;
     };
     const next = async () => {
+        
       let documentValidation = await checkDocuments(
         errorDocuments.value,
         isBackButtonClicked.value,
@@ -741,6 +280,7 @@ export default {
         documentsUploaded.value,
         newLicenseDocuments.value
       );
+    
       fileUploadError.value = documentValidation.fileUploadError
         ? documentValidation.fileUploadError
         : [];
@@ -922,16 +462,6 @@ export default {
       });
     };
 
-    const groupByKey = (array, key) => {
-      return array.reduce((hash, obj) => {
-        if (obj[key] === undefined || obj[key] == null || obj[key] == "")
-          return hash;
-        return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj),
-        });
-      }, {});
-    };
-
     const addMore = (parentItem) => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
@@ -946,33 +476,37 @@ export default {
       showNestedDocuments.value[docCode] -= 1;
     };
     const initDb = async () => {
-      existingDocs;
-      let request = indexedDB.open("NLdocumentUploads", dbVersion);
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open("NLdocumentUploads", dbVersion);
 
-      request.onerror = function () {
-        console.error("Unable to open database.");
-      };
-
-      request.onsuccess = function () {
-        let db = request.result;
-        const tx = db.transaction("NLdocumentUploads", "readonly");
-        const store = tx.objectStore("NLdocumentUploads");
-        let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function (evt) {
-          existingDocs =
-            evt.target.result && evt.target.result[0]
-              ? evt.target.result[0].data
-              : {};
+        request.onerror = function () {
+          console.error("Unable to open database.");
+          reject();
         };
-      };
 
-      request.onupgradeneeded = function () {
-        let db = request.result;
-        db.createObjectStore("NLdocumentUploads", {
-          keyPath: "id",
-          autoIncrement: true,
-        });
-      };
+        request.onsuccess = async function () {
+          const db = request.result;
+          const tx = db.transaction("NLdocumentUploads", "readonly");
+          const store = tx.objectStore("NLdocumentUploads");
+          const getAllIDB = store.getAll();
+
+          getAllIDB.onsuccess = function (evt) {
+            existingDocs.value =
+              evt.target.result && evt.target.result[0]
+                ? evt.target.result[0].data
+                : {};
+            resolve();
+          };
+        };
+
+        request.onupgradeneeded = function () {
+          const db = request.result;
+          db.createObjectStore("NLdocumentUploads", {
+            keyPath: "id",
+            autoIncrement: true,
+          });
+        };
+      });
     };
 
     onMounted(async () => {
@@ -994,153 +528,43 @@ export default {
           : {};
 
         generalInfo.value = localData.value;
-
-        await store
-          .dispatch("newlicense/getApplicationCategories")
-          .then(async (res) => {
-            let categoryResults = res.data.data
-              ? res.data.data.filter((ele) => ele.code == "NA")
-              : "";
-            let educationLevels = generalInfo.value.multipleDepartment;
-            //Get department docs
-            await educationLevels.forEach((element) => {
-              store
-                .dispatch("newlicense/getNLdocuments", [
-                  categoryResults[0].id,
-                  generalInfo.value.applicantTypeSelected.id,
-                  element.educationalLevel.id,
-                  null,
-                ])
-                .then(async (res) => {
-                  let result = res.data ? await res.data.data : [];
-                  let resp = [];
-                  newLicenseDocuments.value = result;
-                  if (isLicenseDesignation.value == true) {
-                    resp = result.filter(
-                      (ed) =>
-                        ed.documentType.code == "SUPINST" ||
-                        ed.documentType.code == "SENSUP"
-                    );
-                  } else {
-                    resp = result.filter(
-                      (ed) =>
-                        ed.documentType.code !== "SUPINST" &&
-                        ed.documentType.code !== "SENSUP"
-                    );
-                  }
-                  resp.forEach((ed, index) => {
-                    if (
-                      generalInfo.value &&
-                      generalInfo.value.nativeLanguageSelected &&
-                      generalInfo.value.nativeLanguageSelected.code !=
-                        "NENGS" &&
-                      ed.documentType.code == "ELPC"
-                    ) {
-                      resp.splice(index, 1);
-                    }
-                  });
-
-                  educationalDocs.value.push({
-                    educationalLevel: element.educationalLevel,
-                    professionType: element.professionalType,
-                    docs: resp.filter(
-                      (element) =>
-                        element.parentDocument == null ||
-                        element.parentDocument == ""
-                    ),
-                    parentDoc: groupByKey(resp, "parentDocument"),
-                  });
-
-                  if (
-                    existingDocs &&
-                    existingDocs.length > 0 &&
-                    resp &&
-                    resp.length > 0
-                  ) {
-                    isBackButtonClicked.value = true;
-                    documentsUploaded.value = existingDocs;
-                    educationalDocs.value.forEach((ed) => {
-                      ed.docs
-                        .filter((docs) => docs.isRequired)
-                        .forEach((Cd) => {
-                          documentsUploaded.value.forEach((element) => {
-                            if (
-                              element.documentCode ===
-                              Cd.documentType.code.toUpperCase() +
-                                "_" +
-                                ed.educationalLevel.code.toUpperCase() +
-                                "_" +
-                                ed.professionType.code.toUpperCase()
-                            ) {
-                              Cd.existingFile = element.image;
-                              Cd.fileName = element.fileName;
-                            }
-                          });
-                        });
-                      for (const property in ed.parentDoc) {
-                        ed.parentDoc[property].forEach((Cd) => {
-                          documentsUploaded.value.forEach((element) => {
-                            if (
-                              element.documentCode ===
-                              Cd.documentType.code.toUpperCase() +
-                                "_" +
-                                ed.educationalLevel.code.toUpperCase() +
-                                "_" +
-                                ed.professionType.code.toUpperCase()
-                            ) {
-                              Cd.existingFile = element.image;
-                              Cd.fileName = element.fileName;
-                            }
-                          });
-                        });
-                      }
-                    });
-                  }
-                  if (tryAgain && tryAgain.id != null && tryAgain.step == 3) {
-                    next();
-                  }
-                });
-            });
-
-            //Get Common Docs
-
-            await store
-              .dispatch("newlicense/getCommonNLdocuments", [
-                categoryResults[0].id,
-                generalInfo.value.applicantTypeSelected.id,
-              ])
-              .then((res) => {
-                let result = res.data.data;
-                if (isLicenseDesignation.value == true) {
-                  result = result.filter((el) => el.documentType.code == "PSP");
-                }
-                commonDocuments.value = result;
-                if (
-                  existingDocs &&
-                  existingDocs.length > 0 &&
-                  result &&
-                  result.length > 0
-                ) {
-                  isBackButtonClicked.value = true;
-                  alreadyUploaded.value = true;
-                  documentsUploaded.value = existingDocs;
-                  existingDocs.forEach((existing) => {
-                    result.forEach((Cd) => {
-                      if (
-                        existing.imageId ==
-                        "common_image_lightbox_" +
-                          Cd.documentType.code.toUpperCase()
-                      ) {
-                        Cd.existingFile = existing.image;
-                        Cd.fileName = existing.fileName;
-                      }
-                    });
-                  });
-                } else {
-                  commonDocuments.value = result;
-                }
-              });
-          });
+        //Get Educational Docs
+        let educationLevels = generalInfo.value.multipleDepartment;
+        const docsResult = await GetDocs(
+          "newlicense/getNLdocuments",
+          generalInfo.value.applicantTypeSelected.id,
+          educationLevels,
+          newLicenseDocuments.value,
+          generalInfo,
+          tryAgain,
+          educationalDocs.value,
+          isLicenseDesignation,
+          existingDocs.value,
+          isBackButtonClicked.value,
+          documentsUploaded.value
+        );
+        newLicenseDocuments.value = docsResult.newLicenseDocuments;
+        tryAgain = docsResult.callTryAgain;
+        educationalDocs.value = docsResult.educationalDocs;
+        isBackButtonClicked.value = docsResult.isBackButtonClicked;
+        documentsUploaded.value = docsResult.documentsUploaded;
+        
+        if (tryAgain) {
+          next();
+        }
+        //Get Common Docs
+        const commonResult = await GetCommonDocs(
+          "newlicense/getCommonNLdocuments",
+          generalInfo.value.applicantTypeSelected.id,
+          isLicenseDesignation,
+          commonDocuments.value,
+          existingDocs.value,
+          isBackButtonClicked.value,
+          alreadyUploaded.value, 
+        );
+        isBackButtonClicked.value = commonResult.isBackButtonClicked;
+        alreadyUploaded.value = commonResult.alreadyUploaded; 
+        commonDocuments.value = commonResult.commonDocuments;
       }
     });
 
