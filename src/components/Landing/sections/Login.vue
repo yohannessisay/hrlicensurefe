@@ -51,7 +51,7 @@
                     />
                   </div>
                   <div class="flex justify-center">
-                    <h2 class=" text-xl">eHPEL</h2>
+                    <h2 class="text-xl">eHPEL</h2>
                   </div>
                 </div>
                 <div class="divide-y divide-gray-200">
@@ -61,11 +61,9 @@
                     <form @submit.prevent="submit">
                       <div class="flex -mx-3">
                         <div class="w-full px-3 mb-1">
-                          <label
-                            for="email"
-                            class="px-1 text-xl  font-thin"
-                            >{{ $t("Email") }}</label
-                          >
+                          <label for="email" class="px-1 text-xl font-thin">{{
+                            $t("Email")
+                          }}</label>
                           <div class="flex mt-1">
                             <div
                               class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"
@@ -89,7 +87,7 @@
                         <div class="w-full px-3 mb-1">
                           <label
                             for="password"
-                            class="px-1 text-xl  font-thin"
+                            class="px-1 text-xl font-thin"
                             >{{ $t("Password") }}</label
                           >
                           <div class="flex mt-1">
@@ -117,11 +115,11 @@
                       <div class="relative padding-2">
                         <div class="vld-parent">
                           <loading
-                            class="rounded-md -m-2"
                             :active="isLoading"
                             :is-full-page="false"
                             :color="'#2F639D'"
-                            :opacity="1"
+                            :opacity="0.6"
+                            class="rounded-md"
                           ></loading>
                           <button
                             class="inline-block w-full mt-4 mb-4 ml-auto font-semibold text-center text-white transition duration-200 rounded-lg shadow-sm bg-main-400 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 hover:text-main-400 hover:bg-white text-md hover:"
@@ -132,7 +130,7 @@
                       </div>
                       <a
                         href="#!"
-                        class=" hover:text-blue-700 text-lg focus:text-blue-700 transition duration-200 ease-in-out"
+                        class="hover:text-blue-700 text-lg focus:text-blue-700 transition duration-200 ease-in-out"
                         data-bs-toggle="modal"
                         data-bs-target="#forgotPassword"
                         >{{ $t("Forgot password?") }}</a
@@ -178,7 +176,8 @@
             :active="isLoadingReset"
             :is-full-page="false"
             :color="'#2F639D'"
-            :opacity="0.7"
+            :opacity="0.6"
+            class="rounded-md"
           ></loading>
           <div class="relative p-2 modal-body">
             <div class="flex justify-center">

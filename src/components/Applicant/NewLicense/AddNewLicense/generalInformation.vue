@@ -464,7 +464,7 @@ export default {
             generalInfo.value && generalInfo.value.woredaSelected
               ? generalInfo.value.woredaSelected.id
               : null,
-          educations: generalInfo.value ? generalInfo.value.education : {},
+          educations: generalInfo.value ? generalInfo.value.educations : {},
           occupationTypeId: generalInfo.value.occupationSelected
             ? generalInfo.value.occupationSelected.id
             : null,
