@@ -308,7 +308,7 @@ export default {
 
     const removeDepartment = index => {
       generalInfo.value.multipleDepartment.splice(index, 1);
-      generalInfo.value.education.splice(index, 1);
+      generalInfo.value.educations.splice(index, 1);
     };
       const addMultiple = async (localGeneralInfo) => {
       if (localGeneralInfo) {
@@ -387,7 +387,7 @@ export default {
       let tempComparision = [];
       if (
         existingLicense.value &&
-        generalInfo.value.education &&
+        generalInfo.value.educations &&
         existingLicense.value.length > 0
       ) {
         existingLicense.value.forEach(element => {
@@ -410,7 +410,7 @@ export default {
         });
       }
       tempComparision.forEach(existingEd => {
-        generalInfo.value.education.forEach(newEd => {
+        generalInfo.value.educations.forEach(newEd => {
           if (existingEd.educations) {
             existingEd.educations.forEach(element => {
               if (
@@ -464,7 +464,7 @@ export default {
             generalInfo.value && generalInfo.value.woredaSelected
               ? generalInfo.value.woredaSelected.id
               : null,
-          educations: generalInfo.value ? generalInfo.value.education : {},
+          educations: generalInfo.value ? generalInfo.value.educations : {},
           occupationTypeId: generalInfo.value.occupationSelected
             ? generalInfo.value.occupationSelected.id
             : null,

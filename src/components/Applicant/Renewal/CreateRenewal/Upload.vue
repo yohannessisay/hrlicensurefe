@@ -865,7 +865,7 @@ export default {
             localData.value && localData.value.woredaSelected
               ? localData.value.woredaSelected.id
               : null,
-          educations: localData.value ? localData.value.education : {},
+          educations: localData.value ? localData.value.educations : {},
           occupationTypeId: localData.value.occupationSelected
             ? localData.value.occupationSelected.id
             : null,

@@ -417,7 +417,7 @@ h6 {
   display: block;
 }
 .content.active .top-navbar {
-  width: 95%;
+  width: calc(100% - 80px);
 }
 .side-navbar ul li a {
   position: relative;
@@ -777,6 +777,6 @@ body.dark-mode {
   .top-navbar {
     position: fixed;
     z-index: 1;
-    width: calc(100% - 15%);
+    width: calc(100% - 305px);
   }
 }

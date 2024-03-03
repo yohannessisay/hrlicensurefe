@@ -448,7 +448,7 @@ export default {
             regionCode: generalInfo.value.regionSelected
               ? generalInfo.value.regionSelected.code
               : "FED",
-            educations: generalInfo.value ? generalInfo.value.education : {},
+            educations: generalInfo.value ? generalInfo.value.educations : {},
             occupationTypeId: generalInfo.value.occupationSelected
               ? generalInfo.value.occupationSelected.id
               : null,
