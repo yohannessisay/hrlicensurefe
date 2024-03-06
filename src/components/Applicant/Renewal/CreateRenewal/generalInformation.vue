@@ -84,7 +84,7 @@
         <AddedDepartmentTable
           :isDarkMode="isDarkMode"
           :generalInfo="generalInfo"
-           @removeDepartment="removeDepartment"
+          @removeDepartment="removeDepartment"
         ></AddedDepartmentTable>
         <div class="vld-parent mt-4">
           <loading
@@ -313,7 +313,7 @@ export default {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.educations.splice(index, 1);
     };
-        const addMultiple = async (localGeneralInfo) => {
+    const addMultiple = async (localGeneralInfo) => {
       if (localGeneralInfo) {
         generalInfo.value = localGeneralInfo;
       }
@@ -334,7 +334,7 @@ export default {
     const apply = async () => {
       let tempFieldError = {};
 
-      let tempError = checkForExistingLicense();
+      let checkResult = checkForExistingLicense();
       generalInfo.value.applicantTypeSelected == ""
         ? (tempFieldError.applicantTypeSelected = true)
         : delete tempFieldError.applicantTypeSelected;
@@ -351,43 +351,34 @@ export default {
         ? (tempFieldError.occupationSelected = true)
         : delete tempFieldError.occupationSelected;
 
-      if (tempError == false) {
-        if (Object.keys(tempFieldError).length > 0) {
-          toastMessage("Fill out fileds marked red", "error", 3000);
-        } else {
-          let tempApplicationData = generalInfo.value;
-          window.localStorage.setItem(
-            "RNApplicationData",
-            JSON.stringify(tempApplicationData)
-          );
-          await fetchData(
-            "renewal/setGeneralInfo",
-            generalInfo.value,
-            "noReturnData"
-          );
-          let tempRN = { step: 2 };
-          localStorage.setItem("tempRN", JSON.stringify(tempRN));
-          emit("changeActiveState");
-        }
-      } else if (tempError == 1) {
+      if (!checkResult) {
+        let tempApplicationData = generalInfo.value;
+        window.localStorage.setItem(
+          "RNApplicationData",
+          JSON.stringify(tempApplicationData)
+        );
+        await fetchData(
+          "renewal/setGeneralInfo",
+          generalInfo.value,
+          "noReturnData"
+        );
+        let tempRN = { step: 2 };
+        localStorage.setItem("tempRN", JSON.stringify(tempRN));
+        emit("changeActiveState");
+      } else if (checkResult) {
         toastMessage(
           "You have already submitted or saved it as a draft application for this department and professional type combination",
           "warning",
           3000
         );
-      } else {
-        let tempRN = localStorage.getItem("tempRN")
-          ? JSON.parse(localStorage.getItem("tempRN"))
-          : JSON.stringify(existingData);
-        existingData ? (tempRN.step = 3) : (tempRN.step = 2);
-        localStorage.setItem("tempRN", JSON.stringify(tempRN));
-        emit("changeActiveState");
+      } else if (Object.keys(tempFieldError).length > 0) {
+        toastMessage("Fill out fields marked red", "error", 3000);
+        return;
       }
     };
     const checkForExistingLicense = () => {
-      let tempError = false;
-      let alreadySubmitted = 0;
-      let tempComparision = [];
+      let alreadySubmitted = false;
+      let tempComparison = [];
       if (
         existingLicense.value &&
         generalInfo.value.educations &&
@@ -399,37 +390,30 @@ export default {
             element.applicationStatus.code != "WD" &&
             element.applicationStatus.code != "DEC"
           ) {
-            tempComparision.push({
+            tempComparison.push({
               licenseId: element.id,
               licenseStatus: element.applicationStatus.code,
               educations: element.educations,
             });
-          } else if (
-            element.educations &&
-            element.applicationStatus.code == "SUB"
-          ) {
-            alreadySubmitted = 1;
           }
         });
       }
-      tempComparision.forEach((existingEd) => {
+      tempComparison.forEach((existingEd) => {
         generalInfo.value.educations.forEach((newEd) => {
-          if (existingEd.educations) {
-            existingEd.educations.forEach((element) => {
-              if (
-                element.departmentId == newEd.departmentId &&
-                element.professionTypeId == newEd.professionTypeId
-              ) {
-                tempError = true;
-                existingData.id = existingEd.licenseId;
-                existingData.step = 2;
-                return;
-              }
-            });
-          }
+          existingEd.educations.forEach((element) => {
+            if (
+              element.departmentId == newEd.departmentId &&
+              element.professionTypeId == newEd.professionTypeId
+            ) {
+              alreadySubmitted = true;
+              existingData.id = existingEd.licenseId;
+              existingData.step = 2;
+              return;
+            }
+          });
         });
       });
-      return alreadySubmitted ? alreadySubmitted : tempError;
+      return alreadySubmitted;
     };
     const clearLocalData = () => {
       localStorage.removeItem("applicantTypeSelected");

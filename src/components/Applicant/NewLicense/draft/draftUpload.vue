@@ -159,7 +159,7 @@ import FileUploadTable from "../../Shared/SavedFileUpload/FileUploadTable.vue";
 import { checkDocuments } from "../../Shared/services/checkDocumentUpload";
 export default {
   components: { Loading, CommonFileUploadTable, FileUploadTable },
-  emits: ["changeActiveStateMinus"],
+  emits: ["changeActiveStateMinus", "changeActiveState"],
   setup(props, { emit }) {
     let store = useStore();
     let isLoading = ref(false);
@@ -816,10 +816,8 @@ export default {
         ? documentValidation.errorDocuments
         : [];
 
-      if (errorDocuments.value && errorDocuments.value.length == 0) {
+      if (errorDocuments.value && errorDocuments.value.length === 0) {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
-          //Save images to indexed Db
-
           let finalLocalData = {
             created: new Date(),
             data: [],
@@ -832,7 +830,6 @@ export default {
               ["NLdocumentUploads"],
               "readwrite"
             );
-
             finalLocalData.data = imageData;
 
             const objectStore = transaction.objectStore("NLdocumentUploads");
@@ -932,27 +929,18 @@ export default {
               : false;
             let professionChanged = localData.professionChanged;
             generalInfo.value = localData;
-            if (professionChanged && professionChanged == true) {
-              generalInfo.value?.documents
-                ? generalInfo.value?.documents.forEach((element) => {
-                    documentsSaved.value[element.fileName] = {};
-                    documentsSaved.value[element.fileName].path =
-                      googleApi + element.filePath;
-                    documentsSaved.value[element.fileName].name =
-                      element.originalFileName;
-                  })
-                : "";
 
+            generalInfo.value?.documents?.forEach((element) => {
+              documentsSaved.value[element.fileName] = {};
+              documentsSaved.value[element.fileName].path =
+                googleApi + element.filePath;
+              documentsSaved.value[element.fileName].name =
+                element.originalFileName;
+            });
+            if (professionChanged && professionChanged == true) {
               documentsUploaded.value = [];
               generalInfo.value = localData;
             } else {
-              generalInfo.value?.documents.forEach((element) => {
-                documentsSaved.value[element.fileName] = {};
-                documentsSaved.value[element.fileName].path =
-                  googleApi + element.filePath;
-                documentsSaved.value[element.fileName].name =
-                  element.originalFileName;
-              });
               documentsUploaded.value = documentsSaved.value;
             }
 

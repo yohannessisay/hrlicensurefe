@@ -8,16 +8,18 @@
           : 'flex flex-col mt-medium p-2 w-full bg-white blue-box-shadow-light rounded mb-large'
       "
     >
-      <div class="flex justify-center">
-        <h2 class="font-bold mb-4 mt-4 text-xl">
-          Search here using File Number and Employee ID, both are required
+      <div class="flex justify-center p-4">
+        <h2 class="font-bold mb-4 mt-4 text-xl break-all">
+          Search here using File Number and Employee ID obtained from HRA
+          (Contact your Human Resource department or concerned department for
+          Employee Id and File Number), both are required
         </h2>
       </div>
-      <div class="flex justify-center">
+      <form  @submit.prevent="searchUser" class="flex justify-center">
         <div class="grid grid-cols-1 gap-4">
           <input
             type="search"
-            class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out hover:text-primary-600 hover:border focus:outline-none"
+            class="form-control relative flex-auto min-w-0 block w-full text-main-400 px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out hover:text-primary-600 hover:border focus:outline-none"
             placeholder="Employee ID *"
             aria-label="Search"
             aria-describedby="button-addon2"
@@ -26,7 +28,7 @@
           />
           <input
             type="search"
-            class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out space-x-7 > * + * focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            class="form-control relative flex-auto min-w-0 block text-main-400 w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out space-x-7 > * + * focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             placeholder="File Number *"
             aria-label="Search"
             aria-describedby="button-addon2"
@@ -34,10 +36,19 @@
             required
           />
           <button
-            class="btn inline-block px-6 py-4 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
+            class="inline-block px-6 py-2.5 bg-white hover:bg-primary-600 hover:text-white text-primary-600 border font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
+            @click="$emit('back', 0)"
             type="button"
-            id="button-addon2"
-            @click="searchUser()"
+          >
+            {{ $t("Back") }}
+          </button>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <button
+            class="btn inline-block px-6 py-4 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
+            type="submit"
+            id="button-addon2" 
             required
           >
             <svg
@@ -57,17 +68,7 @@
             </svg>
           </button>
         </div>
-
-        <div class="flex items-center justify-center">
-          <button
-            class="inline-block px-6 py-2.5 bg-white hover:text-white hover:bg-primary-600 hover:text-white text-primary-600 border font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
-            @click="$emit('back', 0)"
-            type="button"
-          >
-            {{ $t("Back") }}
-          </button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
   <!-- If user clicks HRA -->
@@ -82,7 +83,7 @@
     >
       <div class="flex justify-center">
         <h1 class="text-3xl">
-          {{ $t(`Complete profile data`) }}
+          {{ $t(`Complete profile info`) }}
         </h1>
       </div>
 
@@ -121,10 +122,10 @@
                 </p>
               </div>
 
-              <div class="ml-8 mt-4">
+              <div class="sm:ml-8 mt-4">
                 <span
                   v-if="personalInfoErrors.photo"
-                  class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                  class="mt-2 border p-2 text-sm text-red-300 sm:ml-4"
                   >{{ personalInfoErrors.photo }}</span
                 >
               </div>
@@ -135,7 +136,7 @@
             <div class="flex justify-center">
               <span
                 @click="reset()"
-                class="ml-4 mb-4 cursor-pointer border text-white hover:text-main-400 rounded-lg p-2 hover:bg-white bg-main-400"
+                class=" mb-4 cursor-pointer border text-white hover:text-main-400 rounded-lg p-2 hover:bg-white bg-main-400"
               >
                 <i
                   class="fa fa-upload cursor-pointer hover:text-main-400 text-white"
@@ -151,18 +152,18 @@
           </span>
         </div>
         <div class="flex justify-center">
-          <span>
-            <h6 class="text-sm border-b-2 text-main-400">
+          <span class=" border rounded-md p-1 mb-4 w-1/2">
+            <h5 class="text-base border-b-2  ">
               {{ photoFile.name ? photoFile.name : "------" }}
-            </h6>
-            <h6 class="text-sm">
+            </h5>
+            <h6 class="text-xs">
               {{ fileSize ? fileSize : "------" }}
             </h6>
           </span>
         </div>
 
         <!-- English Name Part -->
-        <h2 class="text-main-400 text-xl">{{ $t("Name") }} (English)</h2>
+        <h2 class="  text-xl">{{ $t("Name") }} (English)</h2>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2 mb-8">
           <div class="flex">
             <div class="form-floating w-full">
@@ -242,7 +243,7 @@
         <!-- End Of English Name Part -->
 
         <!-- Amharic Name Part -->
-        <h2 class="text-main-400 text-xl">{{ $t("Name") }} (Amharic)</h2>
+        <h2 class="  text-xl">{{ $t("Name") }} (Amharic)</h2>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2 mb-8">
           <div class="flex mt-2">
             <div class="form-floating mb-3 w-full">
@@ -375,11 +376,11 @@
               </div>
             </div>
           </div>
-          <div class="flex mt-2">
+          <div class="flex ">
             <div class="form-floating w-full">
               <input
                 type="number"
-                class="form-control block w-full text-base font-normal text-main-400 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out"
+                class="form-control block w-full  text-base font-normal text-main-400 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out"
                 v-model="personalInfo.poBox"
                 :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
                 id="pobox"

@@ -132,7 +132,7 @@
             <div class="flex justify-center mb-medium">
               <div>
                 <button
-                  class="inline-block px-6 py-2.5 text-main-400 font-medium text-xs leading-tight uppercase hover:text-white hover:bg-main-400 transition duration-150 ease-in-out"
+                  class="inline-block px-6 mr-4 py-2.5 text-main-400 font-medium text-xs leading-tight uppercase hover:text-white hover:bg-main-400 transition duration-150 ease-in-out"
                   variant="outline"
                   type="button"
                   @click="prevStep"

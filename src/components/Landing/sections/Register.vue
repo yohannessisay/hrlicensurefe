@@ -278,7 +278,7 @@
                             required
                             name="email"
                             type="email"
-                            class="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
+                            class="w-full py-2 pl-10 pr-3 -ml-10 border-2 text-main-400 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
                             placeholder="abebe@example.com"
                           />
                         </div>
@@ -305,7 +305,7 @@
                             required
                             type="number"
                             v-model="registerCredentials.phoneNumber"
-                            class="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
+                            class="w-full py-2 pl-10 pr-3 -ml-10 border-2  text-main-400 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
                             placeholder="912345678"
                           />
                         </div>
@@ -503,7 +503,7 @@
                             :class="
                               !isVerified
                                 ? 'w-full  pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none  bg-grey-200 text-main-400'
-                                : 'w-full  pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none'
+                                : 'w-full  pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none text-main-400 '
                             "
                             class=""
                             placeholder="************"
